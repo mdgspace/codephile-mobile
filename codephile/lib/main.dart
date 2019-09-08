@@ -1,3 +1,4 @@
+import 'package:codephile/screens/on_boarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'signup.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/signup': (BuildContext context) => new SignupPage()
       },
-      home: new MyHomePage(),
+      home: new OnBoarding(),
     );
   }
 }
