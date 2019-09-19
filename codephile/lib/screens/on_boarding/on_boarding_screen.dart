@@ -39,7 +39,8 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
           PageView.builder(
             itemCount: pageList.length,
             controller: _controller,
-            onPageChanged: (index) {
+            onPageChanged: (index)
+            {
               setState(() {
                 currentPage = index;
                 if (currentPage == pageList.length - 1) {
@@ -116,7 +117,7 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
           Positioned(
               left: 50.0,
               bottom: 73.0,
-              child:  Container(
+              child: Container(
                 width: 312,
                 child: RaisedButton(
                     color: const Color.fromRGBO(197, 197, 197, 0.5),
@@ -132,10 +133,13 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
                       ),
                     ),
                     onPressed:(){
-                      Navigator.pop(context);
-                      Navigator.push(context,
+//                      Navigator.pop(context);
+//                      Navigator.push(context,
+//                          MaterialPageRoute(builder: (context) => MyHomePage()));
+                      Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => MyHomePage()));
                     }, //TODO: implement onPressed
+
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0)
                     )
