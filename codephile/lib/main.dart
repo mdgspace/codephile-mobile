@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:codephile/screens/on_boarding/on_boarding_screen.dart';
+
 import 'package:codephile/services/contests.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'signup.dart';
 import 'package:codephile/screens/contests/contests_screen.dart';
+
 
 void main() => runApp(new MyApp());
 
@@ -94,35 +96,35 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                    child: Text('Hello',
+                    padding: EdgeInsets.fromLTRB(15.0, 250.0, 0.0, 0.0),
+                    child: Text('Login',
                         style: TextStyle(
-                            fontSize: 80.0, fontWeight: FontWeight.bold)),
+                            fontSize: 30.0, fontWeight: FontWeight.bold)),
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 175.0, 0.0, 0.0),
-                    child: Text('There',
-                        style: TextStyle(
-                            fontSize: 80.0, fontWeight: FontWeight.bold)),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(220.0, 175.0, 0.0, 0.0),
-                    child: Text('.',
-                        style: TextStyle(
-                            fontSize: 80.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue[900])),
-                  )
+//                  Container(
+//                    padding: EdgeInsets.fromLTRB(16.0, 175.0, 0.0, 0.0),
+//                    child: Text('There',
+//                        style: TextStyle(
+//                            fontSize: 80.0, fontWeight: FontWeight.bold)),
+//                  ),
+//                  Container(
+//                    padding: EdgeInsets.fromLTRB(220.0, 175.0, 0.0, 0.0),
+//                    child: Text('.',
+//                        style: TextStyle(
+//                            fontSize: 80.0,
+//                            fontWeight: FontWeight.bold,
+//                            color: Colors.blue[900])),
+//                  )
                 ],
               ),
             ),
             Container(
-                padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
                 child: Column(
                   children: <Widget>[
                     TextField(
                       decoration: InputDecoration(
-                          labelText: 'EMAIL',
+                          labelText: 'Username',
                           labelStyle: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
@@ -133,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     SizedBox(height: 20.0),
                     TextField(
                       decoration: InputDecoration(
-                          labelText: 'PASSWORD',
+                          labelText: 'Password',
                           labelStyle: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
@@ -143,91 +145,100 @@ class _MyHomePageState extends State<MyHomePage> {
                       obscureText: true,
                     ),
                     SizedBox(height: 5.0),
-                    Container(
-                      alignment: Alignment(1.0, 0.0),
-                      padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                      child: InkWell(
-                        child: Text(
-                          'Forgot Password',
-                          style: TextStyle(
-                              color: Colors.blue[900],
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat',
-                              decoration: TextDecoration.none),
-                        ),
-                      ),
-                    ),
+//                    Container(
+//                      alignment: Alignment(1.0, 0.0),
+//                      padding: EdgeInsets.only(top: 15.0, left: 20.0),
+//                      child: InkWell(
+//                        child: Text(
+//                          'Forgot Password',
+//                          style: TextStyle(
+//                              color: Colors.blue[900],
+//                              fontWeight: FontWeight.bold,
+//                              fontFamily: 'Montserrat',
+//                              decoration: TextDecoration.none),
+//                        ),
+//                      ),
+//                    ),
                     SizedBox(height: 40.0),
                     Container(
-                      height: 40.0,
+                      height: 50.0,
                       child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.lightBlue[900],
-                        color: Colors.blue[900],
+                        borderRadius: BorderRadius.circular(10.0),
+                        shadowColor: Colors.grey,
+                        color: Colors.grey,
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(builder: (context) => HomePage()),
+                            );
+                          },
                           child: Center(
                             child: Text(
-                              'LOGIN',
+                              'Login',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat'),
+                                  fontFamily: 'Montserrat'
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(height: 20.0),
-                    Container(
-                      height: 40.0,
-                      color: Colors.transparent,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 1.0),
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(20.0)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Center(
-                              child:
-                              ImageIcon(AssetImage('assets/facebook.png')),
-                            ),
-                            SizedBox(width: 10.0),
-                            Center(
-                              child: Text('Log in with facebook',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Montserrat')),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
+//                    Container(
+//                      height: 40.0,
+//                      color: Colors.transparent,
+//                      child: Container(
+//                        decoration: BoxDecoration(
+//                            border: Border.all(
+//                                color: Colors.black,
+//                                style: BorderStyle.solid,
+//                                width: 1.0),
+//                            color: Colors.transparent,
+//                            borderRadius: BorderRadius.circular(20.0)),
+//                        child: Row(
+//                          mainAxisAlignment: MainAxisAlignment.center,
+//                          children: <Widget>[
+//                            Center(
+//                              child:
+//                              ImageIcon(AssetImage('assets/facebook.png')),
+//                            ),
+//                            SizedBox(width: 10.0),
+//                            Center(
+//                              child: Text('Log in with facebook',
+//                                  style: TextStyle(
+//                                      fontWeight: FontWeight.bold,
+//                                      fontFamily: 'Montserrat')),
+//                            )
+//                          ],
+//                        ),
+//                      ),
+//                    )
                   ],
                 )),
-            SizedBox(height: 15.0),
+            SizedBox(height: 5.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'New to Codephile ?',
+                  'New to Codephile?',
                   style: TextStyle(fontFamily: 'Montserrat'),
                 ),
                 SizedBox(width: 5.0),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/signup');
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(builder: (context) => SignupPage()),
+                    );
                   },
                   child: Text(
-                    'Register',
+                    'Sign up',
                     style: TextStyle(
-                        color: Colors.blue[900],
+                        color: Colors.grey,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.bold,
                         decoration: TextDecoration.none),
