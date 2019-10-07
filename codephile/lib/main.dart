@@ -1,9 +1,15 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:codephile/screens/on_boarding/on_boarding_screen.dart';
-import 'package:flutter/cupertino.dart';
+
+import 'package:codephile/services/contests.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 import 'signup.dart';
-import 'homescreen.dart';
+import 'package:codephile/screens/contests/contests_screen.dart';
+
 
 void main() => runApp(new MyApp());
 
@@ -15,7 +21,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/signup': (BuildContext context) => new SignupPage()
       },
-      home: new ChooseHome(),
+      home: new Timeline(),
     );
   }
 }
@@ -62,6 +68,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  Future getData() async{
+    final http.Response response = await http.get('https://codephile-test.herokuapp.com/v1/contests/');
+    if(response.statusCode == 200) {
+      print(json.decode(response.body));
+    }else{
+      print("Error");
+    }
+  }
+
+  @override
+  void initState(){
+    //getData();
+    //contestList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

@@ -2,8 +2,23 @@ import 'package:flutter/material.dart';
 
 class ContestCard extends StatelessWidget{
 
-  final String _date = "10 Aug, 2019";
-  final String _time = "8:30 pm";
+  final String _name;
+  final String _endTime;
+  final String _platform;
+  final String _challengeType;
+  final String _url;
+  final String _startTime;
+  final String _duration;
+
+  ContestCard(
+      this._name,
+      this._endTime,
+      this._platform,
+      this._challengeType,
+      this._url,
+      [this._startTime,
+      this._duration]
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +73,7 @@ class ContestCard extends StatelessWidget{
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8.0, 2.0, 8.0, 2.0),
                   child: Text(
-                    "Website on which it is held",
+                    "$_platform",
                     style: TextStyle(
                         fontSize: 18.0
                     ),
@@ -80,7 +95,7 @@ class ContestCard extends StatelessWidget{
                     Padding(
                       padding: const EdgeInsets.fromLTRB(1.0, 2.0, 4.0, 8.0),
                       child: Text(
-                        "$_time",
+                        "$_endTime",
                         style: TextStyle(
                             fontSize: 14.0,
                             color: const Color.fromRGBO(0, 0, 0, 0.85)
@@ -100,7 +115,7 @@ class ContestCard extends StatelessWidget{
                     Padding(
                       padding: const EdgeInsets.fromLTRB(1.0, 2.0, 8.0, 8.0),
                       child: Text(
-                        "$_date",
+                        "_date",
                         style: TextStyle(
                             fontSize: 14.0,
                             color: const Color.fromRGBO(0, 0, 0, 0.85)
