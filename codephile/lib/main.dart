@@ -101,20 +101,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(
                             fontSize: 30.0, fontWeight: FontWeight.bold)),
                   ),
-//                  Container(
-//                    padding: EdgeInsets.fromLTRB(16.0, 175.0, 0.0, 0.0),
-//                    child: Text('There',
-//                        style: TextStyle(
-//                            fontSize: 80.0, fontWeight: FontWeight.bold)),
-//                  ),
-//                  Container(
-//                    padding: EdgeInsets.fromLTRB(220.0, 175.0, 0.0, 0.0),
-//                    child: Text('.',
-//                        style: TextStyle(
-//                            fontSize: 80.0,
-//                            fontWeight: FontWeight.bold,
-//                            color: Colors.blue[900])),
-//                  )
                 ],
               ),
             ),
@@ -145,20 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       obscureText: true,
                     ),
                     SizedBox(height: 5.0),
-//                    Container(
-//                      alignment: Alignment(1.0, 0.0),
-//                      padding: EdgeInsets.only(top: 15.0, left: 20.0),
-//                      child: InkWell(
-//                        child: Text(
-//                          'Forgot Password',
-//                          style: TextStyle(
-//                              color: Colors.blue[900],
-//                              fontWeight: FontWeight.bold,
-//                              fontFamily: 'Montserrat',
-//                              decoration: TextDecoration.none),
-//                        ),
-//                      ),
-//                    ),
                     SizedBox(height: 40.0),
                     Container(
                       height: 50.0,
@@ -169,10 +141,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(builder: (context) => HomePage()),
-                            );
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => HomePage()),
+                              );
                           },
                           child: Center(
                             child: Text(
@@ -188,35 +161,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     SizedBox(height: 20.0),
-//                    Container(
-//                      height: 40.0,
-//                      color: Colors.transparent,
-//                      child: Container(
-//                        decoration: BoxDecoration(
-//                            border: Border.all(
-//                                color: Colors.black,
-//                                style: BorderStyle.solid,
-//                                width: 1.0),
-//                            color: Colors.transparent,
-//                            borderRadius: BorderRadius.circular(20.0)),
-//                        child: Row(
-//                          mainAxisAlignment: MainAxisAlignment.center,
-//                          children: <Widget>[
-//                            Center(
-//                              child:
-//                              ImageIcon(AssetImage('assets/facebook.png')),
-//                            ),
-//                            SizedBox(width: 10.0),
-//                            Center(
-//                              child: Text('Log in with facebook',
-//                                  style: TextStyle(
-//                                      fontWeight: FontWeight.bold,
-//                                      fontFamily: 'Montserrat')),
-//                            )
-//                          ],
-//                        ),
-//                      ),
-//                    )
                   ],
                 )),
             SizedBox(height: 5.0),
@@ -230,10 +174,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 SizedBox(width: 5.0),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(builder: (context) => SignupPage()),
-                    );
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(builder: (context) => SignupPage()),
+                      );
                   },
                   child: Text(
                     'Sign up',
