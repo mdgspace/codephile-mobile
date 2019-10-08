@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:codephile/screens/contests/contests_screen.dart';
+import 'package:codephile/screens/profile/profile_screen.dart';
 
 class HomePage extends StatefulWidget{
   @override
@@ -9,29 +11,27 @@ class HomePageState extends State<HomePage>{
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static  List<Widget> _widgetOptions = <Widget>[
+    new MaterialApp(
+      home: new Timeline(),
+    ),
     Text(
-      'Index 0: Home',
+      'Index 1',
       style: optionStyle,
     ),
     Text(
-      'Index 1: Business',
+      'Index 2',
       style: optionStyle,
     ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: School',
-      style: optionStyle,
+    new MaterialApp(
+      home: new Profile(),
     ),
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+       setState(() {
+         _selectedIndex = index;
+       });
   }
 
   @override
