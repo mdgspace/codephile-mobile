@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 
 class Timeline extends StatefulWidget {
   Timeline({Key key, this.title}) : super(key: key);
-
   final String title;
 
   @override
