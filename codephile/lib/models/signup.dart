@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-Signup signupFromJson(String str) => Signup.fromJson(json.decode(str));
-String signupToJson(Signup data) => json.encode(data.toJson());
+SignUp signUpFromJson(String str) => SignUp.fromJson(json.decode(str));
+String signUpToJson(SignUp data) => json.encode(data.toJson());
 
-class Signup {
+class SignUp {
   Handle handle;
-  String id;
+  String password;
   String username;
 
-  Signup({this.handle, this.id, this.username});
+  SignUp({this.handle, this.password, this.username});
 
-  factory Signup.fromJson(Map<String, dynamic> json) => Signup(
+  factory SignUp.fromJson(Map<String, dynamic> json) => SignUp(
         handle: Handle.fromJson(json["handle"]),
-        id: json["id"],
+        password: json["password"],
         username: json["username"],
       );
 
@@ -54,4 +54,25 @@ class Handle {
         "hackerrank": hackerrank,
         "spoj": spoj,
       };
+}
+
+class Info {
+  String name;
+  String institute;
+
+  Info({
+    this.name,
+    this.institute,
+  });
+
+  factory Info.fromJson(Map<String, dynamic> json) => Info(
+    name: json["name"],
+    institute: json["institute"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "institute": institute,
+  };
+
 }

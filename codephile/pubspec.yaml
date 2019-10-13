@@ -25,6 +25,9 @@ dependencies:
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.5.3+4
   flutter_svg: ^0.14.1
+  fluttertoast: ^3.1.2
+  url_launcher: ^5.0.2
+  autocomplete_textfield: ^1.6.4
 
 dev_dependencies:
   flutter_test:

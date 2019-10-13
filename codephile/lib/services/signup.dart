@@ -6,7 +6,7 @@ String url = "https://codephile-test.herokuapp.com/v1";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<bool> signup(Signup details) async {
+Future<bool> signUp(SignUp details) async {
   String endpoint = "/user/signup";
   String uri = url + endpoint;
   var json = details;
@@ -16,7 +16,7 @@ Future<bool> signup(Signup details) async {
       headers: header,
       body: jsonEncode(json),
     );
-    if (response.body.isNotEmpty) {
+    if (response.statusCode == 200) {
       return true;
     }
     return null;

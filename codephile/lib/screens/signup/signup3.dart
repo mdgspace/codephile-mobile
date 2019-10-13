@@ -1,18 +1,73 @@
 import 'package:flutter/cupertino.dart';
-
-import 'signup2.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
+import 'package:codephile/models/signup.dart';
+import 'package:codephile/services/signup.dart';
+import 'package:codephile/homescreen.dart';
 
-class SignupPage3 extends StatefulWidget {
+class SignUpPage3 extends StatefulWidget {
+  final String name;
+  final String institute;
+  final Handle handle;
+
+  const SignUpPage3({Key key, this.name, this.institute, this.handle}) : super(key: key);
+
   @override
-  _SignupPageState createState() => _SignupPageState();
+  _SignUpPageState createState() => _SignUpPageState(name: name, institute: institute, handle: handle);
 }
 
-class _SignupPageState extends State<SignupPage3> {
+class _SignUpPageState extends State<SignUpPage3> {
+  String _username, _password;
+  String name;
+  String institute;
+  Handle handle;
+  _SignUpPageState({Key key, this.name, this.institute, this.handle});
+
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final _formKey = new GlobalKey<FormState>();
+
+  bool isCreateAccountButtonTapped = false;
+  bool isCreateAccountSuccessful = false;
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    showConnectivityStatus();
+  }
+
+  Future showConnectivityStatus() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      Fluttertoast.showToast(
+        msg: "Please check your connection!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 7,
+        fontSize: 12.0,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
+      key: _scaffoldKey,
       body: new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,109 +75,197 @@ class _SignupPageState extends State<SignupPage3> {
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(top: 45),
-                height: 10.0,
-                width: 100,
-                child: Material(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Colors.grey,
-                  elevation: 7.0,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 45),
-                height: 10.0,
-                width: 100,
-                child: Material(
-                  borderRadius: BorderRadius.circular(10.0),
-//                    shadowColor: Colors.grey[200],
-                  color: Colors.grey,
-                  elevation: 7.0,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 45),
-                height: 10.0,
-                width: 100,
-                child: Material(
-                  borderRadius: BorderRadius.circular(10.0),
-//                    shadowColor: Colors.grey[200],
-                  color: Colors.grey,
-                  elevation: 7.0,
-                ),
-              ),
+              _bar(width, 500),
+              _bar(width, 500),
+              _bar(width, 500),
             ],
           ),
 
-          Container(
-            padding: EdgeInsets.fromLTRB(15.0, 100.0, 0.0, 0.0),
-            child: Text(
-                'Setup a username and password for Codephile',
-                style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold
-                )
-            ),
-          ),
-          Container(
-              padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(
-                        labelText: 'Username',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                        labelText: 'Password',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 270.0),
-                  Container(
-                    height: 50.0,
-                    child: Material(
-                      borderRadius: BorderRadius.circular(10.0),
-                      shadowColor: Colors.grey,
-                      color: Colors.grey,
-                      elevation: 4.0,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(builder: (context) => SignupPage2()),
-                          );
-                        },
-                        child: Center(
-                          child: Text(
-                            'Create account',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat'
-                            ),
-                          ),
+          Expanded(
+              child: Padding(
+                  padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                  child: new Form(
+                    key: _formKey,
+                    child: ListView(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+                          child: Text('Setup a username and password for Codephile',
+                              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
                         ),
-                      ),
+                        _showUsernameInput(),
+                        _showPasswordInput(),
+                        SizedBox(height: 260.0),
+                        _showCreateAccountButton(),
+                        SizedBox(height: 20.0),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 20.0),
-                ],
-              )),
+                  ))),
         ],
+      ),
+    );
+  }
+
+
+  Widget _showUsernameInput() {
+    return new TextFormField(
+      maxLines: 1,
+      keyboardType: TextInputType.text,
+      autofocus: false,
+      decoration: new InputDecoration(
+        labelText: "Username",
+        labelStyle: new TextStyle(
+          color: Colors.grey,
+        ),
+        icon: new Icon(
+          Icons.person,
+          color: Colors.grey,
+          size: 39,
+        ),
+      ),
+      validator: (value) =>
+      value.isEmpty ? 'Username can\'t be empty' : null,
+      onSaved: (value) => _username = value,
+    );
+  }
+
+  Widget _showPasswordInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+      child: new TextFormField(
+        maxLines: 1,
+        obscureText: _obscureText,
+        autofocus: false,
+        decoration: new InputDecoration(
+          suffixIcon: GestureDetector(
+            child: new Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              color: Colors.grey,
+            ),
+            onTap: _toggle,
+          ),
+          labelText: "Password",
+          labelStyle: new TextStyle(
+            color: Colors.grey,
+          ),
+          icon: new Icon(
+            Icons.lock,
+            color: Colors.grey,
+            size: 39,
+          ),
+        ),
+        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+        onSaved: (value) => _password = value,
+      ),
+    );
+  }
+
+  Widget _showCreateAccountButton() {
+    showConnectivityStatus();
+
+    return (isCreateAccountButtonTapped)
+        ? new FlatButton(
+        padding: EdgeInsets.all(8),
+        color: Colors.white,
+        shape: new Border.all(
+          width: 2,
+          color: Colors.grey,
+          style: BorderStyle.solid,
+        ),
+        child: new Text(
+          'Creating...',
+          style: new TextStyle(
+            color: Colors.grey,
+          ),
+        ),
+        onPressed: () {})
+        : (isCreateAccountSuccessful)
+        ? new FlatButton(
+        padding: EdgeInsets.all(8),
+        color: Colors.white,
+        shape: new Border.all(
+          width: 2,
+          color: Colors.grey,
+          style: BorderStyle.solid,
+        ),
+        child: new Text(
+          'Created Successfully',
+          style: new TextStyle(
+            color: Colors.grey,
+          ),
+        ),
+        onPressed: () {})
+        : new FlatButton(
+      padding: EdgeInsets.all(8),
+      color: Colors.white,
+      shape: new Border.all(
+        width: 2,
+        color: Colors.grey,
+        style: BorderStyle.solid,
+      ),
+      child: new Text(
+        'Create Account',
+        style: new TextStyle(
+          color: Colors.grey,
+        ),
+      ),
+      onPressed: _validateAndSubmit,
+    );
+  }
+
+  bool _validateAndSave() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void _validateAndSubmit() {
+    if (_validateAndSave()) {
+      setState(() {
+        isCreateAccountButtonTapped = true;
+      });
+      FocusScope.of(context).requestFocus(new FocusNode());
+      SignUp details = new SignUp(handle: handle, password: _password, username: _username);
+      signUp(details).then((T) async {
+        if(T == true){
+          setState(() {
+            isCreateAccountButtonTapped = false;
+            isCreateAccountSuccessful = true;
+          });
+          await new Future.delayed(const Duration(seconds: 5));
+          Navigator.push(
+            context,
+            CupertinoPageRoute(builder: (context) => HomePage()),
+          );
+        }else{
+          setState(() {
+            isCreateAccountButtonTapped = false;
+            isCreateAccountSuccessful = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Account Creation unsuccessful",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIos: 7,
+            fontSize: 12.0,
+          );
+        }
+      });
+    }
+  }
+
+  Widget _bar(double width, int shade) {
+    return  Container(
+      margin: EdgeInsets.only(top: 45),
+      height: 10.0,
+      width: width/3.5,
+      child: Material(
+        borderRadius: BorderRadius.circular(10.0),
+        color: Colors.grey[shade],
+        elevation: 7.0,
       ),
     );
   }

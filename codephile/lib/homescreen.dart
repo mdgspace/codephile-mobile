@@ -13,6 +13,7 @@ class HomePageState extends State<HomePage>{
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static  List<Widget> _widgetOptions = <Widget>[
     new MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: new Timeline(),
     ),
     Text(
@@ -24,6 +25,7 @@ class HomePageState extends State<HomePage>{
       style: optionStyle,
     ),
     new MaterialApp(
+  debugShowCheckedModeBanner: false,
       home: new Profile(),
     ),
   ];
@@ -50,7 +52,7 @@ class HomePageState extends State<HomePage>{
         centerTitle: true,
         actions: <Widget>[
           new Icon(
-            Icons.search,
+            Icons.settings,
             color: Colors.green,
             size: 35,
           ),
