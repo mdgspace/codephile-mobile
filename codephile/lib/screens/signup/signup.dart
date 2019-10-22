@@ -109,21 +109,63 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _showInstituteInput() {
-    return new TextFormField(
-      maxLines: 1,
-      keyboardType: TextInputType.text,
-      autofocus: false,
-      decoration: InputDecoration(
-          labelText: 'Enter institute here',
-          labelStyle: TextStyle(
-              fontFamily: 'Montserrat',
+//    return new TextFormField(
+//      maxLines: 1,
+//      keyboardType: TextInputType.text,
+//      autofocus: false,
+//      decoration: InputDecoration(
+//          labelText: 'Enter institute here',
+//          labelStyle: TextStyle(
+//              fontFamily: 'Montserrat',
+//              fontWeight: FontWeight.bold,
+//              color: Colors.grey),
+//          focusedBorder: UnderlineInputBorder(
+//              borderSide: BorderSide(color: Colors.green))),
+//      validator: (value) => value.isEmpty ? 'Institute can\'t be empty' : null,
+//      onSaved: (value) => _institute = value,
+//    );
+
+    return Container(
+        child: DropdownButton<String>(
+          value: _institute,
+          isExpanded: true,
+          icon: Icon(Icons.arrow_drop_down),
+          iconSize: 24,
+          hint:new Container(
+              margin: EdgeInsets.only(top: 20, bottom: 30),
+              child: Text(
+            'Enter Institute here',
+            style: new TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.grey),
-          focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.green))),
-      validator: (value) => value.isEmpty ? 'Institute can\'t be empty' : null,
-      onSaved: (value) => _institute = value,
-    );
+              color: Colors.grey,
+              fontSize: 15.5,
+            )),
+          ),
+          elevation: 16,
+          style: TextStyle(
+              color: Colors.grey
+          ),
+          isDense: false,
+          iconEnabledColor: Colors.blue,
+          underline: Container(
+            height: 1,
+            color: Colors.grey,
+          ),
+          onChanged: (String newValue) {
+            setState(() {
+              _institute = newValue;
+            });
+          },
+          items: <String>['Indian Institute of Technology Roorkee', 'Indian Institute of Technology Delhi','Indian Institute of Technology Mandi','Indian Institute of Technology Indore','Indian Institute of Technology Bombay']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          })
+              .toList(),
+        ),
+      );
   }
 
   Widget _showNextButton() {

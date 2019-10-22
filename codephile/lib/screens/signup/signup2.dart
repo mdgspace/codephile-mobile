@@ -106,6 +106,7 @@ class _SignUpPageState extends State<SignUpPage2> {
                   autofocus: false,
                   decoration: InputDecoration(
                       labelStyle: TextStyle(
+
                           fontFamily: 'Montserrat',
                           color: Colors.grey),
                       focusedBorder: UnderlineInputBorder(
