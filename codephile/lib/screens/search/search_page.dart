@@ -148,7 +148,7 @@ class _SearchPageState extends State<SearchPage> {
   void _handleSearchEnd() {
     setState(() {
       _isSearching = false;
-      _controller.text = "";
+//      _controller.text = "";
     });
   }
 

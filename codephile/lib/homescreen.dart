@@ -26,7 +26,8 @@ class HomePageState extends State<HomePage>{
     ),
     new MaterialApp(
   debugShowCheckedModeBanner: false,
-      home: new Profile(),
+      //TODO: use correct UserId
+      home: new Profile("SomeUserId"),
     ),
   ];
 
