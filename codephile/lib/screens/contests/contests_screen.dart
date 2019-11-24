@@ -1,12 +1,12 @@
 import 'dart:core';
 import 'package:codephile/models/contests.dart';
-import 'package:codephile/screens/contests/contest_card.dart';
 import 'package:codephile/screens/contests/contest_card_2.dart';
 import 'package:codephile/services/contests.dart';
 import 'package:flutter/material.dart';
 
 class Timeline extends StatefulWidget {
-  Timeline({Key key, this.title}) : super(key: key);
+  final String token;
+  Timeline(this.token, {Key key, this.title}) : super(key: key);
   final String title;
 
   @override
@@ -14,7 +14,6 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  //Future<Contests> contests;
   List<Ongoing> ongoingContests;
   List<Upcoming> upcomingContests;
   List<Widget> allContests = List<Widget>();
@@ -22,7 +21,7 @@ class _TimelineState extends State<Timeline> {
 
   @override
   void initState() {
-    contestList().then((contests){
+    contestList(widget.token).then((contests){
       ongoingContests = contests.result.ongoing;
       upcomingContests = contests.result.upcoming;
       print(ongoingContests.length);

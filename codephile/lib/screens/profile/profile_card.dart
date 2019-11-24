@@ -53,8 +53,10 @@ class _ProfileCardState extends State<ProfileCard>{
                           borderRadius: BorderRadius.all(Radius.circular(10.0))
                       ),
                       child: Image.network(
-                          "https://image.flaticon.com/icons/png/512/97/97895.png"
-                        //widget._userIcon
+                        widget._userIcon!=""?
+                        widget._userIcon
+                            :
+                        "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",                        //widget._userIcon
                       ),
                     ),
                   ),
