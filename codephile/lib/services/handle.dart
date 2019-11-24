@@ -1,20 +1,18 @@
 import 'dart:convert';
-import 'package:codephile/models/signup.dart';
 import 'package:http/http.dart' as http;
 
 String url = "https://codephile-test.herokuapp.com/v1";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<bool> signUp(SignUp details) async {
-  String endpoint = "/user/signup";
-  String uri = url + endpoint;
-  var json = details;
+Future<bool> handleVerify(String site, String handle) async {
+  String endpoint = "/user/verify/";
+  String uri = url + endpoint + site;
+  print(handle);
   try {
     var response = await client.post(
       uri,
-      body: {"username" : details.username, "password" : details.password, "fullname": details.fullname,
-      "institute": details.institute},
+      body: {"handle": handle},
     );
     print(response.statusCode);
     if (response.statusCode == 200) {

@@ -8,20 +8,19 @@ http.Client client = new http.Client();
 Future login(String username, String pass) async {
   String endpoint = "/user/login";
   String uri = url + endpoint;
+  print(username + pass);
   var json = {
-    "usernsme": username,
+    "username": username,
     "password": pass,
   };
   try {
     var response = await client.post(
       uri,
-      headers: header,
-      body: jsonEncode(json),
+      body: {'username': username, 'password': pass},
     );
     print(response.statusCode);
     if (response.statusCode == 200) {
       return true;
-
     }
     return null;
   } on Exception catch (e) {

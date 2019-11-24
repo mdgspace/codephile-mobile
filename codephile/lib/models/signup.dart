@@ -7,52 +7,52 @@ class SignUp {
   Handle handle;
   String password;
   String username;
+  String fullname;
+  String institute;
 
-  SignUp({this.handle, this.password, this.username});
+  SignUp({this.handle, this.password, this.username, this.fullname, this.institute});
 
   factory SignUp.fromJson(Map<String, dynamic> json) => SignUp(
-        handle: Handle.fromJson(json["handle"]),
-        password: json["password"],
         username: json["username"],
+        password: json["password"],
+        fullname: json["fullname"],
+        institute: json["institute"],
+        handle: Handle.fromJson(json["handle"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "username": username,
+        "password": password,
+        "fullname": fullname,
+        "institute": institute,
         "handle": handle.toJson(),
       };
 }
 
-//class ObjectId {
-//
-//}
-
 class Handle {
   String codechef;
   String codeforces;
-  String hackerearth;
   String hackerrank;
   String spoj;
 
   Handle(
       {this.codechef,
       this.codeforces,
-      this.hackerearth,
       this.hackerrank,
       this.spoj});
 
   factory Handle.fromJson(Map<String, dynamic> json) => Handle(
-        codechef: json["codechef"],
-        codeforces: json["codeforces"],
-        hackerearth: json["hackerearth"],
-        hackerrank: json["hackerrank"],
-        spoj: json["spoj"],
+        codechef: json["handle.codechef"],
+        codeforces: json["handle.codeforces"],
+        hackerrank: json["handle.hackerrank"],
+        spoj: json["handle.spoj"],
       );
 
   Map<String, dynamic> toJson() => {
-        "codechef": codechef,
-        "codeforces": codeforces,
-        "hackerearth": hackerearth,
-        "hackerrank": hackerrank,
-        "spoj": spoj,
+        "handle.codechef": codechef,
+        "handle.codeforces": codeforces,
+        "handle.hackerrank": hackerrank,
+        "handle.spoj": spoj,
       };
 }
 

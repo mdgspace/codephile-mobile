@@ -11,14 +11,18 @@ Future<Contests> contestList(String token) async {
 
   String endpoint = "/contests/";
   String uri = url + endpoint;
+
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
+
   try {
     var response = await client.get(
       uri,
       headers: tokenAuth,
     );
 
+
 //    http.Response response = await client.get(uri);
+
 
     final jsonResponse = jsonDecode(response.body);
     Contests contests = new Contests.fromJson(jsonResponse);

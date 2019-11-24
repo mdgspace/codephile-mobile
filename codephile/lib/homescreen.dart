@@ -2,6 +2,7 @@ import 'package:codephile/services/search.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/screens/contests/contests_screen.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
+import 'package:codephile/screens/submission/submission_screen.dart';
 
 String testToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzcwMDA3NDMsImlhdCI6MTU3NDU4MTU0MywiaXNzIjoibWRnIiwic3ViIjoiNWRkYTM0ZjA1YzJlYWQwMDA0MjgzZDRkIn0.VrFFp37PxVyUeatBnvnkVOIngND99eoRTaUGLmZ5lkk";
 String testId = "5dda34f05c2ead0004283d4d";
@@ -32,18 +33,18 @@ class HomePageState extends State<HomePage>{
       home: new Timeline(testToken),
     ),
     Text(
-      'Index 1',
-      style: optionStyle,
-    ),
-    Text(
       'Index 2',
       style: optionStyle,
+    ),
+    new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: new Submission(),
     ),
     new MaterialApp(
   debugShowCheckedModeBanner: false,
       //TODO: implement UserId
       //TODO: implement token
-      home: new Profile(testToken, testId),
+      home: new Profile(),
     ),
   ];
 

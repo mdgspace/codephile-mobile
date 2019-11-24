@@ -196,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
         child: new Text(
           'Authenticating...',
           style: new TextStyle(
-            color: Colors.white,
+            color: Colors.grey,
           ),
         ),
         onPressed: () {})
@@ -253,6 +253,10 @@ class _LoginPageState extends State<LoginPage> {
           CupertinoPageRoute(builder: (context) => HomePage()),
         );
       }else{
+        setState(() {
+          _isLoginSuccessful = false;
+          isLoginButtonTapped = false;
+        });
 
       }
     });

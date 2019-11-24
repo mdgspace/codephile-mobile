@@ -228,13 +228,20 @@ class _SignUpPageState extends State<SignUpPage3> {
         isCreateAccountButtonTapped = true;
       });
       FocusScope.of(context).requestFocus(new FocusNode());
-      SignUp details = new SignUp(handle: handle, password: _password, username: _username);
+      SignUp details = new SignUp(handle: handle, password: _password, username: _username, fullname: name, institute: institute);
       signUp(details).then((T) async {
         if(T == true){
           setState(() {
             isCreateAccountButtonTapped = false;
             isCreateAccountSuccessful = true;
           });
+          Fluttertoast.showToast(
+            msg: "Account Creation unsuccessful",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIos: 7,
+            fontSize: 12.0,
+          );
           await new Future.delayed(const Duration(seconds: 5));
           Navigator.push(
             context,
@@ -245,13 +252,6 @@ class _SignUpPageState extends State<SignUpPage3> {
             isCreateAccountButtonTapped = false;
             isCreateAccountSuccessful = false;
           });
-          Fluttertoast.showToast(
-            msg: "Account Creation unsuccessful",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIos: 7,
-            fontSize: 12.0,
-          );
         }
       });
     }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'signup3.dart';
+import 'package:codephile/services/handle.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:codephile/models/signup.dart';
 
 class SignUpPage2 extends StatefulWidget {
@@ -114,6 +116,7 @@ class _SignUpPageState extends State<SignUpPage2> {
                   onSaved: (value) => _codechef = value,
                 ),
               ),
+
             ],
           ),
         ),
@@ -274,8 +277,11 @@ class _SignUpPageState extends State<SignUpPage2> {
   void _validateAndSubmit() {
     isNextButtonTapped = true;
     if (isNextButtonTapped) {
-      Handle handle = new Handle(codechef: _codechef, codeforces: _codeforces,
-      hackerearth: _hackerearth,hackerrank: _hackerrank,spoj: _spoj);
+      _codechef = _verifyHandle("codechef", _codechef);
+      _hackerearth = _verifyHandle("spoj", _hackerearth);
+      _codeforces = _verifyHandle("codeforces", _codeforces);
+      _hackerrank = _verifyHandle("hackerrank", _hackerrank);
+      Handle handle = new Handle(codechef: _codechef, codeforces: _codeforces, hackerrank: _hackerrank,spoj: _hackerearth);
       Navigator.pushReplacement(context,
           CupertinoPageRoute(builder: (context) {
             return SignUpPage3(
@@ -285,6 +291,17 @@ class _SignUpPageState extends State<SignUpPage2> {
             );
           }));
     }
+  }
+
+  String _verifyHandle(String site, String handle) {
+    handleVerify(site, handle).then((T) async {
+      if(T == true){
+        return handle;
+      }else{
+        return null;
+      }
+    });
+    return null;
   }
 
   Widget _bar(double width, int shade) {
