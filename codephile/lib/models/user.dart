@@ -5,28 +5,36 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 String userToJson(User data) => json.encode(data.toJson());
 
 class User {
+  String fullname;
   Handle handle;
-  Id id;
+  String id;
+  String institute;
   String picture;
   String username;
 
   User({
+    this.fullname,
     this.handle,
     this.id,
+    this.institute,
     this.picture,
     this.username,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
+    fullname: json["fullname"],
     handle: Handle.fromJson(json["handle"]),
-    id: Id.fromJson(json["id"]),
+    id: json["id"],
+    institute: json["institute"],
     picture: json["picture"],
     username: json["username"],
   );
 
   Map<String, dynamic> toJson() => {
+    "fullname" : fullname,
     "handle": handle.toJson(),
-    "id": id.toJson(),
+    "id": id,
+    "institute" : institute,
     "picture": picture,
     "username": username,
   };
@@ -61,15 +69,5 @@ class Handle {
     "hackerearth": hackerearth,
     "hackerrank": hackerrank,
     "spoj": spoj,
-  };
-}
-
-class Id {
-  Id();
-
-  factory Id.fromJson(Map<String, dynamic> json) => Id(
-  );
-
-  Map<String, dynamic> toJson() => {
   };
 }

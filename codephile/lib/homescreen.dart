@@ -1,20 +1,35 @@
+import 'package:codephile/services/search.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/screens/contests/contests_screen.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
 
+String testToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzcwMDA3NDMsImlhdCI6MTU3NDU4MTU0MywiaXNzIjoibWRnIiwic3ViIjoiNWRkYTM0ZjA1YzJlYWQwMDA0MjgzZDRkIn0.VrFFp37PxVyUeatBnvnkVOIngND99eoRTaUGLmZ5lkk";
+String testId = "5dda34f05c2ead0004283d4d";
+
 class HomePage extends StatefulWidget{
+  final String token;
+
+  const HomePage({Key key, this.token}) : super(key: key);
+
   @override
   HomePageState createState() => new HomePageState();
 }
 
 class HomePageState extends State<HomePage>{
+
+  @override
+  void initState(){
+    super.initState();
+    var result = search(testToken, "user");
+  }
+
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static  List<Widget> _widgetOptions = <Widget>[
     new MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: new Timeline(),
+      home: new Timeline(testToken),
     ),
     Text(
       'Index 1',
@@ -26,8 +41,9 @@ class HomePageState extends State<HomePage>{
     ),
     new MaterialApp(
   debugShowCheckedModeBanner: false,
-      //TODO: use correct UserId
-      home: new Profile("SomeUserId"),
+      //TODO: implement UserId
+      //TODO: implement token
+      home: new Profile(testToken, testId),
     ),
   ];
 

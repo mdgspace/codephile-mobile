@@ -1,16 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:codephile/models/user_details.dart';
+import 'package:codephile/models/search_results.dart';
 import 'package:http/http.dart' as http;
 
 String url = "https://codephile-test.herokuapp.com/v1";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<UserDetails> getUserDetails(String token, String uId) async {
+Future<SearchResults> search(String token, String query) async {
 
-  String endpoint = "/user/fetch/$uId/";
+  String endpoint = "/user/search?query='$query'";
+
   String uri = url + endpoint;
+//  var uri = Uri.https(url, endpoint, parameters);
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
   try {
     var response = await client.get(
@@ -18,11 +20,13 @@ Future<UserDetails> getUserDetails(String token, String uId) async {
       headers: tokenAuth,
     );
 
-//    http.Response response = await client.get(uri);
+//    print(response.statusCode);
     final jsonResponse = jsonDecode(response.body);
-    UserDetails user = new UserDetails.fromJson(jsonResponse);
-    //print(response.body);
-    return user;
+//    print(jsonResponse.length);
+
+    SearchResults results = new SearchResults.fromJson(jsonResponse, response.statusCode);
+
+    return results;
   } on Exception catch (e) {
     print(e);
     return null;

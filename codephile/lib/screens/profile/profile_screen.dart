@@ -1,12 +1,12 @@
 import 'package:codephile/screens/profile/profile_card.dart';
 import 'package:codephile/services/user.dart';
-import 'package:codephile/services/user_details.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
 
+  final String token;
   final String _uId;
-  Profile(this._uId);
+  Profile(this.token, this._uId);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -31,18 +31,16 @@ class _ProfileState extends State<Profile> {
 
     super.initState();
 
-    getUserDetails(widget._uId).then((userDetails){
-      _institute = userDetails.codechefProfile.profile.school;
-    });
-    getUser(widget._uId).then((user){
-      _username = user.username;
-      _handle = "user.handle???";
+    getUser(widget.token, widget._uId).then((user){
+      _username = user.fullname;
+      _handle = user.username;
       _image = user.picture;
-      //TODO: get user institute
-    });
+      _institute = user.institute;
 
-    setState(() {
-      _isLoading = false;
+      setState(() {
+        _isLoading = false;
+      });
+
     });
   }
 

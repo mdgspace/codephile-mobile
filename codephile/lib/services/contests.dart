@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:codephile/models/contests.dart';
 import 'package:http/http.dart' as http;
 
@@ -6,18 +7,19 @@ String url = "https://codephile-test.herokuapp.com/v1";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<Contests> contestList() async {
-  //contestList(String token)
+Future<Contests> contestList(String token) async {
+
   String endpoint = "/contests/";
   String uri = url + endpoint;
-//  var tokenAuth = {"Authorization": "Token " + token};
+  var tokenAuth = {HttpHeaders.authorizationHeader: token};
   try {
-    //var response = await client.get(
-    //  uri,
-    //  headers: tokenAuth,
-    //);
+    var response = await client.get(
+      uri,
+      headers: tokenAuth,
+    );
 
-    http.Response response = await client.get(uri);
+//    http.Response response = await client.get(uri);
+
     final jsonResponse = jsonDecode(response.body);
     Contests contests = new Contests.fromJson(jsonResponse);
     //print(response.body);

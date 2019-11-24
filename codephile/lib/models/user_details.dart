@@ -1,23 +1,23 @@
 import 'dart:convert';
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
+UserDetails userFromJson(String str) => UserDetails.fromJson(json.decode(str));
 
-String userToJson(User data) => json.encode(data.toJson());
+String userToJson(UserDetails data) => json.encode(data.toJson());
 
-class User {
+class UserDetails {
   Profile codechefProfile;
   Profile codeforcesProfile;
   Profile hackerrankProfile;
   Profile spojProfile;
 
-  User({
+  UserDetails({
     this.codechefProfile,
     this.codeforcesProfile,
     this.hackerrankProfile,
     this.spojProfile,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
     codechefProfile: Profile.fromJson(json["codechefProfile"]),
     codeforcesProfile: Profile.fromJson(json["codeforcesProfile"]),
     hackerrankProfile: Profile.fromJson(json["hackerrankProfile"]),
