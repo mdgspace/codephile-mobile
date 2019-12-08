@@ -10,12 +10,14 @@ class SearchPage extends StatefulWidget{
   SearchPage(this.token);
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _SearchPageState createState() => _SearchPageState(token: token);
 }
 
 class _SearchPageState extends State<SearchPage> {
 
   final String inputHint = "Enter handle or platform";
+  final String token;
+  _SearchPageState({Key key, this.token});
 
   final TextEditingController _controller = TextEditingController();
   bool _isSearching = false;
@@ -105,7 +107,7 @@ class _SearchPageState extends State<SearchPage> {
                 itemCount: searchResult.length,
                 itemBuilder: (BuildContext context, int index){
                   SearchUser user = searchResult[index];
-                  return SearchResultCard(testToken, user._name, user._handle, user._image, user._uid);
+                  return SearchResultCard(token, user._name, user._handle, user._image, user._uid);
                 },
               ),
             )

@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8833bb31-d273-4c17-8bb3-1bd375f8840d" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/codephile/assets/file-text.jpg" afterDir="false" />
+=======
+>>>>>>> minor changes added
       <change afterPath="$PROJECT_DIR$/codephile/assets/problem.svg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/codephile/lib/models/handle.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/codephile/lib/models/submission.dart" afterDir="false" />
@@ -13,9 +16,17 @@
       <change afterPath="$PROJECT_DIR$/codephile/lib/screens/submission/submission_screen.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/codephile/lib/services/handle.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/codephile/lib/services/submission.dart" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codephile/lib/homescreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/codephile/lib/homescreen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codephile/lib/models/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/codephile/lib/models/signup.dart" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codephile/lib/homescreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/codephile/lib/homescreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codephile/lib/models/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/codephile/lib/models/signup.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codephile/lib/screens/contests/contests_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/codephile/lib/screens/contests/contests_screen.dart" afterDir="false" />
+>>>>>>> minor changes added
       <change beforePath="$PROJECT_DIR$/codephile/lib/screens/login/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/codephile/lib/screens/login/login.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codephile/lib/screens/signup/signup2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/codephile/lib/screens/signup/signup2.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codephile/lib/screens/signup/signup3.dart" beforeDir="false" afterPath="$PROJECT_DIR$/codephile/lib/screens/signup/signup3.dart" afterDir="false" />
@@ -37,6 +48,7 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/codephile/assets/contest_icon.svg">
           <provider selected="true" editor-type-id="images" />
         </entry>
@@ -46,6 +58,12 @@
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+=======
+        <entry file="file://$PROJECT_DIR$/codephile/lib/screens/contests/contest_card_2.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+>>>>>>> minor changes added
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -54,6 +72,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/codephile/lib/screens/contests/contest_card.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-315">
@@ -69,7 +88,37 @@
               <caret line="71" column="7" lean-forward="true" selection-start-line="71" selection-start-column="7" selection-end-line="71" selection-end-column="7" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
+=======
+        <entry file="file://$PROJECT_DIR$/codephile/assets/contest_icon.svg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codephile/lib/screens/submission/submission_card.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+>>>>>>> minor changes added
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
+        <entry file="file://$PROJECT_DIR$/codephile/lib/homescreen.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-911">
+              <caret line="71" column="19" lean-forward="true" selection-start-line="71" selection-start-column="19" selection-end-line="71" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#48#0" expanded="true" />
+=======
+        <entry file="file://$PROJECT_DIR$/codephile/lib/screens/contests/contest_card.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-315">
+              <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -77,10 +126,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/codephile/lib/homescreen.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-911">
-              <caret line="71" column="19" lean-forward="true" selection-start-line="71" selection-start-column="19" selection-end-line="71" selection-end-column="19" />
+            <state relative-caret-position="390">
+              <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
               <folding>
-                <element signature="e#0#48#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
+>>>>>>> minor changes added
               </folding>
             </state>
           </provider>
@@ -111,6 +161,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/codephile/lib/services/contests.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
@@ -123,11 +174,17 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+=======
+>>>>>>> minor changes added
         <entry file="file://$PROJECT_DIR$/codephile/.packages">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="false">
+=======
+      <file pinned="false" current-in-tab="true">
+>>>>>>> minor changes added
         <entry file="file://$PROJECT_DIR$/codephile/lib/screens/submission/submission_screen.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="81">
@@ -141,14 +198,41 @@
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/codephile/lib/services/contests.dart" />
         <option value="$PROJECT_DIR$/codephile/lib/screens/contests/contests_screen.dart" />
+=======
+        <option value="$PROJECT_DIR$/codephile/lib/services/login.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/screens/login/login.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/screens/signup/signup3.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/models/signup.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/services/signup.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/screens/submission/submission.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/screens/contests/contests_screen.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/services/contests.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/models/contests.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/screens/submission/submission_screen.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/services/submission.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/services/handle.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/screens/signup/signup2.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/models/submission.dart" />
+        <option value="$PROJECT_DIR$/codephile/lib/homescreen.dart" />
+        <option value="$PROJECT_DIR$/codephile/assets/problem.svg" />
+        <option value="$PROJECT_DIR$/codephile/lib/screens/submission/submission_card.dart" />
+>>>>>>> minor changes added
       </list>
     </option>
   </component>
@@ -161,14 +245,16 @@
         <option value="$PROJECT_DIR$/.idea/codeStyles/Project.xml" />
         <option value="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" />
         <option value="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" />
+        <option value="$PROJECT_DIR$/.idea/dictionaries/yugantar.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="25" />
     <option name="width" value="720" />
     <option name="height" value="785" />
   </component>
+  <component name="ProjectId" id="1U38c0wfgK4bbUh4vbNBzNqBlRL" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -205,7 +291,17 @@
               <item name="codephile" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="screens" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="contests" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="submission" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cpstalk_mobile" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cpstalk_mobile" type="462c0819:PsiDirectoryNode" />
+              <item name="codephile" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -217,21 +313,53 @@
             <path>
               <item name="cpstalk_mobile" type="1abcf292:AndroidViewProjectNode" />
               <item name="cpstalk_mobile" type="e9137016:NonAndroidModuleNode" />
+>>>>>>> minor changes added
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="cpstalk_mobile" type="1abcf292:AndroidViewProjectNode" />
+              <item name="cpstalk_mobile" type="e9137016:NonAndroidModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+=======
+>>>>>>> minor changes added
       <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ToolWindowRun.ShowToolbar" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../Android/Sdk" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/codephile" />
-    <property name="settings.editor.selected.configurable" value="dart.settings" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/codephile/assets" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/codephile/assets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/codephile/lib" />
+      <recent name="$PROJECT_DIR$/codephile" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -245,17 +373,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="main.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Flutter.main.dart">
+    <configuration name="main.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/codephile/lib/main.dart" />
-      <option name="workingDirectory" value="$PROJECT_DIR$/codephile" />
+      <option name="workingDirectory" value="$PROJECT_DIR$/codephile/lib" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Dart Command Line App.main.dart" />
-      </list>
-    </recent_temporary>
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" singleton="false">
+      <option name="filePath" value="$PROJECT_DIR$/codephile/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Dart Command Line App.main.dart" />
+      <item itemvalue="Flutter.main.dart" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -267,11 +398,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1569358623691</updated>
+      <workItem from="1574574007877" duration="29000" />
+      <workItem from="1574574070942" duration="956000" />
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1440" height="785" extended-state="6" />
+<<<<<<< HEAD
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
@@ -303,6 +446,60 @@
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+=======
+    <layout>
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.2123386" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Designer" order="4" />
+      <window_info id="Build Variants" order="5" side_tool="true" />
+      <window_info id="Resources Explorer" order="6" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info id="Favorites" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Dart Analysis" order="0" weight="0.3292683" />
+      <window_info anchor="bottom" id="Run" order="1" sideWeight="0.49928263" weight="0.32012194" />
+      <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.4985653" weight="0.3292683" />
+      <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Logcat" order="4" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.3292683" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="6" visible="true" weight="0.46341464" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50071734" side_tool="true" weight="0.2804878" />
+      <window_info anchor="bottom" id="Flutter Performance" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49928263" weight="0.05335366" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3292683" />
+      <window_info anchor="bottom" id="Find" order="11" />
+      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" weight="0.32998565" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="right" id="Flutter Inspector" order="3" weight="0.32998565" />
+      <window_info anchor="right" id="Flutter Outline" order="4" weight="0.32998565" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="right" id="Coverage" order="6" side_tool="true" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+>>>>>>> minor changes added
     <option name="RECENT_FILTERS">
       <map>
         <entry key="Branch">
@@ -322,34 +519,207 @@
     <SUITE FILE_PATH="coverage/cpstalk_mobile$main_dart.json" NAME="main.dart Coverage Results" MODIFIED="1574575859089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="DartCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" CONTEXT_FILE_PATH="$PROJECT_DIR$/codephile/lib/main.dart" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/problem_solved_card.dart">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codephile/pubspec.yaml">
+    <entry file="file://$PROJECT_DIR$/../development/flutter/packages/flutter/lib/src/material/animated_icons.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135" />
+        <state relative-caret-position="75">
+          <caret line="9" column="33" lean-forward="true" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/codephile/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="37" lean-forward="true" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+        <state relative-caret-position="105">
+          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
           <folding>
             <element signature="e#0#71#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/submission/submission_screen.dart">
+    <entry file="file://$PROJECT_DIR$/codephile/pubspec.lock">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/library/autocomplete.dart">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/problem_solved_card.dart">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/services/login.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+        <state relative-caret-position="255">
+          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/assets/platformIcons/codeChefIcon.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/pubspec.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="27" column="22" lean-forward="true" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/services/contests.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/models/handle.dart">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/models/signup.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/services/signup.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="1" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/signup/signup.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2430">
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/signup/signup3.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1080">
+          <caret line="6" column="48" selection-start-line="6" selection-start-column="48" selection-end-line="6" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/login/login.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="256" column="37" selection-start-line="256" selection-start-column="37" selection-end-line="256" selection-end-column="37" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/services/submission.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="225" selection-start-line="12" selection-start-column="225" selection-end-line="12" selection-end-column="225" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/models/contests.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-135">
+          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/models/submission.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1830">
+          <caret line="182" selection-start-line="182" selection-end-line="182" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/contests/contests_screen.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-759">
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/assets/contest_icon.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/homescreen.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/contests/contest_card.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-315">
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/contests/contest_card_2.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/.packages">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/submission/submission_card.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/submission/submission_screen.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/signup/signup2.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4275">
+          <caret line="285" column="49" selection-start-line="285" selection-start-column="49" selection-end-line="285" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+>>>>>>> minor changes added
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/codephile/assets/problem.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+>>>>>>> minor changes added
     <entry file="file://$PROJECT_DIR$/codephile/lib/services/handle.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -360,6 +730,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/codephile/lib/services/contests.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -394,11 +765,96 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1065">
           <caret line="71" column="7" lean-forward="true" selection-start-line="71" selection-start-column="7" selection-end-line="71" selection-end-column="7" />
+=======
+    <entry file="file://$PROJECT_DIR$/codephile/lib/screens/submission/submission_screen.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+>>>>>>> minor changes added
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Android</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>cpstalk_mobile</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Dart SDK</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+>>>>>>> minor changes added
   </component>
 </project>

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'signup3.dart';
 import 'package:codephile/services/handle.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:codephile/colors.dart';
 import 'package:codephile/models/signup.dart';
 
 class SignUpPage2 extends StatefulWidget {
@@ -19,6 +19,7 @@ class _SignUpPageState extends State<SignUpPage2> {
 
   String name;
   String institute;
+  bool _buttonText = false, _buttonColor = false;
   _SignUpPageState({Key key, this.name, this.institute});
   String _codechef, _hackerrank,_codeforces, _hackerearth, _spoj;
   Handle handle;
@@ -44,9 +45,9 @@ class _SignUpPageState extends State<SignUpPage2> {
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              _bar(width, 500),
-              _bar(width, 500),
-              _bar(width, 200),
+              _bar(width, true),
+              _bar(width, true),
+              _bar(width, false),
             ],
           ),
           Expanded(
@@ -57,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage2> {
                     child: ListView(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 20.0),
+                          padding: EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 20.0),
                           child: Text('Which competetive platforms do you use?',
                               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
                         ),
@@ -255,19 +256,18 @@ class _SignUpPageState extends State<SignUpPage2> {
 
   Widget _showNextButton() {
     return new FlatButton(
-      disabledColor: Colors.black,
-      padding: EdgeInsets.all(8),
-      color: Colors.white,
-      shape: new Border.all(
-        width: 2,
-        color: Colors.grey,
-        style: BorderStyle.solid,
-
-      ),
+      padding: EdgeInsets.all(10),
+      color: _buttonColor ?  codephileMain : Colors.grey[500],
+//      shape: new Border.all(
+//        width: 2,
+//        color: _buttonColor ? codephileMain : Colors.grey,
+//        style: BorderStyle.solid,
+//
+//      ),
       child: new Text(
-        'Next',
+        'NEXT',
         style: new TextStyle(
-          color: Colors.grey,
+          color: _buttonText ? Colors.white : Colors.grey[700],
         ),
       ),
       onPressed: _validateAndSubmit,
@@ -277,19 +277,29 @@ class _SignUpPageState extends State<SignUpPage2> {
   void _validateAndSubmit() {
     isNextButtonTapped = true;
     if (isNextButtonTapped) {
+      setState(() {
+        _buttonText = true;
+        _buttonColor = true;
+      });
       _codechef = _verifyHandle("codechef", _codechef);
       _hackerearth = _verifyHandle("spoj", _hackerearth);
       _codeforces = _verifyHandle("codeforces", _codeforces);
       _hackerrank = _verifyHandle("hackerrank", _hackerrank);
       Handle handle = new Handle(codechef: _codechef, codeforces: _codeforces, hackerrank: _hackerrank,spoj: _hackerearth);
-      Navigator.pushReplacement(context,
-          CupertinoPageRoute(builder: (context) {
-            return SignUpPage3(
-              name: name,
-              institute: institute,
-              handle: handle,
-            );
-          }));
+
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        setState(() {
+          Navigator.pushReplacement(context,
+              CupertinoPageRoute(builder: (context) {
+                return SignUpPage3(
+                  name: name,
+                  institute: institute,
+                  handle: handle,
+                );
+              }));
+        });
+      });
+
     }
   }
 
@@ -304,14 +314,14 @@ class _SignUpPageState extends State<SignUpPage2> {
     return null;
   }
 
-  Widget _bar(double width, int shade) {
+  Widget _bar(double width, bool shade) {
     return  Container(
       margin: EdgeInsets.only(top: 45),
       height: 10.0,
       width: width/3.5,
       child: Material(
         borderRadius: BorderRadius.circular(10.0),
-        color: Colors.grey[shade],
+        color: shade ? codephileMain : codephileMainShade ,
         elevation: 7.0,
       ),
     );

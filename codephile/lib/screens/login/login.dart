@@ -8,6 +8,7 @@ import 'package:codephile/screens/signup/signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:codephile/services/login.dart';
+import 'package:codephile/colors.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -27,8 +28,9 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading;
   bool isLoginButtonTapped = false;
   bool _isLoginSuccessful = false;
-
+  bool _buttonText = false, _buttonColor = false;
   bool _obscureText = true;
+  bool _iconPerson = false, _iconLock = false, _iconEye = false;
 
   void _toggle() {
     setState(() {
@@ -39,7 +41,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState(){
     super.initState();
-
     showConnectivityStatus();
   }
 
@@ -51,6 +52,12 @@ class _LoginPageState extends State<LoginPage> {
       }
     } on SocketException catch (_) {
       print('not connected');
+      setState(() {
+        _isLoginSuccessful = false;
+        isLoginButtonTapped = false;
+        _buttonColor = false;
+        _buttonText = false;
+      });
       Fluttertoast.showToast(
         msg: "Please check your connection!",
         toastLength: Toast.LENGTH_SHORT,
@@ -73,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 250.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(15.0, 200.0, 0.0, 0.0),
                     child: Text('Login',
                         style: TextStyle(
                             fontSize: 30.0, fontWeight: FontWeight.bold)),
@@ -94,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 5.0),
                     SizedBox(height: 40.0),
                     _showLoginButton(),
+                    SizedBox(height: 20.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -130,18 +138,22 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _showUsernameInput() {
     return new TextFormField(
+      onTap: (){
+        _iconPerson = true;
+      },
       maxLines: 1,
       keyboardType: TextInputType.text,
       autofocus: false,
       decoration: new InputDecoration(
+        border: OutlineInputBorder(),
+        prefixIcon: Icon(
+          Icons.person,
+          color: _iconPerson ? codephileMain : Colors.grey,
+          size: 39,
+        ),
         labelText: "Username",
         labelStyle: new TextStyle(
-          color: Colors.grey,
-        ),
-        icon: new Icon(
-          Icons.person,
-          color: Colors.grey,
-          size: 39,
+          color: _iconPerson ? codephileMain : Colors.grey,
         ),
       ),
       validator: (value) =>
@@ -150,29 +162,34 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _showPasswordInput() {
+  Widget _showPasswordInput(){
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
       child: new TextFormField(
+        onTap: (){
+          _iconEye = true;
+          _iconLock = true;
+        },
         maxLines: 1,
         obscureText: _obscureText,
         autofocus: false,
         decoration: new InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(
+            Icons.lock,
+            color: _iconLock ? codephileMain : Colors.grey,
+            size: 39,
+          ),
           suffixIcon: GestureDetector(
             child: new Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
-              color: Colors.grey,
+              color: _iconEye ? codephileMain : Colors.grey,
             ),
             onTap: _toggle,
           ),
           labelText: "Password",
           labelStyle: new TextStyle(
-            color: Colors.grey,
-          ),
-          icon: new Icon(
-            Icons.lock,
-            color: Colors.grey,
-            size: 39,
+            color: _iconLock ? codephileMain: Colors.grey,
           ),
         ),
         validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
@@ -187,47 +204,47 @@ class _LoginPageState extends State<LoginPage> {
     return (isLoginButtonTapped)
         ? new FlatButton(
         padding: EdgeInsets.all(8),
-        color: Colors.white,
-        shape: new Border.all(
-          width: 2,
-          color: Colors.grey,
-          style: BorderStyle.solid,
-        ),
+        color: _buttonColor ? codephileMain : Colors.grey[500],
+//        shape: new Border.all(
+//          width: 2,
+//          color: Colors.grey,
+//          style: BorderStyle.solid,
+//        ),
         child: new Text(
-          'Authenticating...',
+          'AUTHENTICATING...',
           style: new TextStyle(
-            color: Colors.grey,
+            color: _buttonText ? Colors.white : Colors.grey[700],
           ),
         ),
         onPressed: () {})
         : (_isLoginSuccessful)
         ? new FlatButton(
         padding: EdgeInsets.all(8),
-        color: Colors.white,
-        shape: new Border.all(
-          width: 2,
-          color: Colors.grey,
-          style: BorderStyle.solid,
-        ),
+        color: _buttonColor ? codephileMain : Colors.grey[500],
+//        shape: new Border.all(
+//          width: 2,
+//          color: Colors.grey,
+//          style: BorderStyle.solid,
+//        ),
         child: new Text(
-          'Logged In Successfully',
+          'LOGGED IN SUCCESSFULLY',
           style: new TextStyle(
-            color: Colors.grey,
+            color: _buttonText ? Colors.white : Colors.grey[700],
           ),
         ),
         onPressed: () {})
         : new FlatButton(
       padding: EdgeInsets.all(8),
-      color: Colors.white,
-      shape: new Border.all(
-        width: 2,
-        color: Colors.grey,
-        style: BorderStyle.solid,
-      ),
+      color: _buttonColor ? codephileMain : Colors.grey[500],
+//      shape: new Border.all(
+//        width: 2,
+//        color: Colors.grey,
+//        style: BorderStyle.solid,
+//      ),
       child: new Text(
         'LOGIN',
         style: new TextStyle(
-          color: Colors.grey,
+          color: _buttonText ? Colors.white : Colors.grey[700],
         ),
       ),
       onPressed: _validateAndSubmit,
@@ -238,11 +255,14 @@ class _LoginPageState extends State<LoginPage> {
     if(_validateAndSave()) {
       setState(() {
         isLoginButtonTapped = true;
+        _buttonText = true;
+        _buttonColor = true;
       });
     }
     FocusScope.of(context).requestFocus(new FocusNode());
     login(_username, _password).then((T) async {
-      if(T == true) {
+      if(T != null) {
+        print(T.token);
         setState(() {
           _isLoginSuccessful = true;
           isLoginButtonTapped = false;
@@ -250,7 +270,7 @@ class _LoginPageState extends State<LoginPage> {
         await new Future.delayed(const Duration(seconds: 5));
         Navigator.push(
           context,
-          CupertinoPageRoute(builder: (context) => HomePage()),
+          CupertinoPageRoute(builder: (context) => HomePage(token: T.token)),
         );
       }else{
         setState(() {

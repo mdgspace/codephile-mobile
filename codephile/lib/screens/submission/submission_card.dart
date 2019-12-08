@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:codephile/colors.dart';
 
 class SubmissionCard extends StatelessWidget {
 
@@ -8,22 +9,31 @@ class SubmissionCard extends StatelessWidget {
   final String _time;
   final String _problem;
   final String _platform;
+  final String _picture;
 
   final Widget contestIcon = new SvgPicture.asset(
-    "assets/problem.svg",
-    color: const Color.fromRGBO(255, 168, 00, 1),
+    "assets/mask.svg",
+    color: const Color.fromRGBO(152,219 , 17, 1),
     width: 12.0,
     height: 12.0,
+  );
+
+  final Widget bookmark = new SvgPicture.asset(
+    "assets/bookmark.svg",
+    width: 14.0,
+    height: 14.0,
   );
 
   SubmissionCard(this._username,
       this._handle,
       this._platform,
       this._problem,
-      this._time,);
+      this._time,
+      this._picture);
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return GestureDetector(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -45,10 +55,15 @@ class SubmissionCard extends StatelessWidget {
                           child: Card(
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: Image.asset(
-                                "assets/facebook.png",
+                              child: Container(
                                 width: 23.0,
                                 height: 23.0,
+                                decoration: new BoxDecoration(
+                                  image: new DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: new NetworkImage("https://storage.googleapis.com/codephile-a71b6.appspot.com/profile/3c10263f-0d10-4864-a7fd-7e0323e5c339.jpg"),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -98,33 +113,45 @@ class SubmissionCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 3.0, 6.0),
-                      child: Card(
-                        elevation: 0.0,
-                        color: const Color.fromRGBO(51, 102, 255, .15),
-                        child: Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: contestIcon,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  0.0, 4.0, 5.0, 4.0),
-                              child: Text(
-                                'Problem',
-                                style: TextStyle(
-                                  color: const Color.fromRGBO(51, 102, 255, 1),
-                                  fontSize: 12.0,
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 3.0, 6.0),
+                          child: Card(
+                            elevation: 0.0,
+                            color: codephileSolvedBAckground,
+                            child: Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: contestIcon,
                                 ),
-                              ),
-                            )
-                          ],
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0.0, 4.0, 5.0, 4.0),
+                                  child: Text(
+                                    'Solved',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(152, 219, 17, 1),
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: EdgeInsets.only(left: width*.64),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: bookmark,
+                        ),
+                      ],
                     ),
+
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15.0, 6.0, 24.0, 6.0),
                       child: Text(
@@ -148,7 +175,7 @@ class SubmissionCard extends StatelessWidget {
                             padding: const EdgeInsets.fromLTRB(
                                 8.0, 0.0, 2.0, 0.0),
                             child: Image.asset(
-                              "assets/codeChefIcon.png",
+                              getIconUrl(_platform),
                               width: 23.0,
                               height: 23.0,
                             ),
@@ -175,5 +202,40 @@ class SubmissionCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getIconUrl(String platform){
+    final String codeChefIcon =
+        "assets/platformIcons/codeChefIcon.png";
+    final String hackerRankIcon =
+        "assets/platformIcons/hackerRankIcon.png";
+    final String hackerEarthIcon =
+        "assets/platformIcons/hackerEarthIcon.png";
+    final String codeForcesIcon =
+        "assets/platformIcons/codeForcesIcon.png";
+    final String spojIcon =
+        "assets/platformIcons/spoj.png";
+    final String otherIcon =
+        "assets/platformIcons/otherIcon.jpg";
+
+    switch(platform.toLowerCase()){
+      case "codechef" :
+        return codeChefIcon;
+        break;
+      case "hackerrank":
+        return hackerRankIcon;
+        break;
+      case "hackerearth":
+        return hackerEarthIcon;
+        break;
+      case "codeforces":
+        return codeForcesIcon;
+        break;
+      case "spoj":
+        return spojIcon;
+        break;
+      default:
+        return otherIcon;
+    }
   }
 }

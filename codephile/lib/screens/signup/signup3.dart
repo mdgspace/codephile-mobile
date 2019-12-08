@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:codephile/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/models/signup.dart';
@@ -23,6 +24,8 @@ class _SignUpPageState extends State<SignUpPage3> {
   String name;
   String institute;
   Handle handle;
+  bool _buttonText = false, _buttonColor = false;
+  bool _iconColor1 = false, _iconColor2 = false, _iconColor3 = false;
   _SignUpPageState({Key key, this.name, this.institute, this.handle});
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -75,9 +78,9 @@ class _SignUpPageState extends State<SignUpPage3> {
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              _bar(width, 500),
-              _bar(width, 500),
-              _bar(width, 500),
+              _bar(width, true),
+              _bar(width, true),
+              _bar(width, true),
             ],
           ),
 
@@ -89,11 +92,13 @@ class _SignUpPageState extends State<SignUpPage3> {
                     child: ListView(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
                           child: Text('Setup a username and password for Codephile',
                               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
                         ),
+                        SizedBox(height: 25.0),
                         _showUsernameInput(),
+                        SizedBox(height: 15.0),
                         _showPasswordInput(),
                         SizedBox(height: 260.0),
                         _showCreateAccountButton(),
@@ -109,18 +114,24 @@ class _SignUpPageState extends State<SignUpPage3> {
 
   Widget _showUsernameInput() {
     return new TextFormField(
+      onTap: (){
+        setState(() {
+          _iconColor1 = true;
+        });
+      },
       maxLines: 1,
       keyboardType: TextInputType.text,
       autofocus: false,
       decoration: new InputDecoration(
         labelText: "Username",
+        prefixIcon: new Icon(
+          Icons.person,
+          color: _iconColor1 ? codephileMain : Colors.grey,
+          size: 39,
+        ),
+        border: OutlineInputBorder(),
         labelStyle: new TextStyle(
           color: Colors.grey,
-        ),
-        icon: new Icon(
-          Icons.person,
-          color: Colors.grey,
-          size: 39,
         ),
       ),
       validator: (value) =>
@@ -133,6 +144,12 @@ class _SignUpPageState extends State<SignUpPage3> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
       child: new TextFormField(
+        onTap: (){
+          setState(() {
+            _iconColor2 = true;
+            _iconColor3 = true;
+          });
+        },
         maxLines: 1,
         obscureText: _obscureText,
         autofocus: false,
@@ -140,21 +157,24 @@ class _SignUpPageState extends State<SignUpPage3> {
           suffixIcon: GestureDetector(
             child: new Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
-              color: Colors.grey,
+              color: _iconColor3 ?  codephileMain : Colors.grey,
             ),
             onTap: _toggle,
           ),
           labelText: "Password",
+          border: OutlineInputBorder(),
+          prefixIcon: new Icon(
+            Icons.lock,
+            color: _iconColor2 ?  codephileMain : Colors.grey,
+            size: 39,
+          ),
           labelStyle: new TextStyle(
             color: Colors.grey,
           ),
-          icon: new Icon(
-            Icons.lock,
-            color: Colors.grey,
-            size: 39,
-          ),
         ),
-        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+        validator: (value){
+          return value.isEmpty ? 'Password can\'t be empty' : null;
+        },
         onSaved: (value) => _password = value,
       ),
     );
@@ -166,7 +186,7 @@ class _SignUpPageState extends State<SignUpPage3> {
     return (isCreateAccountButtonTapped)
         ? new FlatButton(
         padding: EdgeInsets.all(8),
-        color: Colors.white,
+        color: _buttonColor ? codephileMain : Colors.grey[500],
         shape: new Border.all(
           width: 2,
           color: Colors.grey,
@@ -175,14 +195,14 @@ class _SignUpPageState extends State<SignUpPage3> {
         child: new Text(
           'Creating...',
           style: new TextStyle(
-            color: Colors.grey,
+            color: _buttonText ? Colors.white : Colors.grey[700],
           ),
         ),
         onPressed: () {})
         : (isCreateAccountSuccessful)
         ? new FlatButton(
         padding: EdgeInsets.all(8),
-        color: Colors.white,
+        color: _buttonColor ? codephileMain : Colors.grey[500],
         shape: new Border.all(
           width: 2,
           color: Colors.grey,
@@ -191,13 +211,13 @@ class _SignUpPageState extends State<SignUpPage3> {
         child: new Text(
           'Created Successfully',
           style: new TextStyle(
-            color: Colors.grey,
+            color: _buttonText ? Colors.white : Colors.grey[700],
           ),
         ),
         onPressed: () {})
         : new FlatButton(
       padding: EdgeInsets.all(8),
-      color: Colors.white,
+      color: _buttonColor ? codephileMain : Colors.grey[500],
       shape: new Border.all(
         width: 2,
         color: Colors.grey,
@@ -206,7 +226,7 @@ class _SignUpPageState extends State<SignUpPage3> {
       child: new Text(
         'Create Account',
         style: new TextStyle(
-          color: Colors.grey,
+          color: _buttonText ? Colors.white : Colors.grey[700],
         ),
       ),
       onPressed: _validateAndSubmit,
@@ -226,6 +246,11 @@ class _SignUpPageState extends State<SignUpPage3> {
     if (_validateAndSave()) {
       setState(() {
         isCreateAccountButtonTapped = true;
+        _buttonText = true;
+        _buttonColor = true;
+        _iconColor1 = true;
+        _iconColor2 = true;
+        _iconColor3 = true;
       });
       FocusScope.of(context).requestFocus(new FocusNode());
       SignUp details = new SignUp(handle: handle, password: _password, username: _username, fullname: name, institute: institute);
@@ -257,14 +282,14 @@ class _SignUpPageState extends State<SignUpPage3> {
     }
   }
 
-  Widget _bar(double width, int shade) {
+  Widget _bar(double width, bool shade) {
     return  Container(
       margin: EdgeInsets.only(top: 45),
       height: 10.0,
       width: width/3.5,
       child: Material(
         borderRadius: BorderRadius.circular(10.0),
-        color: Colors.grey[shade],
+        color: shade ? codephileMain : codephileMainShade ,
         elevation: 7.0,
       ),
     );

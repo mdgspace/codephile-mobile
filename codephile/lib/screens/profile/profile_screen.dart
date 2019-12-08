@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class Profile extends StatefulWidget {
 
   final String token;
-  final String _uId;
-  Profile(this.token, this._uId);
+  final String uId;
+  Profile(this.token, this.uId);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -28,10 +28,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState(){
-
     super.initState();
-
-    getUser(widget.token, widget._uId).then((user){
+    getUser(widget.token, widget.uId).then((user){
       _username = user.fullname;
       _handle = user.username;
       _image = user.picture;

@@ -54,6 +54,9 @@ flutter:
    - assets/platformIcons/hackerEarthIcon.png
    - assets/platformIcons/hackerRankIcon.png
    - assets/platformIcons/otherIcon.jpg
+   - assets/platformIcons/spoj.png
+   - assets/bookmark.svg
+   - assets/mask.svg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
