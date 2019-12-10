@@ -19,9 +19,7 @@ class _SubmissionState extends State<Submission> {
 
   final String token;
   final String uid;
-  String _usernameCodechef;
-  String _username;
-  String _picture;
+
   _SubmissionState({Key key, this.token, this.uid});
 
   List<Codechef> codechef;
@@ -30,33 +28,35 @@ class _SubmissionState extends State<Submission> {
   List<Spoj> spoj;
   List<Widget> allSubmission = List<Widget>();
   bool _isLoading = true;
+  String _usernameCodechef;
+  String _username;
+  String _picture;
+  String _usernameSpoj;
+  String _usernameHackerrank;
+  String _usernameCodeforces;
 
   @override
   void initState() {
-    submissionList().then((submission){
+    submissionList(token, uid).then((submission){
       codechef = submission.codechef;
       codeforces = submission.codeforces;
       hackerrank = submission.hackerrank;
       spoj = submission.spoj;
 
-
-      id(token).then((T) async {
-        getUser(token, T).then((user){
+      getUser(token, uid).then((user){
         _username = user.username;
-        print(_username);
         _usernameCodechef = user.handle.codechef;
+        _usernameSpoj = user.handle.spoj;
+        _usernameHackerrank = user.handle.hackerrank;
+        _usernameCodeforces = user.handle.codeforces;
         _picture = user.picture;
-        print(_usernameCodechef);
-        print(token);
-        print(id);
-      });
-      });
+
 
       for(var i = 0; i < codechef.length; i++){
-        codechef[i].status == "AC" ?
+        codechef[i].status == "AC" && codechef != []?
         allSubmission.add(SubmissionCard(
-            _username != null ? _username : "Vishwajeet",
-            _usernameCodechef != null ? _usernameCodechef : "@vishwajeet123",
+            _username,
+            "@" +_usernameCodechef,
             "Codechef",
             codechef[i].name,
             codechef[i].time,
@@ -65,32 +65,34 @@ class _SubmissionState extends State<Submission> {
       }
 
       for(var i = 0; i < codeforces.length; i++){
+        codeforces[i].status == "AC" && codeforces != []?
         allSubmission.add(SubmissionCard(
-          "Vishwajeet",
-          "@vishwajeet123",
+          _username,
+          "@" + _usernameCodeforces,
           "Codefroces",
           codeforces[i].name,
           codeforces[i].time,
           _picture,
-        ));
+        )): null;
       }
 
       for(var i = 0; i < hackerrank.length; i++){
+        hackerrank[i].status == "AC" && hackerrank != [] ?
         allSubmission.add(SubmissionCard(
-          "Vishwajeet",
-          "@vishwajeet123",
+          _username,
+          "@" + _usernameHackerrank,
           "Hackerrank",
           hackerrank[i].name,
           hackerrank[i].time,
           _picture,
-        ));
+        )) : null;
       }
 
       for(var i = 0; i < spoj.length; i++){
-        spoj[i].status == "accepted" ?
+        spoj[i].status == "accepted" && spoj != [] ?
         allSubmission.add(SubmissionCard(
-          "Vishwajeet",
-          "@vishwajeet123",
+          _username,
+          "@" + _usernameSpoj,
           "Spoj",
           spoj[i].name,
           spoj[i].time,
@@ -100,6 +102,7 @@ class _SubmissionState extends State<Submission> {
 
       setState(() {
         _isLoading = false;
+      });
       });
     });
     super.initState();

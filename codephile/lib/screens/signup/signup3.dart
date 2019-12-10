@@ -182,7 +182,6 @@ class _SignUpPageState extends State<SignUpPage3> {
 
   Widget _showCreateAccountButton() {
     showConnectivityStatus();
-
     return (isCreateAccountButtonTapped)
         ? new FlatButton(
         padding: EdgeInsets.all(8),

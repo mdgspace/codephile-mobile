@@ -12,7 +12,7 @@ class SubmissionCard extends StatelessWidget {
   final String _picture;
 
   final Widget contestIcon = new SvgPicture.asset(
-    "assets/mask.svg",
+    "assets/solved.svg",
     color: const Color.fromRGBO(152,219 , 17, 1),
     width: 12.0,
     height: 12.0,
@@ -33,7 +33,8 @@ class SubmissionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    String time = getTime(_time);
+    final width = MediaQuery.of(context).size.width;
     return GestureDetector(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -50,18 +51,19 @@ class SubmissionCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0.0, 2.0, 0.0, 2.0),
+                        padding: const EdgeInsets.fromLTRB(10.0, 2.0, 0.0, 2.0),
                         child: Container(
                           child: Card(
                             child: Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(0.05),
                               child: Container(
-                                width: 23.0,
-                                height: 23.0,
+                                width: 40.0,
+                                height: 40.0,
                                 decoration: new BoxDecoration(
+                                  borderRadius: new BorderRadius.circular(2.0),
                                   image: new DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: new NetworkImage("https://storage.googleapis.com/codephile-a71b6.appspot.com/profile/3c10263f-0d10-4864-a7fd-7e0323e5c339.jpg"),
+                                      fit: BoxFit.cover,
+                                      image: new NetworkImage(_picture),
                                   ),
                                 ),
                               ),
@@ -97,7 +99,7 @@ class SubmissionCard extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(bottom: 2.0, right: 5.0),
                         child: Text(
-                          "Solved time mins ago",
+                          "Solved $time ago",
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -142,9 +144,7 @@ class SubmissionCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: width*.64),
-                        ),
+                        SizedBox(width: width * 0.6),
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: bookmark,
@@ -202,6 +202,16 @@ class SubmissionCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getTime(String time){
+    final solved_time = DateTime.parse(time);
+    final now_time = DateTime.now();
+    final diff = now_time.difference(solved_time).inMinutes;
+    if(diff > 60 && diff < 1440) return now_time.difference(solved_time).inHours.toString() + " hrs";
+    if(diff < 60) return diff.toString() + " mins" ;
+    if(diff < 1) return now_time.difference(solved_time).inSeconds.toString() + " secs";
+    if(diff > 1440) return now_time.difference(solved_time).inDays.toString() + " days";
   }
 
   String getIconUrl(String platform){

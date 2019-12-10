@@ -115,63 +115,6 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _showInstituteInput() {
-//    return Container(
-//        child: DropdownButton<String>(
-//          value: _institute,
-//          isExpanded: true,
-//          icon: Icon(Icons.arrow_drop_down),
-//          iconSize: 24,
-////          hint:new Container(
-////              margin: EdgeInsets.only(top: 20, bottom: 30),
-////              child: Text(
-////            'Enter Institute here',
-////            style: new TextStyle(
-////              fontWeight: FontWeight.bold,
-////              color: Colors.grey,
-////              fontSize: 15.5,
-////            )),
-////          ),
-//        hint:  new TextFormField(
-//          maxLines: 1,
-//          keyboardType: TextInputType.text,
-//          autofocus: false,
-//          decoration: InputDecoration(
-//            labelText: 'Enter name',
-//            border: OutlineInputBorder(),
-//            labelStyle: TextStyle(
-//                fontFamily: 'Montserrat',
-//                color: Colors.grey),
-////          focusedBorder: UnderlineInputBorder(
-////              borderSide: BorderSide(color: Colors.green))
-//          ),
-//          validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
-//          onSaved: (value) => _name = value,
-//        ),
-//          elevation: 16,
-//          style: TextStyle(
-//              color: Colors.grey
-//          ),
-//          isDense: false,
-//          iconEnabledColor: Colors.blue,
-//          underline: Container(
-//            height: 1,
-//            color: Colors.grey,
-//          ),
-//          onChanged: (String newValue) {
-//            setState(() {
-//              _institute = newValue;
-//            });
-//          },
-//          items: <String>['Indian Institute of Technology Roorkee', 'Indian Institute of Technology Delhi','Indian Institute of Technology Mandi','Indian Institute of Technology Indore','Indian Institute of Technology Bombay']
-//              .map<DropdownMenuItem<String>>((String value) {
-//            return DropdownMenuItem<String>(
-//              value: value,
-//              child: Text(value),
-//            );
-//          })
-//              .toList(),
-//        ),
-//      );
   return InputDecorator(
     decoration: InputDecoration(
         labelText: 'Enter name',
@@ -212,12 +155,6 @@ class _SignUpPageState extends State<SignUpPage> {
     return new FlatButton(
       padding: EdgeInsets.all(10),
       color: _buttonColor ?  codephileMain : Colors.grey[500],
-//      shape: new Border.all(
-//        width: 2,
-//        color: _buttonColor ? codephileMain : Colors.grey,
-//        style: BorderStyle.solid,
-//
-//      ),
       child: new Text(
         'NEXT',
         style: new TextStyle(

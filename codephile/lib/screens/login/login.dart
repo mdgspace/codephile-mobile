@@ -9,6 +9,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:codephile/services/login.dart';
 import 'package:codephile/colors.dart';
+import 'package:codephile/services/Id.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -68,6 +70,12 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  final Widget logo = new SvgPicture.asset(
+    "assets/logo.svg",
+    width: 80.0,
+    height: 80.0,
+  );
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -76,11 +84,17 @@ class _LoginPageState extends State<LoginPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 80),
+            ),
+            Center(
+              child: logo,
+            ),
             Container(
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 200.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(15.0, 70.0, 0.0, 0.0),
                     child: Text('Login',
                         style: TextStyle(
                             fontSize: 30.0, fontWeight: FontWeight.bold)),
@@ -112,10 +126,14 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(width: 5.0),
                         InkWell(
                           onTap: () {
+                            _iconPerson = false;
+                            _iconLock = false;
+                            _iconEye = false;
+                            _isLoginSuccessful = false;
                             Navigator.push(
                               context,
                               CupertinoPageRoute(builder: (context) => SignUpPage()),
-                            );
+                            ).then((_) => _formKey.currentState.reset());
                           },
                           child: Text(
                             'Sign up',
@@ -200,7 +218,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _showLoginButton() {
     showConnectivityStatus();
-
     return (isLoginButtonTapped)
         ? new FlatButton(
         padding: EdgeInsets.all(8),
@@ -258,28 +275,41 @@ class _LoginPageState extends State<LoginPage> {
         _buttonText = true;
         _buttonColor = true;
       });
+      FocusScope.of(context).requestFocus(new FocusNode());
+      login(_username, _password).then((T) async {
+        if (T != null) {
+          print(T.token);
+          saveToken(T.token);
+          setState(() {
+            _isLoginSuccessful = true;
+            isLoginButtonTapped = false;
+          });
+          await new Future.delayed(const Duration(seconds: 3));
+          id(T.token).then((id) async {
+            _iconPerson = false;
+            _iconLock = false;
+            _iconEye = false;
+            _isLoginSuccessful = false;
+            Navigator.push(
+             context,
+             CupertinoPageRoute(builder: (context) => HomePage(token: T.token, userId: id)),
+          ).then((_) => _formKey.currentState.reset());
+          });
+        } else {
+          setState(() {
+            _isLoginSuccessful = false;
+            isLoginButtonTapped = false;
+          });
+        }
+      });
     }
-    FocusScope.of(context).requestFocus(new FocusNode());
-    login(_username, _password).then((T) async {
-      if(T != null) {
-        print(T.token);
-        setState(() {
-          _isLoginSuccessful = true;
-          isLoginButtonTapped = false;
-        });
-        await new Future.delayed(const Duration(seconds: 5));
-        Navigator.push(
-          context,
-          CupertinoPageRoute(builder: (context) => HomePage(token: T.token)),
-        );
-      }else{
-        setState(() {
-          _isLoginSuccessful = false;
-          isLoginButtonTapped = false;
-        });
+  }
 
-      }
-    });
+  Future<void> saveToken(
+    String token,
+      ) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("token", token);
   }
 
   bool _validateAndSave() {
@@ -291,7 +321,7 @@ class _LoginPageState extends State<LoginPage> {
     return false;
   }
 
-  Future<SharedPreferences> getUserDetails() async {
+  Future<SharedPreferences> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs;
   }

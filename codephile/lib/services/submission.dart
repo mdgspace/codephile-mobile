@@ -6,11 +6,12 @@ String url = "https://codephile-test.herokuapp.com/v1";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<Submission> submissionList() async {
+Future<Submission> submissionList(String token, String uId) async {
   String endpoint = "/submission/";
-  String uid = "5dda30645c2ead0004283d4a";
-  String uri = url + endpoint + uid;
-  var tokenAuth = {"Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzcwMjQ3MzMsImlhdCI6MTU3NDYwNTUzMywiaXNzIjoibWRnIiwic3ViIjoiNWRkYTMwNjQ1YzJlYWQwMDA0MjgzZDRhIn0.RvjHMryrrh64BOEscCd6Ynqda_lnjruWqyzuD_JpQDE"};
+  print(uId);
+  print(token);
+  String uri = url + endpoint + uId;
+  var tokenAuth = {"Authorization": token};
   try {
     var response = await client.get(
       uri,
