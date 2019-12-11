@@ -15,7 +15,6 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
 
   bool _isLoading = true;
-
   var userDetails;
   var user;
 

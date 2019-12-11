@@ -56,23 +56,23 @@ class Handle {
       };
 }
 
-class Info {
-  String name;
-  String institute;
-
-  Info({
-    this.name,
-    this.institute,
-  });
-
-  factory Info.fromJson(Map<String, dynamic> json) => Info(
-    name: json["name"],
-    institute: json["institute"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "institute": institute,
-  };
-
-}
+//class Info {
+//  String name;
+//  String institute;
+//
+//  Info({
+//    this.name,
+//    this.institute,
+//  });
+//
+//  factory Info.fromJson(Map<String, dynamic> json) => Info(
+//    name: json["name"],
+//    institute: json["institute"],
+//  );
+//
+//  Map<String, dynamic> toJson() => {
+//    "name": name,
+//    "institute": institute,
+//  };
+//
+//}

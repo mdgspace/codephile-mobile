@@ -3,7 +3,6 @@ import 'package:codephile/models/submission.dart';
 import 'package:codephile/screens/submission/submission_card.dart';
 import 'package:codephile/services/submission.dart';
 import 'package:flutter/material.dart';
-import 'package:codephile/services/Id.dart';
 import 'package:codephile/services/user.dart';
 
 class Submission extends StatefulWidget {
@@ -37,6 +36,7 @@ class _SubmissionState extends State<Submission> {
 
   @override
   void initState() {
+
     submissionList(token, uid).then((submission){
       codechef = submission.codechef;
       codeforces = submission.codeforces;
@@ -77,7 +77,7 @@ class _SubmissionState extends State<Submission> {
       }
 
       for(var i = 0; i < hackerrank.length; i++){
-        hackerrank[i].status == "AC" && hackerrank != [] ?
+//        hackerrank[i].status == "AC" && hackerrank != [] ?
         allSubmission.add(SubmissionCard(
           _username,
           "@" + _usernameHackerrank,
@@ -85,7 +85,7 @@ class _SubmissionState extends State<Submission> {
           hackerrank[i].name,
           hackerrank[i].time,
           _picture,
-        )) : null;
+        ));
       }
 
       for(var i = 0; i < spoj.length; i++){

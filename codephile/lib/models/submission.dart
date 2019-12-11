@@ -61,7 +61,6 @@ class Codechef {
         "language": language,
         "name": name,
         "status": status,
-
         "url": url,
       };
 }
@@ -80,7 +79,6 @@ class Codeforces {
     this.name,
     this.language,
     this.status,
-
     this.url,
   });
 
@@ -107,40 +105,24 @@ class Codeforces {
 
 class Hackerrank {
   String time;
-  String language;
   String name;
-  int points;
-  String status;
-
   String url;
 
   Hackerrank({
     this.time,
     this.name,
-    this.language,
-
-    this.status,
-
-    this.url,
+     this.url,
   });
 
   factory Hackerrank.fromJson(Map<String, dynamic> json) => Hackerrank(
-    time: json["creation_date"],
-    language: json["language"],
+    time: json["created_at"],
     name: json["name"],
-
-    status: json["status"],
-
     url: json["url"],
   );
 
   Map<String, dynamic> toJson() => {
-    "creation_date": time,
-    "language": language,
+    "created_at": time,
     "name": name,
-
-    "status": status,
-
     "url": url,
   };
 }

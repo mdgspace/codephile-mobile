@@ -4,6 +4,7 @@ import 'signup3.dart';
 import 'package:codephile/services/handle.dart';
 import 'package:codephile/colors.dart';
 import 'package:codephile/models/signup.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpPage2 extends StatefulWidget {
  final String name;
@@ -21,7 +22,7 @@ class _SignUpPageState extends State<SignUpPage2> {
   String institute;
   bool _buttonText = false, _buttonColor = false;
   _SignUpPageState({Key key, this.name, this.institute});
-  String _codechef, _hackerrank,_codeforces, _hackerearth, _spoj;
+  String _codechef, _hackerrank,_codeforces, _spoj;
   Handle handle;
 
    GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -31,6 +32,7 @@ class _SignUpPageState extends State<SignUpPage2> {
   }
   final _formKey = new GlobalKey<FormState>();
   bool isNextButtonTapped = false;
+  bool handleVefifying = false;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage2> {
                         SizedBox(height: 10.0),
                         _showCodeforcesInput(width),
                         SizedBox(height: 10.0),
-                        _showHackerEarthInput(width),
+                        _showSpojInput(width),
                         SizedBox(height: 110.0),
                         _showNextButton(),
                         SizedBox(height: 20.0),
@@ -114,7 +116,9 @@ class _SignUpPageState extends State<SignUpPage2> {
                           color: Colors.grey),
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey))),
-                  onSaved: (value) => _codechef = value,
+                  onSaved: (value) {
+                    _codechef = value;
+                  },
                 ),
               ),
 
@@ -211,7 +215,7 @@ class _SignUpPageState extends State<SignUpPage2> {
     );
   }
 
-  Widget _showHackerEarthInput(double width) {
+  Widget _showSpojInput(double width) {
     return Center(
       child: Card(
         child: Container(
@@ -224,12 +228,12 @@ class _SignUpPageState extends State<SignUpPage2> {
               Container(
                 height: 30,
                 width: width/10,
-                child: Image.asset("assets/platformIcons/hackerEarthIcon.png"),
+                child: Image.asset("assets/platformIcons/spoj.png"),
               ),
               Container(
                 padding: EdgeInsets.only(left: 10),
                 width: width/4,
-                child: Text('HackerEarth'),
+                child: Text('Spoj'),
               ),
               Container(
                 width: width/2,
@@ -244,7 +248,7 @@ class _SignUpPageState extends State<SignUpPage2> {
                           color: Colors.grey),
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey))),
-                  onSaved: (value) => _hackerearth = value,
+                  onSaved: (value) => _spoj = value,
                 ),
               ),
             ],
@@ -255,15 +259,19 @@ class _SignUpPageState extends State<SignUpPage2> {
   }
 
   Widget _showNextButton() {
-    return new FlatButton(
+    return (handleVefifying) ? new FlatButton(
       padding: EdgeInsets.all(10),
       color: _buttonColor ?  codephileMain : Colors.grey[500],
-//      shape: new Border.all(
-//        width: 2,
-//        color: _buttonColor ? codephileMain : Colors.grey,
-//        style: BorderStyle.solid,
-//
-//      ),
+      child: new Text(
+        'VERIFYING HANDLE',
+        style: new TextStyle(
+          color: _buttonText ? Colors.white : Colors.grey[700],
+        ),
+      ),
+      onPressed: _validateAndSubmit,
+    ) : new FlatButton(
+      padding: EdgeInsets.all(10),
+      color: _buttonColor ?  codephileMain : Colors.grey[500],
       child: new Text(
         'NEXT',
         style: new TextStyle(
@@ -274,21 +282,115 @@ class _SignUpPageState extends State<SignUpPage2> {
     );
   }
 
+  bool _validateAndSave() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
   void _validateAndSubmit() {
-    isNextButtonTapped = true;
-    if (isNextButtonTapped) {
+    if (_validateAndSave()) {
       setState(() {
+        isNextButtonTapped = true;
         _buttonText = true;
         _buttonColor = true;
+        handleVefifying = true;
       });
-      _codechef = _verifyHandle("codechef", _codechef);
-      _hackerearth = _verifyHandle("spoj", _hackerearth);
-      _codeforces = _verifyHandle("codeforces", _codeforces);
-      _hackerrank = _verifyHandle("hackerrank", _hackerrank);
-      Handle handle = new Handle(codechef: _codechef, codeforces: _codeforces, hackerrank: _hackerrank,spoj: _hackerearth);
 
-      Future.delayed(const Duration(milliseconds: 1500), () {
-        setState(() {
+      if (handleVefifying) {
+        handleVerify("codechef", _codechef).then((T) async {
+          if (T == true) {
+            Fluttertoast.showToast(
+              msg: "Codechef handle verified",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 7,
+              fontSize: 12.0,
+            );
+          } else {
+            _codechef = "";
+            Fluttertoast.showToast(
+              msg: "Wrong handle for Codechef",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 7,
+              fontSize: 12.0,
+            );
+          }
+        });
+
+        handleVerify("hackerrank", _hackerrank).then((T) async {
+          if (T == true) {
+            Fluttertoast.showToast(
+              msg: "Hackerrank handle verified",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 7,
+              fontSize: 12.0,
+            );
+          } else {
+            _hackerrank = "";
+            Fluttertoast.showToast(
+              msg: "Wrong handle for Hackerrank",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 7,
+              fontSize: 12.0,
+            );
+          }
+        });
+        handleVerify("codeforces", _codeforces).then((T) async {
+          if (T == true) {
+            Fluttertoast.showToast(
+              msg: "Codeforces handle verified",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 7,
+              fontSize: 12.0,
+            );
+          } else {
+            _codeforces = "";
+            Fluttertoast.showToast(
+              msg: "Wrong handle for codeforces",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 7,
+              fontSize: 12.0,
+            );
+          }
+        });
+        handleVerify("spoj", _spoj).then((T) async {
+          if (T == true) {
+            Fluttertoast.showToast(
+              msg: "Spoj handle verified",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 7,
+              fontSize: 12.0,
+            );
+          } else {
+            _spoj = "";
+            Fluttertoast.showToast(
+              msg: "Wrong handle for Spoj",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 7,
+              fontSize: 12.0,
+            );
+          }
+        });
+
+        Handle handle = new Handle(codechef: _codechef,
+            codeforces: _codeforces,
+            hackerrank: _hackerrank,
+            spoj: _spoj);
+
+        setState(() async{
+          handleVefifying = false;
+          await new Future.delayed(const Duration(seconds: 10));
           Navigator.pushReplacement(context,
               CupertinoPageRoute(builder: (context) {
                 return SignUpPage3(
@@ -298,20 +400,10 @@ class _SignUpPageState extends State<SignUpPage2> {
                 );
               }));
         });
-      });
+
+      }
 
     }
-  }
-
-  String _verifyHandle(String site, String handle) {
-    handleVerify(site, handle).then((T) async {
-      if(T == true){
-        return handle;
-      }else{
-        return null;
-      }
-    });
-    return null;
   }
 
   Widget _bar(double width, bool shade) {

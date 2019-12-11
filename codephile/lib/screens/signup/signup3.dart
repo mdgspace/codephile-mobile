@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:codephile/models/signup.dart';
 import 'package:codephile/services/signup.dart';
 import 'package:codephile/homescreen.dart';
+import 'package:codephile/services/login.dart';
+import 'package:codephile/services/Id.dart';
+import 'package:codephile/services/postSubmission.dart';
 
 class SignUpPage3 extends StatefulWidget {
   final String name;
@@ -255,10 +258,59 @@ class _SignUpPageState extends State<SignUpPage3> {
       SignUp details = new SignUp(handle: handle, password: _password, username: _username, fullname: name, institute: institute);
       signUp(details).then((T) async {
         if(T == true){
+          Fluttertoast.showToast(
+            msg: "Account Creation successful",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIos: 7,
+            fontSize: 12.0,
+          );
           setState(() {
             isCreateAccountButtonTapped = false;
             isCreateAccountSuccessful = true;
           });
+          await new Future.delayed(const Duration(seconds: 5));
+          login(_username, _password).then((T) async {
+            if (T != null) {
+              print(T.token);
+              id(T.token).then((id) async {
+                if(isCreateAccountSuccessful) {
+                  if(handle.spoj != null) {
+                    submissionPost(T.token, "spoj").then((value) async {
+                      if (T == true) print("submissions spoj posted");
+                    });
+                  }
+                  if(handle.codechef != null) {
+                    submissionPost(T.token, "codechef").then((value) async {
+                      if (T == true) print("submissions codechef posted");
+                    });
+                  }
+
+                  if(handle.hackerrank != null) {
+                    submissionPost(T.token, "hackerrank").then((value) async {
+                      if (T == true) print("submissions hackerrank posted");
+                    });
+                  }
+
+                  if(handle.codeforces != null) {
+                    submissionPost(T.token, "codeforces").then((value) async {
+                      if (T == true) print("submissions codeforces posted");
+                    });
+                  }
+
+                  await new Future.delayed(const Duration(seconds: 5));
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => HomePage(token: T.token, userId: id)),
+                  ).then((_) => _formKey.currentState.reset());
+                }
+              });
+            } else {
+              setState(() {
+              });
+            }
+          });
+        }else{
           Fluttertoast.showToast(
             msg: "Account Creation unsuccessful",
             toastLength: Toast.LENGTH_SHORT,
@@ -266,12 +318,6 @@ class _SignUpPageState extends State<SignUpPage3> {
             timeInSecForIos: 7,
             fontSize: 12.0,
           );
-          await new Future.delayed(const Duration(seconds: 5));
-          Navigator.push(
-            context,
-            CupertinoPageRoute(builder: (context) => HomePage()),
-          );
-        }else{
           setState(() {
             isCreateAccountButtonTapped = false;
             isCreateAccountSuccessful = false;

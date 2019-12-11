@@ -283,13 +283,12 @@ class _LoginPageState extends State<LoginPage> {
           setState(() {
             _isLoginSuccessful = true;
             isLoginButtonTapped = false;
-          });
-          await new Future.delayed(const Duration(seconds: 3));
-          id(T.token).then((id) async {
             _iconPerson = false;
             _iconLock = false;
             _iconEye = false;
-            _isLoginSuccessful = false;
+          });
+          await new Future.delayed(const Duration(seconds: 3));
+          id(T.token).then((id) async {
             Navigator.push(
              context,
              CupertinoPageRoute(builder: (context) => HomePage(token: T.token, userId: id)),
