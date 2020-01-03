@@ -33,16 +33,24 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color.fromRGBO(243, 244, 247, 1),
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)
+          backgroundColor: const Color.fromRGBO(243, 244, 247, 1),
+          title: DecoratedBox(
+            decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: const Color.fromRGBO(51, 102, 255, 1),
+                ),
+                borderRadius: BorderRadius.all(
+                    Radius.circular(2.0)
+                )
             ),
-            elevation: 0.0,
-            color: const Color.fromRGBO(229, 229, 229, 0.5),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2.0)
+              ),
+              elevation: 0.0,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,7 +64,7 @@ class _SearchPageState extends State<SearchPage> {
                         decoration: InputDecoration.collapsed(
                             hintText: inputHint,
                             hintStyle: TextStyle(
-                              fontSize: 20.0,
+                              fontSize: 17.0,
                               color : const Color.fromRGBO(151, 151, 151, 1),
                             )
                         ),
@@ -69,7 +77,7 @@ class _SearchPageState extends State<SearchPage> {
                     icon: Icon(
                       Icons.search,
                       size: 30.0,
-                      color : const Color.fromRGBO(145, 145, 145, 1),
+                      color : const Color.fromRGBO(51, 102, 255, 1),
                     ),
                     onPressed: () {
                       if(_controller.text != ""){
@@ -193,10 +201,10 @@ class _SearchPageState extends State<SearchPage> {
           for(int i = 0; i < results.users.length; i++){
             searchResultsTemp.add(
                 SearchUser(
-                    results.users[i].fullname,
-                    results.users[i].username,
-                    results.users[i].id,
-                    results.users[i].picture,
+                  results.users[i].fullname,
+                  results.users[i].username,
+                  results.users[i].id,
+                  results.users[i].picture,
                 )
             );
           }

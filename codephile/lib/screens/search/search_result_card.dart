@@ -20,7 +20,7 @@ class SearchResultCard extends StatelessWidget{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 4.0, 8.0),
+              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 4.0, 8.0),
               child: Image.network(
                 _imageLink!=""?
                 _imageLink
@@ -41,6 +41,7 @@ class SearchResultCard extends StatelessWidget{
                     "$_name",
                     style: TextStyle(
                       fontSize: 18.0,
+                      color: const Color.fromRGBO(36, 36, 36, 1),
                     ),
                   ),
                 ),
@@ -49,7 +50,7 @@ class SearchResultCard extends StatelessWidget{
                   child: Text(
                     "@$_handle",
                     style: TextStyle(
-                      color: const Color.fromRGBO(145, 145, 145, 1),
+                      color: const Color.fromRGBO(151, 151, 151, 1),
                     ),
                   ),
                 ),

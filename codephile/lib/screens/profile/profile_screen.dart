@@ -1,4 +1,5 @@
 import 'package:codephile/screens/profile/profile_card.dart';
+import 'package:codephile/screens/submission/recently_solved_card.dart';
 import 'package:codephile/services/user.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +45,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(243, 244, 247, 1),
 //      appBar: AppBar(
 //        title: Text("Profile"),
 //      ),
@@ -54,13 +56,30 @@ class _ProfileState extends State<Profile> {
       :
       ListView(
         children: <Widget>[
+          //TODO: implement #followers and #following
           ProfileCard(
               _username,
               _handle,
               _image,
               _institute,
+              344,
+              45,
               false
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 16.0),
+            child: Text(
+              "Recently Solved",
+              style: TextStyle(
+                fontSize: 22.0,
+                color: const Color.fromRGBO(36, 36, 36, 1),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          //TODO: implement submissions list
+          RecentlySolvedCard("a very very very very very very very very very very long descripiton", "Codechef",15),
+          RecentlySolvedCard("a very very very very very very very very very very long descripiton", "Codechef",15),
         ],
       ),
     );
