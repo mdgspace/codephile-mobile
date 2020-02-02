@@ -65,6 +65,7 @@ class _ProgressButtonState extends State<ProgressButton>
                     state = 3;
                   });
                   await widget.negativeCallback();
+                  await Future.delayed(Duration(seconds: 1));
                   setState(() {
                     state = 0;
                   });

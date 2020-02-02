@@ -27,10 +27,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = new GlobalKey<FormState>();
 
   String _username, _password;
-  bool isLoading;
+  bool isLoading = false;
   bool isLoginButtonTapped = false;
-  bool _isLoginSuccessful = false;
-  bool _buttonText = false, _buttonColor = false;
   bool _obscureText = true;
   bool _iconPerson = false, _iconLock = false, _iconEye = false;
 
@@ -55,10 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     } on SocketException catch (_) {
       print('not connected');
       setState(() {
-        _isLoginSuccessful = false;
         isLoginButtonTapped = false;
-        _buttonColor = false;
-        _buttonText = false;
       });
       Fluttertoast.showToast(
         msg: "Please check your connection!",
@@ -130,15 +125,16 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 5.0),
                       InkWell(
                         onTap: () {
-                          _iconPerson = false;
-                          _iconLock = false;
-                          _iconEye = false;
-                          _isLoginSuccessful = false;
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => SignUpPage()),
-                          ).then((_) => _formKey.currentState.reset());
+                          if (!isLoading) {
+                            _iconPerson = false;
+                            _iconLock = false;
+                            _iconEye = false;
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => SignUpPage()),
+                            ).then((_) => _formKey.currentState.reset());
+                          }
                         },
                         child: Text(
                           'Sign up',
@@ -227,9 +223,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<bool> loginCallback() async {
+    showConnectivityStatus();
     if (!_validateAndSave()) {
       return false;
     } else {
+      setState(() {
+        isLoading = true;
+      });
       FocusScope.of(context).requestFocus(new FocusNode());
       Token T = await login(_username, _password);
       if (T != null) {
@@ -238,8 +238,14 @@ class _LoginPageState extends State<LoginPage> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("token", T.token);
         prefs.setString("uid", uid);
+        setState(() {
+          isLoading = false;
+        });
         return true;
       } else {
+        setState(() {
+          isLoading = false;
+        });
         return false;
       }
     }
