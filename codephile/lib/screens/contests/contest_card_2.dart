@@ -26,7 +26,7 @@ class ContestCard2 extends StatelessWidget{
       this._url,
       this._notificationTime,
       [this._startTime]
-      );
+  );
 
   @override
   Widget build(BuildContext context) {
