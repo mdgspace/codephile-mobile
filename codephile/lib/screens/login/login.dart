@@ -1,6 +1,8 @@
 import 'dart:core';
 import 'dart:async';
 import 'dart:io';
+import 'package:codephile/models/token.dart';
+import 'package:codephile/screens/login/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:codephile/homescreen.dart';
@@ -13,7 +15,6 @@ import 'package:codephile/services/Id.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
-
   final String code;
 
   const LoginPage({Key key, this.code}) : super(key: key);
@@ -22,15 +23,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
 
   String _username, _password;
-  bool isLoading;
+  bool isLoading = false;
   bool isLoginButtonTapped = false;
-  bool _isLoginSuccessful = false;
-  bool _buttonText = false, _buttonColor = false;
   bool _obscureText = true;
   bool _iconPerson = false, _iconLock = false, _iconEye = false;
 
@@ -41,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     showConnectivityStatus();
   }
@@ -55,10 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     } on SocketException catch (_) {
       print('not connected');
       setState(() {
-        _isLoginSuccessful = false;
         isLoginButtonTapped = false;
-        _buttonColor = false;
-        _buttonText = false;
       });
       Fluttertoast.showToast(
         msg: "Please check your connection!",
@@ -78,85 +73,97 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return new Scaffold(
         resizeToAvoidBottomPadding: false,
         key: _scaffoldKey,
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 80),
+            SizedBox(
+              height: 80.0,
             ),
             Center(
               child: logo,
             ),
             Container(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 70.0, 0.0, 0.0),
-                    child: Text('Login',
-                        style: TextStyle(
-                            fontSize: 30.0, fontWeight: FontWeight.bold)),
-                  ),
-                ],
-              ),
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.fromLTRB(15.0, 70.0, 0.0, 0.0),
+              child: Text('Login',
+                  style:
+                      TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold)),
             ),
-            Expanded(
+            Container(
+                height: height / 3,
                 child: Padding(
-                padding: EdgeInsets.only(top: 0.0, left: 10.0, right: 20.0),
-                child: new Form(
-                  key: _formKey,
-                  child: ListView(
-                  children: <Widget>[
-                    _showUsernameInput(),
-                    SizedBox(height: 20.0),
-                   _showPasswordInput(),
-                    SizedBox(height: 5.0),
-                    SizedBox(height: 40.0),
-                    _showLoginButton(),
-                    SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'New to Codephile?',
-                          style: TextStyle(fontFamily: 'Montserrat'),
-                        ),
-                        SizedBox(width: 5.0),
-                        InkWell(
-                          onTap: () {
+                    padding: EdgeInsets.only(top: 0.0, left: 10.0, right: 20.0),
+                    child: new Form(
+                      key: _formKey,
+                      child: ListView(
+                        children: <Widget>[
+                          _showUsernameInput(),
+                          SizedBox(height: 20.0),
+                          _showPasswordInput(),
+                          SizedBox(height: 40.0),
+                          // _showLoginButton(),
+                          // SizedBox(height: 20.0),
+                        ],
+                      ),
+                    ))),
+            Stack(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 70.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'New to Codephile?',
+                        style: TextStyle(fontFamily: 'Montserrat'),
+                      ),
+                      SizedBox(width: 5.0),
+                      InkWell(
+                        onTap: () {
+                          if (!isLoading) {
                             _iconPerson = false;
                             _iconLock = false;
                             _iconEye = false;
-                            _isLoginSuccessful = false;
                             Navigator.push(
                               context,
-                              CupertinoPageRoute(builder: (context) => SignUpPage()),
+                              CupertinoPageRoute(
+                                  builder: (context) => SignUpPage()),
                             ).then((_) => _formKey.currentState.reset());
-                          },
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.none),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
+                          }
+                        },
+                        child: Text(
+                          'Sign up',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.none),
+                        ),
+                      )
+                    ],
                   ),
-                ))),
-
+                ),
+                Center(
+                  child: ProgressButton(
+                    onPressed: loginCallback,
+                    positiveCallback: navigateCallback,
+                    negativeCallback: () {},
+                  ),
+                ),
+              ],
+            ),
           ],
         ));
   }
 
   Widget _showUsernameInput() {
     return new TextFormField(
-      onTap: (){
+      onTap: () {
         _iconPerson = true;
       },
       maxLines: 1,
@@ -174,17 +181,16 @@ class _LoginPageState extends State<LoginPage> {
           color: _iconPerson ? codephileMain : Colors.grey,
         ),
       ),
-      validator: (value) =>
-      value.isEmpty ? 'Username can\'t be empty' : null,
+      validator: (value) => value.isEmpty ? 'Username can\'t be empty' : null,
       onSaved: (value) => _username = value,
     );
   }
 
-  Widget _showPasswordInput(){
+  Widget _showPasswordInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
       child: new TextFormField(
-        onTap: (){
+        onTap: () {
           _iconEye = true;
           _iconLock = true;
         },
@@ -207,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           labelText: "Password",
           labelStyle: new TextStyle(
-            color: _iconLock ? codephileMain: Colors.grey,
+            color: _iconLock ? codephileMain : Colors.grey,
           ),
         ),
         validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
@@ -216,99 +222,44 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _showLoginButton() {
+  Future<bool> loginCallback() async {
     showConnectivityStatus();
-    return (isLoginButtonTapped)
-        ? new FlatButton(
-        padding: EdgeInsets.all(8),
-        color: _buttonColor ? codephileMain : Colors.grey[500],
-//        shape: new Border.all(
-//          width: 2,
-//          color: Colors.grey,
-//          style: BorderStyle.solid,
-//        ),
-        child: new Text(
-          'AUTHENTICATING...',
-          style: new TextStyle(
-            color: _buttonText ? Colors.white : Colors.grey[700],
-          ),
-        ),
-        onPressed: () {})
-        : (_isLoginSuccessful)
-        ? new FlatButton(
-        padding: EdgeInsets.all(8),
-        color: _buttonColor ? codephileMain : Colors.grey[500],
-//        shape: new Border.all(
-//          width: 2,
-//          color: Colors.grey,
-//          style: BorderStyle.solid,
-//        ),
-        child: new Text(
-          'LOGGED IN SUCCESSFULLY',
-          style: new TextStyle(
-            color: _buttonText ? Colors.white : Colors.grey[700],
-          ),
-        ),
-        onPressed: () {})
-        : new FlatButton(
-      padding: EdgeInsets.all(8),
-      color: _buttonColor ? codephileMain : Colors.grey[500],
-//      shape: new Border.all(
-//        width: 2,
-//        color: Colors.grey,
-//        style: BorderStyle.solid,
-//      ),
-      child: new Text(
-        'LOGIN',
-        style: new TextStyle(
-          color: _buttonText ? Colors.white : Colors.grey[700],
-        ),
-      ),
-      onPressed: _validateAndSubmit,
-    );
-  }
-
-  void _validateAndSubmit() {
-    if(_validateAndSave()) {
+    if (!_validateAndSave()) {
+      return false;
+    } else {
       setState(() {
-        isLoginButtonTapped = true;
-        _buttonText = true;
-        _buttonColor = true;
+        isLoading = true;
       });
       FocusScope.of(context).requestFocus(new FocusNode());
-      login(_username, _password).then((T) async {
-        if (T != null) {
-          print(T.token);
-          saveToken(T.token);
-          setState(() {
-            _isLoginSuccessful = true;
-            isLoginButtonTapped = false;
-            _iconPerson = false;
-            _iconLock = false;
-            _iconEye = false;
-          });
-          await new Future.delayed(const Duration(seconds: 3));
-          id(T.token).then((id) async {
-            Navigator.push(
-             context,
-             CupertinoPageRoute(builder: (context) => HomePage(token: T.token, userId: id)),
-          ).then((_) => _formKey.currentState.reset());
-          });
-        } else {
-          setState(() {
-            _isLoginSuccessful = false;
-            isLoginButtonTapped = false;
-          });
-        }
-      });
+      Token T = await login(_username, _password);
+      if (T != null) {
+        print(T.token);
+        String uid = await id(T.token);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("token", T.token);
+        prefs.setString("uid", uid);
+        setState(() {
+          isLoading = false;
+        });
+        return true;
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        return false;
+      }
     }
   }
 
-  Future<void> saveToken(
-    String token,
-      ) async {
+  Future navigateCallback() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("token", token);
+    String token = prefs.getString('token');
+    String uid = prefs.getString('uid');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) => HomePage(token: token, userId: uid)),
+    ).then((_) => _formKey.currentState.reset());
   }
 
   bool _validateAndSave() {
@@ -318,10 +269,5 @@ class _LoginPageState extends State<LoginPage> {
       return true;
     }
     return false;
-  }
-
-  Future<SharedPreferences> getToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs;
   }
 }

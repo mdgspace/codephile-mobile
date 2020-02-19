@@ -1,22 +1,22 @@
-import 'package:codephile/services/Id.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/screens/contests/contests_screen.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:codephile/screens/submission/submission_screen.dart';
 import 'package:codephile/screens/search/search_page.dart';
 import 'package:codephile/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatefulWidget {
   final String token;
   final String userId;
   const HomePage({Key key, this.token, this.userId}) : super(key: key);
 
   @override
-  HomePageState createState() => new HomePageState(token: token, userId: userId);
+  HomePageState createState() =>
+      new HomePageState(token: token, userId: userId);
 }
 
-class HomePageState extends State<HomePage>{
+class HomePageState extends State<HomePage> {
   final String token;
   final String userId;
   HomePageState({Key key, this.token, this.userId});
@@ -24,7 +24,7 @@ class HomePageState extends State<HomePage>{
   bool search_color = false;
   bool profile_color = false;
   @override
-  void initState(){
+  void initState() {
     super.initState();
     //    var result = search(token, "user");
   }
@@ -32,33 +32,23 @@ class HomePageState extends State<HomePage>{
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
- List<Widget> _showHomeScreen(String token, String userId){
+  List<Widget> _showHomeScreen(String token, String userId) {
     return <Widget>[
-      new PageView(
-        children: <Widget>[
-          new MaterialApp(
+      MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: new Timeline(token),
+        home: Timeline(token: token),
           ),
-          new MaterialApp(
+      MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: new Submission(token: token, id: userId),
-          )
-        ],
-      )
-      ,new MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: new SearchPage(token),
+        home: SearchPage(token),
       ),
-      new MaterialApp(
+      MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: new Submission(token: token, id: userId),
+        home: Submission(token: token, id: userId),
       ),
-      new MaterialApp(
+      MaterialApp(
         debugShowCheckedModeBanner: false,
-        //TODO: implement UserId
-        //TODO: implement token
-        home: new Profile(token, userId),
+        home: Profile(token, userId),
       ),
     ];
   }
@@ -66,14 +56,21 @@ class HomePageState extends State<HomePage>{
   void _onItemTapped(int index) {
        setState(() {
          _selectedIndex = index;
-         if(index == 0) activity_color = true;
-         else activity_color = false;
-         if(index == 1) search_color = true;
-         else search_color = false;
-         if(index == 3) profile_color = true;
-         else profile_color = false;
+      if (index == 0)
+        activity_color = true;
+      else
+        activity_color = false;
+      if (index == 1)
+        search_color = true;
+      else
+        search_color = false;
+      if (index == 3)
+        profile_color = true;
+      else
+        profile_color = false;
        });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
