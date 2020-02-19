@@ -8,8 +8,9 @@ class SearchResultCard extends StatelessWidget{
   final String _imageLink;
   final String _uid;
   final String token;
+  final String _myUid;
 
-  const SearchResultCard(this.token, this._name, this._handle, this._imageLink, this._uid, {Key key}) : super(key: key);
+  const SearchResultCard(this.token, this._name, this._handle, this._imageLink, this._uid, this._myUid, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,7 @@ class SearchResultCard extends StatelessWidget{
       ),
       onTap: (){
         Navigator.push(
-            context, new MaterialPageRoute(builder: (context) => new Profile(token, _uid))
+            context, new MaterialPageRoute(builder: (context) => new Profile(token, _uid, (_myUid == _uid)))
         );
       },
     );

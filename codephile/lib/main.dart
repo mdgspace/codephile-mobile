@@ -52,5 +52,3 @@ class ChooseHomeState extends State<ChooseHome> {
     );
   }
 }
-
-

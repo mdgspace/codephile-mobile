@@ -1,31 +1,27 @@
-import 'package:codephile/models/user.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'dart:io';
+import 'package:codephile/models/following.dart';
 import 'package:codephile/resources/strings.dart';
+import 'package:http/http.dart' as http;
 
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<String> id(String token) async {
-  String endpoint = "/user/";
+Future<List<Following>> getFollowingList(String token) async{
+  String endpoint = "/follow/following";
   String uri = url + endpoint;
-  User user;
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 
-  try {
+  try{
     var response = await client.get(
       uri,
       headers: tokenAuth,
     );
 
-    final jsonResponse = jsonDecode(response.body);
-    user = new User.fromJson(jsonResponse);
-    print(user.id);
-    return user.id;
+    List<Following> followingList = followingFromJson(response.body);
+    return followingList;
 
-  } on Exception catch (e) {
+  }on Exception catch(e){
     print(e);
     return null;
   }

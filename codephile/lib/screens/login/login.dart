@@ -8,7 +8,7 @@ import 'package:codephile/screens/signup/signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:codephile/services/login.dart';
-import 'package:codephile/colors.dart';
+import 'package:codephile/resources/colors.dart';
 import 'package:codephile/services/Id.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

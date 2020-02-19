@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:codephile/models/search_results.dart';
 import 'package:http/http.dart' as http;
+import 'package:codephile/resources/strings.dart';
 
-String url = "https://codephile-test.herokuapp.com/v1";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 

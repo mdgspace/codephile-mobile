@@ -1,27 +1,30 @@
+import 'package:codephile/models/user.dart';
+import 'package:codephile/resources/colors.dart';
+import 'package:codephile/services/follow_profile.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/painting.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../../models/user_details.dart';
 import 'accuracy_tile.dart';
 
 class ProfileCard extends StatefulWidget{
+
+  final String title;
+  final String _token;
+  final User _user;
+  final bool _isFollowing;
+  final bool _isMyProfile;
+  final UserDetails _platformDetails;
+
   ProfileCard(
-      this._name,
-      this._handle,
-      this._userIcon,
-      this._institute,
-      this._followers,
-      this._following,
+      this._token,
+      this._user,
       this._isFollowing,
+      this._isMyProfile,
+      this._platformDetails,
       {Key key, this.title}
       ) : super(key: key);
 
-  final String title;
-  final String _name;
-  final String _handle;
-  final String _userIcon;
-  final String _institute;
-  final bool _isFollowing;
-  final int _followers;
-  final int _following;
 
   @override
   _ProfileCardState createState() => _ProfileCardState();
@@ -46,66 +49,122 @@ class _ProfileCardState extends State<ProfileCard>{
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 8.0, 16.0),
-                  child: Container(
-                    height: 64.0,
-                    width: 64.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                    ),
-                    child: Image.network(
-                      widget._userIcon!=""?
-                      widget._userIcon
-                          :
-                      "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
+            Container(
+              width: MediaQuery.of(context).size.width/1.05,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16.0, 16.0, 8.0, 16.0),
+                    child: Container(
+                      height: MediaQuery.of(context).size.width/6.2,
+                      width: MediaQuery.of(context).size.width/6.2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                      ),
+                      child: Image.network(
+                        widget._user.picture!=""?
+                        widget._user.picture
+                            :
+                        "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
+                        //TODO: use defalut image         Priority: 1
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 16.0, 16.0, 10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0.0, 2.0, 0.0, 2.0),
-                        child: Text(
-                          "${widget._name}",
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              color: const Color.fromRGBO(36, 36, 36, 1)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 16.0, 16.0, 10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: MediaQuery.of(context).size.width/1.5,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    width: MediaQuery.of(context).size.width/3,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(0.0, 2.0, 0.0, 2.0),
+                                      child: Text(
+                                        "${widget._user.fullname}",
+                                        style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: const Color.fromRGBO(36, 36, 36, 1)
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width/3,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(0.0, 2.0, 0.0, 2.0),
+                                      child: Text(
+                                        "@${widget._user.username}",
+                                        style: TextStyle(
+                                          fontSize: 14.0,
+                                          color: const Color.fromRGBO(145, 145, 145, 1),
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              widget._isMyProfile?
+                              Container()
+                                  :
+                              GestureDetector(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    color: codephileMain,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Compare",
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.white
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onTap: (){
+                                  //TODO: implement compare       Priority: 1
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0.0, 2.0, 0.0, 2.0),
-                        child: Text(
-                          "@${widget._handle}",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: const Color.fromRGBO(145, 145, 145, 1),
+
+                        Container(
+                          width: MediaQuery.of(context).size.width/1.5 ,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0.0, 2.0, 16.0, 9.0),
+                            child: Text(
+                              "${widget._user.institute}",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: const Color.fromRGBO(145, 145, 145, 1),
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0.0, 2.0, 16.0, 9.0),
-                        child: Text(
-                          "${widget._institute}",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: const Color.fromRGBO(145, 145, 145, 1),
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
@@ -121,65 +180,46 @@ class _ProfileCardState extends State<ProfileCard>{
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 0.0, 16.0, 14.0),
               child: Wrap(
-                children: <Widget>[
-                  //TODO: implement map function
-                  AccuracyTile("codechef", 32.1),
-                  AccuracyTile("codechef", 32.1),
-                  AccuracyTile("codechef", 32.1),
-//                  AccuracyTile("codechef", 32.1),
-//                  AccuracyTile("codechef", 32.1),
-                ],
+                children: getAccuracyTileList(),
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      "${widget._followers}",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: const Color.fromRGBO(36, 36, 36, 1),
-                      ),
-                    ),
-                    Text(
-                      " Followers",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: const Color.fromRGBO(36, 36, 36, 1),
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      "${widget._following}",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: const Color.fromRGBO(36, 36, 36, 1),
-                      ),
-                    ),
-                    Text(
-                      " Following",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: const Color.fromRGBO(36, 36, 36, 1),
-                      ),
-                    )
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      GestureDetector(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 4.0),
+                          child: Text(
+                            "45 Following",//TODO: implement following       Priority: 1
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: const Color.fromRGBO(36, 36, 36, 1),
+                            ),
+                          ),
+                        ),
+                        onTap: (){
+                          //TODO: implement following page       Priority: 2
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
+            (widget._isMyProfile == true)?
+            Container()
+                :
             GestureDetector(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 16.0),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: widget._isFollowing?
+                      color: isFollowing?
                       const Color.fromRGBO(51, 102, 255, 1)
                           :
                       Colors.white,
@@ -189,7 +229,7 @@ class _ProfileCardState extends State<ProfileCard>{
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(2.0))
                   ),
-                  child: widget._isFollowing?
+                  child: isFollowing?
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
@@ -234,7 +274,36 @@ class _ProfileCardState extends State<ProfileCard>{
                 ),
               ),
               onTap: (){
-                //TODO: implement onTap
+                //TODO: implement un-follow     Priority: 1
+                //TODO: implement load on follow/ un-follow     Priority: 2
+                if(!isFollowing){
+                  followUser(widget._token, widget._user.id).then((statusCode){
+                    if(statusCode == null){
+                      Fluttertoast.showToast(
+                        msg: "Something went wrong. Please try again later.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIos: 7,
+                        fontSize: 12.0,
+                      );
+                    }else{
+                      if(statusCode == 200){
+                        setState(() {
+                          isFollowing = true;
+                        });
+                      }else{
+                        Fluttertoast.showToast(
+                          msg: "Something went wrong. Please try again later.",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIos: 7,
+                          fontSize: 12.0,
+                        );
+                      }
+
+                    }
+                  });
+                }
               },
             ),
           ],
@@ -242,4 +311,43 @@ class _ProfileCardState extends State<ProfileCard>{
       ),
     );
   }
+
+  List<Widget> getAccuracyTileList(){
+    List<AccuracyTile> accuracyTileList = List<AccuracyTile>();
+    if(widget._platformDetails != null){
+      if(widget._platformDetails.codechefProfile != null){
+        accuracyTileList.add(AccuracyTile("codechef", widget._platformDetails.codechefProfile.profile.accuracy));
+      }else {
+        accuracyTileList.add(AccuracyTile("codechef", "-"));
+      }
+
+      if(widget._platformDetails.codeforcesProfile != null){
+        accuracyTileList.add(AccuracyTile("codeforces", widget._platformDetails.codeforcesProfile.profile.accuracy));
+      }else {
+        accuracyTileList.add(AccuracyTile("codeforces", "-"));
+      }
+
+      if(widget._platformDetails.hackerrankProfile != null){
+        accuracyTileList.add(AccuracyTile("hackerrank", widget._platformDetails.hackerrankProfile.profile.accuracy));
+      }else {
+        accuracyTileList.add(AccuracyTile("hackerrank", "-"));
+      }
+
+      if(widget._platformDetails.spojProfile != null){
+        accuracyTileList.add(AccuracyTile("spoj", widget._platformDetails.spojProfile.profile.accuracy));
+      }else {
+        accuracyTileList.add(AccuracyTile("spoj", "-"));
+      }
+    }else{
+      print("user details are null");
+      accuracyTileList.add(AccuracyTile("codechef", "-"));
+      accuracyTileList.add(AccuracyTile("codeforces", "-"));
+      accuracyTileList.add(AccuracyTile("hackerrank", "-"));
+      accuracyTileList.add(AccuracyTile("spoj", "-"));
+
+    }
+
+    return accuracyTileList;
+  }
+
 }

@@ -5,26 +5,26 @@ import 'package:codephile/services/submission.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/services/user.dart';
 
-class Submission extends StatefulWidget {
+class SubmissionScreen extends StatefulWidget {
   final String token;
   final String id;
-  Submission({Key key, this.token, this.id}) : super(key: key);
+  SubmissionScreen({Key key, this.token, this.id}) : super(key: key);
 
   @override
-  _SubmissionState createState() => _SubmissionState(token: token, uid: id);
+  _SubmissionScreenState createState() => _SubmissionScreenState(token: token, uid: id);
 }
 
-class _SubmissionState extends State<Submission> {
+class _SubmissionScreenState extends State<SubmissionScreen> {
 
   final String token;
   final String uid;
 
-  _SubmissionState({Key key, this.token, this.uid});
+  _SubmissionScreenState({Key key, this.token, this.uid});
 
-  List<Codechef> codechef;
-  List<Codeforces> codeforces;
-  List<Hackerrank> hackerrank;
-  List<Spoj> spoj;
+  List<CodechefSubmission> codechef;
+  List<CodeforcesSubmission> codeforces;
+  List<HackerrankSubmission> hackerrank;
+  List<SpojSubmission> spoj;
   List<Widget> allSubmission = List<Widget>();
   bool _isLoading = true;
   String _usernameCodechef;
@@ -37,7 +37,7 @@ class _SubmissionState extends State<Submission> {
   @override
   void initState() {
 
-    submissionList(token, uid).then((submission){
+    getSubmissionList(token, uid).then((submission){
       codechef = submission.codechef;
       codeforces = submission.codeforces;
       hackerrank = submission.hackerrank;
@@ -59,7 +59,7 @@ class _SubmissionState extends State<Submission> {
             "@" +_usernameCodechef,
             "Codechef",
             codechef[i].name,
-            codechef[i].time,
+            codechef[i].creationDate,
             _picture,
         )) : null ;
       }
@@ -71,7 +71,7 @@ class _SubmissionState extends State<Submission> {
           "@" + _usernameCodeforces,
           "Codefroces",
           codeforces[i].name,
-          codeforces[i].time,
+          codeforces[i].creationDate,
           _picture,
         )): null;
       }
@@ -83,7 +83,7 @@ class _SubmissionState extends State<Submission> {
           "@" + _usernameHackerrank,
           "Hackerrank",
           hackerrank[i].name,
-          hackerrank[i].time,
+          hackerrank[i].creationDate,
           _picture,
         ));
       }
@@ -95,7 +95,7 @@ class _SubmissionState extends State<Submission> {
           "@" + _usernameSpoj,
           "Spoj",
           spoj[i].name,
-          spoj[i].time,
+          spoj[i].creationDate,
           _picture,
         )) : null;
       }
@@ -112,9 +112,6 @@ class _SubmissionState extends State<Submission> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-//      appBar: AppBar(
-//        title: Text("Contests"),
-//      ),
       body: (_isLoading)?
       Center(
           child: CircularProgressIndicator()

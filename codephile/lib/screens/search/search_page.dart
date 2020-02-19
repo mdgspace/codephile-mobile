@@ -1,4 +1,3 @@
-import 'package:codephile/homescreen.dart';
 import 'package:codephile/screens/search/search_result_card.dart';
 import 'package:codephile/services/search.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +5,9 @@ import 'package:flutter/material.dart';
 class SearchPage extends StatefulWidget{
 
   final String token;
+  final String uId;
 
-  SearchPage(this.token);
+  SearchPage(this.token, this.uId);
 
   @override
   _SearchPageState createState() => _SearchPageState(token: token);
@@ -27,6 +27,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState(){
     super.initState();
+//    getFollowingList(token)
     _controller.text = "";
   }
 
@@ -115,14 +116,14 @@ class _SearchPageState extends State<SearchPage> {
                 itemCount: searchResult.length,
                 itemBuilder: (BuildContext context, int index){
                   SearchUser user = searchResult[index];
-                  return SearchResultCard(token, user._name, user._handle, user._image, user._uid);
+                  return SearchResultCard(token, user._name, user._handle, user._image, user._uid, widget.uId);
                 },
               ),
             )
           ],
         )
     );
-    //FOR DYNAMIC SEARCH!!
+    //NOTE: FOR DYNAMIC SEARCH!!
 
 
 //      Column(

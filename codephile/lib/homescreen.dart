@@ -4,7 +4,7 @@ import 'package:codephile/screens/contests/contests_screen.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:codephile/screens/submission/submission_screen.dart';
 import 'package:codephile/screens/search/search_page.dart';
-import 'package:codephile/colors.dart';
+import 'package:codephile/resources/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget{
@@ -42,23 +42,23 @@ class HomePageState extends State<HomePage>{
           ),
           new MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: new Submission(token: token, id: userId),
+            home: new SubmissionScreen(token: token, id: userId),
           )
         ],
       )
       ,new MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: new SearchPage(token),
+        home: new SearchPage(token, userId),
       ),
       new MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: new Submission(token: token, id: userId),
+        home: new SubmissionScreen(token: token, id: userId),
       ),
       new MaterialApp(
         debugShowCheckedModeBanner: false,
         //TODO: implement UserId
         //TODO: implement token
-        home: new Profile(token, userId),
+        home: new Profile(token, userId, true),//TODO: use modular _isMyProfile
       ),
     ];
   }
