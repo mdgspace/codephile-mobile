@@ -28,19 +28,20 @@ dependencies:
   fluttertoast: ^3.1.2
   url_launcher: ^5.0.2
   autocomplete_textfield: ^1.6.4
+  flutter_spinkit: ^4.1.1+1
+  curved_navigation_bar: ^0.3.1
+  google_fonts: ^0.3.7
   intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -48,28 +49,25 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/facebook.png
-   - assets/contest_icon.svg
-   - assets/platformIcons/codeChefIcon.png
-   - assets/platformIcons/codeForcesIcon.png
-   - assets/platformIcons/hackerEarthIcon.png
-   - assets/platformIcons/hackerRankIcon.png
-   - assets/platformIcons/otherIcon.jpg
-   - assets/platformIcons/spoj.png
-   - assets/bookmark.svg
-   - assets/search.png
-   - assets/person.png
-   - assets/activity.png
-   - assets/solved.svg
-   - assets/logo.svg
+    - assets/facebook.png
+    - assets/contest_icon.svg
+    - assets/platformIcons/codeChefIcon.png
+    - assets/platformIcons/codeForcesIcon.png
+    - assets/platformIcons/hackerEarthIcon.png
+    - assets/platformIcons/hackerRankIcon.png
+    - assets/platformIcons/otherIcon.jpg
+    - assets/platformIcons/spoj.png
+    - assets/bookmark.svg
+    - assets/search.png
+    - assets/person.png
+    - assets/activity.png
+    - assets/solved.svg
+    - assets/logo.svg
   #  - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
