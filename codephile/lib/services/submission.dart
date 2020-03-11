@@ -6,8 +6,8 @@ import 'package:codephile/resources/strings.dart';
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<Submission> getSubmissionList(String token, String uId) async {
-  String endpoint = "/submission/";
+Future<List<Submission>> getSubmissionList(String token, String uId) async {
+  String endpoint = "/submission/all/";
   String uri = url + endpoint + uId;
   var tokenAuth = {"Authorization": token};
   try {
@@ -16,8 +16,8 @@ Future<Submission> getSubmissionList(String token, String uId) async {
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
-    Submission submission = new Submission.fromJson(jsonResponse);
-    return submission;
+    List<Submission> submissionList = submissionFromJson(response.body);
+    return submissionList;
   } on Exception catch (e) {
     print(e);
     return null;

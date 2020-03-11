@@ -4,8 +4,6 @@ import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:codephile/screens/submission/submission_screen.dart';
 import 'package:codephile/screens/search/search_page.dart';
 import 'package:codephile/resources/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
   final String token;
@@ -41,35 +39,17 @@ class HomePageState extends State<HomePage> {
           ),
       MaterialApp(
             debugShowCheckedModeBanner: false,
-//<<<<<<< HEAD
-//            home: new SubmissionScreen(token: token, id: userId),
-//          )
-//        ],
-//      )
-//      ,new MaterialApp(
-//        debugShowCheckedModeBanner: false,
-//        home: new SearchPage(token, userId),
-//=======
         home: SearchPage(token, userId),
-//>>>>>>> origin/master
       ),
       MaterialApp(
         debugShowCheckedModeBanner: false,
-//<<<<<<< HEAD
-//        home: new SubmissionScreen(token: token, id: userId),
-//=======
         home: SubmissionScreen(token: token, id: userId),
-//>>>>>>> origin/master
       ),
       MaterialApp(
         debugShowCheckedModeBanner: false,
-//<<<<<<< HEAD
 //        //TODO: implement UserId
 //        //TODO: implement token
-//        home: new Profile(token, userId, true),
-//=======
-        home: Profile(token, userId, true),//TODO: use modular _isMyProfile
-//>>>>>>> origin/master
+        home: Profile(token, userId, true, false),//TODO: use modular _isMyProfile
       ),
     ];
   }

@@ -1,6 +1,8 @@
+import 'package:codephile/models/following.dart';
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
-import 'package:codephile/services/follow_profile.dart';
+import 'package:codephile/services/follow.dart';
+import 'package:codephile/services/unfollow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -32,7 +34,8 @@ class ProfileCard extends StatefulWidget{
 
 class _ProfileCardState extends State<ProfileCard>{
 
-  bool isFollowing = false;
+  bool isFollowing;
+//  List<Following> _followingList;
 
   @override
   void initState(){
@@ -274,36 +277,15 @@ class _ProfileCardState extends State<ProfileCard>{
                 ),
               ),
               onTap: (){
+                if(isFollowing){
+                  unFollow();
+                }else{
+                  follow();
+                }
+
+                changeButtonAppearance();
                 //TODO: implement un-follow     Priority: 1
                 //TODO: implement load on follow/ un-follow     Priority: 2
-                if(!isFollowing){
-                  followUser(widget._token, widget._user.id).then((statusCode){
-                    if(statusCode == null){
-                      Fluttertoast.showToast(
-                        msg: "Something went wrong. Please try again later.",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIos: 7,
-                        fontSize: 12.0,
-                      );
-                    }else{
-                      if(statusCode == 200){
-                        setState(() {
-                          isFollowing = true;
-                        });
-                      }else{
-                        Fluttertoast.showToast(
-                          msg: "Something went wrong. Please try again later.",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIos: 7,
-                          fontSize: 12.0,
-                        );
-                      }
-
-                    }
-                  });
-                }
               },
             ),
           ],
@@ -349,5 +331,78 @@ class _ProfileCardState extends State<ProfileCard>{
 
     return accuracyTileList;
   }
+
+  void follow() async{
+    print("follow");
+    followUser(widget._token, widget._user.id).then((statusCode){
+      print(statusCode);
+      if(statusCode != 200){
+        Fluttertoast.showToast(
+          msg: "Something went wrong. Please try again later.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 7,
+          fontSize: 12.0,
+        );
+        setState(() {
+          isFollowing = false;
+        });
+      }
+//      if(statusCode == null){
+//        Fluttertoast.showToast(
+//          msg: "Something went wrong. Please try again later.",
+//          toastLength: Toast.LENGTH_SHORT,
+//          gravity: ToastGravity.CENTER,
+//          timeInSecForIos: 7,
+//          fontSize: 12.0,
+//        );
+//      }else{
+//        if(statusCode == 200){
+//
+//        }else{
+//          Fluttertoast.showToast(
+//            msg: "Something went wrong. Please try again later.",
+//            toastLength: Toast.LENGTH_SHORT,
+//            gravity: ToastGravity.CENTER,
+//            timeInSecForIos: 7,
+//            fontSize: 12.0,
+//          );
+//        }
+//      }
+    });
+  }
+
+  void unFollow() async{
+    print("Unfollow");
+    unfollowUser(widget._token, widget._user.id).then((statusCode){
+      print(statusCode);
+      if(statusCode != 200){
+        Fluttertoast.showToast(
+          msg: "Something went wrong. Please try again later.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 7,
+          fontSize: 12.0,
+        );
+        setState(() {
+          isFollowing = true;
+        });
+      }
+    });
+  }
+
+  void changeButtonAppearance() {
+    if(isFollowing){
+      setState(() {
+        isFollowing = false;
+      });
+    }else{
+      setState(() {
+        isFollowing = true;
+      });
+    }
+  }
+
+
 
 }

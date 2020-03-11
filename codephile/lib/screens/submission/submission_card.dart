@@ -24,12 +24,14 @@ class SubmissionCard extends StatelessWidget {
     height: 14.0,
   );
 
-  SubmissionCard(this._username,
+  SubmissionCard(
+      this._username,
       this._handle,
       this._platform,
       this._problem,
       this._time,
-      this._picture);
+      this._picture
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +78,7 @@ class SubmissionCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              "$_username",
+                              _handle,
                               style: TextStyle(
                                 color: const Color.fromRGBO(36, 36, 36, 1),
                                 fontSize: 16.0,
@@ -84,7 +86,7 @@ class SubmissionCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              _handle,
+                              _username,
                               style: TextStyle(
                                 color: Colors.grey,
                               ),
@@ -121,7 +123,7 @@ class SubmissionCard extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(8.0, 8.0, 3.0, 6.0),
                           child: Card(
                             elevation: 0.0,
-                            color: codephileSolvedBAckground,
+                            color: codephileSolvedBackground,
                             child: Wrap(
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: <Widget>[
@@ -208,10 +210,28 @@ class SubmissionCard extends StatelessWidget {
     final solved_time = DateTime.parse(time);
     final now_time = DateTime.now();
     final diff = now_time.difference(solved_time).inMinutes;
-    if(diff > 60 && diff < 1440) return now_time.difference(solved_time).inHours.toString() + " hrs";
-    if(diff < 60) return diff.toString() + " mins" ;
-    if(diff < 1) return now_time.difference(solved_time).inSeconds.toString() + " secs";
-    if(diff > 1440) return now_time.difference(solved_time).inDays.toString() + " days";
+    if(diff < 1){
+      return now_time.difference(solved_time).inSeconds.toString() + " secs";
+    }else if(diff < 60){
+      return diff.toString() + " mins" ;
+    }else if(diff >= 60 && diff < 1440){
+      //1440 = 60*24
+      return now_time.difference(solved_time).inHours.toString() + " hrs";
+    }else if(diff >= 1440 && diff < 1440*30 ){
+      return now_time.difference(solved_time).inDays.toString() + " days";
+    }else if(diff >= 1440*30 && diff < 1440*30*12){
+      return (now_time.difference(solved_time).inDays~/30).toString() + " months";
+    }else{
+      int years = (now_time.difference(solved_time).inDays~/(30*12));
+      return years.toString() + ((years > 1)? " years": " year");
+    }
+
+    if(diff > 1440){
+      if(diff < 1440*30){
+      }else{
+      }
+
+    }
   }
 
   String getIconUrl(String platform){
