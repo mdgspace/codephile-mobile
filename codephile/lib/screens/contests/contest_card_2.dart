@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 
-class ContestCard2 extends StatelessWidget{
-
+class ContestCard2 extends StatelessWidget {
   final String _platform;
   final String _name;
   final String _endTime;
@@ -18,19 +18,17 @@ class ContestCard2 extends StatelessWidget{
     height: 12.0,
   );
 
-  ContestCard2(
-      this._name,
-      this._endTime,
-      this._platform,
-      this._challengeType,
-      this._url,
-      this._notificationTime,
-      [this._startTime]
-  );
+  ContestCard2(this._name, this._endTime, this._platform, this._challengeType,
+      this._url, this._notificationTime,
+      [this._startTime]);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        FlutterWebBrowser.openWebPage(
+            url:_url, androidToolbarColor: Colors.deepPurple);
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
@@ -99,7 +97,8 @@ class ContestCard2 extends StatelessWidget{
                               child: contestIcon,
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0.0, 4.0, 5.0, 4.0),
+                              padding:
+                                  const EdgeInsets.fromLTRB(0.0, 4.0, 5.0, 4.0),
                               child: Text(
                                 'Contest',
                                 style: TextStyle(
@@ -127,63 +126,68 @@ class ContestCard2 extends StatelessWidget{
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 6.0, 6.0, 8.0),
-                      child:
-                      (_startTime != null)?
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
-                            child: Icon(
-                              Icons.access_time,
-                              size: 18.0,
-                              color: const Color.fromRGBO(145, 145, 145, 1),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(2.0, 0.0,2.0, 0.0),
-                            child: Text(
-                              "Starts : ",
-                              style: TextStyle(
+                      child: (_startTime != null)
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      8.0, 0.0, 2.0, 0.0),
+                                  child: Icon(
+                                    Icons.access_time,
+                                    size: 18.0,
+                                    color:
+                                        const Color.fromRGBO(145, 145, 145, 1),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      2.0, 0.0, 2.0, 0.0),
+                                  child: Text(
+                                    "Starts : ",
+                                    style: TextStyle(
 //                                fontSize: 12.0,
-                                  color: const Color.fromRGBO(145, 145, 145, 1)
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(2.0, 0.0,2.0, 0.0),
-                            child: Text(
-                              _startTime,
-                            ),
-                          )
-                        ],
-                      )
-                          :
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
-                            child: Icon(
-                              Icons.access_time,
-                              size: 18.0,
-                              color: const Color.fromRGBO(145, 145, 145, 1),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(2.0, 0.0,2.0, 0.0),
-                            child: Text(
-                              "Ongoing",
-                              style: TextStyle(
+                                        color: const Color.fromRGBO(
+                                            145, 145, 145, 1)),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      2.0, 0.0, 2.0, 0.0),
+                                  child: Text(
+                                    _startTime,
+                                  ),
+                                )
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      8.0, 0.0, 2.0, 0.0),
+                                  child: Icon(
+                                    Icons.access_time,
+                                    size: 18.0,
+                                    color:
+                                        const Color.fromRGBO(145, 145, 145, 1),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      2.0, 0.0, 2.0, 0.0),
+                                  child: Text(
+                                    "Ongoing",
+                                    style: TextStyle(
 //                                fontSize: 12.0,
-                                  color: const Color.fromRGBO(145, 145, 145, 1)
-                              ),
+                                        color: const Color.fromRGBO(
+                                            145, 145, 145, 1)),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
@@ -200,9 +204,9 @@ class ContestCard2 extends StatelessWidget{
     return null;
   }
 
-  String getFormattedPlatformName(String platform){
-    switch(platform.toLowerCase()){
-      case "codechef" :
+  String getFormattedPlatformName(String platform) {
+    switch (platform.toLowerCase()) {
+      case "codechef":
         return "CodeChef";
         break;
       case "hackerrank":
@@ -219,20 +223,15 @@ class ContestCard2 extends StatelessWidget{
     }
   }
 
-  String getIconUrl(String platform){
-    final String codeChefIcon =
-        "assets/platformIcons/codeChefIcon.png";
-    final String hackerRankIcon =
-        "assets/platformIcons/hackerRankIcon.png";
-    final String hackerEarthIcon =
-        "assets/platformIcons/hackerEarthIcon.png";
-    final String codeForcesIcon =
-        "assets/platformIcons/codeForcesIcon.png";
-    final String otherIcon =
-        "assets/platformIcons/otherIcon.jpg";
+  String getIconUrl(String platform) {
+    final String codeChefIcon = "assets/platformIcons/codeChefIcon.png";
+    final String hackerRankIcon = "assets/platformIcons/hackerRankIcon.png";
+    final String hackerEarthIcon = "assets/platformIcons/hackerEarthIcon.png";
+    final String codeForcesIcon = "assets/platformIcons/codeForcesIcon.png";
+    final String otherIcon = "assets/platformIcons/otherIcon.jpg";
 
-    switch(platform.toLowerCase()){
-      case "codechef" :
+    switch (platform.toLowerCase()) {
+      case "codechef":
         return codeChefIcon;
         break;
       case "hackerrank":
