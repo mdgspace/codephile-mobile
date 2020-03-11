@@ -32,6 +32,8 @@ dependencies:
   curved_navigation_bar: ^0.3.1
   google_fonts: ^0.3.7
   intl: ^0.16.1
+  flutter_local_notifications: ^1.2.1
+  rxdart: ^0.23.1
 
 dev_dependencies:
   flutter_test:
