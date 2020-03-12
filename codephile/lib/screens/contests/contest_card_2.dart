@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 class ContestCard2 extends StatefulWidget {
-
   final String _platform;
   final String _name;
   final String _endTime;
