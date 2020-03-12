@@ -3,6 +3,7 @@ import 'package:codephile/services/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 class ContestCard2 extends StatefulWidget {
   final String _platform;
@@ -32,6 +33,10 @@ class _ContestCard2State extends State<ContestCard2> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        FlutterWebBrowser.openWebPage(
+            url:widget._url, androidToolbarColor: Colors.deepPurple);
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
