@@ -42,21 +42,19 @@ class _TimelineState extends State<Timeline> {
       applyFilter();
       for (var i = 0; i < filteredOngoingContests.length; i++) {
         allContests.add(ContestCard2(
-            filteredOngoingContests[i].name,
+            filteredOngoingContests[i].name.trim(),
             filteredOngoingContests[i].endTime,
             filteredOngoingContests[i].platform,
             filteredOngoingContests[i].challengeType,
-            filteredOngoingContests[i].url,
-            "1 day"));
+            filteredOngoingContests[i].url));
       }
       for (var i = 0; i < filteredUpcomingContests.length; i++) {
         allContests.add(ContestCard2(
-            filteredUpcomingContests[i].name,
+            filteredUpcomingContests[i].name.trim(),
             filteredUpcomingContests[i].endTime,
             filteredUpcomingContests[i].platform,
             filteredUpcomingContests[i].challengeType,
             filteredUpcomingContests[i].url,
-            "1 day",
             filteredUpcomingContests[i].startTime));
       }
       setState(() {
@@ -110,21 +108,20 @@ class _TimelineState extends State<Timeline> {
       allContests.clear();
       for (var i = 0; i < filteredOngoingContests.length; i++) {
         allContests.add(ContestCard2(
-            filteredOngoingContests[i].name,
+            filteredOngoingContests[i].name.trim(),
             filteredOngoingContests[i].endTime,
             filteredOngoingContests[i].platform,
             filteredOngoingContests[i].challengeType,
             filteredOngoingContests[i].url,
-            "1 day"));
+));
       }
       for (var i = 0; i < filteredUpcomingContests.length; i++) {
         allContests.add(ContestCard2(
-            filteredUpcomingContests[i].name,
+            filteredUpcomingContests[i].name.trim(),
             filteredUpcomingContests[i].endTime,
             filteredUpcomingContests[i].platform,
             filteredUpcomingContests[i].challengeType,
             filteredUpcomingContests[i].url,
-            "1 day",
             filteredUpcomingContests[i].startTime));
       }
     });
