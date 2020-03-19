@@ -1,5 +1,5 @@
 import 'dart:core';
-import 'package:codephile/resources/colors.dart';
+import 'package:codephile/colors.dart';
 import 'package:codephile/models/contests.dart';
 import 'package:codephile/models/filters.dart';
 import 'package:codephile/screens/contests/contest_card_2.dart';

@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'package:codephile/models/submission.dart';
 import 'package:http/http.dart' as http;
-import 'package:codephile/resources/strings.dart';
 
+String url = "https://codephile-test.herokuapp.com/v1";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<List<Submission>> getSubmissionList(String token, String uId) async {
-  String endpoint = "/submission/all/";
+Future<Submission> submissionList(String token, String uId) async {
+  String endpoint = "/submission/";
+  print(uId);
+  print(token);
   String uri = url + endpoint + uId;
   var tokenAuth = {"Authorization": token};
   try {
@@ -16,8 +18,8 @@ Future<List<Submission>> getSubmissionList(String token, String uId) async {
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
-    List<Submission> submissionList = submissionFromJson(response.body);
-    return submissionList;
+    Submission submission = new Submission.fromJson(jsonResponse);
+    return submission;
   } on Exception catch (e) {
     print(e);
     return null;

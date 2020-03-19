@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:codephile/resources/colors.dart';
+import 'package:codephile/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/models/signup.dart';

@@ -3,7 +3,8 @@ import 'package:codephile/screens/contests/contests_screen.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:codephile/screens/submission/submission_screen.dart';
 import 'package:codephile/screens/search/search_page.dart';
-import 'package:codephile/resources/colors.dart';
+import 'package:codephile/colors.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
   final String token;
@@ -39,17 +40,15 @@ class HomePageState extends State<HomePage> {
           ),
       MaterialApp(
             debugShowCheckedModeBanner: false,
-        home: SearchPage(token, userId),
+        home: SearchPage(token),
       ),
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SubmissionScreen(token: token, id: userId),
+        home: Submission(token: token, id: userId),
       ),
       MaterialApp(
         debugShowCheckedModeBanner: false,
-//        //TODO: implement UserId
-//        //TODO: implement token
-        home: Profile(token, userId, true, false),//TODO: use modular _isMyProfile
+        home: Profile(token, userId),
       ),
     ];
   }

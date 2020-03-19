@@ -5,7 +5,7 @@ import 'dart:core';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'signup2.dart';
-import 'package:codephile/resources/colors.dart';
+import 'package:codephile/colors.dart';
 
 class SignUpPage extends StatefulWidget {
   @override

@@ -1,120 +1,104 @@
 import 'dart:core';
 import 'package:codephile/models/submission.dart';
-import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/screens/submission/submission_card.dart';
 import 'package:codephile/services/submission.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/services/user.dart';
 
-class SubmissionScreen extends StatefulWidget {
+class Submission extends StatefulWidget {
   final String token;
   final String id;
-  SubmissionScreen({Key key, this.token, this.id}) : super(key: key);
+  Submission({Key key, this.token, this.id}) : super(key: key);
 
   @override
-  _SubmissionScreenState createState() => _SubmissionScreenState(token: token, uid: id);
+  _SubmissionState createState() => _SubmissionState(token: token, uid: id);
 }
 
-class _SubmissionScreenState extends State<SubmissionScreen> {
+class _SubmissionState extends State<Submission> {
 
   final String token;
   final String uid;
 
-  _SubmissionScreenState({Key key, this.token, this.uid});
+  _SubmissionState({Key key, this.token, this.uid});
 
-//  List<CodechefSubmission> codechef;
-//  List<CodeforcesSubmission> codeforces;
-//  List<HackerrankSubmission> hackerrank;
-//  List<SpojSubmission> spoj;
-//  String _usernameCodechef;
-//  String _usernameSpoj;
-//  String _usernameHackerrank;
-//  String _usernameCodeforces;
-
-  List<Submission> submissionList;
+  List<Codechef> codechef;
+  List<Codeforces> codeforces;
+  List<Hackerrank> hackerrank;
+  List<Spoj> spoj;
   List<Widget> allSubmission = List<Widget>();
   bool _isLoading = true;
+  String _usernameCodechef;
   String _username;
   String _picture;
-  String _fullName;
+  String _usernameSpoj;
+  String _usernameHackerrank;
+  String _usernameCodeforces;
 
   @override
   void initState() {
 
-    getSubmissionList(token, uid).then((submissions){
-      submissionList = submissions;
+    submissionList(token, uid).then((submission){
+      codechef = submission.codechef;
+      codeforces = submission.codeforces;
+      hackerrank = submission.hackerrank;
+      spoj = submission.spoj;
 
       getUser(token, uid).then((user){
-        _fullName = user.fullname;
         _username = user.username;
-//        _usernameCodechef = user.handle.codechef;
-//        _usernameSpoj = user.handle.spoj;
-//        _usernameHackerrank = user.handle.hackerrank;
-//        _usernameCodeforces = user.handle.codeforces;
+        _usernameCodechef = user.handle.codechef;
+        _usernameSpoj = user.handle.spoj;
+        _usernameHackerrank = user.handle.hackerrank;
+        _usernameCodeforces = user.handle.codeforces;
         _picture = user.picture;
 
-        if(submissionList != null){
-          for(int i = 0; i < submissionList.length; i++){
-            allSubmission.add(
-              SubmissionCard(
-                _fullName,
-                "@"+ _username,
-                submissionType(submissionList[i]),
-                submissionList[i].name,
-                submissionList[i].createdAt,
-                _picture,
-              )
-            );
-          }
-        }
 
-//      for(var i = 0; i < codechef.length; i++){
-//        codechef[i].status == "AC" && codechef != []?
-//        allSubmission.add(SubmissionCard(
-//            _username,
-//            "@" +_usernameCodechef,
-//            "Codechef",
-//            codechef[i].name,
-//            codechef[i].creationDate,
-//            _picture,
-//        )) : null ;
-//      }
-//
-//      for(var i = 0; i < codeforces.length; i++){
-//        codeforces[i].status == "AC" && codeforces != []?
-//        allSubmission.add(SubmissionCard(
-//          _username,
-//          "@" + _usernameCodeforces,
-//          "Codefroces",
-//          codeforces[i].name,
-//          codeforces[i].creationDate,
-//          _picture,
-//        )): null;
-//      }
-//
-//      for(var i = 0; i < hackerrank.length; i++){
-////        hackerrank[i].status == "AC" && hackerrank != [] ?
-//        allSubmission.add(SubmissionCard(
-//          _username,
-//          "@" + _usernameHackerrank,
-//          "Hackerrank",
-//          hackerrank[i].name,
-//          hackerrank[i].creationDate,
-//          _picture,
-//        ));
-//      }
-//
-//      for(var i = 0; i < spoj.length; i++){
-//        spoj[i].status == "accepted" && spoj != [] ?
-//        allSubmission.add(SubmissionCard(
-//          _username,
-//          "@" + _usernameSpoj,
-//          "Spoj",
-//          spoj[i].name,
-//          spoj[i].creationDate,
-//          _picture,
-//        )) : null;
-//      }
+      for(var i = 0; i < codechef.length; i++){
+        codechef[i].status == "AC" && codechef != []?
+        allSubmission.add(SubmissionCard(
+            _username,
+            "@" +_usernameCodechef,
+            "Codechef",
+            codechef[i].name,
+            codechef[i].time,
+            _picture,
+        )) : null ;
+      }
+
+      for(var i = 0; i < codeforces.length; i++){
+        codeforces[i].status == "AC" && codeforces != []?
+        allSubmission.add(SubmissionCard(
+          _username,
+          "@" + _usernameCodeforces,
+          "Codefroces",
+          codeforces[i].name,
+          codeforces[i].time,
+          _picture,
+        )): null;
+      }
+
+      for(var i = 0; i < hackerrank.length; i++){
+//        hackerrank[i].status == "AC" && hackerrank != [] ?
+        allSubmission.add(SubmissionCard(
+          _username,
+          "@" + _usernameHackerrank,
+          "Hackerrank",
+          hackerrank[i].name,
+          hackerrank[i].time,
+          _picture,
+        ));
+      }
+
+      for(var i = 0; i < spoj.length; i++){
+        spoj[i].status == "accepted" && spoj != [] ?
+        allSubmission.add(SubmissionCard(
+          _username,
+          "@" + _usernameSpoj,
+          "Spoj",
+          spoj[i].name,
+          spoj[i].time,
+          _picture,
+        )) : null;
+      }
 
       setState(() {
         _isLoading = false;
@@ -128,6 +112,9 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+//      appBar: AppBar(
+//        title: Text("Contests"),
+//      ),
       body: (_isLoading)?
       Center(
           child: CircularProgressIndicator()
@@ -172,4 +159,7 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
     }
   }
 
+  String getTime(String time){
+
+  }
 }

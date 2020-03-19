@@ -1,4 +1,4 @@
-import 'package:codephile/resources/colors.dart';
+import 'package:codephile/colors.dart';
 import 'package:codephile/services/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

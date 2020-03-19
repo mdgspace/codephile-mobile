@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'signup3.dart';
 import 'package:codephile/services/handle.dart';
-import 'package:codephile/resources/colors.dart';
+import 'package:codephile/colors.dart';
 import 'package:codephile/models/signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
