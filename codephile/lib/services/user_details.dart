@@ -7,7 +7,7 @@ import 'package:codephile/resources/strings.dart';
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<UserDetails> getAllPlatformDetails(String token, String uId) async {
+Future<UserDetails>   getAllPlatformDetails(String token, String uId) async {
 
   String endpoint = "/user/fetch/$uId/";
   String uri = url + endpoint;

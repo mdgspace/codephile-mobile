@@ -22,15 +22,6 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
 
   _SubmissionScreenState({Key key, this.token, this.uid});
 
-//  List<CodechefSubmission> codechef;
-//  List<CodeforcesSubmission> codeforces;
-//  List<HackerrankSubmission> hackerrank;
-//  List<SpojSubmission> spoj;
-//  String _usernameCodechef;
-//  String _usernameSpoj;
-//  String _usernameHackerrank;
-//  String _usernameCodeforces;
-
   List<Submission> submissionList;
   List<Widget> allSubmission = List<Widget>();
   bool _isLoading = true;
@@ -47,10 +38,6 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
       getUser(token, uid).then((user){
         _fullName = user.fullname;
         _username = user.username;
-//        _usernameCodechef = user.handle.codechef;
-//        _usernameSpoj = user.handle.spoj;
-//        _usernameHackerrank = user.handle.hackerrank;
-//        _usernameCodeforces = user.handle.codeforces;
         _picture = user.picture;
 
         if(submissionList != null){
@@ -68,53 +55,6 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
           }
         }
 
-//      for(var i = 0; i < codechef.length; i++){
-//        codechef[i].status == "AC" && codechef != []?
-//        allSubmission.add(SubmissionCard(
-//            _username,
-//            "@" +_usernameCodechef,
-//            "Codechef",
-//            codechef[i].name,
-//            codechef[i].creationDate,
-//            _picture,
-//        )) : null ;
-//      }
-//
-//      for(var i = 0; i < codeforces.length; i++){
-//        codeforces[i].status == "AC" && codeforces != []?
-//        allSubmission.add(SubmissionCard(
-//          _username,
-//          "@" + _usernameCodeforces,
-//          "Codefroces",
-//          codeforces[i].name,
-//          codeforces[i].creationDate,
-//          _picture,
-//        )): null;
-//      }
-//
-//      for(var i = 0; i < hackerrank.length; i++){
-////        hackerrank[i].status == "AC" && hackerrank != [] ?
-//        allSubmission.add(SubmissionCard(
-//          _username,
-//          "@" + _usernameHackerrank,
-//          "Hackerrank",
-//          hackerrank[i].name,
-//          hackerrank[i].creationDate,
-//          _picture,
-//        ));
-//      }
-//
-//      for(var i = 0; i < spoj.length; i++){
-//        spoj[i].status == "accepted" && spoj != [] ?
-//        allSubmission.add(SubmissionCard(
-//          _username,
-//          "@" + _usernameSpoj,
-//          "Spoj",
-//          spoj[i].name,
-//          spoj[i].creationDate,
-//          _picture,
-//        )) : null;
-//      }
 
       setState(() {
         _isLoading = false;

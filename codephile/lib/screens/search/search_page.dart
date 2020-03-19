@@ -65,8 +65,7 @@ class _SearchPageState extends State<SearchPage> {
                             color : const Color.fromRGBO(151, 151, 151, 1),
                           )
                       ),
-//                      onChanged: searchOperation,
-                      onSubmitted: (text){
+                        onSubmitted: (text){
                         if(text != ""){
                           _handleSearch(text);
                         }
@@ -119,13 +118,6 @@ class _SearchPageState extends State<SearchPage> {
       )
           :
 
-//        Column(
-//          mainAxisAlignment: MainAxisAlignment.start,
-//          children: <Widget>[
-//            Flexible(
-//              child:
-//      SingleChildScrollView(
-//        child:
         ListView.builder(
           shrinkWrap: true,
           itemCount: searchResult.length,
@@ -147,10 +139,6 @@ class _SearchPageState extends State<SearchPage> {
             );
           },
         ),
-//      ),
-//            )
-//          ],
-//        )
     );
   }
 
@@ -173,5 +161,4 @@ class _SearchPageState extends State<SearchPage> {
       });
     });
   }
-
 }
