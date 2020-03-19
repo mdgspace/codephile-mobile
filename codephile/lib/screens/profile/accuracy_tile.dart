@@ -1,9 +1,10 @@
+import 'package:codephile/resources/strings.dart';
 import 'package:flutter/material.dart';
 
 class AccuracyTile extends StatelessWidget{
 
   final String _platform;
-  final double _accuracy;
+  final String _accuracy;
 
   AccuracyTile(this._platform, this._accuracy);
 
@@ -36,8 +37,8 @@ class AccuracyTile extends StatelessWidget{
                 padding: const EdgeInsets.all(3.0),
                 child: Image.asset(
                   getIconUrl(_platform),
-                  width: 24.0,
-                  height: 24.0,
+                  width: MediaQuery.of(context).size.width/16,
+                  height: MediaQuery.of(context).size.width/16,
                 ),
               ),
             ),
@@ -55,6 +56,12 @@ class AccuracyTile extends StatelessWidget{
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
+                  ((_accuracy == "NaN")||(_accuracy == ""))?
+                  "-"
+                      :
+                  (_accuracy.length > 4)?
+                  "${_accuracy.substring(0, 4)}"
+                  :
                   "$_accuracy",
                   style: TextStyle(
                     fontSize: 14.0,
@@ -70,16 +77,6 @@ class AccuracyTile extends StatelessWidget{
   }
 
   String getIconUrl(String platform){
-    final String codeChefIcon =
-        "assets/platformIcons/codeChefIcon.png";
-    final String hackerRankIcon =
-        "assets/platformIcons/hackerRankIcon.png";
-    final String hackerEarthIcon =
-        "assets/platformIcons/hackerEarthIcon.png";
-    final String codeForcesIcon =
-        "assets/platformIcons/codeForcesIcon.png";
-    final String otherIcon =
-        "assets/platformIcons/otherIcon.jpg";
 
     switch(platform.toLowerCase()){
       case "codechef" :
@@ -93,6 +90,9 @@ class AccuracyTile extends StatelessWidget{
         break;
       case "codeforces":
         return codeForcesIcon;
+        break;
+      case "spoj":
+        return spojIcon;
         break;
       default:
         return otherIcon;

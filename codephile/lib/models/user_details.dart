@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-UserDetails userFromJson(String str) => UserDetails.fromJson(json.decode(str));
+UserDetails userDetailsFromJson(String str) => UserDetails.fromJson(json.decode(str));
 
-String userToJson(UserDetails data) => json.encode(data.toJson());
+String userDetailsToJson(UserDetails data) => json.encode(data.toJson());
 
 class UserDetails {
   Profile codechefProfile;
@@ -53,12 +53,14 @@ class Profile {
 }
 
 class ProfileClass {
+  String accuracy;
   String name;
   String rank;
   String school;
   String userName;
 
   ProfileClass({
+    this.accuracy,
     this.name,
     this.rank,
     this.school,
@@ -66,6 +68,7 @@ class ProfileClass {
   });
 
   factory ProfileClass.fromJson(Map<String, dynamic> json) => ProfileClass(
+    accuracy: json["accuracy"],
     name: json["name"],
     rank: json["rank"],
     school: json["school"],
@@ -73,6 +76,7 @@ class ProfileClass {
   );
 
   Map<String, dynamic> toJson() => {
+    "accuracy": accuracy,
     "name": name,
     "rank": rank,
     "school": school,

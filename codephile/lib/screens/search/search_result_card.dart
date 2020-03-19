@@ -6,17 +6,18 @@ class SearchResultCard extends StatelessWidget{
   final String _name;
   final String _handle;
   final String _imageLink;
-  final String _uid;
   final String token;
 
-  const SearchResultCard(this.token, this._name, this._handle, this._imageLink, this._uid, {Key key}) : super(key: key);
+  const SearchResultCard(this.token, this._name, this._handle, this._imageLink, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+      child: Container(
+        color: Colors.transparent,
         child: Row(
+          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
@@ -59,11 +60,6 @@ class SearchResultCard extends StatelessWidget{
           ],
         ),
       ),
-      onTap: (){
-        Navigator.push(
-            context, new MaterialPageRoute(builder: (context) => new Profile(token, _uid))
-        );
-      },
     );
   }
 

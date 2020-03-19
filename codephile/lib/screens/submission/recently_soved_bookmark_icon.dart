@@ -9,13 +9,13 @@ class RecentlySolvedBookmarkIcon extends StatelessWidget{
           Positioned(
             child: Icon(
               Icons.bookmark,
-              size: 30.0,
+              size: MediaQuery.of(context).size.width/13,
               color: const Color.fromRGBO(51, 102, 255, 1),
             ),
           ),
           Positioned(
-            left: 7.5,
-            top: 7.5,
+            left: MediaQuery.of(context).size.width/(13*4),
+            top: MediaQuery.of(context).size.width/(13*4),
             child: Icon(
               Icons.check,
               size: 15.0,

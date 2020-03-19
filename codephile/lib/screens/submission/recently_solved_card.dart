@@ -1,14 +1,16 @@
+import 'package:codephile/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/screens/submission/recently_soved_bookmark_icon.dart';
 
 class RecentlySolvedCard extends StatelessWidget{
 
-final String _problemDescription;
+final String _problemName;
 final String _platform;
-final int _minsAgo;
+final String _time;
+final String _url;
 //TODO: implement mins/hours ago feature
 
-RecentlySolvedCard(this._problemDescription, this._platform, this._minsAgo);
+RecentlySolvedCard(this._problemName, this._platform, this._time, this._url);
 
 @override
 Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ Widget build(BuildContext context) {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      "$_problemDescription",
+                      "$_problemName",
                       style: TextStyle(
                         fontSize: 17.0,
                         color: const Color.fromRGBO(36, 36, 36, 1),
@@ -38,10 +40,10 @@ Widget build(BuildContext context) {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: RecentlySolvedBookmarkIcon(),
-              )
+//              Padding(
+//                padding: const EdgeInsets.all(8.0),
+//                child: RecentlySolvedBookmarkIcon(),
+//              )
 
             ],
           ),
@@ -59,8 +61,8 @@ Widget build(BuildContext context) {
                       padding: const EdgeInsets.all(3.0),
                       child: Image.asset(
                         getIconUrl(_platform),
-                        width: 20.0,
-                        height: 20.0,
+                        width: MediaQuery.of(context).size.width/20,
+                        height: MediaQuery.of(context).size.width/20,
                       ),
                     ),
                     Text(
@@ -76,7 +78,8 @@ Widget build(BuildContext context) {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "$_minsAgo mins ago",
+                  "${_time.substring(0, 10)}",
+                  //TODO: automate according to date format       Priority: 3
                   style: TextStyle(
                     fontSize: 14.0,
                     color: const Color.fromRGBO(145, 145, 145, 1),
@@ -91,18 +94,8 @@ Widget build(BuildContext context) {
   );
 }
 
+//TODO: make import function from file
 String getIconUrl(String platform){
-  final String codeChefIcon =
-      "assets/platformIcons/codeChefIcon.png";
-  final String hackerRankIcon =
-      "assets/platformIcons/hackerRankIcon.png";
-  final String hackerEarthIcon =
-      "assets/platformIcons/hackerEarthIcon.png";
-  final String codeForcesIcon =
-      "assets/platformIcons/codeForcesIcon.png";
-  final String otherIcon =
-      "assets/platformIcons/otherIcon.jpg";
-
   switch(platform.toLowerCase()){
     case "codechef" :
       return codeChefIcon;
@@ -116,6 +109,8 @@ String getIconUrl(String platform){
     case "codeforces":
       return codeForcesIcon;
       break;
+    case "spoj":
+      return spojIcon;
     default:
       return otherIcon;
   }

@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:codephile/models/user_details.dart';
 import 'package:http/http.dart' as http;
+import 'package:codephile/resources/strings.dart';
 
-String url = "https://codephile-test.herokuapp.com/v1";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<UserDetails> getUserDetails(String token, String uId) async {
+Future<UserDetails> getAllPlatformDetails(String token, String uId) async {
 
   String endpoint = "/user/fetch/$uId/";
   String uri = url + endpoint;
