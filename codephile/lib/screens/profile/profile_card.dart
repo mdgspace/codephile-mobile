@@ -348,27 +348,6 @@ class _ProfileCardState extends State<ProfileCard>{
           isFollowing = false;
         });
       }
-//      if(statusCode == null){
-//        Fluttertoast.showToast(
-//          msg: "Something went wrong. Please try again later.",
-//          toastLength: Toast.LENGTH_SHORT,
-//          gravity: ToastGravity.CENTER,
-//          timeInSecForIos: 7,
-//          fontSize: 12.0,
-//        );
-//      }else{
-//        if(statusCode == 200){
-//
-//        }else{
-//          Fluttertoast.showToast(
-//            msg: "Something went wrong. Please try again later.",
-//            toastLength: Toast.LENGTH_SHORT,
-//            gravity: ToastGravity.CENTER,
-//            timeInSecForIos: 7,
-//            fontSize: 12.0,
-//          );
-//        }
-//      }
     });
   }
 
@@ -402,7 +381,4 @@ class _ProfileCardState extends State<ProfileCard>{
       });
     }
   }
-
-
-
 }

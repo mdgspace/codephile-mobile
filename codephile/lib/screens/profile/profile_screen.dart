@@ -36,7 +36,6 @@ class _ProfileState extends State<Profile> {
   List<Submission> _submissionsList;
   List<Submission> _mostRecentSubmissions;
   List<Following> _followingList;
-//  bool _isFollowing;
 
   @override
   void initState() {
@@ -116,8 +115,6 @@ class _ProfileState extends State<Profile> {
       _followingList = followingList;
     }
     //TODO: use shared prefs
-//    _user = user;
-//    _userPlatformDetails = platformDetails;
     _submissionsList = submissionsList;
     getLatestTwoSubmissions();
 
