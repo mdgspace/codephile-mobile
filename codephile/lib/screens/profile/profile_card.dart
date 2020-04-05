@@ -4,6 +4,7 @@ import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/login/login.dart';
 import 'package:codephile/services/follow.dart';
+import 'package:codephile/services/logout_user.dart';
 import 'package:codephile/services/unfollow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -143,7 +144,7 @@ class _ProfileCardState extends State<ProfileCard>{
                                 ),
                                 onTap: (){
                                   if(widget._isMyProfile){
-                                    logout();
+                                    logout(widget._token);
                                   }else{
                                     //TODO: implement compare       Priority: 1
                                   }
@@ -385,7 +386,10 @@ class _ProfileCardState extends State<ProfileCard>{
     }
   }
 
-  void logout() async{
+  void logout(String token) async{
+    logoutUser(token).then((wasSuccessful){
+      print(wasSuccessful);
+    });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove("token");
     await prefs.remove("uid");
