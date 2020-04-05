@@ -36,7 +36,7 @@ class Submission {
     points: json["points"],
     rating: json["rating"],
     status: json["status"],
-    tags: List<String>.from(json["tags"].map((x) => x)),
+    tags: (json["tags"] != null)? List<String>.from(json["tags"].map((x) => x)) : null,
     url: json["url"],
   );
 
