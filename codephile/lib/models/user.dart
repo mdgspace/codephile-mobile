@@ -9,6 +9,7 @@ class User {
   Handle handle;
   String id;
   String institute;
+  int noOfFollowing;
   String picture;
   String username;
 
@@ -17,6 +18,7 @@ class User {
     this.handle,
     this.id,
     this.institute,
+    this.noOfFollowing,
     this.picture,
     this.username,
   });
@@ -26,15 +28,17 @@ class User {
     handle: Handle.fromJson(json["handle"]),
     id: json["id"],
     institute: json["institute"],
+    noOfFollowing: json["no_of_following"],
     picture: json["picture"],
     username: json["username"],
   );
 
   Map<String, dynamic> toJson() => {
-    "fullname" : fullname,
+    "fullname": fullname,
     "handle": handle.toJson(),
     "id": id,
-    "institute" : institute,
+    "institute": institute,
+    "no_of_following": noOfFollowing,
     "picture": picture,
     "username": username,
   };
