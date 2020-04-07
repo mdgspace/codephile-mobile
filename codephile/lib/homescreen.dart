@@ -47,9 +47,7 @@ class HomePageState extends State<HomePage> {
       ),
       MaterialApp(
         debugShowCheckedModeBanner: false,
-//        //TODO: implement UserId
-//        //TODO: implement token
-        home: Profile(token, userId, true, false),//TODO: use modular _isMyProfile
+        home: Profile(token, userId, true, false),
       ),
     ];
   }

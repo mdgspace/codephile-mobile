@@ -394,9 +394,8 @@ class _ProfileCardState extends State<ProfileCard>{
     await prefs.remove("token");
     await prefs.remove("uid");
     Navigator.of(context).popUntil((route) => route.isFirst);
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+    Navigator.of(context, rootNavigator: true).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginPage())
     );
   }
 }
