@@ -1,11 +1,15 @@
+import 'package:codephile/homescreen.dart';
 import 'package:codephile/models/following.dart';
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
+import 'package:codephile/screens/login/login.dart';
 import 'package:codephile/services/follow.dart';
+import 'package:codephile/services/logout_user.dart';
 import 'package:codephile/services/unfollow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/user_details.dart';
 import 'accuracy_tile.dart';
 
@@ -121,9 +125,6 @@ class _ProfileCardState extends State<ProfileCard>{
                                   ),
                                 ],
                               ),
-                              widget._isMyProfile?
-                              Container()
-                                  :
                               GestureDetector(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -132,7 +133,7 @@ class _ProfileCardState extends State<ProfileCard>{
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        "Compare",
+                                        widget._isMyProfile? "Logout":"Compare",
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             color: Colors.white
@@ -142,7 +143,11 @@ class _ProfileCardState extends State<ProfileCard>{
                                   ),
                                 ),
                                 onTap: (){
-                                  //TODO: implement compare       Priority: 1
+                                  if(widget._isMyProfile){
+                                    logout(widget._token);
+                                  }else{
+                                    //TODO: implement compare       Priority: 1
+                                  }
                                 },
                               ),
                             ],
@@ -198,7 +203,7 @@ class _ProfileCardState extends State<ProfileCard>{
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 4.0),
                           child: Text(
-                            "45 Following",//TODO: implement following       Priority: 1
+                            "${widget._user.noOfFollowing} Following",//TODO: implement following       Priority: 1
                             style: TextStyle(
                               fontSize: 18.0,
                               color: const Color.fromRGBO(36, 36, 36, 1),
@@ -284,7 +289,6 @@ class _ProfileCardState extends State<ProfileCard>{
                 }
 
                 changeButtonAppearance();
-                //TODO: implement un-follow     Priority: 1
                 //TODO: implement load on follow/ un-follow     Priority: 2
               },
             ),
@@ -380,5 +384,18 @@ class _ProfileCardState extends State<ProfileCard>{
         isFollowing = true;
       });
     }
+  }
+
+  void logout(String token) async{
+    logoutUser(token).then((wasSuccessful){
+      print(wasSuccessful);
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("token");
+    await prefs.remove("uid");
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.of(context, rootNavigator: true).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginPage())
+    );
   }
 }
