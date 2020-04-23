@@ -1,17 +1,35 @@
 import 'package:intl/intl.dart';
+import 'dart:convert';
 
 class ContestFilter {
   int duration;
   bool ongoing;
   bool upcoming;
   DateTime startDate;
-  var platform;
+  List<dynamic> platform;
   ContestFilter(
       {this.duration,
       this.platform,
       this.startDate,
       this.ongoing,
       this.upcoming});
+
+  Map<String,dynamic> toJson(){
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['duration']=this.duration.toString();
+    data['ongoing']=this.ongoing.toString();
+    data['upcoming']=this.upcoming.toString();
+    data['startDate']=this.startDate.toIso8601String();
+    data['platform']=json.encode(this.platform);
+    return data;
+  }
+  ContestFilter.fromJson(Map<String,dynamic> inputJson){
+    duration=int.parse(inputJson['duration']);
+    ongoing = inputJson['ongoing']=='true';
+    upcoming = inputJson['upcoming']=='true';
+    startDate = DateTime.parse(inputJson['startDate']);
+    platform=json.decode(inputJson['platform']);
+  }
 }
 
 String getLabelForValue(int value) {

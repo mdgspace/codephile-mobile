@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:core';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/models/contests.dart';
@@ -6,6 +7,7 @@ import 'package:codephile/screens/contests/contest_card_2.dart';
 import 'package:codephile/screens/contests/filter_button.dart';
 import 'package:codephile/services/contests.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Timeline extends StatefulWidget {
   final String token;
@@ -27,36 +29,29 @@ class _TimelineState extends State<Timeline> {
 
   @override
   void initState() {
-    print(widget.token);
-    setState(() {
-      filter = ContestFilter(
-          duration: 4,
-          platform: [true, true, true, true, false],
-          startDate: DateTime.now(),
-          ongoing: true,
-          upcoming: true);
+    print('initState');
+    SharedPreferences.getInstance().then((pref) {
+      if (pref.containsKey('filter')) {
+        setState(() {
+          filter = ContestFilter.fromJson(jsonDecode(pref.getString('filter')));
+        });
+      } else {
+        setState(() {
+          filter = ContestFilter(
+              duration: 4,
+              platform: [true, true, true, true, false],
+              startDate: DateTime.now(),
+              ongoing: true,
+              upcoming: true);
+        });
+        pref.setString('filter', jsonEncode(filter.toJson()));
+      }
     });
+
     contestList(widget.token).then((contests) {
       ongoingContests = contests.ongoing;
       upcomingContests = contests.upcoming;
       applyFilter();
-      for (var i = 0; i < filteredOngoingContests.length; i++) {
-        allContests.add(ContestCard2(
-            filteredOngoingContests[i].name.trim(),
-            filteredOngoingContests[i].endTime,
-            filteredOngoingContests[i].platform,
-            filteredOngoingContests[i].challengeType,
-            filteredOngoingContests[i].url));
-      }
-      for (var i = 0; i < filteredUpcomingContests.length; i++) {
-        allContests.add(ContestCard2(
-            filteredUpcomingContests[i].name.trim(),
-            filteredUpcomingContests[i].endTime,
-            filteredUpcomingContests[i].platform,
-            filteredUpcomingContests[i].challengeType,
-            filteredUpcomingContests[i].url,
-            filteredUpcomingContests[i].startTime));
-      }
       setState(() {
         _isLoading = false;
       });
@@ -83,6 +78,7 @@ class _TimelineState extends State<Timeline> {
   }
 
   applyFilter() {
+    print('applyFilter');
     setState(() {
       filteredOngoingContests.clear();
       filteredUpcomingContests.clear();
@@ -108,12 +104,12 @@ class _TimelineState extends State<Timeline> {
       allContests.clear();
       for (var i = 0; i < filteredOngoingContests.length; i++) {
         allContests.add(ContestCard2(
-            filteredOngoingContests[i].name.trim(),
-            filteredOngoingContests[i].endTime,
-            filteredOngoingContests[i].platform,
-            filteredOngoingContests[i].challengeType,
-            filteredOngoingContests[i].url,
-));
+          filteredOngoingContests[i].name.trim(),
+          filteredOngoingContests[i].endTime,
+          filteredOngoingContests[i].platform,
+          filteredOngoingContests[i].challengeType,
+          filteredOngoingContests[i].url,
+        ));
       }
       for (var i = 0; i < filteredUpcomingContests.length; i++) {
         allContests.add(ContestCard2(
