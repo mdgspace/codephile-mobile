@@ -37,8 +37,8 @@ class _TimelineState extends State<Timeline> {
           upcoming: true);
     });
     contestList(widget.token).then((contests) {
-      ongoingContests = contests.result.ongoing;
-      upcomingContests = contests.result.upcoming;
+      ongoingContests = contests.ongoing;
+      upcomingContests = contests.upcoming;
       applyFilter();
       for (var i = 0; i < filteredOngoingContests.length; i++) {
         allContests.add(ContestCard2(
