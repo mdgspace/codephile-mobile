@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'bar.dart';
 import 'signup3.dart';
 import 'package:codephile/services/handle.dart';
 import 'package:codephile/resources/colors.dart';
@@ -7,8 +8,8 @@ import 'package:codephile/models/signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpPage2 extends StatefulWidget {
- final String name;
- final String institute;
+  final String name;
+  final String institute;
 
   const SignUpPage2({Key key, this.name, this.institute})
       : super(key: key);
@@ -20,12 +21,12 @@ class _SignUpPageState extends State<SignUpPage2> {
 
   String name;
   String institute;
-  bool _buttonText = false, _buttonColor = false;
   _SignUpPageState({Key key, this.name, this.institute});
   String _codechef, _hackerrank,_codeforces, _spoj;
+  bool enableTextFields = true;
   Handle handle;
 
-   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -38,46 +39,53 @@ class _SignUpPageState extends State<SignUpPage2> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return new Scaffold(
-      resizeToAvoidBottomPadding: false,
+//      resizeToAvoidBottomPadding: false,
       key: _scaffoldKey,
-      body: new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              _bar(width, true),
-              _bar(width, true),
-              _bar(width, false),
-            ],
-          ),
-          Expanded(
-              child: Padding(
-                  padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-                  child: new Form(
-                    key: _formKey,
-                    child: ListView(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 20.0),
-                          child: Text('Which competetive platforms do you use?',
-                              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-                        ),
-                        _showCodechefInput(width),
-                        SizedBox(height: 10.0),
-                        _showHackerrankInput(width),
-                        SizedBox(height: 10.0),
-                        _showCodeforcesInput(width),
-                        SizedBox(height: 10.0),
-                        _showSpojInput(width),
-                        SizedBox(height: 110.0),
-                        _showNextButton(),
-                        SizedBox(height: 20.0),
-                      ],
-                    ),
-                  ))),
-        ],
+      body: Form(
+        key: _formKey,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Bar(true),
+                    Bar(true),
+                    Bar(false),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: MediaQuery.of(context).size.height/15,),
+                      Text(
+                          'Which competetive platforms do you use?',
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold
+                          )
+                      ),
+                      _showCodechefInput(width),
+                      SizedBox(height: 10.0),
+                      _showHackerrankInput(width),
+                      SizedBox(height: 10.0),
+                      _showCodeforcesInput(width),
+                      SizedBox(height: 10.0),
+                      _showSpojInput(width),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            _showNextButton(),
+          ],
+        ),
       ),
     );
   }
@@ -106,16 +114,21 @@ class _SignUpPageState extends State<SignUpPage2> {
                 width: width/2,
                 padding: EdgeInsets.only(bottom: 10),
                 child: TextFormField(
+                  enabled: enableTextFields,
                   maxLines: 1,
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0, -5),
+                      hintText: "Codechef handle",
                       labelStyle: TextStyle(
-
                           fontFamily: 'Montserrat',
-                          color: Colors.grey),
+                          color: Colors.grey
+                      ),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey))),
+                          borderSide: BorderSide(color: Colors.grey)
+                      )
+                  ),
                   onSaved: (value) {
                     _codechef = value;
                   },
@@ -153,15 +166,20 @@ class _SignUpPageState extends State<SignUpPage2> {
                 width: width/2,
                 padding: EdgeInsets.only(bottom: 10),
                 child: TextFormField(
+                  enabled: enableTextFields,
                   maxLines: 1,
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0, -5),
+                      hintText: "Hackerrank handle",
                       labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           color: Colors.grey),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey))),
+                          borderSide: BorderSide(color: Colors.grey)
+                      )
+                  ),
                   onSaved: (value) => _hackerrank = value,
                 ),
               ),
@@ -196,15 +214,21 @@ class _SignUpPageState extends State<SignUpPage2> {
                 width: width/2,
                 padding: EdgeInsets.only(bottom: 10),
                 child: TextFormField(
+                  enabled: enableTextFields,
                   maxLines: 1,
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0, -5),
+                      hintText: "Codeforces handle",
                       labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
-                          color: Colors.grey),
+                          color: Colors.grey
+                      ),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey))),
+                          borderSide: BorderSide(color: Colors.grey)
+                      )
+                  ),
                   onSaved: (value) => _codeforces = value,
                 ),
               ),
@@ -239,10 +263,13 @@ class _SignUpPageState extends State<SignUpPage2> {
                 width: width/2,
                 padding: EdgeInsets.only(bottom: 10),
                 child: TextFormField(
+                  enabled: enableTextFields,
                   maxLines: 1,
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 0, -5),
+                      hintText: "Spoj handle",
                       labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           color: Colors.grey),
@@ -259,26 +286,49 @@ class _SignUpPageState extends State<SignUpPage2> {
   }
 
   Widget _showNextButton() {
-    return (handleVefifying) ? new FlatButton(
-      padding: EdgeInsets.all(10),
-      color: _buttonColor ?  codephileMain : Colors.grey[500],
-      child: new Text(
-        'VERIFYING HANDLE',
-        style: new TextStyle(
-          color: _buttonText ? Colors.white : Colors.grey[700],
+    return (handleVefifying) ?
+    Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: FlatButton(
+        color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width*0.85,
+            child: new Text(
+              'VERIFYING HANDLES',
+              textAlign: TextAlign.center,
+              style: new TextStyle(
+                  color: isNextButtonTapped ? Colors.grey[700] : Colors.white,
+                  fontSize: 16.0
+              ),
+            ),
+          ),
         ),
+        onPressed: (){},
       ),
-      onPressed: _validateAndSubmit,
-    ) : new FlatButton(
-      padding: EdgeInsets.all(10),
-      color: _buttonColor ?  codephileMain : Colors.grey[500],
-      child: new Text(
-        'NEXT',
-        style: new TextStyle(
-          color: _buttonText ? Colors.white : Colors.grey[700],
+    )
+        :
+    Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: FlatButton(
+        color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width*0.85,
+            child: new Text(
+              'NEXT',
+              textAlign: TextAlign.center,
+              style: new TextStyle(
+                color: isNextButtonTapped ? Colors.grey[700] : Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
+          ),
         ),
+        onPressed: _validateAndSubmit,
       ),
-      onPressed: _validateAndSubmit,
     );
   }
 
@@ -291,131 +341,112 @@ class _SignUpPageState extends State<SignUpPage2> {
     return false;
   }
 
-  void _validateAndSubmit() {
+  void _validateAndSubmit() async {
     if (_validateAndSave()) {
       setState(() {
         isNextButtonTapped = true;
-        _buttonText = true;
-        _buttonColor = true;
         handleVefifying = true;
+        enableTextFields = false;
       });
 
+      bool allHandlesValid = true;
       if (handleVefifying) {
-        handleVerify("codechef", _codechef).then((T) async {
-          if (T == true) {
+        if((_codechef != '')&&(_codechef != null)){
+          bool isValid = await verifyHandle("codechef", _codechef);
+          if (isValid != true) {
+            allHandlesValid = false;
             Fluttertoast.showToast(
-              msg: "Codechef handle verified",
+              msg: "Invalid Codechef handle",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
-              timeInSecForIos: 7,
-              fontSize: 12.0,
-            );
-          } else {
-            _codechef = "";
-            Fluttertoast.showToast(
-              msg: "Wrong handle for Codechef",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIos: 7,
               fontSize: 12.0,
             );
           }
-        });
+        }else{
+          _codechef = '';
+        }
 
-        handleVerify("hackerrank", _hackerrank).then((T) async {
-          if (T == true) {
+        if((_hackerrank != '')&&(_hackerrank != null)){
+          bool isValid = await verifyHandle("hackerrank", _hackerrank);
+          if (isValid != true) {
+            allHandlesValid = false;
             Fluttertoast.showToast(
-              msg: "Hackerrank handle verified",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIos: 7,
-              fontSize: 12.0,
-            );
-          } else {
-            _hackerrank = "";
-            Fluttertoast.showToast(
-              msg: "Wrong handle for Hackerrank",
+              msg: "Invalid Hackerrank handle",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               timeInSecForIos: 7,
               fontSize: 12.0,
             );
           }
-        });
-        handleVerify("codeforces", _codeforces).then((T) async {
-          if (T == true) {
-            Fluttertoast.showToast(
-              msg: "Codeforces handle verified",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIos: 7,
-              fontSize: 12.0,
-            );
-          } else {
-            _codeforces = "";
-            Fluttertoast.showToast(
-              msg: "Wrong handle for codeforces",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIos: 7,
-              fontSize: 12.0,
-            );
-          }
-        });
-        handleVerify("spoj", _spoj).then((T) async {
-          if (T == true) {
-            Fluttertoast.showToast(
-              msg: "Spoj handle verified",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIos: 7,
-              fontSize: 12.0,
-            );
-          } else {
-            _spoj = "";
-            Fluttertoast.showToast(
-              msg: "Wrong handle for Spoj",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIos: 7,
-              fontSize: 12.0,
-            );
-          }
-        });
+        }else{
+          _hackerrank = '';
+        }
 
-        Handle handle = new Handle(codechef: _codechef,
+        if((_codeforces != '')&&(_codeforces != null)){
+          bool isValid = await verifyHandle("codeforces", _codeforces);
+          if (isValid != true) {
+            allHandlesValid = false;
+            Fluttertoast.showToast(
+              msg: "Invalid Codeforces handle",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              fontSize: 12.0,
+            );
+          }
+        }else{
+          _codeforces = '';
+        }
+
+        if((_spoj != '')&&(_spoj != null)){
+          bool isValid = await verifyHandle("spoj", _spoj);
+          if (isValid != true) {
+            allHandlesValid = false;
+            Fluttertoast.showToast(
+              msg: "Invalid Spoj handle",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 7,
+              fontSize: 12.0,
+            );
+          }
+        }else{
+          _spoj = '';
+        }
+
+
+        var handle = Handle(
+            codechef: _codechef,
             codeforces: _codeforces,
             hackerrank: _hackerrank,
-            spoj: _spoj);
+            spoj: _spoj
+        );
 
-        setState(() async{
-          handleVefifying = false;
-          await new Future.delayed(const Duration(seconds: 10));
-          Navigator.pushReplacement(context,
-              CupertinoPageRoute(builder: (context) {
-                return SignUpPage3(
-                  name: name,
-                  institute: institute,
-                  handle: handle,
-                );
-              }));
-        });
-
+        if(allHandlesValid){
+          setState((){
+            handleVefifying = false;
+            isNextButtonTapped = false;
+            enableTextFields = true;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SignUpPage3(
+                      name: name,
+                      institute: institute,
+                      handle: handle,
+                    )
+                )
+            );
+          });
+        }else{
+          setState(() {
+            enableTextFields = true;
+            handleVefifying = false;
+            isNextButtonTapped = false;
+          });
+        }
       }
 
     }
   }
 
-  Widget _bar(double width, bool shade) {
-    return  Container(
-      margin: EdgeInsets.only(top: 45),
-      height: 10.0,
-      width: width/3.5,
-      child: Material(
-        borderRadius: BorderRadius.circular(10.0),
-        color: shade ? codephileMain : codephileMainShade ,
-        elevation: 7.0,
-      ),
-    );
-  }
 }
