@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'bar.dart';
 import 'signup2.dart';
 import 'package:codephile/resources/colors.dart';
@@ -129,38 +130,41 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _showInstituteInput() {
-    return InputDecorator(
-      decoration: InputDecoration(
-          labelText: 'Institute',
-          labelStyle: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.grey
-          ),
-          errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: Colors.grey
+        ),
+        borderRadius: BorderRadius.all(
+            Radius.circular(4.0)
+        ),
       ),
-      isEmpty: _institute == '',
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: _institute,
-          isDense: true,
-          onChanged: (String newValue) {
-            setState(() {
-              _institute = newValue;
-            });
-          },
-          items: _instituteList.map((String value) {
-            return DropdownMenuItem<String>(
+      child: SearchableDropdown<String>(
+        underline: Container(height: 0.0),
+        items: _instituteList.map((value)=>
+            DropdownMenuItem<String>(
               value: value,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width*0.8,
                 child: Text(
-                    value,
+                  value,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-            );
-          }).toList(),
+            )).toList(),
+        onChanged: (String institute){
+          setState(() {
+            _institute = institute;
+          });
+        },
+        hint: SizedBox(
+            width: MediaQuery.of(context).size.width*0.8,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Select Institute",
+              ),
+            )
         ),
       ),
     );
