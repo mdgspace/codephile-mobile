@@ -82,6 +82,7 @@ class _ProfileState extends State<Profile> {
           RecentlySolvedCard(_mostRecentSubmissions[1].name, submissionType(_mostRecentSubmissions[1]), _mostRecentSubmissions[1].createdAt, _mostRecentSubmissions[1].url)
               :
           Container(),
+          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length >=1))?
           GestureDetector(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 8.0),
@@ -94,21 +95,21 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             onTap: (){
-//              Navigator.push(context, new MaterialPageRoute(builder: (context) => new SubmissionScreen(token: widget.token, id: widget.uId)));
+              Navigator.push(context, new MaterialPageRoute(builder: (context) => new SubmissionScreen(token: widget.token, id: widget.uId)));
             },
           )
+              :
+              Container(height: 0.0)
         ],
       ),
     );
   }
 
   void initValues() async{
-    getUser(widget.token, widget.uId).then((user){
-      _user = user;
-    });
-    getAllPlatformDetails(widget.token, widget.uId).then((platformDetails){
-      _userPlatformDetails = platformDetails;
-    });
+    var user = await getUser(widget.token, widget.uId);
+    _user = user;
+    var platformDetails = await getAllPlatformDetails(widget.token, widget.uId);
+    _userPlatformDetails = platformDetails;
     var submissionsList = await getSubmissionList(widget.token, widget.uId);
     if(widget.checkIfFollowing){
       var followingList = await getFollowingList(widget.token);
