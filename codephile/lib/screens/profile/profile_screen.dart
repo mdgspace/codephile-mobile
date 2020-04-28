@@ -7,11 +7,9 @@ import 'package:codephile/screens/profile/profile_card.dart';
 import 'package:codephile/screens/submission/recently_solved_card.dart';
 import 'package:codephile/screens/submission/submission_screen.dart';
 import 'package:codephile/services/following_list.dart';
-import 'package:codephile/services/submission.dart';
 import 'package:codephile/services/user.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import '../../models/user_details.dart';
+import '../../models/user_profile_details.dart';
 import '../../services/user_details.dart';
 
 class Profile extends StatefulWidget {
@@ -32,7 +30,7 @@ class _ProfileState extends State<Profile> {
   bool _isLoading = true;
 
   User _user;
-  UserDetails _userPlatformDetails;
+  UserProfileDetails _userPlatformDetails;
   List<Submission> _submissionsList;
   List<Submission> _mostRecentSubmissions;
   List<Following> _followingList;
@@ -58,7 +56,7 @@ class _ProfileState extends State<Profile> {
           ProfileCard(
               widget.token,
               _user,
-              checkIfFollowing(widget.uId), //TODO: implement isFollowingCheck        Priority: 1
+              checkIfFollowing(widget.uId),
               widget._isMyProfile,
               _userPlatformDetails
           ),
@@ -95,7 +93,15 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             onTap: (){
-              Navigator.push(context, new MaterialPageRoute(builder: (context) => new SubmissionScreen(token: widget.token, id: widget.uId)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => new SubmissionScreen(
+                          token: widget.token,
+                          id: widget.uId
+                      )
+                  )
+              );
             },
           )
               :
@@ -108,15 +114,13 @@ class _ProfileState extends State<Profile> {
   void initValues() async{
     var user = await getUser(widget.token, widget.uId);
     _user = user;
-    var platformDetails = await getAllPlatformDetails(widget.token, widget.uId);
-    _userPlatformDetails = platformDetails;
-    var submissionsList = await getSubmissionList(widget.token, widget.uId);
+    _userPlatformDetails = _user.profiles;
     if(widget.checkIfFollowing){
       var followingList = await getFollowingList(widget.token);
       _followingList = followingList;
     }
     //TODO: use shared prefs
-    _submissionsList = submissionsList;
+    _submissionsList = _user.recentSubmissions;
     getLatestTwoSubmissions();
 
     setState(() {

@@ -18,10 +18,9 @@ Future<User> getUser(String token, String uId) async {
       headers: tokenAuth,
     );
 
-//    http.Response response = await client.get(uri);
-    final jsonResponse = jsonDecode(response.body);
-    User user = new User.fromJson(jsonResponse);
-    //print(response.body);
+    print(response.body);
+    User user = userFromJson(response.body);
+
     return user;
   } on Exception catch (e) {
     print(e);

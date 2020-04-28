@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../models/user_details.dart';
+import '../../models/user_profile_details.dart';
 import 'accuracy_tile.dart';
 
 class ProfileCard extends StatefulWidget{
@@ -20,7 +20,7 @@ class ProfileCard extends StatefulWidget{
   final User _user;
   final bool _isFollowing;
   final bool _isMyProfile;
-  final UserDetails _platformDetails;
+  final UserProfileDetails _platformDetails;
 
   ProfileCard(
       this._token,
@@ -302,25 +302,25 @@ class _ProfileCardState extends State<ProfileCard>{
     List<AccuracyTile> accuracyTileList = List<AccuracyTile>();
     if(widget._platformDetails != null){
       if(widget._platformDetails.codechefProfile != null){
-        accuracyTileList.add(AccuracyTile("codechef", widget._platformDetails.codechefProfile.profile.accuracy));
+        accuracyTileList.add(AccuracyTile("codechef", widget._platformDetails.codechefProfile.accuracy));
       }else {
         accuracyTileList.add(AccuracyTile("codechef", "-"));
       }
 
       if(widget._platformDetails.codeforcesProfile != null){
-        accuracyTileList.add(AccuracyTile("codeforces", widget._platformDetails.codeforcesProfile.profile.accuracy));
+        accuracyTileList.add(AccuracyTile("codeforces", widget._platformDetails.codeforcesProfile.accuracy));
       }else {
         accuracyTileList.add(AccuracyTile("codeforces", "-"));
       }
 
       if(widget._platformDetails.hackerrankProfile != null){
-        accuracyTileList.add(AccuracyTile("hackerrank", widget._platformDetails.hackerrankProfile.profile.accuracy));
+        accuracyTileList.add(AccuracyTile("hackerrank", widget._platformDetails.hackerrankProfile.accuracy));
       }else {
         accuracyTileList.add(AccuracyTile("hackerrank", "-"));
       }
 
       if(widget._platformDetails.spojProfile != null){
-        accuracyTileList.add(AccuracyTile("spoj", widget._platformDetails.spojProfile.profile.accuracy));
+        accuracyTileList.add(AccuracyTile("spoj", widget._platformDetails.spojProfile.accuracy));
       }else {
         accuracyTileList.add(AccuracyTile("spoj", "-"));
       }

@@ -1,23 +1,23 @@
 import 'dart:convert';
 
-UserDetails userDetailsFromJson(String str) => UserDetails.fromJson(json.decode(str));
+UserProfileDetails userProfileDetailsFromJson(String str) => UserProfileDetails.fromJson(json.decode(str));
 
-String userDetailsToJson(UserDetails data) => json.encode(data.toJson());
+String userProfileDetailsToJson(UserProfileDetails data) => json.encode(data.toJson());
 
-class UserDetails {
+class UserProfileDetails {
   Profile codechefProfile;
   Profile codeforcesProfile;
   Profile hackerrankProfile;
   Profile spojProfile;
 
-  UserDetails({
+  UserProfileDetails({
     this.codechefProfile,
     this.codeforcesProfile,
     this.hackerrankProfile,
     this.spojProfile,
   });
 
-  factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
+  factory UserProfileDetails.fromJson(Map<String, dynamic> json) => UserProfileDetails(
     codechefProfile: Profile.fromJson(json["codechefProfile"]),
     codeforcesProfile: Profile.fromJson(json["codeforcesProfile"]),
     hackerrankProfile: Profile.fromJson(json["hackerrankProfile"]),
@@ -33,33 +33,13 @@ class UserDetails {
 }
 
 class Profile {
-  ProfileClass profile;
-  String website;
-
-  Profile({
-    this.profile,
-    this.website,
-  });
-
-  factory Profile.fromJson(Map<String, dynamic> json) => Profile(
-    profile: ProfileClass.fromJson(json["profile"]),
-    website: json["website"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "profile": profile.toJson(),
-    "website": website,
-  };
-}
-
-class ProfileClass {
   String accuracy;
   String name;
   String rank;
   String school;
   String userName;
 
-  ProfileClass({
+  Profile({
     this.accuracy,
     this.name,
     this.rank,
@@ -67,7 +47,7 @@ class ProfileClass {
     this.userName,
   });
 
-  factory ProfileClass.fromJson(Map<String, dynamic> json) => ProfileClass(
+  factory Profile.fromJson(Map<String, dynamic> json) => Profile(
     accuracy: json["accuracy"],
     name: json["name"],
     rank: json["rank"],
