@@ -8,7 +8,6 @@ Future<void> setNotification({
   String startTime,
   String platform,
 }) async {
-  
   var scheduledNotificationDateTime = DateFormat("EEE, dd MMM yyyy hh:mm")
       .parse(startTime)
       .subtract(Duration(minutes: 30));
@@ -46,6 +45,12 @@ Future<void> removeNotification({String name}) async {
   int index = pendingNotifications.indexWhere((notif) => notif.title == name);
   if (index == -1) return;
   await flutterLocalNotificationsPlugin.cancel(pendingNotifications[index].id);
+}
+
+Future<List<String>> getNotificationList() async {
+  List<PendingNotificationRequest> pendingNotifications =
+      await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+  return pendingNotifications.map((val)=>val.title).toList();
 }
 
 Future<int> getID({String name}) async {

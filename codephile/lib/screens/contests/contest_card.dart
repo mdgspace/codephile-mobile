@@ -6,17 +6,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 class ContestCard extends StatefulWidget {
-  final String _platform;
-  final String _name;
-  final String _endTime;
-  final String _startTime;
-  final String _challengeType;
-  final String _url;
-  bool _notification = false;
+  final String platform;
+  final String name;
+  final String endTime;
+  final String startTime;
+  final String challengeType;
+  final String url;
+  final bool notification;
 
   ContestCard(
-      this._name, this._endTime, this._platform, this._challengeType, this._url,
-      [this._startTime]);
+      this.name, this.endTime, this.platform, this.challengeType, this.url,
+      [this.notification, this.startTime]);
 
   @override
   _ContestCardState createState() => _ContestCardState();
@@ -29,13 +29,19 @@ class _ContestCardState extends State<ContestCard> {
     width: 12.0,
     height: 12.0,
   );
+  bool notifyMe;
+  @override
+  void initState() {
+    notifyMe = widget.notification?? false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FlutterWebBrowser.openWebPage(
-            url:widget._url, androidToolbarColor: Colors.deepPurple);
+            url: widget.url, androidToolbarColor: Colors.deepPurple);
       },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -58,7 +64,7 @@ class _ContestCardState extends State<ContestCard> {
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Image.asset(
-                                getIconUrl(widget._platform),
+                                getIconUrl(widget.platform),
                                 width: 23.0,
                                 height: 23.0,
                               ),
@@ -67,7 +73,7 @@ class _ContestCardState extends State<ContestCard> {
                         ),
                       ),
                       Text(
-                        getFormattedPlatformName(widget._platform),
+                        getFormattedPlatformName(widget.platform),
                         style: TextStyle(
                           color: const Color.fromRGBO(36, 36, 36, 1),
                           fontSize: 14.0,
@@ -76,16 +82,6 @@ class _ContestCardState extends State<ContestCard> {
                       )
                     ],
                   ),
-//              Padding(
-//                padding: const EdgeInsets.fromLTRB(4.0, 2.0, 8.0, 8.0),
-//                child: Text(
-//                  "$_notificationTime ago",
-//                  style: TextStyle(
-//                    color: const Color.fromRGBO(145, 145, 145, 1),
-//                    fontSize: 12.0,
-//                  ),
-//                ),
-//              )
                 ],
               ),
               Card(
@@ -122,42 +118,40 @@ class _ContestCardState extends State<ContestCard> {
                                 ],
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () async {
-                                if (widget._startTime != null) {
-                                  if (widget._notification) {
-                                    await removeNotification(name: widget._name);
-                                    setState(() {
-                                      widget._notification = false;
-                                    });
-                                  } else {
-                                    await setNotification(
-                                        name: widget._name,
-                                        platform: widget._platform,
-                                        startTime: widget._startTime);
-                                    setState(() {
-                                      widget._notification = true;
-                                    });
-                                  }
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg:
-                                          "Can't set alert for ongoing contests.");
-                                }
-                              },
-                              child: Icon(
-                                Icons.add_alert,
-                                color: widget._notification
-                                    ? codephileMain
-                                    : codephileMainShade,
-                              ),
-                            )
+                            (widget.startTime != null)
+                                ? GestureDetector(
+                                    onTap: () async {
+                                      if (notifyMe) {
+                                        await removeNotification(
+                                            name: widget.name);
+                                        setState(() {
+                                          notifyMe = false;
+                                        });
+                                      } else {
+                                        print('Hello');
+                                        await setNotification(
+                                            name: widget.name,
+                                            platform: widget.platform,
+                                            startTime: widget.startTime);
+                                        setState(() {
+                                          notifyMe = true;
+                                        });
+                                      }
+                                    },
+                                    child: Icon(
+                                      Icons.add_alert,
+                                      color: notifyMe
+                                          ? codephileMain
+                                          : codephileMainShade,
+                                    ),
+                                  )
+                                : Container()
                           ]),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15.0, 6.0, 24.0, 6.0),
                       child: Text(
-                        "${widget._name}",
+                        "${widget.name}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14.0,
@@ -169,7 +163,7 @@ class _ContestCardState extends State<ContestCard> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 6.0, 6.0, 8.0),
-                      child: (widget._startTime != null)
+                      child: (widget.startTime != null)
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -198,7 +192,7 @@ class _ContestCardState extends State<ContestCard> {
                                   padding: const EdgeInsets.fromLTRB(
                                       2.0, 0.0, 2.0, 0.0),
                                   child: Text(
-                                    widget._startTime,
+                                    widget.startTime,
                                   ),
                                 )
                               ],
@@ -239,11 +233,6 @@ class _ContestCardState extends State<ContestCard> {
         ),
       ),
     );
-  }
-
-  String timeToStart() {
-    //TODO: implement function
-    return null;
   }
 
   String getFormattedPlatformName(String platform) {

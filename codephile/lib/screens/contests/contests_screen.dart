@@ -6,6 +6,7 @@ import 'package:codephile/models/filters.dart';
 import 'package:codephile/screens/contests/contest_card.dart';
 import 'package:codephile/screens/contests/filter_button.dart';
 import 'package:codephile/services/contests.dart';
+import 'package:codephile/services/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,7 +48,6 @@ class _ContestScreenState extends State<ContestScreen> {
         pref.setString('filter', jsonEncode(filter.toJson()));
       }
     });
-
     contestList(widget.token).then((contests) {
       ongoingContests = contests.ongoing;
       upcomingContests = contests.upcoming;
@@ -77,7 +77,8 @@ class _ContestScreenState extends State<ContestScreen> {
               ));
   }
 
-  applyFilter() {
+  applyFilter() async {
+    List notificationList = await getNotificationList();
     print('applyFilter');
     setState(() {
       filteredOngoingContests.clear();
@@ -118,6 +119,8 @@ class _ContestScreenState extends State<ContestScreen> {
             filteredUpcomingContests[i].platform,
             filteredUpcomingContests[i].challengeType,
             filteredUpcomingContests[i].url,
+            notificationList.indexOf(filteredUpcomingContests[i].name.trim()) !=
+                -1,
             filteredUpcomingContests[i].startTime));
       }
     });
