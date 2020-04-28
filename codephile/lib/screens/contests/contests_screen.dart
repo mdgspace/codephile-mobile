@@ -3,7 +3,7 @@ import 'dart:core';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/models/contests.dart';
 import 'package:codephile/models/filters.dart';
-import 'package:codephile/screens/contests/contest_card_2.dart';
+import 'package:codephile/screens/contests/contest_card.dart';
 import 'package:codephile/screens/contests/filter_button.dart';
 import 'package:codephile/services/contests.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +103,7 @@ class _TimelineState extends State<Timeline> {
       }
       allContests.clear();
       for (var i = 0; i < filteredOngoingContests.length; i++) {
-        allContests.add(ContestCard2(
+        allContests.add(ContestCard(
           filteredOngoingContests[i].name.trim(),
           filteredOngoingContests[i].endTime,
           filteredOngoingContests[i].platform,
@@ -112,7 +112,7 @@ class _TimelineState extends State<Timeline> {
         ));
       }
       for (var i = 0; i < filteredUpcomingContests.length; i++) {
-        allContests.add(ContestCard2(
+        allContests.add(ContestCard(
             filteredUpcomingContests[i].name.trim(),
             filteredUpcomingContests[i].endTime,
             filteredUpcomingContests[i].platform,
