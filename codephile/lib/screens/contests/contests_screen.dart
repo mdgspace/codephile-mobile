@@ -9,16 +9,16 @@ import 'package:codephile/services/contests.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Timeline extends StatefulWidget {
+class ContestScreen extends StatefulWidget {
   final String token;
-  Timeline({this.token, Key key, this.title}) : super(key: key);
+  ContestScreen({this.token, Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _TimelineState createState() => _TimelineState();
+  _ContestScreenState createState() => _ContestScreenState();
 }
 
-class _TimelineState extends State<Timeline> {
+class _ContestScreenState extends State<ContestScreen> {
   List<Ongoing> ongoingContests;
   List<Upcoming> upcomingContests;
   List<Widget> allContests = List<Widget>();

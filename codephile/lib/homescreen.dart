@@ -35,7 +35,7 @@ class HomePageState extends State<HomePage> {
     return <Widget>[
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Timeline(token: token),
+        home: ContestScreen(token: token),
       ),
       MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -81,7 +81,7 @@ class HomePageState extends State<HomePage> {
         children: <Widget>[
           MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: Timeline(token: token),
+            home: ContestScreen(token: token),
           ),
           MaterialApp(
             debugShowCheckedModeBanner: false,
