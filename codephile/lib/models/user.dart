@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:codephile/models/submission.dart';
+import 'package:codephile/models/user_profile_details.dart';
+
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
 String userToJson(User data) => json.encode(data.toJson());
@@ -11,6 +14,8 @@ class User {
   String institute;
   int noOfFollowing;
   String picture;
+  UserProfileDetails profiles;
+  List<Submission> recentSubmissions;
   String username;
 
   User({
@@ -20,6 +25,8 @@ class User {
     this.institute,
     this.noOfFollowing,
     this.picture,
+    this.profiles,
+    this.recentSubmissions,
     this.username,
   });
 
@@ -30,6 +37,8 @@ class User {
     institute: json["institute"],
     noOfFollowing: json["no_of_following"],
     picture: json["picture"],
+    profiles: UserProfileDetails.fromJson(json["profiles"]),
+    recentSubmissions: List<Submission>.from(json["recent_submissions"].map((x) => Submission.fromJson(x))),
     username: json["username"],
   );
 
@@ -40,6 +49,8 @@ class User {
     "institute": institute,
     "no_of_following": noOfFollowing,
     "picture": picture,
+    "profiles": profiles.toJson(),
+    "recent_submissions": List<dynamic>.from(recentSubmissions.map((x) => x.toJson())),
     "username": username,
   };
 }

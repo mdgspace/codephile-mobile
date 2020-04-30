@@ -132,7 +132,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               onTap: (){
                 Navigator.push(
-                    context, new MaterialPageRoute(builder: (context) =>
+                    context, MaterialPageRoute(builder: (context) =>
                     new Profile(token, user.id, (widget.uId == user.id), true))
                 );
               },
