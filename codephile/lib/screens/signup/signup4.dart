@@ -298,7 +298,8 @@ class _SignUpPageState extends State<SignUpPage4> {
                   print(uploadStatusCode);
                 }
                 if (isCreateAccountSuccessful) {
-                  Navigator.push(
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
