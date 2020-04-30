@@ -13,6 +13,7 @@ class ProgressTabBar extends StatelessWidget{
         ProgressTab(1 <= pageNo),
         ProgressTab(2 <= pageNo),
         ProgressTab(3 <= pageNo),
+        ProgressTab(4 <= pageNo),
       ],
     );
   }
@@ -28,7 +29,7 @@ class ProgressTab extends StatelessWidget{
     return  Container(
         margin: EdgeInsets.only(top: 45),
         height: 10.0,
-        width: width/3.5,
+        width: width/4.5,
         child: Material(
           borderRadius: BorderRadius.circular(2.0),
           color: shade ? codephileMain : codephileMainShade ,
