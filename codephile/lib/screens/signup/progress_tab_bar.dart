@@ -1,9 +1,26 @@
 import 'package:codephile/resources/colors.dart';
 import 'package:flutter/material.dart';
 
-class Bar extends StatelessWidget{
+class ProgressTabBar extends StatelessWidget{
+  final int pageNo;
+  ProgressTabBar(this.pageNo);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        ProgressTab(1 <= pageNo),
+        ProgressTab(2 <= pageNo),
+        ProgressTab(3 <= pageNo),
+      ],
+    );
+  }
+}
+
+class ProgressTab extends StatelessWidget{
   final bool shade;
-  const Bar(this.shade);
+  const ProgressTab(this.shade);
 
   @override
   Widget build(BuildContext context) {

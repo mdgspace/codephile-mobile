@@ -5,7 +5,7 @@ import 'dart:async';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
-import 'bar.dart';
+import 'progress_tab_bar.dart';
 import 'signup2.dart';
 import 'package:codephile/resources/colors.dart';
 
@@ -62,14 +62,7 @@ class _SignUpPageState extends State<SignUpPage> {
           children: <Widget>[
             Column(
               children: <Widget>[
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Bar(true),
-                    Bar(false),
-                    Bar(false),
-                  ],
-                ),
+                ProgressTabBar(1),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(

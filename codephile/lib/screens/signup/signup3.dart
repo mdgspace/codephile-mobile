@@ -12,7 +12,7 @@ import 'package:codephile/services/Id.dart';
 import 'package:codephile/services/postSubmission.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'bar.dart';
+import 'progress_tab_bar.dart';
 
 class SignUpPage3 extends StatefulWidget {
   final String name;
@@ -71,14 +71,7 @@ class _SignUpPageState extends State<SignUpPage3> {
           children: <Widget>[
             Column(
               children: <Widget>[
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Bar(true),
-                    Bar(true),
-                    Bar(true),
-                  ],
-                ),
+                ProgressTabBar(3),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(

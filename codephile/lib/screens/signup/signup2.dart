@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'bar.dart';
+import 'progress_tab_bar.dart';
 import 'signup3.dart';
 import 'package:codephile/services/handle.dart';
 import 'package:codephile/resources/colors.dart';
@@ -49,14 +49,7 @@ class _SignUpPageState extends State<SignUpPage2> {
           children: <Widget>[
             Column(
               children: <Widget>[
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Bar(true),
-                    Bar(true),
-                    Bar(false),
-                  ],
-                ),
+                ProgressTabBar(2),
                 Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Column(
