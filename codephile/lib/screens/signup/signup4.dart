@@ -140,44 +140,49 @@ class _SignUpPageState extends State<SignUpPage4> {
   Widget _showPasswordInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-      child: new TextFormField(
-        onTap: () {
-          setState(() {
-            _lockIconColor = true;
-            _seePasswordIconColor = true;
-            if((_usernameController.text == '')||(_passwordController.text == null)){
-              _userIconColor = false;
-            }
-          });
-        },
-        controller: _passwordController,
-        enabled: enableTextFields,
-        maxLines: 1,
-        obscureText: _obscureText,
-        autofocus: false,
-        decoration: new InputDecoration(
-          suffixIcon: GestureDetector(
-            child: new Icon(
+      child: Stack(
+        alignment: Alignment.centerRight,
+        children: <Widget>[
+          TextFormField(
+            onTap: () {
+              setState(() {
+                _lockIconColor = true;
+                _seePasswordIconColor = true;
+                if((_usernameController.text == '')||(_passwordController.text == null)){
+                  _userIconColor = false;
+                }
+              });
+            },
+            controller: _passwordController,
+            enabled: enableTextFields,
+            maxLines: 1,
+            obscureText: _obscureText,
+            autofocus: false,
+            decoration: new InputDecoration(
+              labelText: "Password",
+              border: OutlineInputBorder(),
+              prefixIcon: new Icon(
+                Icons.lock,
+                color: _lockIconColor ? codephileMain : Colors.grey,
+                size: 39,
+              ),
+              labelStyle: new TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+            validator: (value) {
+              return value.isEmpty ? 'Password can\'t be empty' : null;
+            },
+            onSaved: (value) => _password = value,
+          ),
+          IconButton(
+            icon : new Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
               color: _seePasswordIconColor ? codephileMain : Colors.grey,
             ),
-            onTap: _toggle,
+            onPressed: _toggle,
           ),
-          labelText: "Password",
-          border: OutlineInputBorder(),
-          prefixIcon: new Icon(
-            Icons.lock,
-            color: _lockIconColor ? codephileMain : Colors.grey,
-            size: 39,
-          ),
-          labelStyle: new TextStyle(
-            color: Colors.grey,
-          ),
-        ),
-        validator: (value) {
-          return value.isEmpty ? 'Password can\'t be empty' : null;
-        },
-        onSaved: (value) => _password = value,
+        ],
       ),
     );
   }
