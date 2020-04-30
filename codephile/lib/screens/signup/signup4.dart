@@ -9,7 +9,6 @@ import 'package:codephile/services/signup.dart';
 import 'package:codephile/homescreen.dart';
 import 'package:codephile/services/login.dart';
 import 'package:codephile/services/Id.dart';
-import 'package:codephile/services/postSubmission.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'progress_tab_bar.dart';
@@ -299,29 +298,6 @@ class _SignUpPageState extends State<SignUpPage4> {
                   print(uploadStatusCode);
                 }
                 if (isCreateAccountSuccessful) {
-                  if (handle.spoj != null) {
-                    submissionPost(userToken.token, "spoj").then((value){
-                      if (value == true) print("submissions spoj posted");
-                    });
-                  }
-                  if (handle.codechef != null) {
-                    submissionPost(userToken.token, "codechef").then((value){
-                      if (value == true) print("submissions codechef posted");
-                    });
-                  }
-
-                  if (handle.hackerrank != null) {
-                    submissionPost(userToken.token, "hackerrank").then((value){
-                      if (value == true) print("submissions hackerrank posted");
-                    });
-                  }
-
-                  if (handle.codeforces != null) {
-                    submissionPost(userToken.token, "codeforces").then((value){
-                      if (value == true) print("submissions codeforces posted");
-                    });
-                  }
-
                   Navigator.push(
                     context,
                     MaterialPageRoute(
