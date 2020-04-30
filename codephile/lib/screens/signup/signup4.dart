@@ -61,45 +61,46 @@ class _SignUpPageState extends State<SignUpPage4> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-//      resizeToAvoidBottomPadding: false,
-      key: _scaffoldKey,
-      body: Form(
-        key: _formKey,
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                ProgressTabBar(4),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: MediaQuery.of(context).size.height/15),
-                      Text(
-                          'Setup a username and password for Codephile',
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                      SizedBox(height: 25.0),
-                      _showUsernameInput(),
-                      SizedBox(height: 15.0),
-                      _showPasswordInput(),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            _showCreateAccountButton(),
-          ],
+    return WillPopScope(
+      child: Scaffold(
+        key: _scaffoldKey,
+        body: Form(
+          key: _formKey,
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  ProgressTabBar(4),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: MediaQuery.of(context).size.height/15),
+                        Text(
+                            'Setup a username and password for Codephile',
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
+                        SizedBox(height: 25.0),
+                        _showUsernameInput(),
+                        SizedBox(height: 15.0),
+                        _showPasswordInput(),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              _showCreateAccountButton(),
+            ],
+          ),
         ),
-      ),
+      ), onWillPop: _onBackPressed,
     );
   }
 
@@ -350,4 +351,11 @@ class _SignUpPageState extends State<SignUpPage4> {
     }
   }
 
+
+  Future<bool> _onBackPressed() async{
+    if(isCreateAccountButtonTapped || isCreateAccountSuccessful){
+      return false;
+    }
+    return true;
+  }
 }
