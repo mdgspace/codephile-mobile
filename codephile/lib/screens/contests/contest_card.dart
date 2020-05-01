@@ -32,7 +32,7 @@ class _ContestCardState extends State<ContestCard> {
   bool notifyMe;
   @override
   void initState() {
-    notifyMe = widget.notification?? false;
+    notifyMe = widget.notification ?? false;
     super.initState();
   }
 
@@ -118,33 +118,69 @@ class _ContestCardState extends State<ContestCard> {
                                 ],
                               ),
                             ),
+                            // (widget.startTime != null)
+                            //     ? GestureDetector(
+                            //         onTap: () async {
+                            //           if (notifyMe) {
+                            //             await removeNotification(
+                            //                 name: widget.name);
+                            //             setState(() {
+                            //               notifyMe = false;
+                            //             });
+                            //           } else {
+                            //             print('Hello');
+                            //             await setNotification(
+                            //                 name: widget.name,
+                            //                 platform: widget.platform,
+                            //                 startTime: widget.startTime);
+                            //             setState(() {
+                            //               notifyMe = true;
+                            //             });
+                            //           }
+                            //         },
+                            //         child: Icon(
+                            //           Icons.add_alert,
+                            //           color: notifyMe
+                            //               ? codephileMain
+                            //               : codephileMainShade,
+                            //         ),
+                            //       )
+                            //     : Container()
                             (widget.startTime != null)
-                                ? GestureDetector(
-                                    onTap: () async {
-                                      if (notifyMe) {
-                                        await removeNotification(
-                                            name: widget.name);
-                                        setState(() {
-                                          notifyMe = false;
-                                        });
-                                      } else {
-                                        print('Hello');
-                                        await setNotification(
-                                            name: widget.name,
-                                            platform: widget.platform,
-                                            startTime: widget.startTime);
-                                        setState(() {
-                                          notifyMe = true;
-                                        });
+                                ? FutureBuilder(
+                                    future: getNotificationList(),
+                                    builder: (context, pendingNotifications) {
+                                      if (pendingNotifications
+                                              .connectionState ==
+                                          ConnectionState.done) {
+                                        bool notify = pendingNotifications.data
+                                                .indexOf(widget.name) !=
+                                            -1;
+                                        return IconButton(
+                                            icon: Icon(
+                                              Icons.notifications,
+                                              color: (notify)
+                                                  ? codephileMain
+                                                  : codephileMainShade,
+                                            ),
+                                            onPressed: () async {
+                                              if (notify) {
+                                                await removeNotification(
+                                                    name: widget.name.trim());
+                                                setState(() {});
+                                              } else {
+                                                await setNotification(
+                                                    name: widget.name,
+                                                    platform: widget.platform,
+                                                    startTime:
+                                                        widget.startTime);
+                                                setState(() {});
+                                              }
+                                            });
+                                      }else{
+                                        return Container();
                                       }
-                                    },
-                                    child: Icon(
-                                      Icons.add_alert,
-                                      color: notifyMe
-                                          ? codephileMain
-                                          : codephileMainShade,
-                                    ),
-                                  )
+                                    })
                                 : Container()
                           ]),
                     ),
