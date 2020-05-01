@@ -56,7 +56,7 @@ class HomePageState extends State<HomePage> {
       body: IndexedStack(index: _selectedIndex, children: <Widget>[
         MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Timeline(token: token),
+          home: ContestScreen(token: token),
         ),
         MaterialApp(
           debugShowCheckedModeBanner: false,
