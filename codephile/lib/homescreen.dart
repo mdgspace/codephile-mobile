@@ -31,31 +31,11 @@ class HomePageState extends State<HomePage> {
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  List<Widget> _showHomeScreen(String token, String userId) {
-    return <Widget>[
-      MaterialApp(
-            debugShowCheckedModeBanner: false,
-        home: Timeline(token: token),
-          ),
-      MaterialApp(
-            debugShowCheckedModeBanner: false,
-        home: SearchPage(token, userId),
-      ),
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: FeedScreen(token: token),
-      ),
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Profile(token, userId, true, false),
-      ),
-    ];
-  }
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   void _onItemTapped(int index) {
-       setState(() {
-         _selectedIndex = index;
+    setState(() {
+      _selectedIndex = index;
       if (index == 0)
         activity_color = true;
       else
@@ -68,26 +48,40 @@ class HomePageState extends State<HomePage> {
         profile_color = true;
       else
         profile_color = false;
-       });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _showHomeScreen(token, userId).elementAt(_selectedIndex),
-      ),
+      body: IndexedStack(index: _selectedIndex, children: <Widget>[
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: ContestScreen(token: token),
+        ),
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SearchPage(token, userId),
+        ),
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SubmissionScreen(token: token, id: userId),
+        ),
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Profile(token, userId, true, false),
+        )
+      ]),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-          icon: ImageIcon(
-            AssetImage("assets/activity.png"),
-            color: activity_color ? codephileMain : Colors.black,
-          ),
+            icon: ImageIcon(
+              AssetImage("assets/activity.png"),
+              color: activity_color ? codephileMain : Colors.black,
+            ),
             title: Text(
-                "Activity",
-                style: new TextStyle(
-                ),
+              "Activity",
+              style: new TextStyle(),
             ),
           ),
           BottomNavigationBarItem(
@@ -96,15 +90,14 @@ class HomePageState extends State<HomePage> {
               color: search_color ? codephileMain : Colors.black,
             ),
             title: Text(
-                'Search',
-                style: new TextStyle(
-                ),
+              'Search',
+              style: new TextStyle(),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.bookmark_border,
-               size: 30,
+              size: 30,
             ),
             title: Text(
               'Feed',
@@ -122,9 +115,8 @@ class HomePageState extends State<HomePage> {
               color: profile_color ? codephileMain : Colors.black,
             ),
             title: Text(
-                'Profile',
-              style: new TextStyle(
-              ),
+              'Profile',
+              style: new TextStyle(),
             ),
           ),
         ],

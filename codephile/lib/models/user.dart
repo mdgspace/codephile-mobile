@@ -37,8 +37,8 @@ class User {
     institute: json["institute"],
     noOfFollowing: json["no_of_following"],
     picture: json["picture"],
-    profiles: UserProfileDetails.fromJson(json["profiles"]),
-    recentSubmissions: List<Submission>.from(json["recent_submissions"].map((x) => Submission.fromJson(x))),
+    profiles: (json["profiles"] == null)? null : UserProfileDetails.fromJson(json["profiles"]),
+    recentSubmissions: (json["recent_submissions"] == null)? null :  List<Submission>.from(json["recent_submissions"].map((x) => Submission.fromJson(x))),
     username: json["username"],
   );
 

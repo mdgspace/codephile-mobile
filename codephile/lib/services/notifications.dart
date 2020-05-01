@@ -8,10 +8,10 @@ Future<void> setNotification({
   String startTime,
   String platform,
 }) async {
-  ;
   var scheduledNotificationDateTime = DateFormat("EEE, dd MMM yyyy hh:mm")
       .parse(startTime)
       .subtract(Duration(minutes: 30));
+  // var scheduledNotificationDateTime = DateTime.now().add(Duration(seconds: 10));
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('1',
       'Contest Alerts', 'Alerts for Contests marked with \'Notify Me\' option',
       icon: 'secondary_icon',
@@ -29,12 +29,14 @@ Future<void> setNotification({
       androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
   List pendingNotifications =
       await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+  // print(pendingNotifications[0].toString());
   await flutterLocalNotificationsPlugin.schedule(
       pendingNotifications.length,
       name,
       'Contest Starts at $startTime',
       scheduledNotificationDateTime,
-      platformChannelSpecifics);
+      platformChannelSpecifics,
+      androidAllowWhileIdle: true);
 }
 
 Future<void> removeNotification({String name}) async {
@@ -43,6 +45,12 @@ Future<void> removeNotification({String name}) async {
   int index = pendingNotifications.indexWhere((notif) => notif.title == name);
   if (index == -1) return;
   await flutterLocalNotificationsPlugin.cancel(pendingNotifications[index].id);
+}
+
+Future<List<String>> getNotificationList() async {
+  List<PendingNotificationRequest> pendingNotifications =
+      await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+  return pendingNotifications.map((val)=>val.title).toList();
 }
 
 Future<int> getID({String name}) async {
