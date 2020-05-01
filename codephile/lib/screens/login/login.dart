@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:codephile/models/token.dart';
 import 'package:codephile/screens/login/progress_button.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     double height = MediaQuery.of(context).size.height;
     return new Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -189,36 +194,39 @@ class _LoginPageState extends State<LoginPage> {
   Widget _showPasswordInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-      child: new TextFormField(
-        onTap: () {
-          _iconEye = true;
-          _iconLock = true;
-        },
-        maxLines: 1,
-        obscureText: _obscureText,
-        autofocus: false,
-        decoration: new InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(
-            Icons.lock,
-            color: _iconLock ? codephileMain : Colors.grey,
-            size: 39,
-          ),
-          suffixIcon: GestureDetector(
-            child: new Icon(
-              _obscureText ? Icons.visibility_off : Icons.visibility,
-              color: _iconEye ? codephileMain : Colors.grey,
+      child: Stack(alignment: Alignment.centerRight, children: <Widget>[
+        TextFormField(
+          onTap: () {
+            _iconEye = true;
+            _iconLock = true;
+          },
+          maxLines: 1,
+          obscureText: _obscureText,
+          autofocus: false,
+          decoration: new InputDecoration(
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(
+              Icons.lock,
+              color: _iconLock ? codephileMain : Colors.grey,
+              size: 39,
             ),
-            onTap: _toggle,
+            labelText: "Password",
+            labelStyle: new TextStyle(
+              color: _iconLock ? codephileMain : Colors.grey,
+            ),
           ),
-          labelText: "Password",
-          labelStyle: new TextStyle(
-            color: _iconLock ? codephileMain : Colors.grey,
-          ),
+          validator: (value) =>
+              value.isEmpty ? 'Password can\'t be empty' : null,
+          onSaved: (value) => _password = value,
         ),
-        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
-        onSaved: (value) => _password = value,
-      ),
+        IconButton(
+          icon: Icon(
+            _obscureText ? Icons.visibility_off : Icons.visibility,
+            color: _iconEye ? codephileMain : Colors.grey,
+          ),
+          onPressed: _toggle,
+        )
+      ]),
     );
   }
 
@@ -270,12 +278,4 @@ class _LoginPageState extends State<LoginPage> {
     }
     return false;
   }
-//<<<<<<< HEAD
-//
-//  Future<SharedPreferences> getToken() async {
-//    SharedPreferences prefs = await SharedPreferences.getInstance();
-//    return prefs;
-//  }
-//=======
-//>>>>>>> origin/master
 }

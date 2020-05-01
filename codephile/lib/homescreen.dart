@@ -31,26 +31,6 @@ class HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  List<Widget> _showHomeScreen(String token, String userId) {
-    return <Widget>[
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: ContestScreen(token: token),
-      ),
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SearchPage(token, userId),
-      ),
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SubmissionScreen(token: token, id: userId),
-      ),
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Profile(token, userId, true, false),
-      ),
-    ];
-  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -73,30 +53,24 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: Center(
-      //   child: _showHomeScreen(token, userId).elementAt(_selectedIndex),
-      // ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: <Widget>[
-          MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: ContestScreen(token: token),
-          ),
-          MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: SearchPage(token, userId),
-          ),
-          MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: SubmissionScreen(token: token, id: userId),
-          ),
-          MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: Profile(token, userId, true, false),
-          )
-        ]
-      ),
+      body: IndexedStack(index: _selectedIndex, children: <Widget>[
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: ContestScreen(token: token),
+        ),
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SearchPage(token, userId),
+        ),
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SubmissionScreen(token: token, id: userId),
+        ),
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Profile(token, userId, true, false),
+        )
+      ]),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(

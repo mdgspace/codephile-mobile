@@ -1,16 +1,14 @@
-import 'package:flutter/cupertino.dart';
-import 'dart:async';
 import 'dart:io';
-import 'package:codephile/resources/colors.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter/material.dart';
 import 'package:codephile/models/signup.dart';
-import 'package:codephile/services/signup.dart';
-import 'package:codephile/homescreen.dart';
-import 'package:codephile/services/login.dart';
-import 'package:codephile/services/Id.dart';
-import 'package:codephile/services/postSubmission.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:codephile/resources/colors.dart';
+import 'package:codephile/resources/helper_functions.dart';
+import 'package:codephile/screens/signup/progress_tab_bar.dart';
+import 'package:codephile/screens/signup/signup4.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignUpPage3 extends StatefulWidget {
   final String name;
@@ -26,26 +24,16 @@ class SignUpPage3 extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage3> {
-  String _username, _password;
   String name;
   String institute;
   Handle handle;
-  bool _buttonText = false, _buttonColor = false;
-  bool _iconColor1 = false, _iconColor2 = false, _iconColor3 = false;
+  File userImage;
   _SignUpPageState({Key key, this.name, this.institute, this.handle});
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
 
-  bool isCreateAccountButtonTapped = false;
-  bool isCreateAccountSuccessful = false;
-  bool _obscureText = true;
-
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+  bool isNextButtonTapped = false;
 
   @override
   void initState() {
@@ -53,188 +41,157 @@ class _SignUpPageState extends State<SignUpPage3> {
     showConnectivityStatus();
   }
 
-  Future showConnectivityStatus() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('connected');
-      }
-    } on SocketException catch (_) {
-      print('not connected');
-      Fluttertoast.showToast(
-        msg: "Please check your connection!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 7,
-        fontSize: 12.0,
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return new Scaffold(
-      resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
+      //TODO: change background color at root
       key: _scaffoldKey,
-      body: new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              _bar(width, true),
-              _bar(width, true),
-              _bar(width, true),
-            ],
-          ),
-          Expanded(
-              child: Padding(
-                  padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-                  child: new Form(
-                    key: _formKey,
-                    child: ListView(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
-                          child: Text(
-                              'Setup a username and password for Codephile',
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold)),
+      body: Form(
+        key: _formKey,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                ProgressTabBar(3),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: MediaQuery.of(context).size.height/15),
+                      Container(
+                        width: MediaQuery.of(context).size.width*0.95,
+                        child: Text(
+                            'Upload a profile photo',
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold
+                            )
                         ),
-                        SizedBox(height: 25.0),
-                        _showUsernameInput(),
-                        SizedBox(height: 15.0),
-                        _showPasswordInput(),
-                        SizedBox(height: 260.0),
-                        _showCreateAccountButton(),
-                        SizedBox(height: 20.0),
-                      ],
-                    ),
-                  ))),
-        ],
-      ),
-    );
-  }
-
-  Widget _showUsernameInput() {
-    return new TextFormField(
-      onTap: () {
-        setState(() {
-          _iconColor1 = true;
-        });
-      },
-      maxLines: 1,
-      keyboardType: TextInputType.text,
-      autofocus: false,
-      decoration: new InputDecoration(
-        labelText: "Username",
-        prefixIcon: new Icon(
-          Icons.person,
-          color: _iconColor1 ? codephileMain : Colors.grey,
-          size: 39,
-        ),
-        border: OutlineInputBorder(),
-        labelStyle: new TextStyle(
-          color: Colors.grey,
-        ),
-      ),
-      validator: (value) => value.isEmpty ? 'Username can\'t be empty' : null,
-      onSaved: (value) => _username = value,
-    );
-  }
-
-  Widget _showPasswordInput() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-      child: new TextFormField(
-        onTap: () {
-          setState(() {
-            _iconColor2 = true;
-            _iconColor3 = true;
-          });
-        },
-        maxLines: 1,
-        obscureText: _obscureText,
-        autofocus: false,
-        decoration: new InputDecoration(
-          suffixIcon: GestureDetector(
-            child: new Icon(
-              _obscureText ? Icons.visibility_off : Icons.visibility,
-              color: _iconColor3 ? codephileMain : Colors.grey,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
+                        child: Text(
+                          'This photo will be visible to your followers.',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              color:secondaryTextGrey
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height/30),
+                _userImageSelect(),
+              ],
             ),
-            onTap: _toggle,
-          ),
-          labelText: "Password",
-          border: OutlineInputBorder(),
-          prefixIcon: new Icon(
-            Icons.lock,
-            color: _iconColor2 ? codephileMain : Colors.grey,
-            size: 39,
-          ),
-          labelStyle: new TextStyle(
-            color: Colors.grey,
-          ),
+            _showNextButton(),
+          ],
         ),
-        validator: (value) {
-          return value.isEmpty ? 'Password can\'t be empty' : null;
-        },
-        onSaved: (value) => _password = value,
       ),
     );
   }
 
-  Widget _showCreateAccountButton() {
+  Widget _userImageSelect(){
+    return Stack(
+      children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.width/2,
+          width: MediaQuery.of(context).size.width/2,
+          alignment: (userImage == null)? Alignment(0.0, 0.0): Alignment.center,
+          child: (userImage == null)?
+          SizedBox(
+            height: MediaQuery.of(context).size.width/3,
+            width: MediaQuery.of(context).size.width/3,
+            child: SvgPicture.asset(
+              'assets/default_user_icon.svg',
+              fit: BoxFit.fitWidth,
+            ),
+          )
+              :
+          Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: FileImage(
+                    userImage,
+                  ),
+                )
+            ),
+          ),
+          decoration: BoxDecoration(
+              color: codephileBackground,
+              shape: BoxShape.circle,
+              border: Border.all(
+                  width: 1,
+                  color: userIconBorderGrey
+              )
+          ),
+        ),
+        Positioned(
+          right: 0.0,
+          bottom: 0.0,
+          child: Container(
+            child: IconButton(
+              icon: Icon(
+                (userImage == null)? Icons.add: Icons.edit,
+                color: Colors.white,
+              ), onPressed: () {
+              _selectImage();
+            },
+            ),
+            decoration: BoxDecoration(
+              color: codephileMain,
+              shape: BoxShape.circle,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _showNextButton() {
     showConnectivityStatus();
-    return (isCreateAccountButtonTapped)
-        ? new FlatButton(
-            padding: EdgeInsets.all(8),
-            color: _buttonColor ? codephileMain : Colors.grey[500],
-            shape: new Border.all(
-              width: 2,
-              color: Colors.grey,
-              style: BorderStyle.solid,
-            ),
-            child: new Text(
-              'Creating...',
-              style: new TextStyle(
-                color: _buttonText ? Colors.white : Colors.grey[700],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        child: FlatButton(
+            color: (userImage == null)? Colors.white: codephileMain,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width*0.85,
+                child: Text(
+                  (userImage == null)? 'SKIP': 'NEXT',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: (userImage == null)? codephileMain: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                ),
+
               ),
             ),
-            onPressed: () {})
-        : (isCreateAccountSuccessful)
-            ? new FlatButton(
-                padding: EdgeInsets.all(8),
-                color: _buttonColor ? codephileMain : Colors.grey[500],
-                shape: new Border.all(
-                  width: 2,
-                  color: Colors.grey,
-                  style: BorderStyle.solid,
-                ),
-                child: new Text(
-                  'Created Successfully',
-                  style: new TextStyle(
-                    color: _buttonText ? Colors.white : Colors.grey[700],
-                  ),
-                ),
-                onPressed: () {})
-            : new FlatButton(
-                padding: EdgeInsets.all(8),
-                color: _buttonColor ? codephileMain : Colors.grey[500],
-                shape: new Border.all(
-                  width: 2,
-                  color: Colors.grey,
-                  style: BorderStyle.solid,
-                ),
-                child: new Text(
-                  'Create Account',
-                  style: new TextStyle(
-                    color: _buttonText ? Colors.white : Colors.grey[700],
-                  ),
-                ),
-                onPressed: _validateAndSubmit,
-              );
+            onPressed: () {
+              if(!isNextButtonTapped){
+                _validateAndSubmit();
+              }
+            }),
+        decoration: BoxDecoration(
+            border: Border.all(
+              width: (userImage == null)? 1.0: 0,
+              color: codephileMain,
+            )
+        ),
+      ),
+    );
   }
 
   bool _validateAndSave() {
@@ -247,107 +204,50 @@ class _SignUpPageState extends State<SignUpPage3> {
   }
 
   void _validateAndSubmit() {
-    if (_validateAndSave()) {
-      setState(() {
-        isCreateAccountButtonTapped = true;
-        _buttonText = true;
-        _buttonColor = true;
-        _iconColor1 = true;
-        _iconColor2 = true;
-        _iconColor3 = true;
-      });
-      FocusScope.of(context).requestFocus(new FocusNode());
-      SignUp details = new SignUp(
-          handle: handle,
-          password: _password,
-          username: _username,
-          fullname: name,
-          institute: institute);
-      signUp(details).then((T) async {
-        if (T == true) {
-          Fluttertoast.showToast(
-            msg: "Account Creation successful",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIos: 7,
-            fontSize: 12.0,
+    setState(() {
+      isNextButtonTapped = true;
+    });
+    if (_validateAndSave()){
+      if(isNextButtonTapped){
+        setState(() {
+          isNextButtonTapped = false;
+          Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => new SignUpPage4(
+                      name: name,
+                      institute: (institute == null)? '': institute,
+                      handle: handle,
+                      userImagePath: (userImage == null)? null : userImage.path
+                  )
+              )
           );
-          setState(() {
-            isCreateAccountButtonTapped = false;
-            isCreateAccountSuccessful = true;
-          });
-          await new Future.delayed(const Duration(seconds: 5));
-          login(_username, _password).then((T) async {
-            if (T != null) {
-              print(T.token);
-              id(T.token).then((id) async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setString("token", T.token);
-                prefs.setString("uid", id);
-                if (isCreateAccountSuccessful) {
-                  if (handle.spoj != null) {
-                    submissionPost(T.token, "spoj").then((value) async {
-                      if (T == true) print("submissions spoj posted");
-                    });
-                  }
-                  if (handle.codechef != null) {
-                    submissionPost(T.token, "codechef").then((value) async {
-                      if (T == true) print("submissions codechef posted");
-                    });
-                  }
-
-                  if (handle.hackerrank != null) {
-                    submissionPost(T.token, "hackerrank").then((value) async {
-                      if (T == true) print("submissions hackerrank posted");
-                    });
-                  }
-
-                  if (handle.codeforces != null) {
-                    submissionPost(T.token, "codeforces").then((value) async {
-                      if (T == true) print("submissions codeforces posted");
-                    });
-                  }
-
-                  await new Future.delayed(const Duration(seconds: 5));
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) =>
-                            HomePage(token: T.token, userId: id)),
-                  ).then((_) => _formKey.currentState.reset());
-                }
-              });
-            } else {
-              setState(() {});
-            }
-          });
-        } else {
-          Fluttertoast.showToast(
-            msg: "Account Creation unsuccessful",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIos: 7,
-            fontSize: 12.0,
-          );
-          setState(() {
-            isCreateAccountButtonTapped = false;
-            isCreateAccountSuccessful = false;
-          });
-        }
-      });
+        });
+      }
     }
   }
 
-  Widget _bar(double width, bool shade) {
-    return Container(
-      margin: EdgeInsets.only(top: 45),
-      height: 10.0,
-      width: width / 3.5,
-      child: Material(
-        borderRadius: BorderRadius.circular(10.0),
-        color: shade ? codephileMain : codephileMainShade,
-        elevation: 7.0,
-      ),
-    );
+  Future<void> _selectImage() async{
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if(picture != null){
+      var croppedPic = await ImageCropper.cropImage(
+        sourcePath: picture.path,
+        aspectRatio: CropAspectRatio(
+          ratioX: 1,
+          ratioY: 1,
+        ),
+        compressQuality: 100,
+        maxHeight: 1000,
+        maxWidth: 1000,
+        compressFormat: ImageCompressFormat.png,
+      );
+      setState(() {
+        userImage = croppedPic;
+      });
+    }else{
+      setState(() {
+        userImage = null;
+      });
+    }
   }
 }

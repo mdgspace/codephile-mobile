@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:codephile/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -21,6 +22,7 @@ class _ProgressButtonState extends State<ProgressButton>
   int state = 0;
   @override
   Widget build(BuildContext context) {
+    
     return CustomPaint(
       painter: SplashPainter(
           fraction: _fraction, screenSize: MediaQuery.of(context).size),
@@ -30,7 +32,7 @@ class _ProgressButtonState extends State<ProgressButton>
           width: state == 0 ? 200.0 : 50.0,
           decoration: BoxDecoration(
               color: (state == 0 || state == 1)
-                  ? Colors.blue
+                  ? codephileMain
                   : (state == 2) ? Colors.green : Colors.red,
               borderRadius: BorderRadius.circular(25.0)),
           child: SizedBox.expand(

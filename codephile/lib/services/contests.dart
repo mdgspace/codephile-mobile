@@ -11,6 +11,8 @@ Future<Contests> contestList(String token) async {
 
   String endpoint = "/contests/";
   String uri = url + endpoint;
+  print("printing token");
+  print(token);
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 

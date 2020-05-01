@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:codephile/models/user_details.dart';
+import 'package:codephile/models/user_profile_details.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
 
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<UserDetails>   getAllPlatformDetails(String token, String uId) async {
+Future<UserProfileDetails>   getAllPlatformDetails(String token, String uId) async {
 
   String endpoint = "/user/fetch/$uId/";
   String uri = url + endpoint;
@@ -20,7 +20,7 @@ Future<UserDetails>   getAllPlatformDetails(String token, String uId) async {
 
 //    http.Response response = await client.get(uri);
     final jsonResponse = jsonDecode(response.body);
-    UserDetails user = new UserDetails.fromJson(jsonResponse);
+    UserProfileDetails user = new UserProfileDetails.fromJson(jsonResponse);
     //print(response.body);
     return user;
   } on Exception catch (e) {
