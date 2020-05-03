@@ -2,7 +2,6 @@ import 'package:codephile/resources/colors.dart';
 import 'package:codephile/services/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 class ContestCard extends StatefulWidget {

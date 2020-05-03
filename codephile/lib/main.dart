@@ -3,7 +3,6 @@ import 'package:codephile/screens/login/login_screen.dart';
 import 'package:codephile/screens/on_boarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:codephile/screens/login/login.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
 

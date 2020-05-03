@@ -1,8 +1,5 @@
-import 'package:codephile/homescreen.dart';
-import 'package:codephile/models/following.dart';
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
-import 'package:codephile/screens/login/login.dart';
 import 'package:codephile/screens/login/login_screen.dart';
 import 'package:codephile/services/follow.dart';
 import 'package:codephile/services/logout_user.dart';
