@@ -3,6 +3,7 @@ import 'package:codephile/models/following.dart';
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/login/login.dart';
+import 'package:codephile/screens/login/login_screen.dart';
 import 'package:codephile/services/follow.dart';
 import 'package:codephile/services/logout_user.dart';
 import 'package:codephile/services/unfollow.dart';
@@ -395,7 +396,7 @@ class _ProfileCardState extends State<ProfileCard>{
     await prefs.remove("uid");
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.of(context, rootNavigator: true).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginPage())
+        MaterialPageRoute(builder: (context) => LoginScreen())
     );
   }
 }

@@ -65,6 +65,8 @@ flutter:
     - assets/platformIcons/spoj.png
     - assets/bookmark.svg
     - assets/search.png
+    - assets/person.svg
+    - assets/lock.svg
     - assets/person.png
     - assets/activity.png
     - assets/solved.svg
