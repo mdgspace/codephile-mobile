@@ -1,5 +1,5 @@
 import 'package:codephile/homescreen.dart';
-import 'package:codephile/screens/on_boarding/on_boarding_screen.dart';
+import 'package:codephile/screens/on_boarding/on_boarding_screen1.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:codephile/screens/login/login.dart';
@@ -95,7 +95,7 @@ class ChooseHomeState extends State<ChooseHome> {
     } else {
       prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => OnBoarding()));
+          new MaterialPageRoute(builder: (context) => OnBoardingScreen1()));
     }
   }
 
