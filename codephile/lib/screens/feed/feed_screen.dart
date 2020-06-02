@@ -15,9 +15,25 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.black,
+              ),
+              onPressed: () {})
+        ],
+        title: Text(
+          "Feed",
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+        ),
+      ),
       body: FutureBuilder(
           future: getFeed(token: widget.token),
-          initialData: Container(),
+          initialData: null,
           builder: (context, feed) {
             if (feed.connectionState == ConnectionState.done) {
               return ListView.builder(

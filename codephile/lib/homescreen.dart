@@ -65,7 +65,7 @@ class HomePageState extends State<HomePage> {
         ),
         MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: SubmissionScreen(token: token, id: userId),
+          home: FeedScreen(token: token),
         ),
         MaterialApp(
           debugShowCheckedModeBanner: false,
