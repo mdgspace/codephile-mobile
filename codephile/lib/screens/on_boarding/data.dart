@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 var pageList = [
   PageModel(
-    imageUrl: "assets/illustration.png",
-    title: "Browse friends and mentors",
-    body: "to stalk"
-  ),
+      imageUrl: "assets/illustration.png",
+      title: "Browse friends and mentors",
+      body: "to stalk"),
   PageModel(
     imageUrl: "assets/illustration2.png",
     title: "Follow people to see their",
@@ -17,7 +16,6 @@ var pageList = [
     body: "on who you follow",
   ),
 ];
-
 
 class PageModel {
   var imageUrl;

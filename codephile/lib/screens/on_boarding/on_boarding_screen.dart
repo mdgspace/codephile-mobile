@@ -39,8 +39,7 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
           PageView.builder(
             itemCount: pageList.length,
             controller: _controller,
-            onPageChanged: (index)
-            {
+            onPageChanged: (index) {
               setState(() {
                 currentPage = index;
                 if (currentPage == pageList.length - 1) {
@@ -79,16 +78,15 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
                         height: 40.0,
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(69.0, 0.0, 71.0, 0.0),
+                        padding:
+                            const EdgeInsets.fromLTRB(69.0, 0.0, 71.0, 0.0),
                         child: Container(
                           width: 272,
-                          child: Text(
-                              page.title,
+                          child: Text(page.title,
                               style: TextStyle(
                                 fontSize: 18.0,
                               ),
-                              textAlign: TextAlign.center
-                          ),
+                              textAlign: TextAlign.center),
                         ),
                       ),
                       Container(
@@ -132,7 +130,7 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-                    onPressed:(){
+                    onPressed: () {
 //                      Navigator.pop(context);
 //                      Navigator.push(context,
 //                          MaterialPageRoute(builder: (context) => MyHomePage()));
@@ -141,11 +139,8 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
                     }, //TODO: implement onPressed
 
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)
-                    )
-                ),
-              )
-          ),
+                        borderRadius: BorderRadius.circular(20.0))),
+              )),
         ],
       ),
     );

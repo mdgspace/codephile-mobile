@@ -31,28 +31,34 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    fullname: json["fullname"],
-    handle: Handle.fromJson(json["handle"]),
-    id: json["id"],
-    institute: json["institute"],
-    noOfFollowing: json["no_of_following"],
-    picture: json["picture"],
-    profiles: (json["profiles"] == null)? null : UserProfileDetails.fromJson(json["profiles"]),
-    recentSubmissions: (json["recent_submissions"] == null)? null :  List<Submission>.from(json["recent_submissions"].map((x) => Submission.fromJson(x))),
-    username: json["username"],
-  );
+        fullname: json["fullname"],
+        handle: Handle.fromJson(json["handle"]),
+        id: json["id"],
+        institute: json["institute"],
+        noOfFollowing: json["no_of_following"],
+        picture: json["picture"],
+        profiles: (json["profiles"] == null)
+            ? null
+            : UserProfileDetails.fromJson(json["profiles"]),
+        recentSubmissions: (json["recent_submissions"] == null)
+            ? null
+            : List<Submission>.from(
+                json["recent_submissions"].map((x) => Submission.fromJson(x))),
+        username: json["username"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "fullname": fullname,
-    "handle": handle.toJson(),
-    "id": id,
-    "institute": institute,
-    "no_of_following": noOfFollowing,
-    "picture": picture,
-    "profiles": profiles.toJson(),
-    "recent_submissions": List<dynamic>.from(recentSubmissions.map((x) => x.toJson())),
-    "username": username,
-  };
+        "fullname": fullname,
+        "handle": handle.toJson(),
+        "id": id,
+        "institute": institute,
+        "no_of_following": noOfFollowing,
+        "picture": picture,
+        "profiles": profiles.toJson(),
+        "recent_submissions":
+            List<dynamic>.from(recentSubmissions.map((x) => x.toJson())),
+        "username": username,
+      };
 }
 
 class Handle {
@@ -71,18 +77,18 @@ class Handle {
   });
 
   factory Handle.fromJson(Map<String, dynamic> json) => Handle(
-    codechef: json["codechef"],
-    codeforces: json["codeforces"],
-    hackerearth: json["hackerearth"],
-    hackerrank: json["hackerrank"],
-    spoj: json["spoj"],
-  );
+        codechef: json["codechef"],
+        codeforces: json["codeforces"],
+        hackerearth: json["hackerearth"],
+        hackerrank: json["hackerrank"],
+        spoj: json["spoj"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "codechef": codechef,
-    "codeforces": codeforces,
-    "hackerearth": hackerearth,
-    "hackerrank": hackerrank,
-    "spoj": spoj,
-  };
+        "codechef": codechef,
+        "codeforces": codeforces,
+        "hackerearth": hackerearth,
+        "hackerrank": hackerrank,
+        "spoj": spoj,
+      };
 }

@@ -8,7 +8,6 @@ var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
 Future<Contests> contestList(String token) async {
-
   String endpoint = "/contests/";
   String uri = url + endpoint;
   print("printing token");
@@ -22,9 +21,7 @@ Future<Contests> contestList(String token) async {
       headers: tokenAuth,
     );
 
-
 //    http.Response response = await client.get(uri);
-
 
     final jsonResponse = jsonDecode(response.body);
     Contests contests = new Contests.fromJson(jsonResponse);

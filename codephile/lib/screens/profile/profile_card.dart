@@ -13,8 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/user_profile_details.dart';
 import 'accuracy_tile.dart';
 
-class ProfileCard extends StatefulWidget{
-
+class ProfileCard extends StatefulWidget {
   final String title;
   final String _token;
   final User _user;
@@ -22,30 +21,25 @@ class ProfileCard extends StatefulWidget{
   final bool _isMyProfile;
   final UserProfileDetails _platformDetails;
 
-  ProfileCard(
-      this._token,
-      this._user,
-      this._isFollowing,
-      this._isMyProfile,
+  ProfileCard(this._token, this._user, this._isFollowing, this._isMyProfile,
       this._platformDetails,
-      {Key key, this.title}
-      ) : super(key: key);
-
+      {Key key, this.title})
+      : super(key: key);
 
   @override
   _ProfileCardState createState() => _ProfileCardState();
 }
 
-class _ProfileCardState extends State<ProfileCard>{
-
+class _ProfileCardState extends State<ProfileCard> {
   bool isFollowing;
 //  List<Following> _followingList;
 
   @override
-  void initState(){
+  void initState() {
     isFollowing = widget._isFollowing;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,7 +51,7 @@ class _ProfileCardState extends State<ProfileCard>{
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-              width: MediaQuery.of(context).size.width/1.05,
+              width: MediaQuery.of(context).size.width / 1.05,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
@@ -65,16 +59,15 @@ class _ProfileCardState extends State<ProfileCard>{
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 16.0, 8.0, 16.0),
                     child: Container(
-                      height: MediaQuery.of(context).size.width/6.2,
-                      width: MediaQuery.of(context).size.width/6.2,
+                      height: MediaQuery.of(context).size.width / 6.2,
+                      width: MediaQuery.of(context).size.width / 6.2,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(2.0)),
                       ),
                       child: Image.network(
-                        widget._user.picture!=""?
-                        widget._user.picture
-                            :
-                        "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
+                        widget._user.picture != ""
+                            ? widget._user.picture
+                            : "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
                         //TODO: use defalut image         Priority: 1
                       ),
                     ),
@@ -86,7 +79,7 @@ class _ProfileCardState extends State<ProfileCard>{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width/1.5,
+                          width: MediaQuery.of(context).size.width / 1.5,
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,29 +88,34 @@ class _ProfileCardState extends State<ProfileCard>{
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Container(
-                                    width: MediaQuery.of(context).size.width/3,
+                                    width:
+                                        MediaQuery.of(context).size.width / 3,
                                     child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(0.0, 2.0, 0.0, 2.0),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0.0, 2.0, 0.0, 2.0),
                                       child: Text(
                                         "${widget._user.fullname}",
                                         style: TextStyle(
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.bold,
-                                            color: const Color.fromRGBO(36, 36, 36, 1)
-                                        ),
+                                            color: const Color.fromRGBO(
+                                                36, 36, 36, 1)),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ),
                                   Container(
-                                    width: MediaQuery.of(context).size.width/3,
+                                    width:
+                                        MediaQuery.of(context).size.width / 3,
                                     child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(0.0, 2.0, 0.0, 2.0),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0.0, 2.0, 0.0, 2.0),
                                       child: Text(
                                         "@${widget._user.username}",
                                         style: TextStyle(
                                           fontSize: 14.0,
-                                          color: const Color.fromRGBO(145, 145, 145, 1),
+                                          color: const Color.fromRGBO(
+                                              145, 145, 145, 1),
                                         ),
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -133,19 +131,20 @@ class _ProfileCardState extends State<ProfileCard>{
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        widget._isMyProfile? "Logout":"Compare",
+                                        widget._isMyProfile
+                                            ? "Logout"
+                                            : "Compare",
                                         style: TextStyle(
                                             fontSize: 16.0,
-                                            color: Colors.white
-                                        ),
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ),
                                 ),
-                                onTap: (){
-                                  if(widget._isMyProfile){
+                                onTap: () {
+                                  if (widget._isMyProfile) {
                                     logout(widget._token);
-                                  }else{
+                                  } else {
                                     //TODO: implement compare       Priority: 1
                                   }
                                 },
@@ -153,11 +152,11 @@ class _ProfileCardState extends State<ProfileCard>{
                             ],
                           ),
                         ),
-
                         Container(
-                          width: MediaQuery.of(context).size.width/1.5 ,
+                          width: MediaQuery.of(context).size.width / 1.5,
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0.0, 2.0, 16.0, 9.0),
+                            padding:
+                                const EdgeInsets.fromLTRB(0.0, 2.0, 16.0, 9.0),
                             child: Text(
                               "${widget._user.institute}",
                               style: TextStyle(
@@ -181,8 +180,7 @@ class _ProfileCardState extends State<ProfileCard>{
                 style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromRGBO(36, 36, 36, 1)
-                ),
+                    color: const Color.fromRGBO(36, 36, 36, 1)),
               ),
             ),
             Padding(
@@ -201,16 +199,17 @@ class _ProfileCardState extends State<ProfileCard>{
                     children: <Widget>[
                       GestureDetector(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 4.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 4.0),
                           child: Text(
-                            "${widget._user.noOfFollowing} Following",//TODO: implement following       Priority: 1
+                            "${widget._user.noOfFollowing} Following", //TODO: implement following       Priority: 1
                             style: TextStyle(
                               fontSize: 18.0,
                               color: const Color.fromRGBO(36, 36, 36, 1),
                             ),
                           ),
                         ),
-                        onTap: (){
+                        onTap: () {
                           //TODO: implement following page       Priority: 2
                         },
                       )
@@ -219,128 +218,132 @@ class _ProfileCardState extends State<ProfileCard>{
                 ),
               ],
             ),
-            (widget._isMyProfile == true)?
-            Container()
-                :
-            GestureDetector(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: isFollowing?
-                      const Color.fromRGBO(51, 102, 255, 1)
-                          :
-                      Colors.white,
-                      border: Border.all(
-                        color: const Color.fromRGBO(51, 102, 255, 1),
-                        width: 1.0,
+            (widget._isMyProfile == true)
+                ? Container()
+                : GestureDetector(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 16.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: isFollowing
+                                ? const Color.fromRGBO(51, 102, 255, 1)
+                                : Colors.white,
+                            border: Border.all(
+                              color: const Color.fromRGBO(51, 102, 255, 1),
+                              width: 1.0,
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(2.0))),
+                        child: isFollowing
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        10.0, 10.0, 2.0, 10.0),
+                                    child: Text(
+                                      "FOLLOWED",
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        2.0, 8.0, 10.0, 8.0),
+                                    child: Icon(
+                                      Icons.check,
+                                      size: 20.0,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      "FOLLOW",
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: const Color.fromRGBO(
+                                            51, 102, 255, 1),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(2.0))
-                  ),
-                  child: isFollowing?
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 2.0, 10.0),
-                        child: Text(
-                          "FOLLOWED",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2.0, 8.0, 10.0, 8.0),
-                        child: Icon(
-                          Icons.check,
-                          size: 20.0,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  )
-                      :
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "FOLLOW",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: const Color.fromRGBO(51, 102, 255, 1),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              onTap: (){
-                if(isFollowing){
-                  unFollow();
-                }else{
-                  follow();
-                }
+                    ),
+                    onTap: () {
+                      if (isFollowing) {
+                        unFollow();
+                      } else {
+                        follow();
+                      }
 
-                changeButtonAppearance();
-                //TODO: implement load on follow/ un-follow     Priority: 2
-              },
-            ),
+                      changeButtonAppearance();
+                      //TODO: implement load on follow/ un-follow     Priority: 2
+                    },
+                  ),
           ],
         ),
       ),
     );
   }
 
-  List<Widget> getAccuracyTileList(){
+  List<Widget> getAccuracyTileList() {
     List<AccuracyTile> accuracyTileList = List<AccuracyTile>();
-    if(widget._platformDetails != null){
-      if(widget._platformDetails.codechefProfile != null){
-        accuracyTileList.add(AccuracyTile("codechef", widget._platformDetails.codechefProfile.accuracy));
-      }else {
+    if (widget._platformDetails != null) {
+      if (widget._platformDetails.codechefProfile != null) {
+        accuracyTileList.add(AccuracyTile(
+            "codechef", widget._platformDetails.codechefProfile.accuracy));
+      } else {
         accuracyTileList.add(AccuracyTile("codechef", "-"));
       }
 
-      if(widget._platformDetails.codeforcesProfile != null){
-        accuracyTileList.add(AccuracyTile("codeforces", widget._platformDetails.codeforcesProfile.accuracy));
-      }else {
+      if (widget._platformDetails.codeforcesProfile != null) {
+        accuracyTileList.add(AccuracyTile(
+            "codeforces", widget._platformDetails.codeforcesProfile.accuracy));
+      } else {
         accuracyTileList.add(AccuracyTile("codeforces", "-"));
       }
 
-      if(widget._platformDetails.hackerrankProfile != null){
-        accuracyTileList.add(AccuracyTile("hackerrank", widget._platformDetails.hackerrankProfile.accuracy));
-      }else {
+      if (widget._platformDetails.hackerrankProfile != null) {
+        accuracyTileList.add(AccuracyTile(
+            "hackerrank", widget._platformDetails.hackerrankProfile.accuracy));
+      } else {
         accuracyTileList.add(AccuracyTile("hackerrank", "-"));
       }
 
-      if(widget._platformDetails.spojProfile != null){
-        accuracyTileList.add(AccuracyTile("spoj", widget._platformDetails.spojProfile.accuracy));
-      }else {
+      if (widget._platformDetails.spojProfile != null) {
+        accuracyTileList.add(
+            AccuracyTile("spoj", widget._platformDetails.spojProfile.accuracy));
+      } else {
         accuracyTileList.add(AccuracyTile("spoj", "-"));
       }
-    }else{
+    } else {
       print("user details are null");
       accuracyTileList.add(AccuracyTile("codechef", "-"));
       accuracyTileList.add(AccuracyTile("codeforces", "-"));
       accuracyTileList.add(AccuracyTile("hackerrank", "-"));
       accuracyTileList.add(AccuracyTile("spoj", "-"));
-
     }
 
     return accuracyTileList;
   }
 
-  void follow() async{
+  void follow() async {
     print("follow");
-    followUser(widget._token, widget._user.id).then((statusCode){
+    followUser(widget._token, widget._user.id).then((statusCode) {
       print(statusCode);
-      if(statusCode != 200){
+      if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
@@ -355,11 +358,11 @@ class _ProfileCardState extends State<ProfileCard>{
     });
   }
 
-  void unFollow() async{
+  void unFollow() async {
     print("Unfollow");
-    unfollowUser(widget._token, widget._user.id).then((statusCode){
+    unfollowUser(widget._token, widget._user.id).then((statusCode) {
       print(statusCode);
-      if(statusCode != 200){
+      if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
@@ -375,27 +378,26 @@ class _ProfileCardState extends State<ProfileCard>{
   }
 
   void changeButtonAppearance() {
-    if(isFollowing){
+    if (isFollowing) {
       setState(() {
         isFollowing = false;
       });
-    }else{
+    } else {
       setState(() {
         isFollowing = true;
       });
     }
   }
 
-  void logout(String token) async{
-    logoutUser(token).then((wasSuccessful){
+  void logout(String token) async {
+    logoutUser(token).then((wasSuccessful) {
       print(wasSuccessful);
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove("token");
     await prefs.remove("uid");
     Navigator.of(context).popUntil((route) => route.isFirst);
-    Navigator.of(context, rootNavigator: true).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginPage())
-    );
+    Navigator.of(context, rootNavigator: true)
+        .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
   }
 }

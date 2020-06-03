@@ -18,7 +18,6 @@ Future<bool> submissionPost(String token, String site) async {
       return true;
     }
     return false;
-
   } on Exception catch (e) {
     print(e);
     return null;

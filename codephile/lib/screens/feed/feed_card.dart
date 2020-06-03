@@ -1,34 +1,36 @@
 import 'package:codephile/models/feed.dart';
+import 'package:codephile/models/grouped_feed.dart';
 import 'package:codephile/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
+import 'package:intl/intl.dart';
+
 class FeedCard extends StatelessWidget {
-  final Feed feed;
+  final GroupedFeed feed;
   FeedCard({this.feed});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          feed.picture != ""
-              ? CircleAvatar(
-                  radius: 16.0,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: NetworkImage(feed.picture),
-                )
-              : Icon(Icons.person, size: 36.0),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 5.0),
-                  child: Row(
+    return ListTileTheme(
+      contentPadding: EdgeInsets.all(10),
+      dense: true,
+      child: ExpansionTile(
+          backgroundColor: Colors.white,
+          title: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <
+              Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+              child: CircleAvatar(
+                radius: 16.0,
+                backgroundColor: Colors.transparent,
+                backgroundImage: NetworkImage(feed.picture),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
@@ -36,59 +38,54 @@ class FeedCard extends StatelessWidget {
                         style: TextStyle(fontSize: 14.0, color: Colors.grey),
                       ),
                       Text(
-                        timeAgo(feed.submission.createdAt),
+                        DateFormat("dd-MM-yyyy kk:mm")
+                            .format(feed.submissions[0].createdAt),
                         style: TextStyle(fontSize: 14.0, color: Colors.grey),
                       )
                     ],
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Text(
-                    '${feed.submission.name}',
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                  Text(
+                    '${feed.name}',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Row(children: <Widget>[
+                  Row(children: <Widget>[
                     Text(
                       'on ',
-                      style: TextStyle(fontSize: 12.0),
+                      style: TextStyle(fontSize: 12.0, color: Colors.black),
                     ),
                     CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      backgroundImage:
-                          AssetImage(getAsset(feed.submission.url)),
+                      backgroundImage: AssetImage(getAsset(feed.url)),
                       radius: 10.0,
                     ),
-                    Text(' ${getPlatform(feed.submission.url)}',
-                        style: TextStyle(fontSize: 12.0))
-                  ]),
-                )
-              ],
+                    Text(' ${getPlatform(feed.url)}',
+                        style: TextStyle(fontSize: 12.0, color: Colors.black)),
+                    Spacer(),
+                    Icon(Icons.keyboard_arrow_down)
+                  ])
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ]),
+          trailing: SizedBox(),
+          children: _buildChildren(feed.submissions)),
     );
   }
 
-  String timeAgo(DateTime time) {
-    Duration _duration = DateTime.now().difference(time);
-    if (_duration < Duration(minutes: 1))
-      return 'just now';
-    else if (_duration < Duration(hours: 1))
-      return '${_duration.inMinutes} mins';
-    else if (_duration < Duration(days: 1))
-      return '${_duration.inHours} hours';
-    else if (_duration < Duration(days: 365))
-      return '${_duration.inDays} days';
-    else
-      return '${(_duration.inDays / 365).round()} year';
+  List<Widget> _buildChildren(List<Submissions> list) {
+    return list
+        .map((e) => Row(
+              children: <Widget>[
+                Text(e.status),
+                Text(DateFormat('dd-MM-yyyy kk-ss').format(e.createdAt))
+              ],
+            ))
+        .toList();
   }
 
   String getPlatform(String url) {

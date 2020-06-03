@@ -13,7 +13,6 @@ import '../../models/user_profile_details.dart';
 import '../../services/user_details.dart';
 
 class Profile extends StatefulWidget {
-
   final String token;
   final String uId;
   final bool _isMyProfile;
@@ -26,7 +25,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   bool _isLoading = true;
 
   User _user;
@@ -45,77 +43,75 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(243, 244, 247, 1),
-      body: _isLoading?
-      Center(
-        child: CircularProgressIndicator(),
-      )
-          :
-      ListView(
-        children: <Widget>[
-          //TODO: implement #following
-          ProfileCard(
-              widget.token,
-              _user,
-              checkIfFollowing(widget.uId),
-              widget._isMyProfile,
-              _userPlatformDetails
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 16.0),
-            child: Text(
-              "Recently Solved",
-              style: TextStyle(
-                fontSize: 22.0,
-                color: const Color.fromRGBO(36, 36, 36, 1),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length >= 1))?
-          RecentlySolvedCard(_mostRecentSubmissions[0].name, submissionType(_mostRecentSubmissions[0]), _mostRecentSubmissions[0].createdAt, _mostRecentSubmissions[0].url)
-              :
-          Container()
-          ,
-          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length > 1))?
-          RecentlySolvedCard(_mostRecentSubmissions[1].name, submissionType(_mostRecentSubmissions[1]), _mostRecentSubmissions[1].createdAt, _mostRecentSubmissions[1].url)
-              :
-          Container(),
-          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length >=1))?
-          GestureDetector(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 8.0),
-              child: Text(
-                  "View More",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: codephileMain,
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView(
+              children: <Widget>[
+                //TODO: implement #following
+                ProfileCard(widget.token, _user, checkIfFollowing(widget.uId),
+                    widget._isMyProfile, _userPlatformDetails),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 16.0),
+                  child: Text(
+                    "Recently Solved",
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      color: const Color.fromRGBO(36, 36, 36, 1),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            onTap: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => new SubmissionScreen(
-                          token: widget.token,
-                          id: widget.uId
+                ((_mostRecentSubmissions != null) &&
+                        (_mostRecentSubmissions.length >= 1))
+                    ? RecentlySolvedCard(
+                        _mostRecentSubmissions[0].name,
+                        submissionType(_mostRecentSubmissions[0]),
+                        _mostRecentSubmissions[0].createdAt,
+                        _mostRecentSubmissions[0].url)
+                    : Container(),
+                ((_mostRecentSubmissions != null) &&
+                        (_mostRecentSubmissions.length > 1))
+                    ? RecentlySolvedCard(
+                        _mostRecentSubmissions[1].name,
+                        submissionType(_mostRecentSubmissions[1]),
+                        _mostRecentSubmissions[1].createdAt,
+                        _mostRecentSubmissions[1].url)
+                    : Container(),
+                ((_mostRecentSubmissions != null) &&
+                        (_mostRecentSubmissions.length >= 1))
+                    ? GestureDetector(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 8.0),
+                          child: Text(
+                            "View More",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: codephileMain,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => new SubmissionScreen(
+                                      token: widget.token, id: widget.uId)));
+                        },
                       )
-                  )
-              );
-            },
-          )
-              :
-              Container(height: 0.0)
-        ],
-      ),
+                    : Container(height: 0.0)
+              ],
+            ),
     );
   }
 
-  void initValues() async{
+  void initValues() async {
     var user = await getUser(widget.token, widget.uId);
     _user = user;
     _userPlatformDetails = _user.profiles;
-    if(widget.checkIfFollowing){
+    if (widget.checkIfFollowing) {
       var followingList = await getFollowingList(widget.token);
       _followingList = followingList;
     }
@@ -129,12 +125,12 @@ class _ProfileState extends State<Profile> {
   }
 
   void getLatestTwoSubmissions() {
-    if(_submissionsList != null){
-      if(_submissionsList.length >=2){
+    if (_submissionsList != null) {
+      if (_submissionsList.length >= 2) {
         _mostRecentSubmissions = List<Submission>();
         _mostRecentSubmissions.add(_submissionsList[0]);
         _mostRecentSubmissions.add(_submissionsList[1]);
-      } else if(_submissionsList.length == 1){
+      } else if (_submissionsList.length == 1) {
         _mostRecentSubmissions = List<Submission>();
         _mostRecentSubmissions.add(_submissionsList[0]);
       }
@@ -142,9 +138,9 @@ class _ProfileState extends State<Profile> {
   }
 
   bool checkIfFollowing(String id) {
-    if(_followingList != null){
-      for(int i = 0; i < _followingList.length; i++){
-        if(_followingList[i].fId == id){
+    if (_followingList != null) {
+      for (int i = 0; i < _followingList.length; i++) {
+        if (_followingList[i].fId == id) {
           return true;
         }
       }

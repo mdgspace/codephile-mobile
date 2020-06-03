@@ -12,11 +12,11 @@ class SubmissionScreen extends StatefulWidget {
   SubmissionScreen({Key key, this.token, this.id}) : super(key: key);
 
   @override
-  _SubmissionScreenState createState() => _SubmissionScreenState(token: token, uid: id);
+  _SubmissionScreenState createState() =>
+      _SubmissionScreenState(token: token, uid: id);
 }
 
 class _SubmissionScreenState extends State<SubmissionScreen> {
-
   final String token;
   final String uid;
 
@@ -31,34 +31,30 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
 
   @override
   void initState() {
-
-    getSubmissionList(token, uid).then((submissions){
+    getSubmissionList(token, uid).then((submissions) {
       submissionList = submissions;
 
-      getUser(token, uid).then((user){
+      getUser(token, uid).then((user) {
         _fullName = user.fullname;
         _username = user.username;
         _picture = user.picture;
 
-        if(submissionList != null){
-          for(int i = 0; i < submissionList.length; i++){
-            allSubmission.add(
-              SubmissionCard(
-                _fullName,
-                "@"+ _username,
-                submissionType(submissionList[i]),
-                submissionList[i].name,
-                submissionList[i].createdAt,
-                _picture,
-              )
-            );
+        if (submissionList != null) {
+          for (int i = 0; i < submissionList.length; i++) {
+            allSubmission.add(SubmissionCard(
+              _fullName,
+              "@" + _username,
+              submissionType(submissionList[i]),
+              submissionList[i].name,
+              submissionList[i].createdAt,
+              _picture,
+            ));
           }
         }
 
-
-      setState(() {
-        _isLoading = false;
-      });
+        setState(() {
+          _isLoading = false;
+        });
       });
     });
     super.initState();
@@ -66,36 +62,27 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: (_isLoading)?
-      Center(
-          child: CircularProgressIndicator()
-      )
-          :
-      ListView.builder(
-        itemBuilder: (context, position){
-          return allSubmission[position];
-        },
-        itemCount: allSubmission.length,
-      ),
+      body: (_isLoading)
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemBuilder: (context, position) {
+                return allSubmission[position];
+              },
+              itemCount: allSubmission.length,
+            ),
     );
   }
 
-  String getIconUrl(String platform){
-    final String codeChefIcon =
-        "assets/platformIcons/codeChefIcon.png";
-    final String hackerRankIcon =
-        "assets/platformIcons/hackerRankIcon.png";
-    final String hackerEarthIcon =
-        "assets/platformIcons/hackerEarthIcon.png";
-    final String codeForcesIcon =
-        "assets/platformIcons/codeForcesIcon.png";
-    final String otherIcon =
-        "assets/platformIcons/otherIcon.jpg";
+  String getIconUrl(String platform) {
+    final String codeChefIcon = "assets/platformIcons/codeChefIcon.png";
+    final String hackerRankIcon = "assets/platformIcons/hackerRankIcon.png";
+    final String hackerEarthIcon = "assets/platformIcons/hackerEarthIcon.png";
+    final String codeForcesIcon = "assets/platformIcons/codeForcesIcon.png";
+    final String otherIcon = "assets/platformIcons/otherIcon.jpg";
 
-    switch(platform.toLowerCase()){
-      case "codechef" :
+    switch (platform.toLowerCase()) {
+      case "codechef":
         return codeChefIcon;
         break;
       case "hackerrank":
@@ -111,5 +98,4 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
         return otherIcon;
     }
   }
-
 }

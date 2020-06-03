@@ -1,14 +1,15 @@
 import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
-class SearchResultCard extends StatelessWidget{
-
+class SearchResultCard extends StatelessWidget {
   final String _name;
   final String _handle;
   final String _imageLink;
   final String token;
 
-  const SearchResultCard(this.token, this._name, this._handle, this._imageLink, {Key key}) : super(key: key);
+  const SearchResultCard(this.token, this._name, this._handle, this._imageLink,
+      {Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +24,9 @@ class SearchResultCard extends StatelessWidget{
             Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 8.0, 4.0, 8.0),
               child: Image.network(
-                _imageLink!=""?
-                _imageLink
-                    :
-                "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
+                _imageLink != ""
+                    ? _imageLink
+                    : "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
                 height: 40.0,
                 width: 40.0,
               ),
@@ -62,5 +62,4 @@ class SearchResultCard extends StatelessWidget{
       ),
     );
   }
-
 }

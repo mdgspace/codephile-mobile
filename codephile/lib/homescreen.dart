@@ -69,7 +69,8 @@ class HomePageState extends State<HomePage> {
         ),
         MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Profile(token, userId, true, false),
+          home: Container(),
+          // home: Profile(token, userId, true, false),
         )
       ]),
       bottomNavigationBar: BottomNavigationBar(
@@ -101,8 +102,7 @@ class HomePageState extends State<HomePage> {
             ),
             title: Text(
               'Feed',
-              style: new TextStyle(
-              ),
+              style: new TextStyle(),
             ),
           ),
           BottomNavigationBarItem(

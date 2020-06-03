@@ -1,8 +1,7 @@
 import 'package:codephile/resources/strings.dart';
 import 'package:flutter/material.dart';
 
-class AccuracyTile extends StatelessWidget{
-
+class AccuracyTile extends StatelessWidget {
   final String _platform;
   final String _accuracy;
 
@@ -18,8 +17,7 @@ class AccuracyTile extends StatelessWidget{
             border: Border.all(
               color: const Color.fromRGBO(151, 151, 151, 1),
               width: 1,
-            )
-        ),
+            )),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -37,8 +35,8 @@ class AccuracyTile extends StatelessWidget{
                 padding: const EdgeInsets.all(3.0),
                 child: Image.asset(
                   getIconUrl(_platform),
-                  width: MediaQuery.of(context).size.width/16,
-                  height: MediaQuery.of(context).size.width/16,
+                  width: MediaQuery.of(context).size.width / 16,
+                  height: MediaQuery.of(context).size.width / 16,
                 ),
               ),
             ),
@@ -56,13 +54,11 @@ class AccuracyTile extends StatelessWidget{
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  ((_accuracy == "NaN")||(_accuracy == ""))?
-                  "-"
-                      :
-                  (_accuracy.length > 4)?
-                  "${_accuracy.substring(0, 4)}"
-                  :
-                  "$_accuracy",
+                  ((_accuracy == "NaN") || (_accuracy == ""))
+                      ? "-"
+                      : (_accuracy.length > 4)
+                          ? "${_accuracy.substring(0, 4)}"
+                          : "$_accuracy",
                   style: TextStyle(
                     fontSize: 14.0,
                     color: const Color.fromRGBO(151, 151, 151, 1),
@@ -76,10 +72,9 @@ class AccuracyTile extends StatelessWidget{
     );
   }
 
-  String getIconUrl(String platform){
-
-    switch(platform.toLowerCase()){
-      case "codechef" :
+  String getIconUrl(String platform) {
+    switch (platform.toLowerCase()) {
+      case "codechef":
         return codeChefIcon;
         break;
       case "hackerrank":

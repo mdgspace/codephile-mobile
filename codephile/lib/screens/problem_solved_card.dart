@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ProblemSolvedCard extends StatelessWidget{
-
+class ProblemSolvedCard extends StatelessWidget {
   final String _date = "10 Aug, 2019";
   final String _time = "8:30 pm";
   final String _website = "Codechef";
@@ -27,10 +26,7 @@ class ProblemSolvedCard extends StatelessWidget{
                           image: DecorationImage(
                               fit: BoxFit.fill,
                               image: NetworkImage(
-                                  "http://cdn.onlinewebfonts.com/svg/img_357118.png"
-                              )
-                          )
-                      ),
+                                  "http://cdn.onlinewebfonts.com/svg/img_357118.png"))),
                     ),
                   ),
                 ),
@@ -51,9 +47,7 @@ class ProblemSolvedCard extends StatelessWidget{
                       padding: const EdgeInsets.fromLTRB(8.0, 2.0, 8.0, 2.0),
                       child: Text(
                         "@usename",
-                        style: TextStyle(
-                            fontSize: 16.0
-                        ),
+                        style: TextStyle(fontSize: 16.0),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -111,8 +105,7 @@ class ProblemSolvedCard extends StatelessWidget{
                     "$_time",
                     style: TextStyle(
                         fontSize: 14.0,
-                        color: const Color.fromRGBO(0, 0, 0, 0.85)
-                    ),
+                        color: const Color.fromRGBO(0, 0, 0, 0.85)),
                   ),
                 ),
                 Padding(
@@ -131,8 +124,7 @@ class ProblemSolvedCard extends StatelessWidget{
                     "$_date",
                     style: TextStyle(
                         fontSize: 14.0,
-                        color: const Color.fromRGBO(0, 0, 0, 0.85)
-                    ),
+                        color: const Color.fromRGBO(0, 0, 0, 0.85)),
                   ),
                 ),
               ],

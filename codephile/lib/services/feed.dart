@@ -8,7 +8,8 @@ var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
 Future<List<Feed>> getFeed({String token}) async {
-  String endpoint = "/feed/friend-activity?before=${DateTime.now().millisecondsSinceEpoch}";
+  String endpoint =
+      "/feed/friend-activity?before=${DateTime.now().millisecondsSinceEpoch}";
   String uri = url + endpoint;
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
@@ -18,7 +19,7 @@ Future<List<Feed>> getFeed({String token}) async {
       uri,
       headers: tokenAuth,
     );
-    return feedFromJson(response.body); 
+    return feedFromJson(response.body);
   } catch (e) {
     print(e.toString());
     return null;
