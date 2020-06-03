@@ -5,6 +5,7 @@ class GroupedFeed {
   String picture;
   String name;
   String url;
+  String language;
   List<Submissions> submissions;
 
   GroupedFeed(
@@ -14,13 +15,13 @@ class GroupedFeed {
       this.picture,
       this.name,
       this.url,
+      this.language,
       this.submissions});
 }
 
 class Submissions {
   DateTime createdAt;
   String status;
-  String language;
   int points;
   List<String> tags;
   int rating;
@@ -28,7 +29,6 @@ class Submissions {
   Submissions(
       {this.createdAt,
       this.status,
-      this.language,
       this.points,
       this.tags,
       this.rating});

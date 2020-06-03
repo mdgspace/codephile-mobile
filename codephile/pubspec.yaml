@@ -69,6 +69,8 @@ flutter:
     - assets/solved.svg
     - assets/logo.svg
     - assets/default_user_icon.svg
+    - assets/emptyFeed.svg
+    - assets/refresh.svg
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
