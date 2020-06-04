@@ -3,11 +3,15 @@ import 'package:codephile/models/submission.dart';
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/helper_functions.dart';
+import 'package:codephile/screens/profile/accuracy_display.dart';
+import 'package:codephile/screens/profile/no_of_questions_solved_display.dart';
 import 'package:codephile/screens/profile/profile_card.dart';
+import 'package:codephile/screens/profile/submissions_stats.dart';
 import 'package:codephile/screens/submission/recently_solved_card.dart';
 import 'package:codephile/screens/submission/submission_screen.dart';
 import 'package:codephile/services/following_list.dart';
 import 'package:codephile/services/user.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../models/user_profile_details.dart';
 import '../../services/user_details.dart';
@@ -44,7 +48,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(243, 244, 247, 1),
+      backgroundColor: Colors.white,
       body: _isLoading?
       Center(
         child: CircularProgressIndicator(),
@@ -52,60 +56,56 @@ class _ProfileState extends State<Profile> {
           :
       ListView(
         children: <Widget>[
-          //TODO: implement #following
           ProfileCard(
-              widget.token,
-              _user,
-              checkIfFollowing(widget.uId),
-              widget._isMyProfile,
-              _userPlatformDetails
+            widget.token,
+            _user,
+            checkIfFollowing(widget.uId),
+            widget._isMyProfile,
           ),
+          AccuracyDisplay(_userPlatformDetails),
+          QuestionsSolvedDisplay(),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 16.0),
-            child: Text(
-              "Recently Solved",
-              style: TextStyle(
-                fontSize: 22.0,
-                color: const Color.fromRGBO(36, 36, 36, 1),
-                fontWeight: FontWeight.bold,
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: codephileMain,
+                      width: 1.0
+                  )
+              ),
+              child: GestureDetector(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        "View all Solved questions",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: codephileMain
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.navigate_next,
+                        color: codephileMain,
+                        size: MediaQuery.of(context).size.width/14,
+                      ),
+                    )
+                  ],
+                ),
+                onTap: (){
+                  //TODO: implement onTap       Priority 1
+                },
               ),
             ),
           ),
-          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length >= 1))?
-          RecentlySolvedCard(_mostRecentSubmissions[0].name, submissionType(_mostRecentSubmissions[0]), _mostRecentSubmissions[0].createdAt, _mostRecentSubmissions[0].url)
-              :
-          Container()
-          ,
-          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length > 1))?
-          RecentlySolvedCard(_mostRecentSubmissions[1].name, submissionType(_mostRecentSubmissions[1]), _mostRecentSubmissions[1].createdAt, _mostRecentSubmissions[1].url)
-              :
-          Container(),
-          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length >=1))?
-          GestureDetector(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 8.0),
-              child: Text(
-                  "View More",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: codephileMain,
-                ),
-              ),
-            ),
-            onTap: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => new SubmissionScreen(
-                          token: widget.token,
-                          id: widget.uId
-                      )
-                  )
-              );
-            },
-          )
-              :
-              Container(height: 0.0)
+          SubmissionStatistics(),
         ],
       ),
     );

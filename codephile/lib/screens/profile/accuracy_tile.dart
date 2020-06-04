@@ -1,3 +1,4 @@
+import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/strings.dart';
 import 'package:flutter/material.dart';
 
@@ -11,12 +12,13 @@ class AccuracyTile extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8.0, 4.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 8.0, 0.0),
       child: Container(
         decoration: BoxDecoration(
+          color: uiBackground,
             borderRadius: BorderRadius.all(Radius.circular(2.0)),
             border: Border.all(
-              color: const Color.fromRGBO(151, 151, 151, 1),
+              color: secondaryTextGrey,
               width: 1,
             )
         ),
@@ -25,33 +27,27 @@ class AccuracyTile extends StatelessWidget{
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
+                color: Colors.white,
                 border: Border(
                   right: BorderSide(
-                    color: const Color.fromRGBO(151, 151, 151, 1),
-                    width: 0,
+                    color: secondaryTextGrey,
+                    width: 1,
                   ),
                 ),
               ),
-//              child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(3.0),
                 child: Image.asset(
                   getIconUrl(_platform),
-                  width: MediaQuery.of(context).size.width/16,
-                  height: MediaQuery.of(context).size.width/16,
+                  width: MediaQuery.of(context).size.width/14,
+                  height: MediaQuery.of(context).size.width/14,
                 ),
               ),
             ),
-//            ),
             Container(
               decoration: BoxDecoration(
-                color: const Color.fromRGBO(243, 244, 247, 1),
-                border: Border(
-                  left: BorderSide(
-                    color: const Color.fromRGBO(151, 151, 151, 1),
-                    width: 1,
-                  ),
-                ),
+                color: uiBackground,
+
               ),
               child: Padding(
                 padding: EdgeInsets.all(8.0),
@@ -65,7 +61,7 @@ class AccuracyTile extends StatelessWidget{
                   "$_accuracy",
                   style: TextStyle(
                     fontSize: 14.0,
-                    color: const Color.fromRGBO(151, 151, 151, 1),
+                    color: secondaryTextGrey,
                   ),
                 ),
               ),
@@ -77,7 +73,6 @@ class AccuracyTile extends StatelessWidget{
   }
 
   String getIconUrl(String platform){
-
     switch(platform.toLowerCase()){
       case "codechef" :
         return codeChefIcon;
