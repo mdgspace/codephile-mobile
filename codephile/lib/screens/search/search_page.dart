@@ -1,3 +1,4 @@
+import 'package:codephile/models/search_results.dart';
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
@@ -5,6 +6,7 @@ import 'package:codephile/screens/search/search_result_card.dart';
 import 'package:codephile/services/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchPage extends StatefulWidget{
 
@@ -28,11 +30,14 @@ class _SearchPageState extends State<SearchPage> {
   List<User> searchResult = List();
   int statusCode = 0;
   bool isResultNull = false;
+  bool showRecentSearches = true;
+  List<User> _recentlySearchedUsers;
 
   @override
   void initState(){
     super.initState();
     _controller.text = "";
+    loadRecentSearches();
   }
 
   @override
@@ -106,13 +111,15 @@ class _SearchPageState extends State<SearchPage> {
                 child: Text(
                   "No matching users found",
                   style: TextStyle(
-                      fontSize: 16.0,
-                      color: const Color.fromRGBO(36, 36, 36, 1),
+                    fontSize: 16.0,
+                    color: const Color.fromRGBO(36, 36, 36, 1),
                   ),
                 ),
               )
                   :
-
+              ((showRecentSearches) && (_recentlySearchedUsers != null ) && (_recentlySearchedUsers.length != 0))?
+              recentSearches()
+                  :
               ListView.builder(
                 shrinkWrap: true,
                 padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
@@ -127,6 +134,7 @@ class _SearchPageState extends State<SearchPage> {
                       user.picture,
                     ),
                     onTap: (){
+                      addToRecentSearches(user);
                       Navigator.push(
                           context, MaterialPageRoute(builder: (context) =>
                       new Profile(token, user.id, (widget.uId == user.id), true))
@@ -145,12 +153,13 @@ class _SearchPageState extends State<SearchPage> {
     bool isResNull = false;
     setState(() {
       _isSearching = true;
+      if(showRecentSearches == true){
+        showRecentSearches = false;
+      }
     });
     List<User> searchResultsTemp;// = List();
     search(widget.token, query).then((results){
       if((results != null) && (results.length != 0)){
-        print('resultsNotNull');
-        print(results.length);
         searchResultsTemp = results;
         isResNull = false;
       }else{
@@ -160,9 +169,87 @@ class _SearchPageState extends State<SearchPage> {
       setState(() {
         _isSearching = false;
         isResultNull = isResNull;
-        print(isResNull);
         searchResult = searchResultsTemp;
       });
     });
+  }
+
+  void addToRecentSearches(User user) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String searchHist = prefs.get("recentSearches");
+
+    List<User> oldUserObjects = (searchHist != null)? searchResultUsersFromJson(searchHist) : [];
+    List<User> newUserObjects = [];
+    newUserObjects.add(user);
+    for(int i = 0; i < oldUserObjects.length; i++){
+      if(oldUserObjects[i].id != user.id){
+        newUserObjects.add(oldUserObjects[i]);
+      }
+    }
+
+    if(newUserObjects.length > 10) {
+      while (newUserObjects.length > 10) {
+        newUserObjects.removeLast();
+      }
+    }
+    searchHist = searchResultUsersToJson(newUserObjects);
+    prefs.setString("recentSearches", searchHist);
+    setState(() {
+      _recentlySearchedUsers = newUserObjects;
+    });
+  }
+
+  Widget recentSearches() {
+    List<Widget> textWidget = [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+        child: Text(
+          "RECENT SEARCHES",
+          style: TextStyle(
+            color: secondaryTextGrey,
+            fontSize: 16.0,
+          ),
+        ),
+      )
+    ];
+
+    List<Widget> recentSearches = [];
+    if((_recentlySearchedUsers != null)&&(_recentlySearchedUsers.length != 0)){
+      for(int i = 0; i < _recentlySearchedUsers.length; i++){
+        recentSearches.add(
+            GestureDetector(
+              child: SearchResultCard(
+                  widget.token,
+                  _recentlySearchedUsers[i].fullname,
+                  _recentlySearchedUsers[i].username,
+                  _recentlySearchedUsers[i].picture
+              ),
+              onTap: (){
+                addToRecentSearches(_recentlySearchedUsers[i]);
+                Navigator.push(
+                    context, MaterialPageRoute(
+                    builder: (context) => new Profile(
+                        token,
+                        _recentlySearchedUsers[i].id,
+                        (widget.uId == _recentlySearchedUsers[i].id),
+                        true))
+                );
+              },
+            )
+        );
+      }
+    }
+
+    List<Widget> widgetsToRender = textWidget + recentSearches;
+    return ListView(
+        children: widgetsToRender
+    );
+  }
+
+  void loadRecentSearches() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userListString = prefs.get("recentSearches");
+    List<User> recentlySearchedUsers = (userListString == null)? [] : searchResultUsersFromJson(userListString);
+    _recentlySearchedUsers = recentlySearchedUsers;
   }
 }
