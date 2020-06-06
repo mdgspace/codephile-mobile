@@ -63,47 +63,11 @@ class _ProfileState extends State<Profile> {
             widget._isMyProfile,
           ),
           AccuracyDisplay(_userPlatformDetails),
-          QuestionsSolvedDisplay(),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: codephileMain,
-                      width: 1.0
-                  )
-              ),
-              child: GestureDetector(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        "View all Solved questions",
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: codephileMain
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.navigate_next,
-                        color: codephileMain,
-                        size: MediaQuery.of(context).size.width/14,
-                      ),
-                    )
-                  ],
-                ),
-                onTap: (){
-                  //TODO: implement onTap       Priority 1
-                },
-              ),
-            ),
+          QuestionsSolvedDisplay(
+            _user.solvedProblemsCount.codechef,
+            _user.solvedProblemsCount.codeforces,
+            _user.solvedProblemsCount.hackerrank,
+            _user.solvedProblemsCount.spoj
           ),
           SubmissionStatistics(),
         ],

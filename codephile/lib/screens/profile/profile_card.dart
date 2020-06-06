@@ -169,14 +169,6 @@ class _ProfileCardState extends State<ProfileCard>{
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Text(
-                            "COMPARE",
-                            style: TextStyle(
-                              color: secondaryTextGrey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.0,
-                            ),
-                          ),
                           GestureDetector(
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(8.0, 10.0, 16.0, 10.0),

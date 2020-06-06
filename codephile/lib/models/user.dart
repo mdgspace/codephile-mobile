@@ -17,6 +17,7 @@ class User {
   UserProfileDetails profiles;
   List<Submission> recentSubmissions;
   String username;
+  SolvedProblemsCount solvedProblemsCount;
 
   User({
     this.fullname,
@@ -28,6 +29,7 @@ class User {
     this.profiles,
     this.recentSubmissions,
     this.username,
+    this.solvedProblemsCount,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -40,6 +42,7 @@ class User {
     profiles: (json["profiles"] == null)? null : UserProfileDetails.fromJson(json["profiles"]),
     recentSubmissions: (json["recent_submissions"] == null)? null :  List<Submission>.from(json["recent_submissions"].map((x) => Submission.fromJson(x))),
     username: json["username"],
+    solvedProblemsCount: (json["solved_problems_count"] == null)? null : SolvedProblemsCount.fromJson(json["solved_problems_count"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -52,6 +55,7 @@ class User {
     "profiles": profiles.toJson(),
     "recent_submissions": List<dynamic>.from(recentSubmissions.map((x) => x.toJson())),
     "username": username,
+    "solved_problems_count": solvedProblemsCount.toJson(),
   };
 }
 
@@ -82,6 +86,34 @@ class Handle {
     "codechef": codechef,
     "codeforces": codeforces,
     "hackerearth": hackerearth,
+    "hackerrank": hackerrank,
+    "spoj": spoj,
+  };
+}
+
+class SolvedProblemsCount {
+  SolvedProblemsCount({
+    this.codechef,
+    this.codeforces,
+    this.hackerrank,
+    this.spoj,
+  });
+
+  int codechef;
+  int codeforces;
+  int hackerrank;
+  int spoj;
+
+  factory SolvedProblemsCount.fromJson(Map<String, dynamic> json) => SolvedProblemsCount(
+    codechef: json["codechef"],
+    codeforces: json["codeforces"],
+    hackerrank: json["hackerrank"],
+    spoj: json["spoj"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "codechef": codechef,
+    "codeforces": codeforces,
     "hackerrank": hackerrank,
     "spoj": spoj,
   };

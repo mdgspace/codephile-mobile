@@ -11,7 +11,7 @@ class SubmissionStatistics extends StatelessWidget{
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(16.0, 36.0, 16.0,16.0),
           child: Text(
             "Status of total submissions",
             style: TextStyle(
