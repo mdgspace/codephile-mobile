@@ -1,20 +1,15 @@
 import 'package:codephile/models/following.dart';
 import 'package:codephile/models/submission.dart';
 import 'package:codephile/models/user.dart';
-import 'package:codephile/resources/colors.dart';
-import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/screens/profile/accuracy_display.dart';
 import 'package:codephile/screens/profile/no_of_questions_solved_display.dart';
 import 'package:codephile/screens/profile/profile_card.dart';
 import 'package:codephile/screens/profile/submissions_stats.dart';
-import 'package:codephile/screens/submission/recently_solved_card.dart';
-import 'package:codephile/screens/submission/submission_screen.dart';
 import 'package:codephile/services/following_list.dart';
 import 'package:codephile/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../models/user_profile_details.dart';
-import '../../services/user_details.dart';
 
 class Profile extends StatefulWidget {
 
@@ -48,41 +43,44 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: _isLoading?
-      Center(
-        child: CircularProgressIndicator(),
-      )
-          :
-      ListView(
-        children: <Widget>[
-          ProfileCard(
-            widget.token,
-            _user,
-            checkIfFollowing(widget.uId),
-            widget._isMyProfile,
-          ),
-          AccuracyDisplay(_userPlatformDetails),
-          QuestionsSolvedDisplay(
-            _user.solvedProblemsCount.codechef,
-            _user.solvedProblemsCount.codeforces,
-            _user.solvedProblemsCount.hackerrank,
-            _user.solvedProblemsCount.spoj
-          ),
-          SubmissionStatistics(),
-        ],
-      ),
+        backgroundColor: Colors.white,
+        body:
+        RefreshIndicator(
+          child:_isLoading?
+          Center(
+            child: CircularProgressIndicator(),
+          )
+              :
+          ListView(
+            children: <Widget>[
+              ProfileCard(
+                widget.token,
+                _user,
+                checkIfFollowing(widget.uId),
+                widget._isMyProfile,
+                refreshPage,
+              ),
+              AccuracyDisplay(_userPlatformDetails),
+              QuestionsSolvedDisplay(
+                  _user.solvedProblemsCount.codechef,
+                  _user.solvedProblemsCount.codeforces,
+                  _user.solvedProblemsCount.hackerrank,
+                  _user.solvedProblemsCount.spoj
+              ),
+              SubmissionStatistics(),
+            ],
+          ), onRefresh: refreshPage
+        )
     );
   }
 
   void initValues() async{
     var user = await getUser(widget.token, widget.uId);
     _user = user;
-    _userPlatformDetails = _user.profiles;
-    if(widget.checkIfFollowing){
-      var followingList = await getFollowingList(widget.token);
-      _followingList = followingList;
-    }
+    _userPlatformDetails = (_user == null)? null :_user.profiles;
+    var followingList = await getFollowingList(widget.token);
+    _followingList = followingList;
+
     //TODO: use shared prefs
     _submissionsList = _user.recentSubmissions;
     getLatestTwoSubmissions();
@@ -108,12 +106,19 @@ class _ProfileState extends State<Profile> {
   bool checkIfFollowing(String id) {
     if(_followingList != null){
       for(int i = 0; i < _followingList.length; i++){
-        if(_followingList[i].fId == id){
+        if(_followingList[i].id == id){
           return true;
         }
       }
       return false;
     }
     return false;
+  }
+
+  Future<void> refreshPage() async {
+    setState(() {
+      _isLoading = true;
+    });
+    initValues();
   }
 }

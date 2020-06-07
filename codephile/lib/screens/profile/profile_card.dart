@@ -1,15 +1,13 @@
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
-import 'package:codephile/screens/login/login.dart';
+import 'package:codephile/screens/following/following_screen.dart';
 import 'package:codephile/screens/profile/settings_popup_menu.dart';
 import 'package:codephile/services/follow.dart';
-import 'package:codephile/services/logout_user.dart';
 import 'package:codephile/services/unfollow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileCard extends StatefulWidget{
 
@@ -18,12 +16,14 @@ class ProfileCard extends StatefulWidget{
   final User _user;
   final bool _isFollowing;
   final bool _isMyProfile;
+  final Function _callback;
 
   ProfileCard(
       this._token,
       this._user,
       this._isFollowing,
       this._isMyProfile,
+      this._callback,
       {Key key, this.title}
       ) : super(key: key);
 
@@ -139,15 +139,27 @@ class _ProfileCardState extends State<ProfileCard>{
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          "${widget._user.noOfFollowing} Following",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18.0,
+                      GestureDetector(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            "${widget._user.noOfFollowing} Following",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.0,
+                            ),
                           ),
                         ),
+                        onTap: (){
+                          if(widget._isMyProfile){
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(builder: (context) => new FollowingScreen(widget._token, widget._user.id))
+                            ).then((v){
+                              widget._callback();
+                            });
+                          }
+                        },
                       )
                     ],
                   )
