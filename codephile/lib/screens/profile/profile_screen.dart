@@ -1,11 +1,13 @@
 import 'package:codephile/models/following.dart';
 import 'package:codephile/models/submission.dart';
+import 'package:codephile/models/submission_status_data.dart';
 import 'package:codephile/models/user.dart';
 import 'package:codephile/screens/profile/accuracy_display.dart';
 import 'package:codephile/screens/profile/no_of_questions_solved_display.dart';
 import 'package:codephile/screens/profile/profile_card.dart';
 import 'package:codephile/screens/profile/submissions_stats.dart';
 import 'package:codephile/services/following_list.dart';
+import 'package:codephile/services/submissions_status.dart';
 import 'package:codephile/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,7 @@ class _ProfileState extends State<Profile> {
   List<Submission> _submissionsList;
   List<Submission> _mostRecentSubmissions;
   List<Following> _followingList;
+  SubStatusData _subStats;
 
   @override
   void initState() {
@@ -67,7 +70,7 @@ class _ProfileState extends State<Profile> {
                   _user.solvedProblemsCount.hackerrank,
                   _user.solvedProblemsCount.spoj
               ),
-              SubmissionStatistics(),
+              SubmissionStatistics(_subStats),
             ],
           ), onRefresh: refreshPage
         )
@@ -80,6 +83,8 @@ class _ProfileState extends State<Profile> {
     _userPlatformDetails = (_user == null)? null :_user.profiles;
     var followingList = await getFollowingList(widget.token);
     _followingList = followingList;
+    var subData = await getSubmissionStatusData(widget.token, widget.uId);
+    _subStats = subData;
 
     //TODO: use shared prefs
     _submissionsList = _user.recentSubmissions;
