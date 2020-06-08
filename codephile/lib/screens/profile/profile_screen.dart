@@ -86,8 +86,7 @@ class _ProfileState extends State<Profile> {
     var subData = await getSubmissionStatusData(widget.token, widget.uId);
     _subStats = subData;
 
-    //TODO: use shared prefs
-    _submissionsList = _user.recentSubmissions;
+    _submissionsList = (_user == null)? null : _user.recentSubmissions;
     getLatestTwoSubmissions();
 
     setState(() {

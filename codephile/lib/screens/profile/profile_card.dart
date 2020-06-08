@@ -4,6 +4,7 @@ import 'package:codephile/screens/following/following_screen.dart';
 import 'package:codephile/screens/profile/settings_popup_menu.dart';
 import 'package:codephile/services/follow.dart';
 import 'package:codephile/services/unfollow.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -115,9 +116,11 @@ class _ProfileCardState extends State<ProfileCard>{
                 )
                     :
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 0.0),
                   child: Text(
                     widget._user.institute,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.0
@@ -270,7 +273,7 @@ class _ProfileCardState extends State<ProfileCard>{
           top: 24.0,
           right: 16.0,
           child: (widget._isMyProfile)?
-          SettingsIcon(widget._token)
+          SettingsIcon(widget._token, widget._user, widget._callback)
               :
           Container(
             height: 0,

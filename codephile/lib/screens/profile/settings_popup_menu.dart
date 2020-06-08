@@ -1,5 +1,7 @@
+import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/login/login.dart';
+import 'package:codephile/screens/update_details/update_details_page.dart';
 import 'package:codephile/services/logout_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsIcon extends StatefulWidget{
   final String _token;
-
-  const SettingsIcon(this._token, {Key key }) : super(key: key);
+  final User _user;
+  final Function _callbackRefresh;
+  const SettingsIcon(this._token, this._user, this._callbackRefresh, {Key key }) : super(key: key);
   @override
   _SettingsIconState createState() => _SettingsIconState();
 }
@@ -71,13 +74,12 @@ class _SettingsIconState extends State<SettingsIcon> {
   void optionSelect(String value) {
     switch(value){
       case "update" :
-        //TODO: Navigate to update page       Priority 1
-//        Navigator.push(
-//          context,
-//          MaterialPageRoute(
-//              builder: (context) =>
-//          )
-//        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => new UpdateDetails(widget._token, widget._user, widget._callbackRefresh)
+          )
+        );
         break;
       case "logout" :
         logout(widget._token);

@@ -33,3 +33,32 @@ Future showConnectivityStatus() async {
     );
   }
 }
+
+String getPlatformIconAssetPath(String platform) {
+  platform = platform.toLowerCase();
+  switch(platform){
+    case "codechef":
+      return "assets/platformIcons/codeChefIcon.png";
+      break;
+    case "codeforces":
+      return "assets/platformIcons/codeForcesIcon.png";
+      break;
+    case "hackerrank":
+      return "assets/platformIcons/hackerRankIcon.png";
+      break;
+    case "spoj":
+      return "assets/platformIcons/spoj.png";
+      break;
+  }
+  return null;
+}
+
+void showToast(String message){
+  Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.CENTER,
+    timeInSecForIos: 7,
+    fontSize: 12.0,
+  );
+}
