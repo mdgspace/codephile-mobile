@@ -52,8 +52,8 @@ class User {
     "institute": institute,
     "no_of_following": noOfFollowing,
     "picture": picture,
-    "profiles": profiles.toJson(),
-    "recent_submissions": List<dynamic>.from(recentSubmissions.map((x) => x.toJson())),
+    "profiles": (profiles != null)? profiles.toJson(): null,
+    "recent_submissions": (recentSubmissions != null )? List<dynamic>.from(recentSubmissions.map((x) => x.toJson())) : null,
     "username": username,
     "solved_problems_count": solvedProblemsCount.toJson(),
   };

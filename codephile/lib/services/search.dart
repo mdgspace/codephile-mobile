@@ -10,10 +10,8 @@ http.Client client = new http.Client();
 
 Future<List<User>> search(String token, String query) async {
   String endpoint = "/user/search?query=$query";
-//  print(endpoint);
   String uri = url + endpoint;
-  print(uri);
-//  var uri = Uri.https(url, endpoint, parameters);
+
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
   try {
     var response = await client.get(
@@ -21,9 +19,7 @@ Future<List<User>> search(String token, String query) async {
       headers: tokenAuth,
     );
 
-    print(response.body);
     List<User> results;
-    print(response.body is String);
 
     if (response.statusCode == 200) {
       if (response.body != "null") {
