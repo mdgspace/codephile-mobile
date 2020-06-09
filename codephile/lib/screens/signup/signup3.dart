@@ -41,7 +41,6 @@ class _SignUpPageState extends State<SignUpPage3> {
     showConnectivityStatus();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -63,31 +62,25 @@ class _SignUpPageState extends State<SignUpPage3> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: MediaQuery.of(context).size.height/15),
+                      SizedBox(height: MediaQuery.of(context).size.height / 15),
                       Container(
-                        width: MediaQuery.of(context).size.width*0.95,
-                        child: Text(
-                            'Upload a profile photo',
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        child: Text('Upload a profile photo',
                             style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold
-                            )
-                        ),
+                                fontSize: 20.0, fontWeight: FontWeight.bold)),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
                         child: Text(
                           'This photo will be visible to your followers.',
                           style: TextStyle(
-                              fontSize: 16.0,
-                              color:secondaryTextGrey
-                          ),
+                              fontSize: 16.0, color: secondaryTextGrey),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height/30),
+                SizedBox(height: MediaQuery.of(context).size.height / 30),
                 _userImageSelect(),
               ],
             ),
@@ -98,42 +91,37 @@ class _SignUpPageState extends State<SignUpPage3> {
     );
   }
 
-  Widget _userImageSelect(){
+  Widget _userImageSelect() {
     return Stack(
       children: <Widget>[
         Container(
-          height: MediaQuery.of(context).size.width/2,
-          width: MediaQuery.of(context).size.width/2,
-          alignment: (userImage == null)? Alignment(0.0, 0.0): Alignment.center,
-          child: (userImage == null)?
-          SizedBox(
-            height: MediaQuery.of(context).size.width/3,
-            width: MediaQuery.of(context).size.width/3,
-            child: SvgPicture.asset(
-              'assets/default_user_icon.svg',
-              fit: BoxFit.fitWidth,
-            ),
-          )
-              :
-          Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  image: FileImage(
-                    userImage,
+          height: MediaQuery.of(context).size.width / 2,
+          width: MediaQuery.of(context).size.width / 2,
+          alignment:
+              (userImage == null) ? Alignment(0.0, 0.0) : Alignment.center,
+          child: (userImage == null)
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.width / 3,
+                  width: MediaQuery.of(context).size.width / 3,
+                  child: SvgPicture.asset(
+                    'assets/default_user_icon.svg',
+                    fit: BoxFit.fitWidth,
                   ),
                 )
-            ),
-          ),
+              : Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.fitWidth,
+                        image: FileImage(
+                          userImage,
+                        ),
+                      )),
+                ),
           decoration: BoxDecoration(
               color: codephileBackground,
               shape: BoxShape.circle,
-              border: Border.all(
-                  width: 1,
-                  color: userIconBorderGrey
-              )
-          ),
+              border: Border.all(width: 1, color: userIconBorderGrey)),
         ),
         Positioned(
           right: 0.0,
@@ -141,11 +129,12 @@ class _SignUpPageState extends State<SignUpPage3> {
           child: Container(
             child: IconButton(
               icon: Icon(
-                (userImage == null)? Icons.add: Icons.edit,
+                (userImage == null) ? Icons.add : Icons.edit,
                 color: Colors.white,
-              ), onPressed: () {
-              _selectImage();
-            },
+              ),
+              onPressed: () {
+                _selectImage();
+              },
             ),
             decoration: BoxDecoration(
               color: codephileMain,
@@ -163,33 +152,31 @@ class _SignUpPageState extends State<SignUpPage3> {
       padding: const EdgeInsets.all(16.0),
       child: Container(
         child: FlatButton(
-            color: (userImage == null)? Colors.white: codephileMain,
+            color: (userImage == null) ? Colors.white : codephileMain,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
-                width: MediaQuery.of(context).size.width*0.85,
+                width: MediaQuery.of(context).size.width * 0.85,
                 child: Text(
-                  (userImage == null)? 'SKIP': 'NEXT',
+                  (userImage == null) ? 'SKIP' : 'NEXT',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: (userImage == null)? codephileMain: Colors.white,
+                    color: (userImage == null) ? codephileMain : Colors.white,
                     fontSize: 16.0,
                   ),
                 ),
-
               ),
             ),
             onPressed: () {
-              if(!isNextButtonTapped){
+              if (!isNextButtonTapped) {
                 _validateAndSubmit();
               }
             }),
         decoration: BoxDecoration(
             border: Border.all(
-              width: (userImage == null)? 1.0: 0,
-              color: codephileMain,
-            )
-        ),
+          width: (userImage == null) ? 1.0 : 0,
+          color: codephileMain,
+        )),
       ),
     );
   }
@@ -207,8 +194,8 @@ class _SignUpPageState extends State<SignUpPage3> {
     setState(() {
       isNextButtonTapped = true;
     });
-    if (_validateAndSave()){
-      if(isNextButtonTapped){
+    if (_validateAndSave()) {
+      if (isNextButtonTapped) {
         setState(() {
           isNextButtonTapped = false;
           Navigator.push(
@@ -216,20 +203,18 @@ class _SignUpPageState extends State<SignUpPage3> {
               new MaterialPageRoute(
                   builder: (context) => new SignUpPage4(
                       name: name,
-                      institute: (institute == null)? '': institute,
+                      institute: (institute == null) ? '' : institute,
                       handle: handle,
-                      userImagePath: (userImage == null)? null : userImage.path
-                  )
-              )
-          );
+                      userImagePath:
+                          (userImage == null) ? null : userImage.path)));
         });
       }
     }
   }
 
-  Future<void> _selectImage() async{
+  Future<void> _selectImage() async {
     var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
-    if(picture != null){
+    if (picture != null) {
       var croppedPic = await ImageCropper.cropImage(
         sourcePath: picture.path,
         aspectRatio: CropAspectRatio(
@@ -244,7 +229,7 @@ class _SignUpPageState extends State<SignUpPage3> {
       setState(() {
         userImage = croppedPic;
       });
-    }else{
+    } else {
       setState(() {
         userImage = null;
       });

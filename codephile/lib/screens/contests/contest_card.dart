@@ -177,7 +177,7 @@ class _ContestCardState extends State<ContestCard> {
                                                 setState(() {});
                                               }
                                             });
-                                      }else{
+                                      } else {
                                         return Container();
                                       }
                                     })

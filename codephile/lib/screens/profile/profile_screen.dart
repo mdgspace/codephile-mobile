@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import '../../models/user_profile_details.dart';
 
 class Profile extends StatefulWidget {
-
   final String token;
   final String uId;
   final bool _isMyProfile;
@@ -27,7 +26,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   bool _isLoading = true;
 
   User _user;
@@ -77,7 +75,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void initValues() async{
+  void initValues() async {
     var user = await getUser(widget.token, widget.uId);
     _user = user;
     _userPlatformDetails = (_user == null)? null :_user.profiles;
@@ -95,12 +93,12 @@ class _ProfileState extends State<Profile> {
   }
 
   void getLatestTwoSubmissions() {
-    if(_submissionsList != null){
-      if(_submissionsList.length >=2){
+    if (_submissionsList != null) {
+      if (_submissionsList.length >= 2) {
         _mostRecentSubmissions = List<Submission>();
         _mostRecentSubmissions.add(_submissionsList[0]);
         _mostRecentSubmissions.add(_submissionsList[1]);
-      } else if(_submissionsList.length == 1){
+      } else if (_submissionsList.length == 1) {
         _mostRecentSubmissions = List<Submission>();
         _mostRecentSubmissions.add(_submissionsList[0]);
       }

@@ -1,3 +1,4 @@
+import 'package:codephile/screens/feed/feed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/screens/contests/contests_screen.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
@@ -64,10 +65,11 @@ class HomePageState extends State<HomePage> {
         ),
         MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: SubmissionScreen(token: token, id: userId),
+          home: FeedScreen(token: token),
         ),
         MaterialApp(
           debugShowCheckedModeBanner: false,
+          // home: Container(),
           home: Profile(token, userId, true, false),
         )
       ]),
@@ -99,7 +101,7 @@ class HomePageState extends State<HomePage> {
               size: 30,
             ),
             title: Text(
-              'Bookmarks',
+              'Feed',
               style: new TextStyle(),
             ),
           ),

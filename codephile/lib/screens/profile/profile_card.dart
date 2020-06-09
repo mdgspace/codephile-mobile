@@ -10,8 +10,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class ProfileCard extends StatefulWidget{
-
+class ProfileCard extends StatefulWidget {
   final String title;
   final String _token;
   final User _user;
@@ -33,12 +32,11 @@ class ProfileCard extends StatefulWidget{
   _ProfileCardState createState() => _ProfileCardState();
 }
 
-class _ProfileCardState extends State<ProfileCard>{
-
+class _ProfileCardState extends State<ProfileCard> {
   bool isFollowing;
 
   @override
-  void initState(){
+  void initState() {
     isFollowing = widget._isFollowing;
     super.initState();
   }
@@ -286,9 +284,9 @@ class _ProfileCardState extends State<ProfileCard>{
 
   void follow() async{
     print("follow");
-    followUser(widget._token, widget._user.id).then((statusCode){
+    followUser(widget._token, widget._user.id).then((statusCode) {
       print(statusCode);
-      if(statusCode != 200){
+      if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
@@ -303,11 +301,11 @@ class _ProfileCardState extends State<ProfileCard>{
     });
   }
 
-  void unFollow() async{
+  void unFollow() async {
     print("Unfollow");
-    unfollowUser(widget._token, widget._user.id).then((statusCode){
+    unfollowUser(widget._token, widget._user.id).then((statusCode) {
       print(statusCode);
-      if(statusCode != 200){
+      if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
@@ -323,11 +321,11 @@ class _ProfileCardState extends State<ProfileCard>{
   }
 
   void changeButtonAppearance() {
-    if(isFollowing){
+    if (isFollowing) {
       setState(() {
         isFollowing = false;
       });
-    }else{
+    } else {
       setState(() {
         isFollowing = true;
       });

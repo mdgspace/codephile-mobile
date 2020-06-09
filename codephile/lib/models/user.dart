@@ -75,20 +75,20 @@ class Handle {
   });
 
   factory Handle.fromJson(Map<String, dynamic> json) => Handle(
-    codechef: json["codechef"],
-    codeforces: json["codeforces"],
-    hackerearth: json["hackerearth"],
-    hackerrank: json["hackerrank"],
-    spoj: json["spoj"],
-  );
+        codechef: json["codechef"],
+        codeforces: json["codeforces"],
+        hackerearth: json["hackerearth"],
+        hackerrank: json["hackerrank"],
+        spoj: json["spoj"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "codechef": codechef,
-    "codeforces": codeforces,
-    "hackerearth": hackerearth,
-    "hackerrank": hackerrank,
-    "spoj": spoj,
-  };
+        "codechef": codechef,
+        "codeforces": codeforces,
+        "hackerearth": hackerearth,
+        "hackerrank": hackerrank,
+        "spoj": spoj,
+      };
 }
 
 class SolvedProblemsCount {

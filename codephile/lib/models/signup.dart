@@ -10,7 +10,12 @@ class SignUp {
   String fullname;
   String institute;
 
-  SignUp({this.handle, this.password, this.username, this.fullname, this.institute});
+  SignUp(
+      {this.handle,
+      this.password,
+      this.username,
+      this.fullname,
+      this.institute});
 
   factory SignUp.fromJson(Map<String, dynamic> json) => SignUp(
         username: json["username"],
@@ -35,11 +40,7 @@ class Handle {
   String hackerrank;
   String spoj;
 
-  Handle(
-      {this.codechef,
-      this.codeforces,
-      this.hackerrank,
-      this.spoj});
+  Handle({this.codechef, this.codeforces, this.hackerrank, this.spoj});
 
   factory Handle.fromJson(Map<String, dynamic> json) => Handle(
         codechef: json["handle.codechef"],

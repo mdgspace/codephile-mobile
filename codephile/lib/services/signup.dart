@@ -24,8 +24,8 @@ Future<int> signUp(SignUp details) async {
     var response = await client.post(
       uri,
       body: {
-        "username" : details.username,
-        "password" : details.password,
+        "username": details.username,
+        "password": details.password,
         "fullname": details.fullname,
         "institute": details.institute,
         "handle.codechef": details.handle.codechef,
@@ -38,7 +38,6 @@ Future<int> signUp(SignUp details) async {
     print(response.statusCode);
 
     return response.statusCode;
-
   } on Exception catch (e) {
     print(e);
     return null;

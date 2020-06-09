@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-List<Submission> submissionFromJson(String str) => List<Submission>.from(json.decode(str).map((x) => Submission.fromJson(x)));
+List<Submission> submissionFromJson(String str) =>
+    List<Submission>.from(json.decode(str).map((x) => Submission.fromJson(x)));
 
-String submissionToJson(List<Submission> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String submissionToJson(List<Submission> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Submission {
   String createdAt;
@@ -30,24 +32,26 @@ class Submission {
   });
 
   factory Submission.fromJson(Map<String, dynamic> json) => Submission(
-    createdAt: json["created_at"],
-    language: json["language"],
-    name: json["name"],
-    points: json["points"],
-    rating: json["rating"],
-    status: json["status"],
-    tags: (json["tags"] != null)? List<String>.from(json["tags"].map((x) => x)) : null,
-    url: json["url"],
-  );
+        createdAt: json["created_at"],
+        language: json["language"],
+        name: json["name"],
+        points: json["points"],
+        rating: json["rating"],
+        status: json["status"],
+        tags: (json["tags"] != null)
+            ? List<String>.from(json["tags"].map((x) => x))
+            : null,
+        url: json["url"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "created_at": createdAt,
-    "language": language,
-    "name": name,
-    "points": points,
-    "rating": rating,
-    "status": status,
-    "tags": List<dynamic>.from(tags.map((x) => x)),
-    "url": url,
-  };
+        "created_at": createdAt,
+        "language": language,
+        "name": name,
+        "points": points,
+        "rating": rating,
+        "status": status,
+        "tags": List<dynamic>.from(tags.map((x) => x)),
+        "url": url,
+      };
 }

@@ -5,13 +5,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 String submissionType(Submission submission) {
   String url = submission.url;
-  if(url.contains("codechef")){
+  if (url.contains("codechef")) {
     return "Codechef";
-  }else if(url.contains("codeforces")){
+  } else if (url.contains("codeforces")) {
     return "Codeforces";
-  }else if(url.contains("hackerrank")){
+  } else if (url.contains("hackerrank")) {
     return "Hackerrank";
-  }else{
+  } else {
     return "Spoj";
   }
 }

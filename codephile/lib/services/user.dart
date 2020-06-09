@@ -8,7 +8,6 @@ var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
 Future<User> getUser(String token, String uId) async {
-
   String endpoint = "/user/$uId";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};

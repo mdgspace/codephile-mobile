@@ -24,12 +24,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.5.3+4
-  flutter_svg: ^0.14.1
+  flutter_svg: ^0.17.4
   fluttertoast: ^3.1.2
   url_launcher: ^5.0.2
   autocomplete_textfield: ^1.6.4
   flutter_spinkit: ^4.1.1+1
-  curved_navigation_bar: ^0.3.1
   google_fonts: ^0.3.7
   intl: ^0.16.1
   flutter_local_notifications: ^1.2.1
@@ -72,6 +71,8 @@ flutter:
     - assets/logo.svg
     - assets/default_user_icon.svg
     - assets/settings_icon.svg
+    - assets/emptyFeed.svg
+    - assets/refresh.svg
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

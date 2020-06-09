@@ -9,7 +9,9 @@ class ProgressButton extends StatefulWidget {
   final Function positiveCallback;
   final Function negativeCallback;
   ProgressButton(
-      {@required this.onPressed,@required this.negativeCallback,@required this.positiveCallback});
+      {@required this.onPressed,
+      @required this.negativeCallback,
+      @required this.positiveCallback});
   @override
   _ProgressButtonState createState() => _ProgressButtonState();
 }
@@ -22,7 +24,6 @@ class _ProgressButtonState extends State<ProgressButton>
   int state = 0;
   @override
   Widget build(BuildContext context) {
-    
     return CustomPaint(
       painter: SplashPainter(
           fraction: _fraction, screenSize: MediaQuery.of(context).size),
@@ -60,7 +61,7 @@ class _ProgressButtonState extends State<ProgressButton>
                         widget.positiveCallback();
                       }
                     });
-                    await Future.delayed(Duration(milliseconds: 500));
+                  await Future.delayed(Duration(milliseconds: 500));
                   _controller.forward();
                 } else {
                   setState(() {
