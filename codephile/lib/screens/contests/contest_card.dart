@@ -169,10 +169,11 @@ class _ContestCardState extends State<ContestCard> {
                                                 setState(() {});
                                               } else {
                                                 await setNotification(
-                                                    name: widget.name,
-                                                    platform: widget.platform,
-                                                    startTime:
-                                                        widget.startTime);
+                                                  name: widget.name,
+                                                  platform: widget.platform,
+                                                  // startTime:
+                                                  // widget.startTime
+                                                );
                                                 setState(() {});
                                               }
                                             });

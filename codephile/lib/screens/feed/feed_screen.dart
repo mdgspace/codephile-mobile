@@ -1,4 +1,3 @@
-import 'package:codephile/models/feed.dart';
 import 'package:codephile/models/grouped_feed.dart';
 import 'package:codephile/screens/feed/feed_card.dart';
 import 'package:codephile/services/feed.dart';

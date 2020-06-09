@@ -1,7 +1,6 @@
 import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/services/institute_list.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:async';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';

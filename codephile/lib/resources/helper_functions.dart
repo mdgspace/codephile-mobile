@@ -36,7 +36,7 @@ Future showConnectivityStatus() async {
 
 String getPlatformIconAssetPath(String platform) {
   platform = platform.toLowerCase();
-  switch(platform){
+  switch (platform) {
     case "codechef":
       return "assets/platformIcons/codeChefIcon.png";
       break;
@@ -46,14 +46,41 @@ String getPlatformIconAssetPath(String platform) {
     case "hackerrank":
       return "assets/platformIcons/hackerRankIcon.png";
       break;
+    case "hackerearth":
+      return "assets/platformIcons/hackerEarthIcon.png";
+      break;
     case "spoj":
       return "assets/platformIcons/spoj.png";
+      break;
+    default :
+      return "assets/platformIcons/otherIcon.jpg";
+      break;
+  }
+}
+
+String getPlatformName(String platform) {
+  platform = platform.toLowerCase();
+  switch (platform) {
+    case "codechef":
+      return "CodeChef";
+      break;
+    case "codeforces":
+      return "CodeForces";
+      break;
+    case "hackerrank":
+      return "HackerRank";
+      break;
+    case "hackerearth":
+      return "HackerEarth";
+      break;
+    case "spoj":
+      return "Spoj";
       break;
   }
   return null;
 }
 
-void showToast(String message){
+void showToast(String message) {
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,

@@ -5,12 +5,12 @@ import 'package:intl/intl.dart';
 
 Future<void> setNotification({
   String name,
-  String startTime,
+  DateTime startTime,
   String platform,
+  Duration offset
 }) async {
-  var scheduledNotificationDateTime = DateFormat("EEE, dd MMM yyyy hh:mm")
-      .parse(startTime)
-      .subtract(Duration(minutes: 30));
+  var scheduledNotificationDateTime = startTime
+      .subtract(offset);
   // var scheduledNotificationDateTime = DateTime.now().add(Duration(seconds: 10));
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('1',
       'Contest Alerts', 'Alerts for Contests marked with \'Notify Me\' option',
@@ -35,6 +35,7 @@ Future<void> setNotification({
       name,
       'Contest Starts at $startTime',
       scheduledNotificationDateTime,
+      // DateTime.now().add(Duration(seconds: 5)),
       platformChannelSpecifics,
       androidAllowWhileIdle: true);
 }

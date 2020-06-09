@@ -1,8 +1,7 @@
 import 'package:codephile/screens/feed/feed_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:codephile/screens/contests/contests_screen.dart';
+import 'package:codephile/screens/contest/contest_screen.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
-import 'package:codephile/screens/submission/submission_screen.dart';
 import 'package:codephile/screens/search/search_page.dart';
 import 'package:codephile/resources/colors.dart';
 
