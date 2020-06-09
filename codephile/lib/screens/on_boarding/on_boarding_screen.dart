@@ -1,4 +1,4 @@
-import 'package:codephile/screens/login/login.dart';
+import 'package:codephile/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'data.dart';
 import 'package:codephile/screens/on_boarding/page_indicator.dart';
@@ -135,7 +135,7 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
 //                      Navigator.push(context,
 //                          MaterialPageRoute(builder: (context) => MyHomePage()));
                       Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                          MaterialPageRoute(builder: (context) => LoginScreen()));
                     }, //TODO: implement onPressed
 
                     shape: RoundedRectangleBorder(

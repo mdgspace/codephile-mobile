@@ -1,6 +1,6 @@
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
-import 'package:codephile/screens/login/login.dart';
+import 'package:codephile/screens/login/login_screen.dart';
 import 'package:codephile/screens/update_details/update_details_page.dart';
 import 'package:codephile/services/logout_user.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,24 +8,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsIcon extends StatefulWidget{
+class SettingsIcon extends StatefulWidget {
   final String _token;
   final User _user;
   final Function _callbackRefresh;
-  const SettingsIcon(this._token, this._user, this._callbackRefresh, {Key key }) : super(key: key);
+  const SettingsIcon(this._token, this._user, this._callbackRefresh, {Key key})
+      : super(key: key);
   @override
   _SettingsIconState createState() => _SettingsIconState();
 }
 
 class _SettingsIconState extends State<SettingsIcon> {
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         Container(
-          height: MediaQuery.of(context).size.width/15,
-          width: MediaQuery.of(context).size.width/15,
+          height: MediaQuery.of(context).size.width / 15,
+          width: MediaQuery.of(context).size.width / 15,
           child: SvgPicture.asset(
             "assets/settings_icon.svg",
           ),
@@ -37,9 +37,9 @@ class _SettingsIconState extends State<SettingsIcon> {
             icon: Icon(
               Icons.settings,
               color: Colors.transparent,
-              size: MediaQuery.of(context).size.width/15,
+              size: MediaQuery.of(context).size.width / 15,
             ),
-            itemBuilder: (BuildContext context){
+            itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem(
                   value: "update",
@@ -50,7 +50,6 @@ class _SettingsIconState extends State<SettingsIcon> {
                       color: primaryBlackText,
                     ),
                   ),
-
                 ),
                 PopupMenuItem(
                   value: "logout",
@@ -72,23 +71,22 @@ class _SettingsIconState extends State<SettingsIcon> {
   }
 
   void optionSelect(String value) {
-    switch(value){
-      case "update" :
+    switch (value) {
+      case "update":
         Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => new UpdateDetails(widget._token, widget._user, widget._callbackRefresh)
-          )
-        );
+            context,
+            MaterialPageRoute(
+                builder: (context) => new UpdateDetails(
+                    widget._token, widget._user, widget._callbackRefresh)));
         break;
-      case "logout" :
+      case "logout":
         logout(widget._token);
         break;
     }
   }
 
-  void logout(String token) async{
-    logoutUser(token).then((wasSuccessful){
+  void logout(String token) async {
+    logoutUser(token).then((wasSuccessful) {
       print(wasSuccessful);
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -96,7 +94,6 @@ class _SettingsIconState extends State<SettingsIcon> {
     await prefs.remove("uid");
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.of(context, rootNavigator: true).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginPage())
-    );
+        MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 }
