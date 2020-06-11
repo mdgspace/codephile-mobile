@@ -105,10 +105,6 @@ class HomePageState extends State<HomePage> {
             ),
           ),
           BottomNavigationBarItem(
-//            icon: Icon(
-//                Icons.perm_identity,
-//                size: 30,
-//            ),
             icon: ImageIcon(
               AssetImage("assets/person.png"),
               color: profile_color ? codephileMain : Colors.black,

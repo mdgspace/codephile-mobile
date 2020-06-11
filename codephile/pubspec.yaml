@@ -56,7 +56,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/facebook.png
     - assets/contest_icon.svg
     - assets/platformIcons/codeChefIcon.png
     - assets/platformIcons/codeForcesIcon.png
@@ -65,13 +64,10 @@ flutter:
     - assets/platformIcons/otherIcon.jpg
     - assets/platformIcons/spoj.png
     - assets/bookmark.svg
-    - assets/search.png
     - assets/person.svg
     - assets/lock.svg
     - assets/eye-on.svg
     - assets/eye-off.svg
-    - assets/person.png
-    - assets/activity.png
     - assets/solved.svg
     - assets/logo.svg
     - assets/default_user_icon.svg
