@@ -1,11 +1,14 @@
+import 'package:codephile/models/activity_details.dart';
 import 'package:codephile/models/following.dart';
 import 'package:codephile/models/submission.dart';
 import 'package:codephile/models/submission_status_data.dart';
 import 'package:codephile/models/user.dart';
+import 'package:codephile/screens/profile/acceptance_graph.dart';
 import 'package:codephile/screens/profile/accuracy_display.dart';
 import 'package:codephile/screens/profile/no_of_questions_solved_display.dart';
 import 'package:codephile/screens/profile/profile_card.dart';
 import 'package:codephile/screens/profile/submissions_stats.dart';
+import 'package:codephile/services/activity_details.dart';
 import 'package:codephile/services/following_list.dart';
 import 'package:codephile/services/submissions_status.dart';
 import 'package:codephile/services/user.dart';
@@ -33,6 +36,7 @@ class _ProfileState extends State<Profile> {
   List<Submission> _submissionsList;
   List<Submission> _mostRecentSubmissions;
   List<Following> _followingList;
+  List<ActivityDetails> _activityDetails;
   SubStatusData _subStats;
 
   @override
@@ -45,48 +49,47 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body:
-        RefreshIndicator(
-          child:_isLoading?
-          Center(
-            child: CircularProgressIndicator(),
-          )
-              :
-          ListView(
-            children: <Widget>[
-              ProfileCard(
-                widget.token,
-                _user,
-                checkIfFollowing(widget.uId),
-                widget._isMyProfile,
-                refreshPage,
-              ),
-              AccuracyDisplay(_userPlatformDetails),
-              QuestionsSolvedDisplay(
-                  _user.solvedProblemsCount.codechef,
-                  _user.solvedProblemsCount.codeforces,
-                  _user.solvedProblemsCount.hackerrank,
-                  _user.solvedProblemsCount.spoj
-              ),
-              SubmissionStatistics(_subStats),
-            ],
-          ), onRefresh: refreshPage
-        )
-    );
+        body: RefreshIndicator(
+            child: _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ListView(
+                    children: <Widget>[
+                      ProfileCard(
+                        widget.token,
+                        _user,
+                        checkIfFollowing(widget.uId),
+                        widget._isMyProfile,
+                        refreshPage,
+                      ),
+                      AccuracyDisplay(_userPlatformDetails),
+                      QuestionsSolvedDisplay(
+                          _user.solvedProblemsCount.codechef,
+                          _user.solvedProblemsCount.codeforces,
+                          _user.solvedProblemsCount.hackerrank,
+                          _user.solvedProblemsCount.spoj),
+                      SubmissionStatistics(_subStats),
+                      AcceptanceGraph(
+                        activityDetails: _activityDetails,
+                      )
+                    ],
+                  ),
+            onRefresh: refreshPage));
   }
 
   void initValues() async {
     var user = await getUser(widget.token, widget.uId);
     _user = user;
-    _userPlatformDetails = (_user == null)? null :_user.profiles;
+    _userPlatformDetails = (_user == null) ? null : _user.profiles;
     var followingList = await getFollowingList(widget.token);
     _followingList = followingList;
     var subData = await getSubmissionStatusData(widget.token, widget.uId);
     _subStats = subData;
 
-    _submissionsList = (_user == null)? null : _user.recentSubmissions;
+    _submissionsList = (_user == null) ? null : _user.recentSubmissions;
     getLatestTwoSubmissions();
-
+    _activityDetails = await getActivityDetails(widget.token, widget.uId);
     setState(() {
       _isLoading = false;
     });
@@ -106,9 +109,9 @@ class _ProfileState extends State<Profile> {
   }
 
   bool checkIfFollowing(String id) {
-    if(_followingList != null){
-      for(int i = 0; i < _followingList.length; i++){
-        if(_followingList[i].id == id){
+    if (_followingList != null) {
+      for (int i = 0; i < _followingList.length; i++) {
+        if (_followingList[i].id == id) {
           return true;
         }
       }
