@@ -10,13 +10,11 @@ class PageIndicator extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 4.0),
         child: Container(
-          height: isActive ? 12.0 : 8.0,
-          width: isActive ? 12.0 : 8.0,
+          height: isActive ? 14.0 : 10.0,
+          width: isActive ? 14.0 : 10.0,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive
-                ? Color.fromRGBO(196, 196, 196, 1)
-                : Color.fromRGBO(196, 196, 196, 0.25),
+            color: isActive ? Colors.white : Color.fromRGBO(0, 0, 0, 0.24),
           ),
         ),
       ),
@@ -34,7 +32,7 @@ class PageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Row(
+    return Row(
       children: _buildPageIndicators(),
     );
   }
