@@ -156,7 +156,7 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
                   Icons.arrow_forward_ios,
                   size: 20,
                 ),
-                onPressed: (){
+                onPressed: () {
                   setState(() {
                     if (currentTriplet == 4) {
                       currentYear++;
@@ -210,6 +210,31 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
               width: 20,
             ),
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
+          child: Row(
+            children: <Widget>[
+              Spacer(),
+              Text("-5"),
+              SizedBox(width: 80),
+              Text("5")
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                width: 100,
+                height: 10,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.red, Colors.white, Colors.green],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight)),
+              )),
         )
       ],
     );

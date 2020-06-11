@@ -47,7 +47,7 @@ class Ongoing {
       {this.endTime, this.name, this.platform, this.url, this.challengeType});
 
   Ongoing.fromJson(Map<String, dynamic> json) {
-    endTime = DateFormat("EEE, dd MMM yyyy hh:mm").parse(json['EndTime']);
+    endTime = DateTime.parse(json['EndTime']);
     name = json['Name'];
     platform = json['Platform'];
     url = json['url'];
@@ -85,10 +85,10 @@ class Upcoming {
 
   Upcoming.fromJson(Map<String, dynamic> json) {
     duration = json['Duration'];
-    endTime =DateFormat("EEE, dd MMM yyyy hh:mm").parse(json['EndTime']);
+    endTime =DateTime.parse(json['EndTime']);
     name = json['Name'];
     platform = json['Platform'];
-    startTime = DateFormat("EEE, dd MMM yyyy hh:mm").parse(json['StartTime']);
+    startTime = DateTime.parse(json['StartTime']);
     url = json['url'];
     challengeType = json['challenge_type'];
   }
