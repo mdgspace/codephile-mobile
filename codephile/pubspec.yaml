@@ -63,6 +63,7 @@ flutter:
     - assets/platformIcons/hackerRankIcon.png
     - assets/platformIcons/otherIcon.jpg
     - assets/platformIcons/spoj.png
+    - assets/navbar/
     - assets/bookmark.svg
     - assets/person.svg
     - assets/lock.svg
