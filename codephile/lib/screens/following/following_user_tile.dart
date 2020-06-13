@@ -6,24 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class FollowingUserTile extends StatefulWidget{
-
+class FollowingUserTile extends StatefulWidget {
   final String _token;
   final Following _user;
   final bool _isFollowing;
 
-  const FollowingUserTile(this._token, this._user, this._isFollowing, {Key key}) : super(key: key);
+  const FollowingUserTile(this._token, this._user, this._isFollowing, {Key key})
+      : super(key: key);
 
   @override
   _FollowingUserTileState createState() => _FollowingUserTileState();
 }
 
 class _FollowingUserTileState extends State<FollowingUserTile> {
-
   bool isFollowing;
 
   @override
-  void initState(){
+  void initState() {
     isFollowing = widget._isFollowing;
     super.initState();
   }
@@ -43,39 +42,36 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 8.0, 4.0, 8.0),
-                  child:Container(
-                    height: MediaQuery.of(context).size.width/10,
-                    width: MediaQuery.of(context).size.width/10,
-                    alignment: (widget._user.picture == "")? Alignment(0.0, 0.0): Alignment.center,
-                    child: (widget._user.picture == "")?
-                    SizedBox(
-                      height: MediaQuery.of(context).size.width/3,
-                      width: MediaQuery.of(context).size.width/3,
-                      child: SvgPicture.asset(
-                        'assets/default_user_icon.svg',
-                        fit: BoxFit.fitWidth,
-                      ),
-                    )
-                        :
-                    Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.fitWidth,
-                            image: NetworkImage(
-                              widget._user.picture,
+                  child: Container(
+                    height: MediaQuery.of(context).size.width / 10,
+                    width: MediaQuery.of(context).size.width / 10,
+                    alignment: (widget._user.picture == "")
+                        ? Alignment(0.0, 0.0)
+                        : Alignment.center,
+                    child: (widget._user.picture == "")
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.width / 3,
+                            width: MediaQuery.of(context).size.width / 3,
+                            child: SvgPicture.asset(
+                              'assets/default_user_icon.svg',
+                              fit: BoxFit.fitWidth,
                             ),
                           )
-                      ),
-                    ),
+                        : Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.fitWidth,
+                                  image: NetworkImage(
+                                    widget._user.picture,
+                                  ),
+                                )),
+                          ),
                     decoration: BoxDecoration(
                         color: codephileBackground,
                         shape: BoxShape.circle,
-                        border: Border.all(
-                            width: 0,
-                            color: userIconBorderGrey
-                        )
-                    ),
+                        border:
+                            Border.all(width: 0, color: userIconBorderGrey)),
                   ),
                 ),
                 Column(
@@ -111,65 +107,63 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                 padding: const EdgeInsets.fromLTRB(8.0, 10.0, 16.0, 10.0),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: isFollowing?
-                      codephileMain
-                          :
-                      Colors.white,
+                      color: isFollowing ? codephileMain : Colors.white,
                       border: Border.all(
                         color: codephileMain,
                         width: 1.0,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(2.0))
-                  ),
-                  child: isFollowing?
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12.0, 5.0, 2.0, 5.0),
-                        child: Text(
-                          "FOLLOWING",
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.white,
-                          ),
+                      borderRadius: BorderRadius.all(Radius.circular(2.0))),
+                  child: isFollowing
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  12.0, 5.0, 2.0, 5.0),
+                              child: Text(
+                                "FOLLOWING",
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0.0, 8.0, 12.0, 8.0),
+                              child: Icon(
+                                Icons.check,
+                                size: 16.0,
+                                color: Colors.white,
+                              ),
+                            )
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  16.0, 5.0, 16.0, 5.0),
+                              child: Text(
+                                "FOLLOW",
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: codephileMain,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0.0, 8.0, 12.0, 8.0),
-                        child: Icon(
-                          Icons.check,
-                          size: 16.0,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  )
-                      :
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16.0, 5.0, 16.0, 5.0),
-                        child: Text(
-                          "FOLLOW",
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            color: codephileMain,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
                 ),
               ),
-              onTap: (){
-                if(isFollowing){
+              onTap: () {
+                if (isFollowing) {
                   unFollow();
-                }else{
+                } else {
                   follow();
                 }
 
@@ -183,11 +177,9 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
     );
   }
 
-  void follow() async{
-    print("follow");
-    followUser(widget._token, widget._user.id).then((statusCode){
-      print(statusCode);
-      if(statusCode != 200){
+  void follow() async {
+    followUser(widget._token, widget._user.id).then((statusCode) {
+      if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
@@ -202,11 +194,9 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
     });
   }
 
-  void unFollow() async{
-    print("Unfollow");
-    unfollowUser(widget._token, widget._user.id).then((statusCode){
-      print(statusCode);
-      if(statusCode != 200){
+  void unFollow() async {
+    unfollowUser(widget._token, widget._user.id).then((statusCode) {
+      if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,

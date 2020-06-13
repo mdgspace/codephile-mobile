@@ -27,9 +27,5 @@ class Submissions {
   int rating;
 
   Submissions(
-      {this.createdAt,
-      this.status,
-      this.points,
-      this.tags,
-      this.rating});
+      {this.createdAt, this.status, this.points, this.tags, this.rating});
 }

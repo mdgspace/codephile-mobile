@@ -2,7 +2,7 @@ import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/profile/no_of_questions_solved_tile.dart';
 import 'package:flutter/material.dart';
 
-class QuestionsSolvedDisplay extends StatelessWidget{
+class QuestionsSolvedDisplay extends StatelessWidget {
   final int codechefSubmissions;
   final int codeforcesSubmissions;
   final int hackerrankSubmissions;
@@ -12,8 +12,9 @@ class QuestionsSolvedDisplay extends StatelessWidget{
       this.codechefSubmissions,
       this.codeforcesSubmissions,
       this.hackerrankSubmissions,
-      this.spojSubmissions, {Key key}) : super(key: key);
-
+      this.spojSubmissions,
+      {Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +26,9 @@ class QuestionsSolvedDisplay extends StatelessWidget{
           child: Text(
             "Number of questions solved",
             style: TextStyle(
-              color: primaryBlackText,
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold
-            ),
+                color: primaryBlackText,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold),
           ),
         ),
         Padding(
@@ -51,5 +51,4 @@ class QuestionsSolvedDisplay extends StatelessWidget{
       ],
     );
   }
-
 }

@@ -22,7 +22,7 @@ var pageList = [
       "Get updates about contests from various coding platforms"),
   OnBoardingPageModel(
       Padding(
-        padding: const EdgeInsets.only(top:100.0),
+        padding: const EdgeInsets.only(top: 100.0),
         child: Image.asset("assets/onBoardingShapesAndIcons/ProfilePage.jpg"),
       ),
       "Check and compare progress",

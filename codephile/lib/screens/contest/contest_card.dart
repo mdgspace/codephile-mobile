@@ -33,7 +33,6 @@ class _ContestCardState extends State<ContestCard>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print('rebuild');
     return FlatButton(
       onPressed: () {
         FlutterWebBrowser.openWebPage(

@@ -18,10 +18,8 @@ Future<UserProfileDetails> getAllPlatformDetails(
       headers: tokenAuth,
     );
 
-//    http.Response response = await client.get(uri);
     final jsonResponse = jsonDecode(response.body);
     UserProfileDetails user = new UserProfileDetails.fromJson(jsonResponse);
-    //print(response.body);
     return user;
   } on Exception catch (e) {
     print(e);

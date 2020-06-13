@@ -22,7 +22,6 @@ Future<String> id(String token) async {
 
     final jsonResponse = jsonDecode(response.body);
     user = new User.fromJson(jsonResponse);
-    print(user.id);
     return user.id;
   } on Exception catch (e) {
     print(e);

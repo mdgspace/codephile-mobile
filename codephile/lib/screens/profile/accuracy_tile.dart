@@ -14,7 +14,7 @@ class AccuracyTile extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0.0, 4.0, 8.0, 0.0),
       child: Container(
         decoration: BoxDecoration(
-          color: uiBackground,
+            color: uiBackground,
             borderRadius: BorderRadius.all(Radius.circular(2.0)),
             border: Border.all(
               color: secondaryTextGrey,
@@ -37,15 +37,14 @@ class AccuracyTile extends StatelessWidget {
                 padding: const EdgeInsets.all(3.0),
                 child: Image.asset(
                   getIconUrl(_platform),
-                  width: MediaQuery.of(context).size.width/14,
-                  height: MediaQuery.of(context).size.width/14,
+                  width: MediaQuery.of(context).size.width / 14,
+                  height: MediaQuery.of(context).size.width / 14,
                 ),
               ),
             ),
             Container(
               decoration: BoxDecoration(
                 color: uiBackground,
-
               ),
               child: Padding(
                 padding: EdgeInsets.all(8.0),
@@ -68,9 +67,9 @@ class AccuracyTile extends StatelessWidget {
     );
   }
 
-  String getIconUrl(String platform){
-    switch(platform.toLowerCase()){
-      case "codechef" :
+  String getIconUrl(String platform) {
+    switch (platform.toLowerCase()) {
+      case "codechef":
         return codeChefIcon;
         break;
       case "hackerrank":

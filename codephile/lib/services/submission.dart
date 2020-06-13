@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:codephile/models/submission.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
@@ -15,7 +14,6 @@ Future<List<Submission>> getSubmissionList(String token, String uId) async {
       uri,
       headers: tokenAuth,
     );
-    final jsonResponse = jsonDecode(response.body);
     List<Submission> submissionList = submissionFromJson(response.body);
     return submissionList;
   } on Exception catch (e) {

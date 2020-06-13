@@ -43,13 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
     _scrollController = ScrollController();
     _usernameFocusNode = FocusNode();
     _usernameFocusNode.addListener(() async {
-      print("Hello");
       setState(() {
         _usernameFocus = _usernameFocusNode.hasFocus;
       });
       await Future.delayed(Duration(milliseconds: 300));
 
-      print(_scrollController.position.maxScrollExtent);
       _scrollController.animateTo(MediaQuery.of(context).viewInsets.bottom,
           duration: Duration(milliseconds: 500), curve: Curves.bounceOut);
     });

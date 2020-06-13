@@ -141,8 +141,8 @@ class _ProfileCardState extends State<ProfileCard> {
                                       context,
                                       new MaterialPageRoute(
                                           builder: (context) =>
-                                              new FollowingScreen(widget._token,
-                                                  widget._user.id))).then((v) {
+                                              new FollowingScreen(
+                                                  widget._token))).then((v) {
                                     widget._callback();
                                   });
                                 }
@@ -275,9 +275,7 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   void follow() async {
-    print("follow");
     followUser(widget._token, widget._user.id).then((statusCode) {
-      print(statusCode);
       if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
@@ -294,9 +292,7 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   void unFollow() async {
-    print("Unfollow");
     unfollowUser(widget._token, widget._user.id).then((statusCode) {
-      print(statusCode);
       if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",

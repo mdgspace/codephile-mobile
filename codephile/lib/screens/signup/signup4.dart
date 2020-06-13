@@ -298,7 +298,6 @@ class _SignUpPageState extends State<SignUpPage4> {
           });
           login(_username, _password).then((userToken) {
             if (userToken != null) {
-              print(userToken.token);
               id(userToken.token).then((id) async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.setString("token", userToken.token);
@@ -306,7 +305,6 @@ class _SignUpPageState extends State<SignUpPage4> {
                 if (userImagePath != null) {
                   int uploadStatusCode =
                       await uploadImage(userToken.token, userImagePath);
-                  print(uploadStatusCode);
                 }
                 if (isCreateAccountSuccessful) {
                   Navigator.of(context).popUntil((route) => route.isFirst);

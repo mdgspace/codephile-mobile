@@ -43,8 +43,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        body:
-        Column(
+        body: Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 40.0, 16.0, 8.0),
@@ -58,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width*0.7,
+                      width: MediaQuery.of(context).size.width * 0.7,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 4.0, 2.0, 4.0),
                         child: TextField(
@@ -67,29 +66,30 @@ class _SearchPageState extends State<SearchPage> {
                               hintText: inputHint,
                               hintStyle: TextStyle(
                                 fontSize: 17.0,
-                                color : secondaryTextGrey,
-                              )
-                          ),
-                          onSubmitted: (text){
-                            if(text != ""){
+                                color: secondaryTextGrey,
+                              )),
+                          onSubmitted: (text) {
+                            if (text != "") {
                               _handleSearch(text);
                             }
                           },
                           style: TextStyle(
-                            color: const Color.fromRGBO(36, 36, 36, 1), //TODO: use color resources
+                            color: const Color.fromRGBO(
+                                36, 36, 36, 1), //TODO: use color resources
                           ),
                         ),
                       ),
                     ),
-                    IconButton( //TODO: use search icon from designs
+                    IconButton(
+                      //TODO: use search icon from designs
                       padding: EdgeInsets.fromLTRB(8.0, 1.0, 2.0, 4.0),
                       icon: Icon(
                         Icons.search,
                         size: 30.0,
-                        color : const Color.fromRGBO(141, 141, 141, 1),
+                        color: const Color.fromRGBO(141, 141, 141, 1),
                       ),
                       onPressed: () {
-                        if(_controller.text != ""){
+                        if (_controller.text != "") {
                           _handleSearch(_controller.text);
                         }
                       },
@@ -99,68 +99,70 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
             Expanded(
-              child:  _isSearching==true?
-              Center(
-                child: CircularProgressIndicator(),
-              )
-                  :
-              isResultNull?
-              Center(
-                child: Text(
-                  "No matching users found",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: const Color.fromRGBO(36, 36, 36, 1),
-                  ),
-                ),
-              )
-                  :
-              ((showRecentSearches) && (_recentlySearchedUsers != null ) && (_recentlySearchedUsers.length != 0))?
-              recentSearches()
-                  :
-              ListView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
-                itemCount: searchResult.length,
-                itemBuilder: (BuildContext context, int index){
-                  User user = searchResult[index];
-                  return GestureDetector(
-                    child: SearchResultCard(
-                      token,
-                      user.fullname,
-                      user.username,
-                      user.picture,
-                    ),
-                    onTap: (){
-                      addToRecentSearches(user);
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) =>
-                      new Profile(token, user.id, (widget.uId == user.id), true))
-                      );
-                    },
-                  );
-                },
-              ),
+              child: _isSearching == true
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : isResultNull
+                      ? Center(
+                          child: Text(
+                            "No matching users found",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: const Color.fromRGBO(36, 36, 36, 1),
+                            ),
+                          ),
+                        )
+                      : ((showRecentSearches) &&
+                              (_recentlySearchedUsers != null) &&
+                              (_recentlySearchedUsers.length != 0))
+                          ? recentSearches()
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+                              itemCount: searchResult.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                User user = searchResult[index];
+                                return GestureDetector(
+                                  child: SearchResultCard(
+                                    token,
+                                    user.fullname,
+                                    user.username,
+                                    user.picture,
+                                  ),
+                                  onTap: () {
+                                    addToRecentSearches(user);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => new Profile(
+                                                token,
+                                                user.id,
+                                                (widget.uId == user.id),
+                                                true)));
+                                  },
+                                );
+                              },
+                            ),
             )
           ],
-        )
-    );
+        ));
   }
 
   void _handleSearch(String query) {
     bool isResNull = false;
     setState(() {
       _isSearching = true;
-      if(showRecentSearches == true){
+      if (showRecentSearches == true) {
         showRecentSearches = false;
       }
     });
-    List<User> searchResultsTemp;// = List();
-    search(widget.token, query).then((results){
-      if((results != null) && (results.length != 0)){
+    List<User> searchResultsTemp; // = List();
+    search(widget.token, query).then((results) {
+      if ((results != null) && (results.length != 0)) {
         searchResultsTemp = results;
         isResNull = false;
-      }else{
+      } else {
         searchResultsTemp = [];
         isResNull = true;
       }
@@ -172,20 +174,21 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
-  void addToRecentSearches(User user) async{
+  void addToRecentSearches(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String searchHist = prefs.get("recentSearches");
 
-    List<User> oldUserObjects = (searchHist != null)? searchResultUsersFromJson(searchHist) : [];
+    List<User> oldUserObjects =
+        (searchHist != null) ? searchResultUsersFromJson(searchHist) : [];
     List<User> newUserObjects = [];
     newUserObjects.add(user);
-    for(int i = 0; i < oldUserObjects.length; i++){
-      if(oldUserObjects[i].id != user.id){
+    for (int i = 0; i < oldUserObjects.length; i++) {
+      if (oldUserObjects[i].id != user.id) {
         newUserObjects.add(oldUserObjects[i]);
       }
     }
 
-    if(newUserObjects.length > 10) {
+    if (newUserObjects.length > 10) {
       while (newUserObjects.length > 10) {
         newUserObjects.removeLast();
       }
@@ -212,42 +215,40 @@ class _SearchPageState extends State<SearchPage> {
     ];
 
     List<Widget> recentSearches = [];
-    if((_recentlySearchedUsers != null)&&(_recentlySearchedUsers.length != 0)){
-      for(int i = 0; i < _recentlySearchedUsers.length; i++){
-        recentSearches.add(
-            GestureDetector(
-              child: SearchResultCard(
-                  widget.token,
-                  _recentlySearchedUsers[i].fullname,
-                  _recentlySearchedUsers[i].username,
-                  _recentlySearchedUsers[i].picture
-              ),
-              onTap: (){
-                addToRecentSearches(_recentlySearchedUsers[i]);
-                Navigator.push(
-                    context, MaterialPageRoute(
+    if ((_recentlySearchedUsers != null) &&
+        (_recentlySearchedUsers.length != 0)) {
+      for (int i = 0; i < _recentlySearchedUsers.length; i++) {
+        recentSearches.add(GestureDetector(
+          child: SearchResultCard(
+              widget.token,
+              _recentlySearchedUsers[i].fullname,
+              _recentlySearchedUsers[i].username,
+              _recentlySearchedUsers[i].picture),
+          onTap: () {
+            addToRecentSearches(_recentlySearchedUsers[i]);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
                     builder: (context) => new Profile(
                         token,
                         _recentlySearchedUsers[i].id,
                         (widget.uId == _recentlySearchedUsers[i].id),
-                        true))
-                );
-              },
-            )
-        );
+                        true)));
+          },
+        ));
       }
     }
 
     List<Widget> widgetsToRender = textWidget + recentSearches;
-    return ListView(
-        children: widgetsToRender
-    );
+    return ListView(children: widgetsToRender);
   }
 
-  void loadRecentSearches() async{
+  void loadRecentSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userListString = prefs.get("recentSearches");
-    List<User> recentlySearchedUsers = (userListString == null)? [] : searchResultUsersFromJson(userListString);
+    List<User> recentlySearchedUsers = (userListString == null)
+        ? []
+        : searchResultUsersFromJson(userListString);
     _recentlySearchedUsers = recentlySearchedUsers;
   }
 }

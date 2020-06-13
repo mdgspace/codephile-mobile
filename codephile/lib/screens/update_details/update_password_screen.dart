@@ -3,8 +3,7 @@ import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/services/update_password.dart';
 import 'package:flutter/material.dart';
 
-class UpdatePasswordScreen extends StatefulWidget{
-
+class UpdatePasswordScreen extends StatefulWidget {
   final String _token;
   const UpdatePasswordScreen(this._token, {Key key}) : super(key: key);
 
@@ -13,13 +12,19 @@ class UpdatePasswordScreen extends StatefulWidget{
 }
 
 class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
-
   final _formKey = new GlobalKey<FormState>();
   bool isUpdatePasswordTapped = false;
-  bool _obscureTextOld = true, _obscureTextNew = true, _obscureTextNewConfirm = true,
-      enableTextFields = true, _lockIconColorOld = false, _seePasswordIconColorOld = false,
-      _lockIconColorNew = false, _seePasswordIconColorNew = false, _lockIconColorNewConfirm = false,
-      _seePasswordIconColorNewConfirm = false, isOldPasswordIncorrect = false;
+  bool _obscureTextOld = true,
+      _obscureTextNew = true,
+      _obscureTextNewConfirm = true,
+      enableTextFields = true,
+      _lockIconColorOld = false,
+      _seePasswordIconColorOld = false,
+      _lockIconColorNew = false,
+      _seePasswordIconColorNew = false,
+      _lockIconColorNewConfirm = false,
+      _seePasswordIconColorNewConfirm = false,
+      isOldPasswordIncorrect = false;
   TextEditingController _oldPasswordController = TextEditingController(),
       _newPasswordController = TextEditingController(),
       _newPasswordConfirmController = TextEditingController();
@@ -39,18 +44,17 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
             style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w500,
-                color: primaryBlackText
-            ),
+                color: primaryBlackText),
           ),
           actions: <Widget>[
             IconButton(
               icon: Icon(
                 Icons.clear,
                 color: primaryBlackText,
-                size: MediaQuery.of(context).size.width/15,
+                size: MediaQuery.of(context).size.width / 15,
               ),
               onPressed: () {
-                if(!isUpdatePasswordTapped){
+                if (!isUpdatePasswordTapped) {
                   Navigator.of(context).pop();
                 }
               },
@@ -70,7 +74,8 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(16.0, 27.0, 16.0, 16.0),
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 27.0, 16.0, 16.0),
                         child: Text(
                           "Setup a new password for Codephile",
                           style: TextStyle(
@@ -85,8 +90,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       _showPasswordInput("newConfirm"),
                     ],
                   ),
-                )
-            ),
+                )),
             _showUpdatePasswordButton(),
           ],
         ),
@@ -94,6 +98,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
       onWillPop: _onBackPressed,
     );
   }
+
   Widget _showPasswordInput(String inputField) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
@@ -101,7 +106,9 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
         children: <Widget>[
           TextFormField(
             onTap: () => onInputFieldTap(inputField),
-            onChanged: (value) {isOldPasswordIncorrect = false;},
+            onChanged: (value) {
+              isOldPasswordIncorrect = false;
+            },
             controller: getController(inputField),
             enabled: enableTextFields,
             maxLines: 1,
@@ -110,8 +117,9 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
             decoration: new InputDecoration(
               border: OutlineInputBorder(),
               prefixIcon: new Icon(
-                (inputField == "old")? Icons.lock_outline : Icons.lock,
-                color: getLockIconBool(inputField) ? codephileMain : Colors.grey,
+                (inputField == "old") ? Icons.lock_outline : Icons.lock,
+                color:
+                    getLockIconBool(inputField) ? codephileMain : Colors.grey,
                 size: 39,
               ),
               hintText: getHintText(inputField),
@@ -120,18 +128,19 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
               ),
             ),
             validator: (value) {
-              if(value.isEmpty){
+              if (value.isEmpty) {
                 return 'Password can\'t be empty';
-              }else{
-                if(inputField == "newConfirm"){
-                  if(_newPasswordController.text != _newPasswordConfirmController.text){
+              } else {
+                if (inputField == "newConfirm") {
+                  if (_newPasswordController.text !=
+                      _newPasswordConfirmController.text) {
                     return "Passwords don't match";
-                  }else{
+                  } else {
                     return null;
                   }
-                }else if((inputField == "old")&& isOldPasswordIncorrect){
+                } else if ((inputField == "old") && isOldPasswordIncorrect) {
                   return "Password Incorrect";
-                }else {
+                } else {
                   return null;
                 }
               }
@@ -139,11 +148,15 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
           ),
           Positioned(
             top: 6.0,
-            right:  0.0,
+            right: 0.0,
             child: IconButton(
-              icon : new Icon(
-                getObscureTextBool(inputField) ? Icons.visibility_off : Icons.visibility,
-                color: getPasswordIconBool(inputField) ? codephileMain : Colors.grey,
+              icon: new Icon(
+                getObscureTextBool(inputField)
+                    ? Icons.visibility_off
+                    : Icons.visibility,
+                color: getPasswordIconBool(inputField)
+                    ? codephileMain
+                    : Colors.grey,
               ),
               onPressed: () => _toggle(inputField),
             ),
@@ -154,14 +167,14 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   }
 
   Widget _showUpdatePasswordButton() {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.all(16.0),
       child: FlatButton(
-        color: isUpdatePasswordTapped ? Colors.grey[500]: codephileMain,
+        color: isUpdatePasswordTapped ? Colors.grey[500] : codephileMain,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(
-            width: MediaQuery.of(context).size.width*0.85,
+            width: MediaQuery.of(context).size.width * 0.85,
             child: Text(
               'Update Password',
               textAlign: TextAlign.center,
@@ -176,6 +189,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
       ),
     );
   }
+
   bool _validateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -185,56 +199,51 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     return false;
   }
 
-  void _validateAndSubmit() async{
+  void _validateAndSubmit() async {
     if (_validateAndSave()) {
       setState(() {
         isUpdatePasswordTapped = true;
         enableTextFields = false;
       });
 
-      int responseCode = await updatePassword(
-          widget._token,
-          _oldPasswordController.text,
-          _newPasswordController.text
-      );
+      int responseCode = await updatePassword(widget._token,
+          _oldPasswordController.text, _newPasswordController.text);
 
       print(responseCode);
-      if(responseCode == 200){
+      if (responseCode == 200) {
         setState(() {
           isUpdatePasswordTapped = false;
           enableTextFields = true;
           isOldPasswordIncorrect = false;
           showToast("Password Changed");
         });
-      }
-      else if(responseCode == 403){
+      } else if (responseCode == 403) {
         setState(() {
           isUpdatePasswordTapped = false;
           enableTextFields = true;
           isOldPasswordIncorrect = true;
           _validateAndSave();
         });
-      }else{
+      } else {
         setState(() {
           isUpdatePasswordTapped = false;
           enableTextFields = true;
           showToast("Something went wrong");
         });
       }
-
     }
   }
 
-  Future<bool> _onBackPressed() async{
-    if(isUpdatePasswordTapped){
+  Future<bool> _onBackPressed() async {
+    if (isUpdatePasswordTapped) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
 
   getController(String inputField) {
-    switch(inputField){
+    switch (inputField) {
       case "old":
         return _oldPasswordController;
         break;
@@ -248,7 +257,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   }
 
   getObscureTextBool(String inputField) {
-    switch(inputField){
+    switch (inputField) {
       case "old":
         return _obscureTextOld;
         break;
@@ -262,7 +271,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   }
 
   _toggle(String inputField) {
-    switch(inputField){
+    switch (inputField) {
       case "old":
         setState(() {
           _obscureTextOld = !_obscureTextOld;
@@ -282,16 +291,18 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   }
 
   onInputFieldTap(String inputField) {
-    switch(inputField){
+    switch (inputField) {
       case "old":
         setState(() {
           _lockIconColorOld = true;
           _seePasswordIconColorOld = true;
-          if((_newPasswordController.text == '')||(_oldPasswordController.text == null)){
+          if ((_newPasswordController.text == '') ||
+              (_oldPasswordController.text == null)) {
             _lockIconColorNew = false;
             _seePasswordIconColorNew = false;
           }
-          if((_newPasswordConfirmController.text == '')||(_oldPasswordController.text == null)){
+          if ((_newPasswordConfirmController.text == '') ||
+              (_oldPasswordController.text == null)) {
             _lockIconColorNewConfirm = false;
             _seePasswordIconColorNewConfirm = false;
           }
@@ -301,11 +312,13 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
         setState(() {
           _lockIconColorNew = true;
           _seePasswordIconColorNew = true;
-          if((_oldPasswordController.text == '')||(_newPasswordController.text == null)){
+          if ((_oldPasswordController.text == '') ||
+              (_newPasswordController.text == null)) {
             _lockIconColorOld = false;
             _seePasswordIconColorOld = false;
           }
-          if((_newPasswordConfirmController.text == '')||(_newPasswordController.text == null)){
+          if ((_newPasswordConfirmController.text == '') ||
+              (_newPasswordController.text == null)) {
             _lockIconColorNewConfirm = false;
             _seePasswordIconColorNewConfirm = false;
           }
@@ -315,11 +328,13 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
         setState(() {
           _lockIconColorNewConfirm = true;
           _seePasswordIconColorNewConfirm = true;
-          if((_oldPasswordController.text == '')||(_newPasswordConfirmController.text == null)){
+          if ((_oldPasswordController.text == '') ||
+              (_newPasswordConfirmController.text == null)) {
             _lockIconColorOld = false;
             _seePasswordIconColorOld = false;
           }
-          if((_newPasswordController.text == '')||(_newPasswordConfirmController.text == null)){
+          if ((_newPasswordController.text == '') ||
+              (_newPasswordConfirmController.text == null)) {
             _lockIconColorNew = false;
             _seePasswordIconColorNew = false;
           }
@@ -329,7 +344,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   }
 
   getPasswordIconBool(String inputField) {
-    switch(inputField){
+    switch (inputField) {
       case "old":
         return _seePasswordIconColorOld;
         break;
@@ -343,7 +358,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   }
 
   getLockIconBool(String inputField) {
-    switch(inputField){
+    switch (inputField) {
       case "old":
         return _lockIconColorOld;
         break;
@@ -357,7 +372,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   }
 
   getHintText(String inputField) {
-    switch(inputField){
+    switch (inputField) {
       case "old":
         return "Current Password";
         break;
@@ -369,5 +384,4 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
         break;
     }
   }
-
 }

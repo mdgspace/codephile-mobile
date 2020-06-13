@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UpdateHandleCard extends StatefulWidget{
+class UpdateHandleCard extends StatefulWidget {
   @override
   _UpdateHandleCardState createState() => _UpdateHandleCardState();
 }

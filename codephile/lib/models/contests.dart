@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class Contests {
   List<Ongoing> ongoing;
   String timestamp;
@@ -85,7 +83,7 @@ class Upcoming {
 
   Upcoming.fromJson(Map<String, dynamic> json) {
     duration = json['Duration'];
-    endTime =DateTime.parse(json['EndTime']);
+    endTime = DateTime.parse(json['EndTime']);
     name = json['Name'];
     platform = json['Platform'];
     startTime = DateTime.parse(json['StartTime']);

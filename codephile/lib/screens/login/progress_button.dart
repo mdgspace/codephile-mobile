@@ -73,7 +73,6 @@ class _ProgressButtonState extends State<ProgressButton>
                     state = 0;
                   });
                 }
-                print("Pressed");
               },
               child: showChild(state: state),
               highlightColor: Colors.white12,

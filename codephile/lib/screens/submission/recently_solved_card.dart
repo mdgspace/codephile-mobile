@@ -1,15 +1,13 @@
 import 'package:codephile/resources/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:codephile/screens/submission/recently_soved_bookmark_icon.dart';
 
 class RecentlySolvedCard extends StatelessWidget {
   final String _problemName;
   final String _platform;
   final String _time;
-  final String _url;
 //TODO: implement mins/hours ago feature
 
-  RecentlySolvedCard(this._problemName, this._platform, this._time, this._url);
+  RecentlySolvedCard(this._problemName, this._platform, this._time);
 
   @override
   Widget build(BuildContext context) {

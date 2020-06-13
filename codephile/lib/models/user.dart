@@ -33,30 +33,39 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    fullname: json["fullname"],
-    handle: Handle.fromJson(json["handle"]),
-    id: json["id"],
-    institute: json["institute"],
-    noOfFollowing: json["no_of_following"],
-    picture: json["picture"],
-    profiles: (json["profiles"] == null)? null : UserProfileDetails.fromJson(json["profiles"]),
-    recentSubmissions: (json["recent_submissions"] == null)? null :  List<Submission>.from(json["recent_submissions"].map((x) => Submission.fromJson(x))),
-    username: json["username"],
-    solvedProblemsCount: (json["solved_problems_count"] == null)? null : SolvedProblemsCount.fromJson(json["solved_problems_count"]),
-  );
+        fullname: json["fullname"],
+        handle: Handle.fromJson(json["handle"]),
+        id: json["id"],
+        institute: json["institute"],
+        noOfFollowing: json["no_of_following"],
+        picture: json["picture"],
+        profiles: (json["profiles"] == null)
+            ? null
+            : UserProfileDetails.fromJson(json["profiles"]),
+        recentSubmissions: (json["recent_submissions"] == null)
+            ? null
+            : List<Submission>.from(
+                json["recent_submissions"].map((x) => Submission.fromJson(x))),
+        username: json["username"],
+        solvedProblemsCount: (json["solved_problems_count"] == null)
+            ? null
+            : SolvedProblemsCount.fromJson(json["solved_problems_count"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "fullname": fullname,
-    "handle": handle.toJson(),
-    "id": id,
-    "institute": institute,
-    "no_of_following": noOfFollowing,
-    "picture": picture,
-    "profiles": (profiles != null)? profiles.toJson(): null,
-    "recent_submissions": (recentSubmissions != null )? List<dynamic>.from(recentSubmissions.map((x) => x.toJson())) : null,
-    "username": username,
-    "solved_problems_count": solvedProblemsCount.toJson(),
-  };
+        "fullname": fullname,
+        "handle": handle.toJson(),
+        "id": id,
+        "institute": institute,
+        "no_of_following": noOfFollowing,
+        "picture": picture,
+        "profiles": (profiles != null) ? profiles.toJson() : null,
+        "recent_submissions": (recentSubmissions != null)
+            ? List<dynamic>.from(recentSubmissions.map((x) => x.toJson()))
+            : null,
+        "username": username,
+        "solved_problems_count": solvedProblemsCount.toJson(),
+      };
 }
 
 class Handle {
@@ -104,17 +113,18 @@ class SolvedProblemsCount {
   int hackerrank;
   int spoj;
 
-  factory SolvedProblemsCount.fromJson(Map<String, dynamic> json) => SolvedProblemsCount(
-    codechef: json["codechef"],
-    codeforces: json["codeforces"],
-    hackerrank: json["hackerrank"],
-    spoj: json["spoj"],
-  );
+  factory SolvedProblemsCount.fromJson(Map<String, dynamic> json) =>
+      SolvedProblemsCount(
+        codechef: json["codechef"],
+        codeforces: json["codeforces"],
+        hackerrank: json["hackerrank"],
+        spoj: json["spoj"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "codechef": codechef,
-    "codeforces": codeforces,
-    "hackerrank": hackerrank,
-    "spoj": spoj,
-  };
+        "codechef": codechef,
+        "codeforces": codeforces,
+        "hackerrank": hackerrank,
+        "spoj": spoj,
+      };
 }

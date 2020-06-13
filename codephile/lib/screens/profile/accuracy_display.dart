@@ -3,7 +3,7 @@ import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/profile/accuracy_tile.dart';
 import 'package:flutter/material.dart';
 
-class AccuracyDisplay extends StatelessWidget{
+class AccuracyDisplay extends StatelessWidget {
   final UserProfileDetails _platformDetails;
   AccuracyDisplay(this._platformDetails, {Key key});
 
@@ -19,10 +19,9 @@ class AccuracyDisplay extends StatelessWidget{
             child: Text(
               "Accuracy",
               style: TextStyle(
-                color: primaryBlackText,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold
-              ),
+                  color: primaryBlackText,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold),
             ),
           ),
           Wrap(
@@ -32,40 +31,42 @@ class AccuracyDisplay extends StatelessWidget{
       ),
     );
   }
-  
-  List<Widget> getAccuracyTileList(){
+
+  List<Widget> getAccuracyTileList() {
     List<AccuracyTile> accuracyTileList = List<AccuracyTile>();
-    if(_platformDetails != null){
-      if(_platformDetails.codechefProfile != null){
-        accuracyTileList.add(AccuracyTile("codechef", _platformDetails.codechefProfile.accuracy));
-      }else {
+    if (_platformDetails != null) {
+      if (_platformDetails.codechefProfile != null) {
+        accuracyTileList.add(AccuracyTile(
+            "codechef", _platformDetails.codechefProfile.accuracy));
+      } else {
         accuracyTileList.add(AccuracyTile("codechef", "-"));
       }
 
-      if(_platformDetails.codeforcesProfile != null){
-        accuracyTileList.add(AccuracyTile("codeforces", _platformDetails.codeforcesProfile.accuracy));
-      }else {
+      if (_platformDetails.codeforcesProfile != null) {
+        accuracyTileList.add(AccuracyTile(
+            "codeforces", _platformDetails.codeforcesProfile.accuracy));
+      } else {
         accuracyTileList.add(AccuracyTile("codeforces", "-"));
       }
 
-      if(_platformDetails.hackerrankProfile != null){
-        accuracyTileList.add(AccuracyTile("hackerrank", _platformDetails.hackerrankProfile.accuracy));
-      }else {
+      if (_platformDetails.hackerrankProfile != null) {
+        accuracyTileList.add(AccuracyTile(
+            "hackerrank", _platformDetails.hackerrankProfile.accuracy));
+      } else {
         accuracyTileList.add(AccuracyTile("hackerrank", "-"));
       }
 
-      if(_platformDetails.spojProfile != null){
-        accuracyTileList.add(AccuracyTile("spoj", _platformDetails.spojProfile.accuracy));
-      }else {
+      if (_platformDetails.spojProfile != null) {
+        accuracyTileList
+            .add(AccuracyTile("spoj", _platformDetails.spojProfile.accuracy));
+      } else {
         accuracyTileList.add(AccuracyTile("spoj", "-"));
       }
-    }else{
-      print("user details are null");
+    } else {
       accuracyTileList.add(AccuracyTile("codechef", "-"));
       accuracyTileList.add(AccuracyTile("codeforces", "-"));
       accuracyTileList.add(AccuracyTile("hackerrank", "-"));
       accuracyTileList.add(AccuracyTile("spoj", "-"));
-
     }
     return accuracyTileList;
   }

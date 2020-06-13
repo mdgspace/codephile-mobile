@@ -52,7 +52,7 @@ String getPlatformIconAssetPath(String platform) {
     case "spoj":
       return "assets/platformIcons/spoj.png";
       break;
-    default :
+    default:
       return "assets/platformIcons/otherIcon.jpg";
       break;
   }

@@ -7,28 +7,27 @@ import 'package:http/http.dart' as http;
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<SubStatusData> getSubmissionStatusData(String token, String id) async{
+Future<SubStatusData> getSubmissionStatusData(String token, String id) async {
   String endpoint = "/graph/status/$id";
   String uri = url + endpoint;
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 
-  try{
+  try {
     var response = await client.get(
       uri,
       headers: tokenAuth,
     );
 
     SubStatusData data;
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       data = subStatusDataFromJson(response.body);
-    }else{
+    } else {
       data = null;
     }
 
     return data;
-
-  }on Exception catch(e){
+  } on Exception catch (e) {
     print(e);
     return null;
   }

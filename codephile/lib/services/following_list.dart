@@ -19,7 +19,6 @@ Future<List<Following>> getFollowingList(String token) async {
     );
 
     List<Following> followingList = followingFromJson(response.body);
-    print("Here!!");
     print(followingList.length);
     return followingList;
   } on Exception catch (e) {

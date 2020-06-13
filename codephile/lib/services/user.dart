@@ -16,7 +16,6 @@ Future<User> getUser(String token, String uId) async {
       headers: tokenAuth,
     );
 
-    print(response.body);
     User user = userFromJson(response.body);
 
     return user;

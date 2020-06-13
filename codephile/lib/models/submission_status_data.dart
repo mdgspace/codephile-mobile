@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-SubStatusData subStatusDataFromJson(String str) => SubStatusData.fromJson(json.decode(str));
+SubStatusData subStatusDataFromJson(String str) =>
+    SubStatusData.fromJson(json.decode(str));
 
 String subStatusDataToJson(SubStatusData data) => json.encode(data.toJson());
 
@@ -24,22 +25,22 @@ class SubStatusData {
   int wa;
 
   factory SubStatusData.fromJson(Map<String, dynamic> json) => SubStatusData(
-    ac: json["ac"],
-    ce: json["ce"],
-    mle: json["mle"],
-    ptl: json["ptl"],
-    re: json["re"],
-    tle: json["tle"],
-    wa: json["wa"],
-  );
+        ac: json["ac"],
+        ce: json["ce"],
+        mle: json["mle"],
+        ptl: json["ptl"],
+        re: json["re"],
+        tle: json["tle"],
+        wa: json["wa"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "ac": ac,
-    "ce": ce,
-    "mle": mle,
-    "ptl": ptl,
-    "re": re,
-    "tle": tle,
-    "wa": wa,
-  };
+        "ac": ac,
+        "ce": ce,
+        "mle": mle,
+        "ptl": ptl,
+        "re": re,
+        "tle": tle,
+        "wa": wa,
+      };
 }

@@ -39,7 +39,6 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
             Utils.firstDayOfWeek(range.first), Utils.lastDayOfWeek(range.last))
         .toList();
     renderRange.add(Utils.lastDayOfWeek(range.last));
-    print("render range:- " + renderRange.length.toString());
     switch (currentTriplet) {
       case 1:
         monthLabels = ["Jan", "Feb", "Mar"];
@@ -72,7 +71,6 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
             (element.correct - (element.total - element.correct));
       }
     });
-    print("map" + input.length.toString());
     column = input.length ~/ 7;
   }
 

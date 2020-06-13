@@ -19,7 +19,6 @@ Future<int> uploadImage(String token, String userImagePath) async {
     ));
 
     var response = await request.send();
-    print(response.statusCode);
     return response.statusCode;
   } on Exception catch (e) {
     print(e);

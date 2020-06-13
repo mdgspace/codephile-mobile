@@ -86,9 +86,7 @@ class _SettingsIconState extends State<SettingsIcon> {
   }
 
   void logout(String token) async {
-    logoutUser(token).then((wasSuccessful) {
-      print(wasSuccessful);
-    });
+    logoutUser(token).then((wasSuccessful) {});
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove("token");
     await prefs.remove("uid");

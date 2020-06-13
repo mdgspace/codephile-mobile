@@ -197,29 +197,24 @@ class SubmissionCard extends StatelessWidget {
   }
 
   String getTime(String time) {
-    final solved_time = DateTime.parse(time);
-    final now_time = DateTime.now();
-    final diff = now_time.difference(solved_time).inMinutes;
+    final solvedTime = DateTime.parse(time);
+    final nowTime = DateTime.now();
+    final diff = nowTime.difference(solvedTime).inMinutes;
     if (diff < 1) {
-      return now_time.difference(solved_time).inSeconds.toString() + " secs";
+      return nowTime.difference(solvedTime).inSeconds.toString() + " secs";
     } else if (diff < 60) {
       return diff.toString() + " mins";
     } else if (diff >= 60 && diff < 1440) {
       //1440 = 60*24
-      return now_time.difference(solved_time).inHours.toString() + " hrs";
+      return nowTime.difference(solvedTime).inHours.toString() + " hrs";
     } else if (diff >= 1440 && diff < 1440 * 30) {
-      return now_time.difference(solved_time).inDays.toString() + " days";
+      return nowTime.difference(solvedTime).inDays.toString() + " days";
     } else if (diff >= 1440 * 30 && diff < 1440 * 30 * 12) {
-      return (now_time.difference(solved_time).inDays ~/ 30).toString() +
+      return (nowTime.difference(solvedTime).inDays ~/ 30).toString() +
           " months";
     } else {
-      int years = (now_time.difference(solved_time).inDays ~/ (30 * 12));
+      int years = (nowTime.difference(solvedTime).inDays ~/ (30 * 12));
       return years.toString() + ((years > 1) ? " years" : " year");
-    }
-
-    if (diff > 1440) {
-      if (diff < 1440 * 30) {
-      } else {}
     }
   }
 
