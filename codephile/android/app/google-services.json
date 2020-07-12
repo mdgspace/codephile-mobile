@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "792980113678",
+    "firebase_url": "https://codephile-a71b6.firebaseio.com",
+    "project_id": "codephile-a71b6",
+    "storage_bucket": "codephile-a71b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792980113678:android:4348b2caf27132655f2f5f",
+        "android_client_info": {
+          "package_name": "com.example.codephile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792980113678-1rbprmsn7kd68fluk2tlbnaqbkld519p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVADgSuifCC3Hs-n2ztFaPG8CMTfl3jWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792980113678-1rbprmsn7kd68fluk2tlbnaqbkld519p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
