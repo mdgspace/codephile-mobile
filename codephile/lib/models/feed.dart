@@ -68,7 +68,7 @@ class Submission {
     status = json['status'];
     language = json['language'];
     points = json['points'];
-    tags = json['tags'].cast<String>();
+    // tags = json['tags'].cast<String>();
     rating = json['rating'];
   }
 
