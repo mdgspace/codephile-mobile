@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RecentlySolvedBookmarkIcon extends StatelessWidget{
+class RecentlySolvedBookmarkIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -9,13 +9,13 @@ class RecentlySolvedBookmarkIcon extends StatelessWidget{
           Positioned(
             child: Icon(
               Icons.bookmark,
-              size: MediaQuery.of(context).size.width/13,
+              size: MediaQuery.of(context).size.width / 13,
               color: const Color.fromRGBO(51, 102, 255, 1),
             ),
           ),
           Positioned(
-            left: MediaQuery.of(context).size.width/(13*4),
-            top: MediaQuery.of(context).size.width/(13*4),
+            left: MediaQuery.of(context).size.width / (13 * 4),
+            top: MediaQuery.of(context).size.width / (13 * 4),
             child: Icon(
               Icons.check,
               size: 15.0,
@@ -26,5 +26,4 @@ class RecentlySolvedBookmarkIcon extends StatelessWidget{
       ),
     );
   }
-
 }

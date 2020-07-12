@@ -11,18 +11,17 @@ class SignUpPage2 extends StatefulWidget {
   final String name;
   final String institute;
 
-  const SignUpPage2({Key key, this.name, this.institute})
-      : super(key: key);
+  const SignUpPage2({Key key, this.name, this.institute}) : super(key: key);
   @override
-  _SignUpPageState createState() => _SignUpPageState(name: name,institute: institute);
+  _SignUpPageState createState() =>
+      _SignUpPageState(name: name, institute: institute);
 }
 
 class _SignUpPageState extends State<SignUpPage2> {
-
   String name;
   String institute;
   _SignUpPageState({Key key, this.name, this.institute});
-  String _codechef, _hackerrank,_codeforces, _spoj;
+  String _codechef, _hackerrank, _codeforces, _spoj;
   bool enableTextFields = true;
   Handle handle;
 
@@ -31,6 +30,7 @@ class _SignUpPageState extends State<SignUpPage2> {
   void initState() {
     super.initState();
   }
+
   final _formKey = new GlobalKey<FormState>();
   bool isNextButtonTapped = false;
   bool handleVefifying = false;
@@ -56,14 +56,12 @@ class _SignUpPageState extends State<SignUpPage2> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: MediaQuery.of(context).size.height/15,),
-                      Text(
-                          'Which competetive platforms do you use?',
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold
-                          )
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 15,
                       ),
+                      Text('Which competetive platforms do you use?',
+                          style: TextStyle(
+                              fontSize: 20.0, fontWeight: FontWeight.bold)),
                       _showCodechefInput(width),
                       SizedBox(height: 10.0),
                       _showHackerrankInput(width),
@@ -95,16 +93,16 @@ class _SignUpPageState extends State<SignUpPage2> {
             children: <Widget>[
               Container(
                 height: 30,
-                width: width/10,
+                width: width / 10,
                 child: Image.asset("assets/platformIcons/codeChefIcon.png"),
               ),
               Container(
                 padding: EdgeInsets.only(left: 10),
-                width: width/4,
+                width: width / 4,
                 child: Text('Codechef'),
               ),
               Container(
-                width: width/2,
+                width: width / 2,
                 padding: EdgeInsets.only(bottom: 10),
                 child: TextFormField(
                   enabled: enableTextFields,
@@ -115,19 +113,14 @@ class _SignUpPageState extends State<SignUpPage2> {
                       contentPadding: EdgeInsets.fromLTRB(0, 0, 0, -5),
                       hintText: "Codechef handle",
                       labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Colors.grey
-                      ),
+                          fontFamily: 'Montserrat', color: Colors.grey),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)
-                      )
-                  ),
+                          borderSide: BorderSide(color: Colors.grey))),
                   onSaved: (value) {
                     _codechef = value;
                   },
                 ),
               ),
-
             ],
           ),
         ),
@@ -147,16 +140,16 @@ class _SignUpPageState extends State<SignUpPage2> {
             children: <Widget>[
               Container(
                 height: 30,
-                width: width/10,
+                width: width / 10,
                 child: Image.asset("assets/platformIcons/hackerRankIcon.png"),
               ),
               Container(
                 padding: EdgeInsets.only(left: 10),
-                width: width/4,
+                width: width / 4,
                 child: Text('HackerRank'),
               ),
               Container(
-                width: width/2,
+                width: width / 2,
                 padding: EdgeInsets.only(bottom: 10),
                 child: TextFormField(
                   enabled: enableTextFields,
@@ -167,12 +160,9 @@ class _SignUpPageState extends State<SignUpPage2> {
                       contentPadding: EdgeInsets.fromLTRB(0, 0, 0, -5),
                       hintText: "Hackerrank handle",
                       labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Colors.grey),
+                          fontFamily: 'Montserrat', color: Colors.grey),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)
-                      )
-                  ),
+                          borderSide: BorderSide(color: Colors.grey))),
                   onSaved: (value) => _hackerrank = value,
                 ),
               ),
@@ -195,16 +185,16 @@ class _SignUpPageState extends State<SignUpPage2> {
             children: <Widget>[
               Container(
                 height: 30,
-                width: width/10,
+                width: width / 10,
                 child: Image.asset("assets/platformIcons/codeForcesIcon.png"),
               ),
               Container(
                 padding: EdgeInsets.only(left: 10),
-                width: width/4,
+                width: width / 4,
                 child: Text('CodeForces'),
               ),
               Container(
-                width: width/2,
+                width: width / 2,
                 padding: EdgeInsets.only(bottom: 10),
                 child: TextFormField(
                   enabled: enableTextFields,
@@ -215,13 +205,9 @@ class _SignUpPageState extends State<SignUpPage2> {
                       contentPadding: EdgeInsets.fromLTRB(0, 0, 0, -5),
                       hintText: "Codeforces handle",
                       labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Colors.grey
-                      ),
+                          fontFamily: 'Montserrat', color: Colors.grey),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)
-                      )
-                  ),
+                          borderSide: BorderSide(color: Colors.grey))),
                   onSaved: (value) => _codeforces = value,
                 ),
               ),
@@ -244,16 +230,16 @@ class _SignUpPageState extends State<SignUpPage2> {
             children: <Widget>[
               Container(
                 height: 30,
-                width: width/10,
+                width: width / 10,
                 child: Image.asset("assets/platformIcons/spoj.png"),
               ),
               Container(
                 padding: EdgeInsets.only(left: 10),
-                width: width/4,
+                width: width / 4,
                 child: Text('Spoj'),
               ),
               Container(
-                width: width/2,
+                width: width / 2,
                 padding: EdgeInsets.only(bottom: 10),
                 child: TextFormField(
                   enabled: enableTextFields,
@@ -264,8 +250,7 @@ class _SignUpPageState extends State<SignUpPage2> {
                       contentPadding: EdgeInsets.fromLTRB(0, 0, 0, -5),
                       hintText: "Spoj handle",
                       labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Colors.grey),
+                          fontFamily: 'Montserrat', color: Colors.grey),
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey))),
                   onSaved: (value) => _spoj = value,
@@ -279,50 +264,51 @@ class _SignUpPageState extends State<SignUpPage2> {
   }
 
   Widget _showNextButton() {
-    return (handleVefifying) ?
-    Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-        color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width*0.85,
-            child: new Text(
-              'VERIFYING HANDLES',
-              textAlign: TextAlign.center,
-              style: new TextStyle(
-                  color: isNextButtonTapped ? Colors.grey[700] : Colors.white,
-                  fontSize: 16.0
+    return (handleVefifying)
+        ? Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: FlatButton(
+              color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: new Text(
+                    'VERIFYING HANDLES',
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(
+                        color: isNextButtonTapped
+                            ? Colors.grey[700]
+                            : Colors.white,
+                        fontSize: 16.0),
+                  ),
+                ),
               ),
+              onPressed: () {},
             ),
-          ),
-        ),
-        onPressed: (){},
-      ),
-    )
-        :
-    Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-        color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width*0.85,
-            child: new Text(
-              'NEXT',
-              textAlign: TextAlign.center,
-              style: new TextStyle(
-                color: isNextButtonTapped ? Colors.grey[700] : Colors.white,
-                fontSize: 16.0,
+          )
+        : Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: FlatButton(
+              color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: new Text(
+                    'NEXT',
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(
+                      color:
+                          isNextButtonTapped ? Colors.grey[700] : Colors.white,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
               ),
+              onPressed: _validateAndSubmit,
             ),
-          ),
-        ),
-        onPressed: _validateAndSubmit,
-      ),
-    );
+          );
   }
 
   bool _validateAndSave() {
@@ -344,7 +330,7 @@ class _SignUpPageState extends State<SignUpPage2> {
 
       bool allHandlesValid = true;
       if (handleVefifying) {
-        if((_codechef != '')&&(_codechef != null)){
+        if ((_codechef != '') && (_codechef != null)) {
           bool isValid = await verifyHandle("codechef", _codechef);
           if (isValid != true) {
             allHandlesValid = false;
@@ -355,11 +341,11 @@ class _SignUpPageState extends State<SignUpPage2> {
               fontSize: 12.0,
             );
           }
-        }else{
+        } else {
           _codechef = '';
         }
 
-        if((_hackerrank != '')&&(_hackerrank != null)){
+        if ((_hackerrank != '') && (_hackerrank != null)) {
           bool isValid = await verifyHandle("hackerrank", _hackerrank);
           if (isValid != true) {
             allHandlesValid = false;
@@ -371,11 +357,11 @@ class _SignUpPageState extends State<SignUpPage2> {
               fontSize: 12.0,
             );
           }
-        }else{
+        } else {
           _hackerrank = '';
         }
 
-        if((_codeforces != '')&&(_codeforces != null)){
+        if ((_codeforces != '') && (_codeforces != null)) {
           bool isValid = await verifyHandle("codeforces", _codeforces);
           if (isValid != true) {
             allHandlesValid = false;
@@ -386,11 +372,11 @@ class _SignUpPageState extends State<SignUpPage2> {
               fontSize: 12.0,
             );
           }
-        }else{
+        } else {
           _codeforces = '';
         }
 
-        if((_spoj != '')&&(_spoj != null)){
+        if ((_spoj != '') && (_spoj != null)) {
           bool isValid = await verifyHandle("spoj", _spoj);
           if (isValid != true) {
             allHandlesValid = false;
@@ -402,20 +388,18 @@ class _SignUpPageState extends State<SignUpPage2> {
               fontSize: 12.0,
             );
           }
-        }else{
+        } else {
           _spoj = '';
         }
-
 
         var handle = Handle(
             codechef: _codechef,
             codeforces: _codeforces,
             hackerrank: _hackerrank,
-            spoj: _spoj
-        );
+            spoj: _spoj);
 
-        if(allHandlesValid){
-          setState((){
+        if (allHandlesValid) {
+          setState(() {
             handleVefifying = false;
             isNextButtonTapped = false;
             enableTextFields = true;
@@ -423,14 +407,12 @@ class _SignUpPageState extends State<SignUpPage2> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => SignUpPage3(
-                      name: name,
-                      institute: institute,
-                      handle: handle,
-                    )
-                )
-            );
+                          name: name,
+                          institute: institute,
+                          handle: handle,
+                        )));
           });
-        }else{
+        } else {
           setState(() {
             enableTextFields = true;
             handleVefifying = false;
@@ -438,8 +420,6 @@ class _SignUpPageState extends State<SignUpPage2> {
           });
         }
       }
-
     }
   }
-
 }

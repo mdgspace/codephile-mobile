@@ -6,7 +6,6 @@ http.Client client = new http.Client();
 
 Future<bool> submissionPost(String token, String site) async {
   String endpoint = "/submission/$site";
-  print(token);
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": token};
   try {
@@ -18,7 +17,6 @@ Future<bool> submissionPost(String token, String site) async {
       return true;
     }
     return false;
-
   } on Exception catch (e) {
     print(e);
     return null;

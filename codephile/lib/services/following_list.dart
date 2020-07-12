@@ -6,24 +6,22 @@ import 'package:http/http.dart' as http;
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<List<Following>> getFollowingList(String token) async{
+Future<List<Following>> getFollowingList(String token) async {
   String endpoint = "/friends/following";
   String uri = url + endpoint;
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 
-  try{
+  try {
     var response = await client.get(
       uri,
       headers: tokenAuth,
     );
 
     List<Following> followingList = followingFromJson(response.body);
-    print("Here!!");
     print(followingList.length);
     return followingList;
-
-  }on Exception catch(e){
+  } on Exception catch (e) {
     print(e);
     return null;
   }

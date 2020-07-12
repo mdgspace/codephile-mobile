@@ -1,19 +1,22 @@
+import 'package:codephile/models/activity_details.dart';
 import 'package:codephile/models/following.dart';
 import 'package:codephile/models/submission.dart';
+import 'package:codephile/models/submission_status_data.dart';
 import 'package:codephile/models/user.dart';
-import 'package:codephile/resources/colors.dart';
-import 'package:codephile/resources/helper_functions.dart';
+import 'package:codephile/screens/profile/acceptance_graph.dart';
+import 'package:codephile/screens/profile/accuracy_display.dart';
+import 'package:codephile/screens/profile/no_of_questions_solved_display.dart';
 import 'package:codephile/screens/profile/profile_card.dart';
-import 'package:codephile/screens/submission/recently_solved_card.dart';
-import 'package:codephile/screens/submission/submission_screen.dart';
+import 'package:codephile/screens/profile/submissions_stats.dart';
+import 'package:codephile/services/activity_details.dart';
 import 'package:codephile/services/following_list.dart';
+import 'package:codephile/services/submissions_status.dart';
 import 'package:codephile/services/user.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../models/user_profile_details.dart';
-import '../../services/user_details.dart';
 
 class Profile extends StatefulWidget {
-
   final String token;
   final String uId;
   final bool _isMyProfile;
@@ -26,7 +29,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   bool _isLoading = true;
 
   User _user;
@@ -34,6 +36,8 @@ class _ProfileState extends State<Profile> {
   List<Submission> _submissionsList;
   List<Submission> _mostRecentSubmissions;
   List<Following> _followingList;
+  List<ActivityDetails> _activityDetails;
+  SubStatusData _subStats;
 
   @override
   void initState() {
@@ -44,97 +48,60 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(243, 244, 247, 1),
-      body: _isLoading?
-      Center(
-        child: CircularProgressIndicator(),
-      )
-          :
-      ListView(
-        children: <Widget>[
-          //TODO: implement #following
-          ProfileCard(
-              widget.token,
-              _user,
-              checkIfFollowing(widget.uId),
-              widget._isMyProfile,
-              _userPlatformDetails
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 16.0),
-            child: Text(
-              "Recently Solved",
-              style: TextStyle(
-                fontSize: 22.0,
-                color: const Color.fromRGBO(36, 36, 36, 1),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length >= 1))?
-          RecentlySolvedCard(_mostRecentSubmissions[0].name, submissionType(_mostRecentSubmissions[0]), _mostRecentSubmissions[0].createdAt, _mostRecentSubmissions[0].url)
-              :
-          Container()
-          ,
-          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length > 1))?
-          RecentlySolvedCard(_mostRecentSubmissions[1].name, submissionType(_mostRecentSubmissions[1]), _mostRecentSubmissions[1].createdAt, _mostRecentSubmissions[1].url)
-              :
-          Container(),
-          ((_mostRecentSubmissions != null)&&(_mostRecentSubmissions.length >=1))?
-          GestureDetector(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 8.0),
-              child: Text(
-                  "View More",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: codephileMain,
-                ),
-              ),
-            ),
-            onTap: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => new SubmissionScreen(
-                          token: widget.token,
-                          id: widget.uId
-                      )
+        backgroundColor: Colors.white,
+        body: RefreshIndicator(
+            child: _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
                   )
-              );
-            },
-          )
-              :
-              Container(height: 0.0)
-        ],
-      ),
-    );
+                : ListView(
+                    children: <Widget>[
+                      ProfileCard(
+                        widget.token,
+                        _user,
+                        checkIfFollowing(widget.uId),
+                        widget._isMyProfile,
+                        refreshPage,
+                      ),
+                      AccuracyDisplay(_userPlatformDetails),
+                      QuestionsSolvedDisplay(
+                          _user.solvedProblemsCount.codechef,
+                          _user.solvedProblemsCount.codeforces,
+                          _user.solvedProblemsCount.hackerrank,
+                          _user.solvedProblemsCount.spoj),
+                      SubmissionStatistics(_subStats),
+                      AcceptanceGraph(
+                        activityDetails: _activityDetails,
+                      )
+                    ],
+                  ),
+            onRefresh: refreshPage));
   }
 
-  void initValues() async{
+  void initValues() async {
     var user = await getUser(widget.token, widget.uId);
     _user = user;
-    _userPlatformDetails = _user.profiles;
-    if(widget.checkIfFollowing){
-      var followingList = await getFollowingList(widget.token);
-      _followingList = followingList;
-    }
-    //TODO: use shared prefs
-    _submissionsList = _user.recentSubmissions;
-    getLatestTwoSubmissions();
+    _userPlatformDetails = (_user == null) ? null : _user.profiles;
+    var followingList = await getFollowingList(widget.token);
+    _followingList = followingList;
+    var subData = await getSubmissionStatusData(widget.token, widget.uId);
+    _subStats = subData;
 
+    _submissionsList = (_user == null) ? null : _user.recentSubmissions;
+    getLatestTwoSubmissions();
+    _activityDetails = await getActivityDetails(widget.token, widget.uId);
     setState(() {
       _isLoading = false;
     });
   }
 
   void getLatestTwoSubmissions() {
-    if(_submissionsList != null){
-      if(_submissionsList.length >=2){
+    if (_submissionsList != null) {
+      if (_submissionsList.length >= 2) {
         _mostRecentSubmissions = List<Submission>();
         _mostRecentSubmissions.add(_submissionsList[0]);
         _mostRecentSubmissions.add(_submissionsList[1]);
-      } else if(_submissionsList.length == 1){
+      } else if (_submissionsList.length == 1) {
         _mostRecentSubmissions = List<Submission>();
         _mostRecentSubmissions.add(_submissionsList[0]);
       }
@@ -142,14 +109,21 @@ class _ProfileState extends State<Profile> {
   }
 
   bool checkIfFollowing(String id) {
-    if(_followingList != null){
-      for(int i = 0; i < _followingList.length; i++){
-        if(_followingList[i].fId == id){
+    if (_followingList != null) {
+      for (int i = 0; i < _followingList.length; i++) {
+        if (_followingList[i].id == id) {
           return true;
         }
       }
       return false;
     }
     return false;
+  }
+
+  Future<void> refreshPage() async {
+    setState(() {
+      _isLoading = true;
+    });
+    initValues();
   }
 }

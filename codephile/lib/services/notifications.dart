@@ -1,16 +1,10 @@
 import 'package:codephile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:intl/intl.dart';
 
-Future<void> setNotification({
-  String name,
-  String startTime,
-  String platform,
-}) async {
-  var scheduledNotificationDateTime = DateFormat("EEE, dd MMM yyyy hh:mm")
-      .parse(startTime)
-      .subtract(Duration(minutes: 30));
+Future<void> setNotification(
+    {String name, DateTime startTime, String platform, Duration offset}) async {
+  var scheduledNotificationDateTime = startTime.subtract(offset);
   // var scheduledNotificationDateTime = DateTime.now().add(Duration(seconds: 10));
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('1',
       'Contest Alerts', 'Alerts for Contests marked with \'Notify Me\' option',
@@ -29,7 +23,6 @@ Future<void> setNotification({
       androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
   List pendingNotifications =
       await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-  // print(pendingNotifications[0].toString());
   await flutterLocalNotificationsPlugin.schedule(
       pendingNotifications.length,
       name,
@@ -50,7 +43,7 @@ Future<void> removeNotification({String name}) async {
 Future<List<String>> getNotificationList() async {
   List<PendingNotificationRequest> pendingNotifications =
       await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-  return pendingNotifications.map((val)=>val.title).toList();
+  return pendingNotifications.map((val) => val.title).toList();
 }
 
 Future<int> getID({String name}) async {

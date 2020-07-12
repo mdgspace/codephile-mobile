@@ -19,12 +19,16 @@ class SignUpPage4 extends StatefulWidget {
   final Handle handle;
   final String userImagePath;
 
-  const SignUpPage4({Key key, this.name, this.institute, this.handle, this.userImagePath})
+  const SignUpPage4(
+      {Key key, this.name, this.institute, this.handle, this.userImagePath})
       : super(key: key);
 
   @override
-  _SignUpPageState createState() =>
-      _SignUpPageState(name: name, institute: institute, handle: handle, userImagePath: userImagePath);
+  _SignUpPageState createState() => _SignUpPageState(
+      name: name,
+      institute: institute,
+      handle: handle,
+      userImagePath: userImagePath);
 }
 
 class _SignUpPageState extends State<SignUpPage4> {
@@ -34,8 +38,11 @@ class _SignUpPageState extends State<SignUpPage4> {
   Handle handle;
   String userImagePath;
   bool enableTextFields = true;
-  bool _userIconColor = false, _lockIconColor = false, _seePasswordIconColor = false;
-  _SignUpPageState({Key key, this.name, this.institute, this.handle, this.userImagePath});
+  bool _userIconColor = false,
+      _lockIconColor = false,
+      _seePasswordIconColor = false;
+  _SignUpPageState(
+      {Key key, this.name, this.institute, this.handle, this.userImagePath});
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
@@ -58,7 +65,6 @@ class _SignUpPageState extends State<SignUpPage4> {
     showConnectivityStatus();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -79,14 +85,11 @@ class _SignUpPageState extends State<SignUpPage4> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(height: MediaQuery.of(context).size.height/15),
-                        Text(
-                            'Setup a username and password for Codephile',
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height / 15),
+                        Text('Setup a username and password for Codephile',
                             style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold
-                            )
-                        ),
+                                fontSize: 20.0, fontWeight: FontWeight.bold)),
                         SizedBox(height: 25.0),
                         _showUsernameInput(),
                         SizedBox(height: 15.0),
@@ -100,7 +103,8 @@ class _SignUpPageState extends State<SignUpPage4> {
             ],
           ),
         ),
-      ), onWillPop: _onBackPressed,
+      ),
+      onWillPop: _onBackPressed,
     );
   }
 
@@ -109,7 +113,8 @@ class _SignUpPageState extends State<SignUpPage4> {
       onTap: () {
         setState(() {
           _userIconColor = true;
-          if((_passwordController.text == '')||(_passwordController.text == null)){
+          if ((_passwordController.text == '') ||
+              (_passwordController.text == null)) {
             _seePasswordIconColor = false;
             _lockIconColor = false;
           }
@@ -148,7 +153,8 @@ class _SignUpPageState extends State<SignUpPage4> {
               setState(() {
                 _lockIconColor = true;
                 _seePasswordIconColor = true;
-                if((_usernameController.text == '')||(_passwordController.text == null)){
+                if ((_usernameController.text == '') ||
+                    (_passwordController.text == null)) {
                   _userIconColor = false;
                 }
               });
@@ -176,7 +182,7 @@ class _SignUpPageState extends State<SignUpPage4> {
             onSaved: (value) => _password = value,
           ),
           IconButton(
-            icon : new Icon(
+            icon: new Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
               color: _seePasswordIconColor ? codephileMain : Colors.grey,
             ),
@@ -189,70 +195,69 @@ class _SignUpPageState extends State<SignUpPage4> {
 
   Widget _showCreateAccountButton() {
     showConnectivityStatus();
-    return (isCreateAccountButtonTapped) ?
-    Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-          color: Colors.grey[500],
-          child: Padding(
+    return (isCreateAccountButtonTapped)
+        ? Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width*0.85,
-              child: Text(
-                'Creating...',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 16.0,
+            child: FlatButton(
+                color: Colors.grey[500],
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: Text(
+                      'Creating...',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          onPressed: () {}),
-    )
-        : (isCreateAccountSuccessful) ?
-    Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-          color: codephileMain,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width*0.85,
-              child: new Text(
-                'Created Successfully',
-                textAlign: TextAlign.center,
-                style: new TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
+                onPressed: () {}),
+          )
+        : (isCreateAccountSuccessful)
+            ? Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: FlatButton(
+                    color: codephileMain,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: new Text(
+                          'Created Successfully',
+                          textAlign: TextAlign.center,
+                          style: new TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {}),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: FlatButton(
+                  color: codephileMain,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: new Text(
+                        'Create Account',
+                        textAlign: TextAlign.center,
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: _validateAndSubmit,
                 ),
-              ),
-            ),
-          ),
-          onPressed: () {}),
-    )
-        :
-    Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-        color: codephileMain,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width*0.85,
-            child: new Text(
-              'Create Account',
-              textAlign: TextAlign.center,
-              style: new TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-              ),
-            ),
-          ),
-        ),
-        onPressed: _validateAndSubmit,
-      ),
-    );
+              );
   }
 
   bool _validateAndSave() {
@@ -265,7 +270,7 @@ class _SignUpPageState extends State<SignUpPage4> {
   }
 
   void _validateAndSubmit() {
-    if (_validateAndSave()){
+    if (_validateAndSave()) {
       setState(() {
         isCreateAccountButtonTapped = true;
         enableTextFields = false;
@@ -278,9 +283,8 @@ class _SignUpPageState extends State<SignUpPage4> {
           password: _password,
           username: _username,
           fullname: name,
-          institute: institute
-      );
-      signUp(details).then((statusCode){
+          institute: institute);
+      signUp(details).then((statusCode) {
         if (statusCode == 201) {
           Fluttertoast.showToast(
             msg: "Account Creation successful",
@@ -292,16 +296,15 @@ class _SignUpPageState extends State<SignUpPage4> {
             isCreateAccountButtonTapped = false;
             isCreateAccountSuccessful = true;
           });
-          login(_username, _password).then((userToken){
+          login(_username, _password).then((userToken) {
             if (userToken != null) {
-              print(userToken.token);
               id(userToken.token).then((id) async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.setString("token", userToken.token);
                 prefs.setString("uid", id);
-                if(userImagePath != null){
-                  int uploadStatusCode = await uploadImage(userToken.token, userImagePath);
-                  print(uploadStatusCode);
+                if (userImagePath != null) {
+                  int uploadStatusCode =
+                      await uploadImage(userToken.token, userImagePath);
                 }
                 if (isCreateAccountSuccessful) {
                   Navigator.of(context).popUntil((route) => route.isFirst);
@@ -327,7 +330,7 @@ class _SignUpPageState extends State<SignUpPage4> {
               });
             }
           });
-        } else if(statusCode == 409) {
+        } else if (statusCode == 409) {
           Fluttertoast.showToast(
             msg: "Username Already Taken",
             toastLength: Toast.LENGTH_SHORT,
@@ -339,7 +342,7 @@ class _SignUpPageState extends State<SignUpPage4> {
             isCreateAccountSuccessful = false;
             enableTextFields = true;
           });
-        } else{
+        } else {
           Fluttertoast.showToast(
             msg: "Account Creation unsuccessful",
             toastLength: Toast.LENGTH_SHORT,
@@ -356,9 +359,8 @@ class _SignUpPageState extends State<SignUpPage4> {
     }
   }
 
-
-  Future<bool> _onBackPressed() async{
-    if(isCreateAccountButtonTapped || isCreateAccountSuccessful){
+  Future<bool> _onBackPressed() async {
+    if (isCreateAccountButtonTapped || isCreateAccountSuccessful) {
       return false;
     }
     return true;

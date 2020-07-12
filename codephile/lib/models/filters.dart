@@ -1,3 +1,4 @@
+import 'package:codephile/models/contests.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 
@@ -14,21 +15,132 @@ class ContestFilter {
       this.ongoing,
       this.upcoming});
 
-  Map<String,dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['duration']=this.duration.toString();
-    data['ongoing']=this.ongoing.toString();
-    data['upcoming']=this.upcoming.toString();
-    data['startDate']=this.startDate.toIso8601String();
-    data['platform']=json.encode(this.platform);
+    data['duration'] = this.duration.toString();
+    data['ongoing'] = this.ongoing.toString();
+    data['upcoming'] = this.upcoming.toString();
+    data['startDate'] = this.startDate.toIso8601String();
+    data['platform'] = json.encode(this.platform);
     return data;
   }
-  ContestFilter.fromJson(Map<String,dynamic> inputJson){
-    duration=int.parse(inputJson['duration']);
-    ongoing = inputJson['ongoing']=='true';
-    upcoming = inputJson['upcoming']=='true';
+
+  ContestFilter.fromJson(Map<String, dynamic> inputJson) {
+    duration = int.parse(inputJson['duration']);
+    ongoing = inputJson['ongoing'] == 'true';
+    upcoming = inputJson['upcoming'] == 'true';
     startDate = DateTime.parse(inputJson['startDate']);
-    platform=json.decode(inputJson['platform']);
+    platform = json.decode(inputJson['platform']);
+  }
+
+  bool check({Upcoming upcoming, Ongoing ongoing}) {
+    bool platformCheck = true, durationCheck = true, startTimeCheck = true;
+
+    if (upcoming != null) {
+      switch (upcoming.platform.toLowerCase()) {
+        case "codechef":
+          platformCheck = platform[0];
+          break;
+        case "codeforces":
+          platformCheck = platform[1];
+          break;
+        case "hackerearth":
+          platformCheck = platform[2];
+          break;
+        case "hackerrank":
+          platformCheck = platform[3];
+          break;
+        default:
+          platformCheck = platform[4];
+      }
+
+      Duration _maxDuration;
+      switch (duration) {
+        case 0:
+          _maxDuration = Duration(hours: 2);
+          break;
+        case 1:
+          _maxDuration = Duration(hours: 3);
+          break;
+        case 2:
+          _maxDuration = Duration(hours: 5);
+          break;
+        case 3:
+          _maxDuration = Duration(days: 1);
+          break;
+        case 4:
+          _maxDuration = Duration(days: 10);
+          break;
+        case 5:
+          _maxDuration = Duration(days: 31);
+          break;
+        default:
+          return true;
+      }
+      if (_maxDuration
+              .compareTo(upcoming.endTime.difference(upcoming.startTime)) >=
+          0) {
+        durationCheck = true;
+      } else {
+        durationCheck = false;
+      }
+      if (upcoming.startTime.isAfter(startDate)) {
+        startTimeCheck = true;
+      } else {
+        startTimeCheck = false;
+      }
+      return platformCheck && durationCheck && startTimeCheck;
+    } else if (ongoing != null) {
+      switch (ongoing.platform.toLowerCase()) {
+        case "codechef":
+          platformCheck = platform[0];
+          break;
+        case "codeforces":
+          platformCheck = platform[1];
+          break;
+        case "hackerearth":
+          platformCheck = platform[2];
+          break;
+        case "hackerrank":
+          platformCheck = platform[3];
+          break;
+        default:
+          platformCheck = platform[4];
+      }
+
+      Duration _maxDuration;
+      switch (duration) {
+        case 0:
+          _maxDuration = Duration(hours: 2);
+          break;
+        case 1:
+          _maxDuration = Duration(hours: 3);
+          break;
+        case 2:
+          _maxDuration = Duration(hours: 5);
+          break;
+        case 3:
+          _maxDuration = Duration(days: 1);
+          break;
+        case 4:
+          _maxDuration = Duration(days: 10);
+          break;
+        case 5:
+          _maxDuration = Duration(days: 31);
+          break;
+        default:
+          return true;
+      }
+      if (_maxDuration.compareTo(ongoing.endTime.difference(DateTime.now())) >=
+          0) {
+        durationCheck = true;
+      } else {
+        durationCheck = false;
+      }
+      return platformCheck && durationCheck && startTimeCheck;
+    } else {
+      return false;
+    }
   }
 }
 

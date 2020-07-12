@@ -1,8 +1,8 @@
 import 'package:codephile/homescreen.dart';
-import 'package:codephile/screens/on_boarding/on_boarding_screen.dart';
+import 'package:codephile/screens/login/login_screen.dart';
+import 'package:codephile/screens/on_boarding/on_boarding_screen1.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:codephile/screens/login/login.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -90,12 +90,12 @@ class ChooseHomeState extends State<ChooseHome> {
             builder: (context) => HomePage(token: token, userId: uid)));
       } else {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => LoginPage()));
+            new MaterialPageRoute(builder: (context) => LoginScreen()));
       }
     } else {
       prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => OnBoarding()));
+          new MaterialPageRoute(builder: (context) => OnBoardingScreen1()));
     }
   }
 

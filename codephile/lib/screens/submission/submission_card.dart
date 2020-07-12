@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:codephile/resources/colors.dart';
 
 class SubmissionCard extends StatelessWidget {
-
   final String _username;
   final String _handle;
   final String _time;
@@ -13,7 +12,7 @@ class SubmissionCard extends StatelessWidget {
 
   final Widget contestIcon = new SvgPicture.asset(
     "assets/solved.svg",
-    color: const Color.fromRGBO(152,219 , 17, 1),
+    color: const Color.fromRGBO(152, 219, 17, 1),
     width: 12.0,
     height: 12.0,
   );
@@ -24,14 +23,8 @@ class SubmissionCard extends StatelessWidget {
     height: 14.0,
   );
 
-  SubmissionCard(
-      this._username,
-      this._handle,
-      this._platform,
-      this._problem,
-      this._time,
-      this._picture
-      );
+  SubmissionCard(this._username, this._handle, this._platform, this._problem,
+      this._time, this._picture);
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +57,8 @@ class SubmissionCard extends StatelessWidget {
                                 decoration: new BoxDecoration(
                                   borderRadius: new BorderRadius.circular(2.0),
                                   image: new DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: new NetworkImage(_picture),
+                                    fit: BoxFit.cover,
+                                    image: new NetworkImage(_picture),
                                   ),
                                 ),
                               ),
@@ -92,7 +85,6 @@ class SubmissionCard extends StatelessWidget {
                               ),
                             ),
                           ]),
-
                     ],
                   ),
                   Row(
@@ -110,9 +102,7 @@ class SubmissionCard extends StatelessWidget {
                     ],
                   ),
                 ],
-
               ),
-
               Card(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +110,8 @@ class SubmissionCard extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 3.0, 6.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(8.0, 8.0, 3.0, 6.0),
                           child: Card(
                             elevation: 0.0,
                             color: codephileSolvedBackground,
@@ -153,7 +144,6 @@ class SubmissionCard extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15.0, 6.0, 24.0, 6.0),
                       child: Text(
@@ -174,8 +164,8 @@ class SubmissionCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                8.0, 0.0, 2.0, 0.0),
+                            padding:
+                                const EdgeInsets.fromLTRB(8.0, 0.0, 2.0, 0.0),
                             child: Image.asset(
                               getIconUrl(_platform),
                               width: 23.0,
@@ -183,8 +173,8 @@ class SubmissionCard extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                4.0, 0.0, 2.0, 0.0),
+                            padding:
+                                const EdgeInsets.fromLTRB(4.0, 0.0, 2.0, 0.0),
                             child: Text(
                               "$_platform",
                               style: TextStyle(
@@ -206,50 +196,38 @@ class SubmissionCard extends StatelessWidget {
     );
   }
 
-  String getTime(String time){
-    final solved_time = DateTime.parse(time);
-    final now_time = DateTime.now();
-    final diff = now_time.difference(solved_time).inMinutes;
-    if(diff < 1){
-      return now_time.difference(solved_time).inSeconds.toString() + " secs";
-    }else if(diff < 60){
-      return diff.toString() + " mins" ;
-    }else if(diff >= 60 && diff < 1440){
+  String getTime(String time) {
+    final solvedTime = DateTime.parse(time);
+    final nowTime = DateTime.now();
+    final diff = nowTime.difference(solvedTime).inMinutes;
+    if (diff < 1) {
+      return nowTime.difference(solvedTime).inSeconds.toString() + " secs";
+    } else if (diff < 60) {
+      return diff.toString() + " mins";
+    } else if (diff >= 60 && diff < 1440) {
       //1440 = 60*24
-      return now_time.difference(solved_time).inHours.toString() + " hrs";
-    }else if(diff >= 1440 && diff < 1440*30 ){
-      return now_time.difference(solved_time).inDays.toString() + " days";
-    }else if(diff >= 1440*30 && diff < 1440*30*12){
-      return (now_time.difference(solved_time).inDays~/30).toString() + " months";
-    }else{
-      int years = (now_time.difference(solved_time).inDays~/(30*12));
-      return years.toString() + ((years > 1)? " years": " year");
-    }
-
-    if(diff > 1440){
-      if(diff < 1440*30){
-      }else{
-      }
-
+      return nowTime.difference(solvedTime).inHours.toString() + " hrs";
+    } else if (diff >= 1440 && diff < 1440 * 30) {
+      return nowTime.difference(solvedTime).inDays.toString() + " days";
+    } else if (diff >= 1440 * 30 && diff < 1440 * 30 * 12) {
+      return (nowTime.difference(solvedTime).inDays ~/ 30).toString() +
+          " months";
+    } else {
+      int years = (nowTime.difference(solvedTime).inDays ~/ (30 * 12));
+      return years.toString() + ((years > 1) ? " years" : " year");
     }
   }
 
-  String getIconUrl(String platform){
-    final String codeChefIcon =
-        "assets/platformIcons/codeChefIcon.png";
-    final String hackerRankIcon =
-        "assets/platformIcons/hackerRankIcon.png";
-    final String hackerEarthIcon =
-        "assets/platformIcons/hackerEarthIcon.png";
-    final String codeForcesIcon =
-        "assets/platformIcons/codeForcesIcon.png";
-    final String spojIcon =
-        "assets/platformIcons/spoj.png";
-    final String otherIcon =
-        "assets/platformIcons/otherIcon.jpg";
+  String getIconUrl(String platform) {
+    final String codeChefIcon = "assets/platformIcons/codeChefIcon.png";
+    final String hackerRankIcon = "assets/platformIcons/hackerRankIcon.png";
+    final String hackerEarthIcon = "assets/platformIcons/hackerEarthIcon.png";
+    final String codeForcesIcon = "assets/platformIcons/codeForcesIcon.png";
+    final String spojIcon = "assets/platformIcons/spoj.png";
+    final String otherIcon = "assets/platformIcons/otherIcon.jpg";
 
-    switch(platform.toLowerCase()){
-      case "codechef" :
+    switch (platform.toLowerCase()) {
+      case "codechef":
         return codeChefIcon;
         break;
       case "hackerrank":
