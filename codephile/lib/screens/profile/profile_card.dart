@@ -29,10 +29,29 @@ class ProfileCard extends StatefulWidget {
 
 class _ProfileCardState extends State<ProfileCard> {
   bool isFollowing;
+  String _picture;
+  String _name;
+  String _username;
+  String _institute;
+  int _noOfFollowing;
+
 
   @override
   void initState() {
     isFollowing = widget._isFollowing;
+    if(widget._user == null){
+      _picture = "";
+      _name = "";
+      _username = "";
+      _institute = "";
+      _noOfFollowing = 0;
+    }else{
+      _picture = widget._user.picture;
+      _name = widget._user.fullname;
+      _username = widget._user.username;
+      _institute = widget._user.institute;
+      _noOfFollowing = widget._user.noOfFollowing;
+    }
     super.initState();
   }
 
@@ -51,10 +70,10 @@ class _ProfileCardState extends State<ProfileCard> {
                 child: Container(
                   height: MediaQuery.of(context).size.width / 4,
                   width: MediaQuery.of(context).size.width / 4,
-                  alignment: (widget._user.picture == "")
+                  alignment: (_picture == "")
                       ? Alignment(0.0, 0.0)
                       : Alignment.center,
-                  child: (widget._user.picture == "")
+                  child: (_picture == "")
                       ? SizedBox(
                           height: MediaQuery.of(context).size.width / 3,
                           width: MediaQuery.of(context).size.width / 3,
@@ -69,7 +88,7 @@ class _ProfileCardState extends State<ProfileCard> {
                               image: DecorationImage(
                                 fit: BoxFit.fitWidth,
                                 image: NetworkImage(
-                                  widget._user.picture,
+                                  _picture,
                                 ),
                               )),
                         ),
@@ -82,7 +101,7 @@ class _ProfileCardState extends State<ProfileCard> {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Text(
-                  widget._user.fullname,
+                  _name,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
@@ -90,12 +109,12 @@ class _ProfileCardState extends State<ProfileCard> {
                 ),
               ),
               Text(
-                "@" + widget._user.username,
+                "@" + _username,
                 style: TextStyle(
                     color: Color.fromRGBO(255, 255, 255, 0.65), fontSize: 16.0),
               ),
               Container(
-                child: (widget._user.institute == "")
+                child: (_institute == "")
                     ? Container(
                         height: 0,
                         width: 0,
@@ -104,7 +123,7 @@ class _ProfileCardState extends State<ProfileCard> {
                         padding:
                             const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 0.0),
                         child: Text(
-                          widget._user.institute,
+                          _institute,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: Colors.white, fontSize: 16.0),
@@ -128,7 +147,7 @@ class _ProfileCardState extends State<ProfileCard> {
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Text(
-                                  "${widget._user.noOfFollowing} Following",
+                                  "$_noOfFollowing Following",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 18.0,
@@ -157,7 +176,7 @@ class _ProfileCardState extends State<ProfileCard> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Text(
-                                "${widget._user.noOfFollowing} Following",
+                                "$_noOfFollowing Following",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18.0,
