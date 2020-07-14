@@ -46,7 +46,7 @@ class SubmissionChartKey extends StatelessWidget {
               ),
               Container(
                 child: Text(
-                  "Prtially Solved",
+                  "Partially Solved",
                   style: TextStyle(fontSize: 15.0, color: primaryBlackText),
                 ),
               )

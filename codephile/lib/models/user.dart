@@ -64,7 +64,7 @@ class CodephileUser {
             ? List<dynamic>.from(recentSubmissions.map((x) => x.toJson()))
             : null,
         "username": username,
-        "solved_problems_count": solvedProblemsCount.toJson(),
+        "solved_problems_count": (solvedProblemsCount != null)? solvedProblemsCount.toJson() : null,
       };
 }
 
