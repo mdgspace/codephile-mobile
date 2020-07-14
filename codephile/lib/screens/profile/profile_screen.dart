@@ -52,29 +52,32 @@ class _ProfileState extends State<Profile> {
         body: RefreshIndicator(
             child: _isLoading
                 ? Center(
-                    child: CircularProgressIndicator(),
-                  )
+              child: CircularProgressIndicator(),
+            )
                 : ListView(
-                    children: <Widget>[
-                      ProfileCard(
-                        widget.token,
-                        _user,
-                        checkIfFollowing(widget.uId),
-                        widget._isMyProfile,
-                        refreshPage,
-                      ),
-                      AccuracyDisplay(_userPlatformDetails),
-                      QuestionsSolvedDisplay(
-                          _user.solvedProblemsCount.codechef,
-                          _user.solvedProblemsCount.codeforces,
-                          _user.solvedProblemsCount.hackerrank,
-                          _user.solvedProblemsCount.spoj),
-                      SubmissionStatistics(_subStats),
-                      AcceptanceGraph(
-                        activityDetails: _activityDetails,
-                      )
-                    ],
-                  ),
+              children: <Widget>[
+                ProfileCard(
+                  widget.token,
+                  _user,
+                  checkIfFollowing(widget.uId),
+                  widget._isMyProfile,
+                  refreshPage,
+                ),
+                AccuracyDisplay(_userPlatformDetails),
+                ((_user == null) || (_user.solvedProblemsCount == null))?
+                QuestionsSolvedDisplay(0,0,0,0)
+                    :
+                QuestionsSolvedDisplay(
+                    _user.solvedProblemsCount.codechef,
+                    _user.solvedProblemsCount.codeforces,
+                    _user.solvedProblemsCount.hackerrank,
+                    _user.solvedProblemsCount.spoj),
+                SubmissionStatistics(_subStats),
+                AcceptanceGraph(
+                  activityDetails: (_activityDetails != null)? _activityDetails: [],
+                )
+              ],
+            ),
             onRefresh: refreshPage));
   }
 
