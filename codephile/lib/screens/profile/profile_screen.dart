@@ -82,17 +82,17 @@ class _ProfileState extends State<Profile> {
   }
 
   void initValues() async {
-    var user = await getUser(widget.token, widget.uId);
+    var user = await getUser(widget.token, widget.uId, context);
     _user = user;
     _userPlatformDetails = (_user == null) ? null : _user.profiles;
-    var followingList = await getFollowingList(widget.token);
+    var followingList = await getFollowingList(widget.token, context);
     _followingList = followingList;
-    var subData = await getSubmissionStatusData(widget.token, widget.uId);
+    var subData = await getSubmissionStatusData(widget.token, widget.uId, context);
     _subStats = subData;
 
     _submissionsList = (_user == null) ? null : _user.recentSubmissions;
     getLatestTwoSubmissions();
-    _activityDetails = await getActivityDetails(widget.token, widget.uId);
+    _activityDetails = await getActivityDetails(widget.token, widget.uId, context);
     setState(() {
       _isLoading = false;
     });

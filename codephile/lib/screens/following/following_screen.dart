@@ -70,7 +70,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
   }
 
   void initFollowingList() async {
-    List<Following> followingList = await getFollowingList(widget._token);
+    List<Following> followingList = await getFollowingList(widget._token, context);
     setState(() {
       _userFollowing = followingList;
       isLoading = false;

@@ -294,7 +294,7 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   void follow() async {
-    followUser(widget._token, widget._user.id).then((statusCode) {
+    followUser(widget._token, widget._user.id, context).then((statusCode) {
       if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
@@ -311,7 +311,7 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   void unFollow() async {
-    unfollowUser(widget._token, widget._user.id).then((statusCode) {
+    unfollowUser(widget._token, widget._user.id, context).then((statusCode) {
       if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",

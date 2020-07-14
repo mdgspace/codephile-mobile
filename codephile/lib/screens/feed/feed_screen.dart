@@ -119,7 +119,7 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   void refreshFeed() {
-    getFeed(token: widget.token).then((value) {
+    getFeed(widget.token, context).then((value) {
       List<GroupedFeed> groupedFeed = List();
       if (value == null) {
         setState(() {

@@ -502,11 +502,11 @@ class _UpdateDetailsState extends State<UpdateDetails> {
           };
 
           int responseStatus =
-              await updateUserDetails(widget._token, requestBody);
+              await updateUserDetails(widget._token, requestBody, context);
           if (responseStatus == 202) {
             if (userImageNew != null) {
               int responseStatusImageUpload =
-                  await uploadImage(widget._token, userImageNew.path);
+                  await uploadImage(widget._token, userImageNew.path, context);
               if (responseStatusImageUpload == 201) {
                 setState(() {
                   enableTextFields = true;

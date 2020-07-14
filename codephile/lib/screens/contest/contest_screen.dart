@@ -154,7 +154,7 @@ class _ContestScreenState extends State<ContestScreen> {
   }
 
   refreshContests() {
-    contestList(widget.token).then((value) {
+    contestList(widget.token, context).then((value) {
       setState(() {
         ongoingContests = value.ongoing;
         upcomingContests = value.upcoming;

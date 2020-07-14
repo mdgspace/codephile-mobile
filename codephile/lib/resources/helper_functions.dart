@@ -1,7 +1,10 @@
 import 'dart:io';
-
+import 'package:codephile/screens/login/login_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:codephile/models/submission.dart';
+import 'package:codephile/services/logout_user.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String submissionType(Submission submission) {
   String url = submission.url;
@@ -88,4 +91,14 @@ void showToast(String message) {
     timeInSecForIos: 7,
     fontSize: 12.0,
   );
+}
+
+void logout({String token, BuildContext context}) async {
+  logoutUser(token).then((wasSuccessful) {});
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove("token");
+  await prefs.remove("uid");
+  Navigator.of(context).popUntil((route) => route.isFirst);
+  Navigator.of(context, rootNavigator: true).pushReplacement(
+      MaterialPageRoute(builder: (context) => LoginScreen()));
 }

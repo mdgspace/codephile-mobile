@@ -158,7 +158,7 @@ class _SearchPageState extends State<SearchPage> {
       }
     });
     List<User> searchResultsTemp; // = List();
-    search(widget.token, query).then((results) {
+    search(widget.token, query, context).then((results) {
       if ((results != null) && (results.length != 0)) {
         searchResultsTemp = results;
         isResNull = false;
