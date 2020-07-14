@@ -25,7 +25,6 @@ Future<List<Following>> getFollowingList(String token, BuildContext context) asy
       return null;
     }
     List<Following> followingList = followingFromJson(response.body);
-    print(followingList.length);
     return followingList;
   } on Exception catch (e) {
     print(e);

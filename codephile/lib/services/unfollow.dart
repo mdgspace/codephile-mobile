@@ -23,7 +23,6 @@ Future<int> unfollowUser(String token, String uid, BuildContext context) async {
       showToast("Please login again");
       return null;
     }
-    print(uri);
     return response.statusCode;
   } on Exception catch (e) {
     print(e);

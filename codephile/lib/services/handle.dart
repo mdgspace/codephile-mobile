@@ -13,7 +13,6 @@ Future<bool> verifyHandle(String site, String handle) async {
       uri,
     );
 
-    print(response.statusCode);
     if (response.statusCode == 200) {
       return true;
     }

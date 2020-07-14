@@ -98,6 +98,7 @@ void logout({String token, BuildContext context}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.remove("token");
   await prefs.remove("uid");
+  await prefs.remove("recentSearches");
   Navigator.of(context).popUntil((route) => route.isFirst);
   Navigator.of(context, rootNavigator: true).pushReplacement(
       MaterialPageRoute(builder: (context) => LoginScreen()));

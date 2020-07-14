@@ -12,7 +12,6 @@ Future<bool> isUsernameAvailable(String username) async {
     var response = await client.get(
       uri,
     );
-    print(response.statusCode);
     if (response.statusCode == 200) {
       return true;
     } else {

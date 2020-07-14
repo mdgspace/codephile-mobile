@@ -18,7 +18,6 @@ Future<int> followUser(String token, String uid, BuildContext context) async {
       uri,
       headers: tokenAuth,
     );
-    print(uri);
     if(response.statusCode == 401){
       logout(token: token, context: context);
       showToast("Please login again");
