@@ -8,7 +8,7 @@ import 'package:codephile/resources/helper_functions.dart';
 
 class SettingsIcon extends StatefulWidget {
   final String _token;
-  final User _user;
+  final CodephileUser _user;
   final Function _callbackRefresh;
   const SettingsIcon(this._token, this._user, this._callbackRefresh, {Key key})
       : super(key: key);

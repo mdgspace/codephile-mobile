@@ -4,12 +4,14 @@ import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/resources/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:sentry/sentry.dart';
 
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
 Future<List<ActivityDetails>> getActivityDetails(
     String token, String uid, BuildContext context) async {
+  final SentryClient sentry = new SentryClient(dsn: dsn);
   String endpoint = "/graph/activity/$uid";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
@@ -23,8 +25,12 @@ Future<List<ActivityDetails>> getActivityDetails(
     }
     return activityDetailsFromJson(response.body);
 
-  } on Exception catch (error) {
+  } catch(error, stackTrace){
     print(error);
+    await sentry.captureException(
+      exception: error,
+      stackTrace: stackTrace,
+    );
     return null;
   }
 }

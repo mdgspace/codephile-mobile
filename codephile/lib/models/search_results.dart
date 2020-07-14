@@ -5,8 +5,8 @@
 import 'dart:convert';
 import 'package:codephile/models/user.dart';
 
-List<User> searchResultUsersFromJson(String str) =>
-    List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
+List<CodephileUser> searchResultUsersFromJson(String str) =>
+    List<CodephileUser>.from(json.decode(str).map((x) => CodephileUser.fromJson(x)));
 
-String searchResultUsersToJson(List<User> data) =>
+String searchResultUsersToJson(List<CodephileUser> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));

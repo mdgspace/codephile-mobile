@@ -3,6 +3,7 @@ import 'package:codephile/models/following.dart';
 import 'package:codephile/models/submission.dart';
 import 'package:codephile/models/submission_status_data.dart';
 import 'package:codephile/models/user.dart';
+import 'package:codephile/resources/strings.dart';
 import 'package:codephile/screens/profile/acceptance_graph.dart';
 import 'package:codephile/screens/profile/accuracy_display.dart';
 import 'package:codephile/screens/profile/no_of_questions_solved_display.dart';
@@ -14,6 +15,7 @@ import 'package:codephile/services/submissions_status.dart';
 import 'package:codephile/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry/sentry.dart';
 import '../../models/user_profile_details.dart';
 
 class Profile extends StatefulWidget {
@@ -30,8 +32,9 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   bool _isLoading = true;
+  final SentryClient sentry = new SentryClient(dsn: dsn);
 
-  User _user;
+  CodephileUser _user;
   UserProfileDetails _userPlatformDetails;
   List<Submission> _submissionsList;
   List<Submission> _mostRecentSubmissions;
@@ -82,20 +85,27 @@ class _ProfileState extends State<Profile> {
   }
 
   void initValues() async {
-    var user = await getUser(widget.token, widget.uId, context);
-    _user = user;
-    _userPlatformDetails = (_user == null) ? null : _user.profiles;
-    var followingList = await getFollowingList(widget.token, context);
-    _followingList = followingList;
-    var subData = await getSubmissionStatusData(widget.token, widget.uId, context);
-    _subStats = subData;
+    try{
+      var user = await getUser(widget.token, widget.uId, context);
+      _user = user;
+      _userPlatformDetails = (_user == null) ? null : _user.profiles;
+      var followingList = await getFollowingList(widget.token, context);
+      _followingList = followingList;
+      var subData = await getSubmissionStatusData(widget.token, widget.uId, context);
+      _subStats = subData;
 
-    _submissionsList = (_user == null) ? null : _user.recentSubmissions;
-    getLatestTwoSubmissions();
-    _activityDetails = await getActivityDetails(widget.token, widget.uId, context);
-    setState(() {
-      _isLoading = false;
-    });
+      _submissionsList = (_user == null) ? null : _user.recentSubmissions;
+      getLatestTwoSubmissions();
+      _activityDetails = await getActivityDetails(widget.token, widget.uId, context);
+      setState(() {
+        _isLoading = false;
+      });
+    } catch(error, stackTrace){
+      await sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    }
   }
 
   void getLatestTwoSubmissions() {

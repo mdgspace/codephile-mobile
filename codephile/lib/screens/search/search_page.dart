@@ -25,11 +25,11 @@ class _SearchPageState extends State<SearchPage> {
 
   final TextEditingController _controller = TextEditingController();
   bool _isSearching = false;
-  List<User> searchResult = List();
+  List<CodephileUser> searchResult = List();
   int statusCode = 0;
   bool isResultNull = false;
   bool showRecentSearches = true;
-  List<User> _recentlySearchedUsers;
+  List<CodephileUser> _recentlySearchedUsers;
 
   @override
   void initState() {
@@ -122,7 +122,7 @@ class _SearchPageState extends State<SearchPage> {
                               padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
                               itemCount: searchResult.length,
                               itemBuilder: (BuildContext context, int index) {
-                                User user = searchResult[index];
+                                CodephileUser user = searchResult[index];
                                 return GestureDetector(
                                   child: SearchResultCard(
                                     token,
@@ -157,7 +157,7 @@ class _SearchPageState extends State<SearchPage> {
         showRecentSearches = false;
       }
     });
-    List<User> searchResultsTemp; // = List();
+    List<CodephileUser> searchResultsTemp; // = List();
     search(widget.token, query, context).then((results) {
       if ((results != null) && (results.length != 0)) {
         searchResultsTemp = results;
@@ -174,13 +174,13 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
-  void addToRecentSearches(User user) async {
+  void addToRecentSearches(CodephileUser user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String searchHist = prefs.get("recentSearches");
 
-    List<User> oldUserObjects =
+    List<CodephileUser> oldUserObjects =
         (searchHist != null) ? searchResultUsersFromJson(searchHist) : [];
-    List<User> newUserObjects = [];
+    List<CodephileUser> newUserObjects = [];
     newUserObjects.add(user);
     for (int i = 0; i < oldUserObjects.length; i++) {
       if (oldUserObjects[i].id != user.id) {
@@ -246,7 +246,7 @@ class _SearchPageState extends State<SearchPage> {
   void loadRecentSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userListString = prefs.get("recentSearches");
-    List<User> recentlySearchedUsers = (userListString == null)
+    List<CodephileUser> recentlySearchedUsers = (userListString == null)
         ? []
         : searchResultUsersFromJson(userListString);
     _recentlySearchedUsers = recentlySearchedUsers;

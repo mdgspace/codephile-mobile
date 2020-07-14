@@ -6,13 +6,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
+import 'package:sentry/sentry.dart';
 
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<List<User>> search(String token, String query, BuildContext context) async {
+Future<List<CodephileUser>> search(String token, String query, BuildContext context) async {
   String endpoint = "/user/search?query=$query";
   String uri = url + endpoint;
+  final SentryClient sentry = new SentryClient(dsn: dsn);
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
   try {
@@ -21,7 +23,7 @@ Future<List<User>> search(String token, String query, BuildContext context) asyn
       headers: tokenAuth,
     );
 
-    List<User> results;
+    List<CodephileUser> results;
     if(response.statusCode == 401){
       logout(token: token, context: context);
       showToast("Please login again");
@@ -47,8 +49,12 @@ Future<List<User>> search(String token, String query, BuildContext context) asyn
     }
 
     return results;
-  } on Exception catch (e) {
-    print(e);
+  } catch(error, stackTrace){
+    print(error);
+    await sentry.captureException(
+      exception: error,
+      stackTrace: stackTrace,
+    );
     return null;
   }
 }

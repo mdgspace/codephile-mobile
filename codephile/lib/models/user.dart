@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:codephile/models/submission.dart';
 import 'package:codephile/models/user_profile_details.dart';
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
+CodephileUser userFromJson(String str) => CodephileUser.fromJson(json.decode(str));
 
-String userToJson(User data) => json.encode(data.toJson());
+String userToJson(CodephileUser data) => json.encode(data.toJson());
 
-class User {
+class CodephileUser {
   String fullname;
   Handle handle;
   String id;
@@ -19,7 +19,7 @@ class User {
   String username;
   SolvedProblemsCount solvedProblemsCount;
 
-  User({
+  CodephileUser({
     this.fullname,
     this.handle,
     this.id,
@@ -32,7 +32,7 @@ class User {
     this.solvedProblemsCount,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory CodephileUser.fromJson(Map<String, dynamic> json) => CodephileUser(
         fullname: json["fullname"],
         handle: Handle.fromJson(json["handle"]),
         id: json["id"],

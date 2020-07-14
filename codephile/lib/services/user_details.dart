@@ -5,6 +5,7 @@ import 'package:codephile/resources/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
+import 'package:sentry/sentry.dart';
 
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
@@ -14,6 +15,8 @@ Future<UserProfileDetails> getAllPlatformDetails(
   String endpoint = "/user/fetch/$uId/";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
+  final SentryClient sentry = new SentryClient(dsn: dsn);
+
   try {
     var response = await client.get(
       uri,
@@ -27,8 +30,12 @@ Future<UserProfileDetails> getAllPlatformDetails(
     final jsonResponse = jsonDecode(response.body);
     UserProfileDetails user = new UserProfileDetails.fromJson(jsonResponse);
     return user;
-  } on Exception catch (e) {
-    print(e);
+  } catch(error, stackTrace){
+    print(error);
+    await sentry.captureException(
+      exception: error,
+      stackTrace: stackTrace,
+    );
     return null;
   }
 }

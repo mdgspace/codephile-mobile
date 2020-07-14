@@ -3,6 +3,7 @@ import 'package:codephile/resources/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
+import 'package:sentry/sentry.dart';
 
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
@@ -11,6 +12,8 @@ Future<List<Submission>> getSubmissionList(String token, String uId, BuildContex
   String endpoint = "/submission/all/";
   String uri = url + endpoint + uId;
   var tokenAuth = {"Authorization": token};
+  final SentryClient sentry = new SentryClient(dsn: dsn);
+
   try {
     var response = await client.get(
       uri,
@@ -23,8 +26,13 @@ Future<List<Submission>> getSubmissionList(String token, String uId, BuildContex
     }
     List<Submission> submissionList = submissionFromJson(response.body);
     return submissionList;
-  } on Exception catch (e) {
-    print(e);
+
+  } catch(error, stackTrace){
+    print(error);
+    await sentry.captureException(
+      exception: error,
+      stackTrace: stackTrace,
+    );
     return null;
   }
 }

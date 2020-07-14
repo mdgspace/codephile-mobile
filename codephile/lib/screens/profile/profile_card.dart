@@ -13,7 +13,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 class ProfileCard extends StatefulWidget {
   final String title;
   final String _token;
-  final User _user;
+  final CodephileUser _user;
   final bool _isFollowing;
   final bool _isMyProfile;
   final Function _callback;
