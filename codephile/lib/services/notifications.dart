@@ -1,11 +1,12 @@
 import 'package:codephile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 
 Future<void> setNotification(
     {String name, DateTime startTime, String platform, Duration offset}) async {
   var scheduledNotificationDateTime = startTime.subtract(offset);
-  // var scheduledNotificationDateTime = DateTime.now().add(Duration(seconds: 10));
+  // var scheduledNotificationDateTime = DateTime.now().add(Duration(seconds: 1));
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('1',
       'Contest Alerts', 'Alerts for Contests marked with \'Notify Me\' option',
       icon: 'secondary_icon',
@@ -26,7 +27,7 @@ Future<void> setNotification(
   await flutterLocalNotificationsPlugin.schedule(
       pendingNotifications.length,
       name,
-      'Contest Starts at $startTime',
+      'Contest Starts at ${DateFormat('hh:mm a dd, MMMM yyyy').format(startTime)}',
       scheduledNotificationDateTime,
       platformChannelSpecifics,
       androidAllowWhileIdle: true);
