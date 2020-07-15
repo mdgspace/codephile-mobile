@@ -44,6 +44,7 @@ dependencies:
   flutter_local_notifications: ^1.4.4+2
   flutter_swiper: ^1.1.6
   sentry: ^3.0.1
+  battery_optimization: ^0.1.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.7.3
