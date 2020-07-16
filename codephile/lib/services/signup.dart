@@ -23,8 +23,6 @@ Future<int> signUp(SignUp details) async {
         "handle.spoj": details.handle.spoj
       },
     );
-    print('after try');
-    print(response.statusCode);
 
     return response.statusCode;
   } on Exception catch (e) {

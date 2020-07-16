@@ -1,16 +1,14 @@
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
-import 'package:codephile/screens/login/login_screen.dart';
 import 'package:codephile/screens/update_details/update_details_page.dart';
-import 'package:codephile/services/logout_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:codephile/resources/helper_functions.dart';
 
 class SettingsIcon extends StatefulWidget {
   final String _token;
-  final User _user;
+  final CodephileUser _user;
   final Function _callbackRefresh;
   const SettingsIcon(this._token, this._user, this._callbackRefresh, {Key key})
       : super(key: key);
@@ -80,18 +78,9 @@ class _SettingsIconState extends State<SettingsIcon> {
                     widget._token, widget._user, widget._callbackRefresh)));
         break;
       case "logout":
-        logout(widget._token);
+        logout(token: widget._token, context: context);
         break;
     }
   }
 
-  void logout(String token) async {
-    logoutUser(token).then((wasSuccessful) {});
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove("token");
-    await prefs.remove("uid");
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    Navigator.of(context, rootNavigator: true).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
-  }
 }

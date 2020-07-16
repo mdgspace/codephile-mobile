@@ -207,7 +207,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
       });
 
       int responseCode = await updatePassword(widget._token,
-          _oldPasswordController.text, _newPasswordController.text);
+          _oldPasswordController.text, _newPasswordController.text, context);
 
       print(responseCode);
       if (responseCode == 200) {

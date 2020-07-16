@@ -1,10 +1,14 @@
+import 'package:codephile/battery_optimization_dialog.dart';
 import 'package:codephile/screens/feed/feed_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/screens/contest/contest_screen.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:codephile/screens/search/search_page.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:battery_optimization/battery_optimization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   final String token;
@@ -20,11 +24,14 @@ class HomePageState extends State<HomePage> {
   final String token;
   final String userId;
   int _selectedIndex;
+  bool _showBatteryOptimizationDialog;
+
   HomePageState({Key key, this.token, this.userId});
   @override
   void initState() {
     super.initState();
     _selectedIndex = 0;
+    showBatteryOptimisationAlert();
   }
 
   @override
@@ -104,6 +111,24 @@ class HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future<void> showBatteryOptimisationAlert() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _showBatteryOptimizationDialog = prefs.getBool("showBatteryOptimisationDialog");
+    if(_showBatteryOptimizationDialog == null) _showBatteryOptimizationDialog = true;
+    BatteryOptimization.isIgnoringBatteryOptimizations().then((isNotOptimized){
+      if(isNotOptimized){
+        //do nothing
+      }else{
+        if(_showBatteryOptimizationDialog){
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => new BatteryOptimisationDialog()
+          );
+        }
+      }
+    });
   }
 }
 

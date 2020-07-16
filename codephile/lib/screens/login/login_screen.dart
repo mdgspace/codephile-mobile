@@ -222,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (_validateAndSave()) {
                             Token token = await login(_username, _password);
                             if (token != null) {
-                              String uid = await id(token.token);
+                              String uid = await id(token.token, context);
                               if (_keepMeLoggedIn) {
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();

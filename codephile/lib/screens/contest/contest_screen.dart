@@ -1,13 +1,14 @@
 import 'dart:convert';
-
 import 'package:codephile/models/contests.dart';
 import 'package:codephile/models/filters.dart';
+import 'package:codephile/resources/strings.dart';
 import 'package:codephile/screens/contest/contest_card.dart';
 import 'package:codephile/screens/contest/filter_sheet.dart';
 import 'package:codephile/services/contests.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ContestScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class ContestScreen extends StatefulWidget {
 }
 
 class _ContestScreenState extends State<ContestScreen> {
+  final SentryClient sentry = new SentryClient(dsn: dsn);
   List<Ongoing> ongoingContests;
   List<Upcoming> upcomingContests;
   List<Ongoing> filteredOngoingContests = List<Ongoing>();
@@ -153,14 +155,22 @@ class _ContestScreenState extends State<ContestScreen> {
     );
   }
 
-  refreshContests() {
-    contestList(widget.token).then((value) {
-      setState(() {
-        ongoingContests = value.ongoing;
-        upcomingContests = value.upcoming;
+  refreshContests() async {
+    try{
+      contestList(widget.token, context).then((value) {
+        setState(() {
+          ongoingContests = value.ongoing;
+          upcomingContests = value.upcoming;
+        });
+        applyFilter();
       });
-      applyFilter();
-    });
+    } catch(error, stackTrace){
+      await sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    }
+
   }
 
   applyFilter() {
