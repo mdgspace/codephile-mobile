@@ -581,7 +581,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
         break;
       case "codeforces":
         return (widget._user.profiles.codeforcesProfile != null)
-            ? widget._user.profiles.codechefProfile.userName
+            ? widget._user.profiles.codeforcesProfile.userName
             : null;
         break;
       case "hackerrank":

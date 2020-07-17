@@ -216,6 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 18),
                             )),
                         onPressed: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           setState(() {
                             _loggingIn = true;
                           });
