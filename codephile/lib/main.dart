@@ -105,8 +105,8 @@ class ChooseHomeState extends State<ChooseHome> {
     bool _seen = (prefs.getBool('seen') ?? false);
 
     final RemoteConfig _remoteConfig = await RemoteConfig.instance;
-    final int version = 3;
-    final defaults = <String, int>{'version': 3};
+    final int version = 4;
+    final defaults = <String, int>{'version': 4};
     await _remoteConfig.setDefaults(defaults);
     await _remoteConfig.fetch(expiration: Duration(seconds: 5));
     await _remoteConfig.activateFetched();
