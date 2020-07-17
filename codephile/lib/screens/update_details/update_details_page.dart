@@ -17,7 +17,7 @@ import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class UpdateDetails extends StatefulWidget {
   final String _token;
-  final User _user;
+  final CodephileUser _user;
   final Function _callbackRefresh;
   const UpdateDetails(this._token, this._user, this._callbackRefresh, {Key key})
       : super(key: key);
@@ -502,11 +502,11 @@ class _UpdateDetailsState extends State<UpdateDetails> {
           };
 
           int responseStatus =
-              await updateUserDetails(widget._token, requestBody);
+              await updateUserDetails(widget._token, requestBody, context);
           if (responseStatus == 202) {
             if (userImageNew != null) {
               int responseStatusImageUpload =
-                  await uploadImage(widget._token, userImageNew.path);
+                  await uploadImage(widget._token, userImageNew.path, context);
               if (responseStatusImageUpload == 201) {
                 setState(() {
                   enableTextFields = true;
@@ -581,7 +581,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
         break;
       case "codeforces":
         return (widget._user.profiles.codeforcesProfile != null)
-            ? widget._user.profiles.codechefProfile.userName
+            ? widget._user.profiles.codeforcesProfile.userName
             : null;
         break;
       case "hackerrank":

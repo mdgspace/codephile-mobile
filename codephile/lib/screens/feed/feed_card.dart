@@ -2,6 +2,7 @@ import 'package:codephile/models/grouped_feed.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:core';
 
 import 'package:intl/intl.dart';
@@ -36,7 +37,26 @@ class _FeedCardState extends State<FeedCard> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: CircleAvatar(
+                    child: ((widget.feed.picture == null) || (widget.feed.picture == ""))?
+                    Container(
+                      decoration: BoxDecoration(
+                        color: codephileBackground,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: userIconBorderGrey,
+                        )
+                      ),
+                      child: SizedBox(
+                        height: 32.0,
+                        width: 32.0,
+                        child: SvgPicture.asset(
+                          'assets/default_user_icon.svg',
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    )
+                        :
+                    CircleAvatar(
                       radius: 16.0,
                       backgroundColor: Colors.transparent,
                       backgroundImage: NetworkImage(widget.feed.picture),
@@ -83,7 +103,7 @@ class _FeedCardState extends State<FeedCard> {
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
                             backgroundImage:
-                                AssetImage(getAsset(widget.feed.url)),
+                            AssetImage(getAsset(widget.feed.url)),
                             radius: 10.0,
                           ),
                           Text(
@@ -113,7 +133,7 @@ class _FeedCardState extends State<FeedCard> {
                   color: Color(0xFFFAFAFA),
                   padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child:
-                      Column(children: _buildChildren(widget.feed.submissions)))
+                  Column(children: _buildChildren(widget.feed.submissions)))
             ]),
       ),
     );

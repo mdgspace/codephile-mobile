@@ -31,10 +31,10 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
 
   @override
   void initState() {
-    getSubmissionList(token, uid).then((submissions) {
+    getSubmissionList(token, uid, context).then((submissions) {
       submissionList = submissions;
 
-      getUser(token, uid).then((user) {
+      getUser(token, uid, context).then((user) {
         _fullName = user.fullname;
         _username = user.username;
         _picture = user.picture;

@@ -12,7 +12,7 @@ final uiBackground = const Color.fromRGBO(243, 244, 247, 1);
 final questionsSolvedBackground = const Color.fromRGBO(239, 242, 252, 1);
 
 final subAccepted = const Color.fromRGBO(76, 175, 80, 1);
-final subPartiallySolved = const Color.fromRGBO(139, 195, 74, 1);
+final subPartiallySolved = const Color.fromRGBO(166, 244, 99, 1);
 final subWrongAnswer = const Color.fromRGBO(244, 67, 54, 1);
 final subTimeLimitExceeded = const Color.fromRGBO(63, 81, 181, 1);
 final subRuntimeError = const Color.fromRGBO(147, 39, 176, 1);

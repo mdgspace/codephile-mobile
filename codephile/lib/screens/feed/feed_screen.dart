@@ -1,8 +1,10 @@
 import 'package:codephile/models/grouped_feed.dart';
+import 'package:codephile/resources/strings.dart';
 import 'package:codephile/screens/feed/feed_card.dart';
 import 'package:codephile/services/feed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sentry/sentry.dart';
 
 class FeedScreen extends StatefulWidget {
   final String token;
@@ -12,8 +14,10 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  final SentryClient sentry = new SentryClient(dsn: dsn);
   List<GroupedFeed> feed;
   bool empty;
+
   @override
   void initState() {
     super.initState();
@@ -118,41 +122,48 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
-  void refreshFeed() {
-    getFeed(token: widget.token).then((value) {
-      List<GroupedFeed> groupedFeed = List();
-      if (value == null) {
-        setState(() {
-          empty = true;
+  void refreshFeed() async {
+    try{
+      getFeed(widget.token, context).then((value) {
+        List<GroupedFeed> groupedFeed = List();
+        if (value == null) {
+          setState(() {
+            empty = true;
+          });
+        }
+        value.forEach((feedElement) {
+          GroupedFeed e = groupedFeed.firstWhere(
+                (grpFeedElement) =>
+            grpFeedElement.name == feedElement.submission.name,
+            orElse: () {
+              groupedFeed.add(GroupedFeed(
+                  fullname: feedElement.fullname,
+                  name: feedElement.submission.name,
+                  picture: feedElement.picture,
+                  url: feedElement.submission.url,
+                  userId: feedElement.userId,
+                  username: feedElement.username,
+                  language: feedElement.submission.language,
+                  submissions: List()));
+              return groupedFeed.last;
+            },
+          );
+          e.submissions.add(Submissions(
+              createdAt: feedElement.submission.createdAt,
+              points: feedElement.submission.points,
+              rating: feedElement.submission.rating,
+              status: feedElement.submission.status,
+              tags: feedElement.submission.tags));
         });
-      }
-      value.forEach((feedElement) {
-        GroupedFeed e = groupedFeed.firstWhere(
-          (grpFeedElement) =>
-              grpFeedElement.name == feedElement.submission.name,
-          orElse: () {
-            groupedFeed.add(GroupedFeed(
-                fullname: feedElement.fullname,
-                name: feedElement.submission.name,
-                picture: feedElement.picture,
-                url: feedElement.submission.url,
-                userId: feedElement.userId,
-                username: feedElement.username,
-                language: feedElement.submission.language,
-                submissions: List()));
-            return groupedFeed.last;
-          },
-        );
-        e.submissions.add(Submissions(
-            createdAt: feedElement.submission.createdAt,
-            points: feedElement.submission.points,
-            rating: feedElement.submission.rating,
-            status: feedElement.submission.status,
-            tags: feedElement.submission.tags));
+        setState(() {
+          feed = groupedFeed;
+        });
       });
-      setState(() {
-        feed = groupedFeed;
-      });
-    });
+    } catch(error, stackTrace){
+      await sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    }
   }
 }

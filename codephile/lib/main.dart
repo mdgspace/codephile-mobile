@@ -1,6 +1,13 @@
 import 'package:codephile/homescreen.dart';
+import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/login/login_screen.dart';
-import 'package:codephile/screens/on_boarding/on_boarding_screen1.dart';
+import 'package:intent/intent.dart' as intent;
+import 'package:intent/action.dart' as action;
+import 'package:intent/extra.dart' as extra;
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:codephile/screens/on_boarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -55,6 +62,21 @@ Future<void> main() async {
     }
     selectNotificationSubject.add(payload);
   });
+
+  Crashlytics.instance.enableInDevMode = true;
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  _firebaseMessaging.configure(
+    onMessage: (Map<String, dynamic> message) async {
+      print(message.toString());
+    },
+    onLaunch: (Map<String, dynamic> message) async {
+      print(message.toString());
+    },
+    onResume: (Map<String, dynamic> message) async {
+      print(message.toString());
+    },
+  );
   runApp(
     MaterialApp(
       home: MyApp(),
@@ -82,6 +104,63 @@ class ChooseHomeState extends State<ChooseHome> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
 
+    final RemoteConfig _remoteConfig = await RemoteConfig.instance;
+    final int version = 3;
+    final defaults = <String, int>{'version': 3};
+    await _remoteConfig.setDefaults(defaults);
+    await _remoteConfig.fetch(expiration: Duration(seconds: 5));
+    await _remoteConfig.activateFetched();
+    final int minimunVersion = _remoteConfig.getInt('version');
+    print('Minimum version:- ' + minimunVersion.toString());
+    if (version < minimunVersion) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => WillPopScope(
+                onWillPop: () async => false,
+                child: AlertDialog(
+                  titlePadding: EdgeInsets.all(0),
+                  title: Container(
+                    padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                    decoration: BoxDecoration(
+                        color: Color(0xFFF3F4F7),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15))),
+                    child: Text(
+                      "Update Available",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.all(0),
+                  content: Padding(
+                    padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+                    child: Text(
+                      "This version of the application has been depricated, please update your app through the Google PlayStore.",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                        padding: EdgeInsets.all(15),
+                        onPressed: () {
+                          intent.Intent()
+                            ..setAction(action.Action.ACTION_SHOW_APP_INFO)
+                            ..putExtra(extra.Extra.EXTRA_PACKAGE_NAME,
+                                "com.mdg.codephile")
+                            ..startActivity().catchError((e) => print(e));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                          color: codephileMain,
+                          child: Text("Okay",
+                              style: TextStyle(color: Colors.white)),
+                        ))
+                  ],
+                  actionsPadding: EdgeInsets.all(0),
+                ),
+              ));
+    }
     if (_seen) {
       String token = prefs.getString('token');
       String uid = prefs.getString('uid');
@@ -95,7 +174,7 @@ class ChooseHomeState extends State<ChooseHome> {
     } else {
       prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => OnBoardingScreen1()));
+          new MaterialPageRoute(builder: (context) => OnBoardingScreen()));
     }
   }
 
