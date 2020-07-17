@@ -1,7 +1,9 @@
 import 'package:codephile/homescreen.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/login/login_screen.dart';
-
+import 'package:intent/intent.dart' as intent;
+import 'package:intent/action.dart' as action;
+import 'package:intent/extra.dart' as extra;
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -114,42 +116,49 @@ class ChooseHomeState extends State<ChooseHome> {
       showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (context) => AlertDialog(
-                titlePadding: EdgeInsets.all(0),
-                title: Container(
-                  padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                  decoration: BoxDecoration(
-                      color: Color(0xFFF3F4F7),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15))),
-                  child: Text(
-                    "Update Available",
-                    textAlign: TextAlign.center,
+          builder: (context) => WillPopScope(
+                onWillPop: () async => false,
+                child: AlertDialog(
+                  titlePadding: EdgeInsets.all(0),
+                  title: Container(
+                    padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                    decoration: BoxDecoration(
+                        color: Color(0xFFF3F4F7),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15))),
+                    child: Text(
+                      "Update Available",
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                contentPadding: EdgeInsets.all(0),
-                content: Padding(
-                  padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
-                  child: Text(
-                    "This version of the application has been depricated, please update your app through the Google PlayStore.",
-                    textAlign: TextAlign.center,
+                  contentPadding: EdgeInsets.all(0),
+                  content: Padding(
+                    padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+                    child: Text(
+                      "This version of the application has been depricated, please update your app through the Google PlayStore.",
+                      textAlign: TextAlign.center,
+                    ),
                   ),
+                  actions: <Widget>[
+                    FlatButton(
+                        padding: EdgeInsets.all(15),
+                        onPressed: () {
+                          intent.Intent()
+                            ..setAction(action.Action.ACTION_SHOW_APP_INFO)
+                            ..putExtra(extra.Extra.EXTRA_PACKAGE_NAME,
+                                "com.mdg.codephile")
+                            ..startActivity().catchError((e) => print(e));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                          color: codephileMain,
+                          child: Text("Okay",
+                              style: TextStyle(color: Colors.white)),
+                        ))
+                  ],
+                  actionsPadding: EdgeInsets.all(0),
                 ),
-                actions: <Widget>[
-                  FlatButton(
-                      padding: EdgeInsets.all(15),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                        color: codephileMain,
-                        child:
-                            Text("Okay", style: TextStyle(color: Colors.white)),
-                      ))
-                ],
-                actionsPadding: EdgeInsets.all(0),
               ));
     }
     if (_seen) {
