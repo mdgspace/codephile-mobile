@@ -17,21 +17,18 @@ Future<List<Feed>> getFeed(String token, BuildContext context) async {
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
   final SentryClient sentry = new SentryClient(dsn: dsn);
-
-
   try {
     var response = await client.get(
       uri,
       headers: tokenAuth,
     );
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
     }
-
     return feedFromJson(response.body);
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
     await sentry.captureException(
       exception: error,

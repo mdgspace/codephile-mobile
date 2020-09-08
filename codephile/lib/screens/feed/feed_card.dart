@@ -31,109 +31,113 @@ class _FeedCardState extends State<FeedCard> {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.white),
         child: ExpansionTile(
+            tilePadding: EdgeInsets.zero,
             backgroundColor: Colors.white,
-            title: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: ((widget.feed.picture == null) || (widget.feed.picture == ""))?
-                    Container(
-                      decoration: BoxDecoration(
-                        color: codephileBackground,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: userIconBorderGrey,
-                        )
-                      ),
-                      child: SizedBox(
-                        height: 32.0,
-                        width: 32.0,
-                        child: SvgPicture.asset(
-                          'assets/default_user_icon.svg',
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
-                    )
-                        :
-                    CircleAvatar(
-                      radius: 16.0,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(widget.feed.picture),
+            title: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      child: ((widget.feed.picture == null) ||
+                              (widget.feed.picture == ""))
+                          ? Container(
+                              decoration: BoxDecoration(
+                                  color: codephileBackground,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: userIconBorderGrey,
+                                  )),
+                              child: SizedBox(
+                                height: 32.0,
+                                width: 32.0,
+                                child: SvgPicture.asset(
+                                  'assets/default_user_icon.svg',
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                            )
+                          : CircleAvatar(
+                              radius: 16.0,
+                              backgroundColor: Colors.transparent,
+                              backgroundImage:
+                                  NetworkImage(widget.feed.picture),
+                            ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              '${widget.feed.fullname.trim()} solved',
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                '${widget.feed.fullname.trim()} solved',
+                                style: TextStyle(
+                                    fontSize: 14.0, color: Color(0xFF979797)),
+                              ),
+                              Text(
+                                DateFormat("dd-MM-yyyy kk:mm").format(
+                                    widget.feed.submissions[0].createdAt),
+                                style: TextStyle(
+                                    fontSize: 14.0, color: Color(0xFF979797)),
+                              )
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                            child: Text(
+                              '${widget.feed.name}',
                               style: TextStyle(
-                                  fontSize: 14.0, color: Color(0xFF979797)),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                          ),
+                          Row(children: <Widget>[
+                            Text(
+                              'on ',
+                              style: TextStyle(
+                                  fontSize: 12.0, color: Color(0xFF979797)),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage:
+                                  AssetImage(getAsset(widget.feed.url)),
+                              radius: 10.0,
                             ),
                             Text(
-                              DateFormat("dd-MM-yyyy kk:mm")
-                                  .format(widget.feed.submissions[0].createdAt),
-                              style: TextStyle(
-                                  fontSize: 14.0, color: Color(0xFF979797)),
+                                ' ${getPlatform(widget.feed.url)} | ${widget.feed.language}',
+                                style: TextStyle(
+                                    fontSize: 12.0, color: Color(0xFF979797))),
+                            Spacer(),
+                            Icon(
+                              open
+                                  ? Icons.keyboard_arrow_up
+                                  : Icons.keyboard_arrow_down,
+                              color: codephileMain,
                             )
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                          child: Text(
-                            '${widget.feed.name}',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        ),
-                        Row(children: <Widget>[
-                          Text(
-                            'on ',
-                            style: TextStyle(
-                                fontSize: 12.0, color: Color(0xFF979797)),
-                          ),
-                          CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage:
-                            AssetImage(getAsset(widget.feed.url)),
-                            radius: 10.0,
-                          ),
-                          Text(
-                              ' ${getPlatform(widget.feed.url)} | ${widget.feed.language}',
-                              style: TextStyle(
-                                  fontSize: 12.0, color: Color(0xFF979797))),
-                          Spacer(),
-                          Icon(
-                            open
-                                ? Icons.keyboard_arrow_up
-                                : Icons.keyboard_arrow_down,
-                            color: codephileMain,
-                          )
-                        ])
-                      ],
+                          ])
+                        ],
+                      ),
                     ),
-                  ),
-                ]),
+                  ]),
+            ),
             onExpansionChanged: (value) {
               setState(() {
                 open = value;
               });
             },
-            trailing: SizedBox(),
+            trailing: const SizedBox(),
             children: [
               Container(
                   color: Color(0xFFFAFAFA),
                   padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child:
-                  Column(children: _buildChildren(widget.feed.submissions)))
+                      Column(children: _buildChildren(widget.feed.submissions)))
             ]),
       ),
     );

@@ -23,7 +23,7 @@ Future<int> signUp(SignUp details) async {
         "handle.spoj": details.handle.spoj
       },
     );
-
+    print(response.toString());
     return response.statusCode;
   } on Exception catch (e) {
     print(e);

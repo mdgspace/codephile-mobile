@@ -1,7 +1,11 @@
 import 'dart:convert';
 
 List<Feed> feedFromJson(String str) {
-  return List<Feed>.from(json.decode(str).map((x) => Feed.fromJson(x)));
+  if (str == "null") {
+    return null;
+  } else {
+    return List<Feed>.from(json.decode(str).map((x) => Feed.fromJson(x)));
+  }
 }
 
 class Feed {

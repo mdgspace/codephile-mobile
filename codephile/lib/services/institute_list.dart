@@ -7,7 +7,7 @@ var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
 Future<List<String>> getInstituteList() async {
-  String uri = "https://codephile-test.herokuapp.com/institutes";
+  String uri = "https://codephile.mdg.iitr.ac.in/institutes";
   final SentryClient sentry = new SentryClient(dsn: dsn);
 
   try {
@@ -15,7 +15,7 @@ Future<List<String>> getInstituteList() async {
 
     List<String> instituteList = institutesFromJson(response.body);
     return instituteList;
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
     await sentry.captureException(
       exception: error,

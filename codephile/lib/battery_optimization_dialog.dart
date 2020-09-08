@@ -3,9 +3,10 @@ import 'package:codephile/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class BatteryOptimisationDialog extends StatefulWidget{
+class BatteryOptimisationDialog extends StatefulWidget {
   @override
-  _BatteryOptimisationDialogState createState() => _BatteryOptimisationDialogState();
+  _BatteryOptimisationDialogState createState() =>
+      _BatteryOptimisationDialogState();
 }
 
 class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
@@ -35,7 +36,7 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
               Checkbox(
                 value: !_showBatteryOptimizationDialog,
                 activeColor: codephileMain,
-                onChanged: (value){
+                onChanged: (value) {
                   setState(() {
                     _showBatteryOptimizationDialog = !value;
                   });
@@ -55,11 +56,9 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
         FlatButton(
           child: Text(
             "Cancel",
-            style: TextStyle(
-                color: codephileMain
-            ),
+            style: TextStyle(color: codephileMain),
           ),
-          onPressed: (){
+          onPressed: () {
             setBoolValue();
             Navigator.of(context).pop();
           },
@@ -67,14 +66,11 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
         FlatButton(
           child: Text(
             "Open Settings",
-            style: TextStyle(
-                color: codephileMain
-            ),
+            style: TextStyle(color: codephileMain),
           ),
-          onPressed: (){
+          onPressed: () {
             setBoolValue();
-            BatteryOptimization.openBatteryOptimizationSettings().then((value){
-              print(value);
+            BatteryOptimization.openBatteryOptimizationSettings().then((value) {
               Navigator.of(context).pop();
             });
           },
@@ -83,8 +79,9 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
     );
   }
 
-  void setBoolValue() async{
+  void setBoolValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("showBatteryOptimisationDialog", _showBatteryOptimizationDialog);
+    prefs.setBool(
+        "showBatteryOptimisationDialog", _showBatteryOptimizationDialog);
   }
 }

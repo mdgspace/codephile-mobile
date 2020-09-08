@@ -123,43 +123,44 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   void refreshFeed() async {
-    try{
+    try {
       getFeed(widget.token, context).then((value) {
         List<GroupedFeed> groupedFeed = List();
         if (value == null) {
           setState(() {
             empty = true;
           });
+        } else {
+          value.forEach((feedElement) {
+            GroupedFeed e = groupedFeed.firstWhere(
+              (grpFeedElement) =>
+                  grpFeedElement.name == feedElement.submission.name,
+              orElse: () {
+                groupedFeed.add(GroupedFeed(
+                    fullname: feedElement.fullname,
+                    name: feedElement.submission.name,
+                    picture: feedElement.picture,
+                    url: feedElement.submission.url,
+                    userId: feedElement.userId,
+                    username: feedElement.username,
+                    language: feedElement.submission.language,
+                    submissions: List()));
+                return groupedFeed.last;
+              },
+            );
+            e.submissions.add(Submissions(
+                createdAt: feedElement.submission.createdAt,
+                points: feedElement.submission.points,
+                rating: feedElement.submission.rating,
+                status: feedElement.submission.status,
+                tags: feedElement.submission.tags));
+          });
+          setState(() {
+            feed = groupedFeed;
+          });
         }
-        value.forEach((feedElement) {
-          GroupedFeed e = groupedFeed.firstWhere(
-                (grpFeedElement) =>
-            grpFeedElement.name == feedElement.submission.name,
-            orElse: () {
-              groupedFeed.add(GroupedFeed(
-                  fullname: feedElement.fullname,
-                  name: feedElement.submission.name,
-                  picture: feedElement.picture,
-                  url: feedElement.submission.url,
-                  userId: feedElement.userId,
-                  username: feedElement.username,
-                  language: feedElement.submission.language,
-                  submissions: List()));
-              return groupedFeed.last;
-            },
-          );
-          e.submissions.add(Submissions(
-              createdAt: feedElement.submission.createdAt,
-              points: feedElement.submission.points,
-              rating: feedElement.submission.rating,
-              status: feedElement.submission.status,
-              tags: feedElement.submission.tags));
-        });
-        setState(() {
-          feed = groupedFeed;
-        });
       });
-    } catch(error, stackTrace){
+    } catch (error, stackTrace) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,
