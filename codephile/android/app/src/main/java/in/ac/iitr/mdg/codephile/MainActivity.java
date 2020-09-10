@@ -1,4 +1,4 @@
-package com.mdg.codephile;
+package in.ac.iitr.mdg.codephile;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
