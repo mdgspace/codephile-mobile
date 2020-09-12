@@ -14,6 +14,7 @@ Future<int> signUp(SignUp details) async {
       uri,
       body: {
         "username": details.username,
+        "email": details.email,
         "password": details.password,
         "fullname": details.fullname,
         "institute": details.institute,

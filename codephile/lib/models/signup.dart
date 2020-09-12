@@ -5,6 +5,7 @@ String signUpToJson(SignUp data) => json.encode(data.toJson());
 
 class SignUp {
   Handle handle;
+  String email;
   String password;
   String username;
   String fullname;
@@ -12,6 +13,7 @@ class SignUp {
 
   SignUp(
       {this.handle,
+      this.email,
       this.password,
       this.username,
       this.fullname,
@@ -19,6 +21,7 @@ class SignUp {
 
   factory SignUp.fromJson(Map<String, dynamic> json) => SignUp(
         username: json["username"],
+        email: json["email"],
         password: json["password"],
         fullname: json["fullname"],
         institute: json["institute"],
@@ -27,6 +30,7 @@ class SignUp {
 
   Map<String, dynamic> toJson() => {
         "username": username,
+        "email": email,
         "password": password,
         "fullname": fullname,
         "institute": institute,

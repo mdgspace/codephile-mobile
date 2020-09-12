@@ -14,7 +14,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _name, _institute;
+  String _name, _institute, _email;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
   bool isNextButtonTapped = false;
@@ -47,6 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       body: isLoading
           ? Center(
@@ -67,29 +68,31 @@ class _SignUpPageState extends State<SignUpPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height / 15),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(
-                                  0.0, 00.0, 0.0, 0.0),
+                                  0.0, 20.0, 0.0, 20.0),
                               child: Text('What\'s your name?',
                                   style: TextStyle(
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold)),
                             ),
-                            SizedBox(height: 10.0),
                             _showNameInput(),
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height / 30),
-                            Container(
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0.0, 20.0, 0.0, 20.0),
+                              child: Text('What\'s your email?',
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                            _showEmailInput(),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                               child: Text('What is the name of your Institute?',
                                   style: TextStyle(
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold)),
                             ),
-                            SizedBox(height: 10.0),
                             _showInstituteInput(),
                           ],
                         ),
@@ -108,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
       maxLines: 1,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        labelText: 'Enter name',
+        labelText: 'Enter full name',
         border: OutlineInputBorder(),
         labelStyle: TextStyle(fontFamily: 'Montserrat', color: Colors.grey),
       ),
@@ -117,14 +120,34 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  Widget _showEmailInput() {
+    return new TextFormField(
+      maxLines: 1,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        labelText: 'Enter email ID',
+        border: OutlineInputBorder(),
+        labelStyle: TextStyle(fontFamily: 'Montserrat', color: Colors.grey),
+      ),
+      validator: (value) => value.isEmpty
+          ? 'Email can\'t be empty'
+          : RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                  .hasMatch(value)
+              ? null
+              : "Enter a valid email address!",
+      onSaved: (value) => _email = value,
+    );
+  }
+
   Widget _showInstituteInput() {
     return Container(
+      padding: EdgeInsets.zero,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
       ),
       child: SearchableDropdown<String>(
-        underline: Container(height: 0.0),
+        underline: const SizedBox(height: 0.0),
         items: _instituteList
             .map((value) => DropdownMenuItem<String>(
                   value: value,
@@ -145,9 +168,10 @@ class _SignUpPageState extends State<SignUpPage> {
         hint: SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
               child: Text(
                 "Select Institute",
+                style: TextStyle(color: Colors.grey),
               ),
             )),
       ),
@@ -201,7 +225,8 @@ class _SignUpPageState extends State<SignUpPage> {
               new MaterialPageRoute(
                   builder: (context) => new SignUpPage2(
                         name: _name,
-                        institute: (_institute == null) ? '' : _institute,
+                        email: _email,
+                        institute: (_institute == null) ? "" : _institute,
                       )));
         });
       }

@@ -15,17 +15,24 @@ import 'progress_tab_bar.dart';
 
 class SignUpPage4 extends StatefulWidget {
   final String name;
+  final String email;
   final String institute;
   final Handle handle;
   final String userImagePath;
 
   const SignUpPage4(
-      {Key key, this.name, this.institute, this.handle, this.userImagePath})
+      {Key key,
+      this.name,
+      this.email,
+      this.institute,
+      this.handle,
+      this.userImagePath})
       : super(key: key);
 
   @override
   _SignUpPageState createState() => _SignUpPageState(
       name: name,
+      email: email,
       institute: institute,
       handle: handle,
       userImagePath: userImagePath);
@@ -34,6 +41,7 @@ class SignUpPage4 extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage4> {
   String _username, _password;
   String name;
+  String email;
   String institute;
   Handle handle;
   String userImagePath;
@@ -42,7 +50,12 @@ class _SignUpPageState extends State<SignUpPage4> {
       _lockIconColor = false,
       _seePasswordIconColor = false;
   _SignUpPageState(
-      {Key key, this.name, this.institute, this.handle, this.userImagePath});
+      {Key key,
+      this.name,
+      this.email,
+      this.institute,
+      this.handle,
+      this.userImagePath});
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
@@ -76,36 +89,38 @@ class _SignUpPageState extends State<SignUpPage4> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ((isCreateAccountButtonTapped) || (isCreateAccountSuccessful))?
-              Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-                  :
-              Column(
-                children: <Widget>[
-                  ProgressTabBar(4),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              ((isCreateAccountButtonTapped) || (isCreateAccountSuccessful))
+                  ? Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Column(
                       children: <Widget>[
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 15),
-                        Text('Setup a username and password for Codephile',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 25.0),
-                        _showUsernameInput(),
-                        SizedBox(height: 15.0),
-                        _showPasswordInput(),
+                        ProgressTabBar(4),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height / 15),
+                              Text(
+                                  'Setup a username and password for Codephile',
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(height: 25.0),
+                              _showUsernameInput(),
+                              SizedBox(height: 15.0),
+                              _showPasswordInput(),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
               _showCreateAccountButton(),
             ],
           ),
@@ -204,67 +219,67 @@ class _SignUpPageState extends State<SignUpPage4> {
     showConnectivityStatus();
     return (isCreateAccountButtonTapped)
         ? Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-          color: Colors.grey[500],
-          child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.85,
-              child: Text(
-                'Creating...',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 16.0,
+            child: FlatButton(
+                color: Colors.grey[500],
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: Text(
+                      'Creating...',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          onPressed: () {}),
-    )
+                onPressed: () {}),
+          )
         : (isCreateAccountSuccessful)
-        ? Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-          color: codephileMain,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.85,
-              child: new Text(
-                'Created Successfully',
-                textAlign: TextAlign.center,
-                style: new TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
+            ? Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: FlatButton(
+                    color: codephileMain,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: new Text(
+                          'Created Successfully',
+                          textAlign: TextAlign.center,
+                          style: new TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {}),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: FlatButton(
+                  color: codephileMain,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: new Text(
+                        'Create Account',
+                        textAlign: TextAlign.center,
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: _validateAndSubmit,
                 ),
-              ),
-            ),
-          ),
-          onPressed: () {}),
-    )
-        : Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-        color: codephileMain,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.85,
-            child: new Text(
-              'Create Account',
-              textAlign: TextAlign.center,
-              style: new TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-              ),
-            ),
-          ),
-        ),
-        onPressed: _validateAndSubmit,
-      ),
-    );
+              );
   }
 
   bool _validateAndSave() {
@@ -290,6 +305,7 @@ class _SignUpPageState extends State<SignUpPage4> {
           password: _password,
           username: _username,
           fullname: name,
+          email: email,
           institute: institute);
       signUp(details).then((statusCode) {
         if (statusCode == 201) {
@@ -310,8 +326,8 @@ class _SignUpPageState extends State<SignUpPage4> {
                 prefs.setString("token", userToken.token);
                 prefs.setString("uid", id);
                 if (userImagePath != null) {
-                  int uploadStatusCode =
-                  await uploadImage(userToken.token, userImagePath, context);
+                  int uploadStatusCode = await uploadImage(
+                      userToken.token, userImagePath, context);
                 }
                 if (isCreateAccountSuccessful) {
                   Navigator.of(context).popUntil((route) => route.isFirst);

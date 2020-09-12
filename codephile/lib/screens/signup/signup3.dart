@@ -12,23 +12,27 @@ import 'package:image_picker/image_picker.dart';
 
 class SignUpPage3 extends StatefulWidget {
   final String name;
+  final String email;
   final String institute;
   final Handle handle;
 
-  const SignUpPage3({Key key, this.name, this.institute, this.handle})
+  const SignUpPage3(
+      {Key key, this.name, this.email, this.institute, this.handle})
       : super(key: key);
 
   @override
-  _SignUpPageState createState() =>
-      _SignUpPageState(name: name, institute: institute, handle: handle);
+  _SignUpPageState createState() => _SignUpPageState(
+      name: name, email: email, institute: institute, handle: handle);
 }
 
 class _SignUpPageState extends State<SignUpPage3> {
   String name;
+  String email;
   String institute;
   Handle handle;
   File userImage;
-  _SignUpPageState({Key key, this.name, this.institute, this.handle});
+  _SignUpPageState(
+      {Key key, this.email, this.name, this.institute, this.handle});
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
@@ -203,6 +207,7 @@ class _SignUpPageState extends State<SignUpPage3> {
               new MaterialPageRoute(
                   builder: (context) => new SignUpPage4(
                       name: name,
+                      email: email,
                       institute: (institute == null) ? '' : institute,
                       handle: handle,
                       userImagePath:

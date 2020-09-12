@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:codephile/models/submission.dart';
 import 'package:codephile/models/user_profile_details.dart';
 
-CodephileUser userFromJson(String str) => CodephileUser.fromJson(json.decode(str));
+CodephileUser userFromJson(String str) =>
+    CodephileUser.fromJson(json.decode(str));
 
 String userToJson(CodephileUser data) => json.encode(data.toJson());
 
 class CodephileUser {
   String fullname;
+  String email;
   Handle handle;
   String id;
   String institute;
@@ -21,6 +23,7 @@ class CodephileUser {
 
   CodephileUser({
     this.fullname,
+    this.email,
     this.handle,
     this.id,
     this.institute,
@@ -34,6 +37,7 @@ class CodephileUser {
 
   factory CodephileUser.fromJson(Map<String, dynamic> json) => CodephileUser(
         fullname: json["fullname"],
+        email: json['email'],
         handle: Handle.fromJson(json["handle"]),
         id: json["id"],
         institute: json["institute"],
@@ -54,6 +58,7 @@ class CodephileUser {
 
   Map<String, dynamic> toJson() => {
         "fullname": fullname,
+        "email": email,
         "handle": handle.toJson(),
         "id": id,
         "institute": institute,
@@ -64,7 +69,8 @@ class CodephileUser {
             ? List<dynamic>.from(recentSubmissions.map((x) => x.toJson()))
             : null,
         "username": username,
-        "solved_problems_count": (solvedProblemsCount != null)? solvedProblemsCount.toJson() : null,
+        "solved_problems_count":
+            (solvedProblemsCount != null) ? solvedProblemsCount.toJson() : null,
       };
 }
 

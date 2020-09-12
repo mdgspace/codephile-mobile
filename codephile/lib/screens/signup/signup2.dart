@@ -8,19 +8,22 @@ import 'package:codephile/models/signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpPage2 extends StatefulWidget {
+  final String email;
   final String name;
   final String institute;
 
-  const SignUpPage2({Key key, this.name, this.institute}) : super(key: key);
+  const SignUpPage2({Key key, this.email, this.name, this.institute})
+      : super(key: key);
   @override
   _SignUpPageState createState() =>
-      _SignUpPageState(name: name, institute: institute);
+      _SignUpPageState(name: name, email: email, institute: institute);
 }
 
 class _SignUpPageState extends State<SignUpPage2> {
   String name;
+  String email;
   String institute;
-  _SignUpPageState({Key key, this.name, this.institute});
+  _SignUpPageState({Key key, this.email, this.name, this.institute});
   String _codechef, _hackerrank, _codeforces, _spoj;
   bool enableTextFields = true;
   Handle handle;
@@ -408,6 +411,7 @@ class _SignUpPageState extends State<SignUpPage2> {
                 MaterialPageRoute(
                     builder: (context) => SignUpPage3(
                           name: name,
+                          email: email,
                           institute: institute,
                           handle: handle,
                         )));
