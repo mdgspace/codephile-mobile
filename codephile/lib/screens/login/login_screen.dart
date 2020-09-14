@@ -4,6 +4,7 @@ import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/signup/signup.dart';
 import 'package:codephile/services/Id.dart';
 import 'package:codephile/services/login.dart';
+import 'package:codephile/services/password_reset.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _username;
   String _password;
   GlobalKey<FormState> _key;
+  TextEditingController _controller;
   ScrollController _scrollController;
   @override
   void initState() {
@@ -40,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _username = '';
     _password = '';
     _key = GlobalKey<FormState>();
+    _controller = TextEditingController();
     _scrollController = ScrollController();
     _usernameFocusNode = FocusNode();
     _usernameFocusNode.addListener(() async {
@@ -188,7 +191,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             Text('Keep me logged in'),
                             Spacer(),
                             FlatButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  bool result = await buildShowDialog(context);
+                                  if (result) {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Success! Please check your email");
+                                  } else {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Failure! No user associated with the email address");
+                                  }
+                                },
                                 child: Text(
                                   'Forgot Password?',
                                   style: TextStyle(color: codephileMain),
@@ -279,6 +293,58 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future buildShowDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              titlePadding: EdgeInsets.all(0),
+              title: Container(
+                padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                decoration: BoxDecoration(
+                    color: Color(0xFFF3F4F7),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15))),
+                child: Text(
+                  "Forgot Password",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              contentPadding: EdgeInsets.all(0),
+              content: Padding(
+                  padding: EdgeInsets.fromLTRB(15, 30, 15, 30),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Enter email',
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: codephileMain, width: 1.5)),
+                      labelStyle: TextStyle(color: Colors.grey),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    maxLines: 1,
+                    controller: _controller,
+                  )),
+              actions: <Widget>[
+                FlatButton(
+                    padding: EdgeInsets.all(15),
+                    onPressed: () async {
+                      String email = _controller.text;
+                      bool result = await resetPassword(email);
+                      Navigator.pop(context, result);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                      color: codephileMain,
+                      child:
+                          Text("Okay", style: TextStyle(color: Colors.white)),
+                    ))
+              ],
+              actionsPadding: EdgeInsets.all(0),
+            ));
   }
 
   bool _validateAndSave() {
