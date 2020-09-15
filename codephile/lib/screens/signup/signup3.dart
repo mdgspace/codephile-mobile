@@ -36,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage3> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
-
+  final ImagePicker _imagePicker = ImagePicker();
   bool isNextButtonTapped = false;
 
   @override
@@ -218,7 +218,7 @@ class _SignUpPageState extends State<SignUpPage3> {
   }
 
   Future<void> _selectImage() async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var picture = await _imagePicker.getImage(source: ImageSource.gallery);
     if (picture != null) {
       var croppedPic = await ImageCropper.cropImage(
         sourcePath: picture.path,

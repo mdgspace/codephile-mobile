@@ -47,6 +47,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
       _isSpojHandleChanged = false;
   final _formKey = new GlobalKey<FormState>();
   bool isSaveChangesTapped = false;
+  final ImagePicker _imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -437,7 +438,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   }
 
   Future<void> _selectImage() async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var picture = await _imagePicker.getImage(source: ImageSource.gallery);
     if (picture != null) {
       var croppedPic = await ImageCropper.cropImage(
         sourcePath: picture.path,
