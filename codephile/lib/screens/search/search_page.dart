@@ -232,6 +232,7 @@ class _SearchPageState extends State<SearchPage> {
     if ((_recentlySearchedUsers != null) &&
         (_recentlySearchedUsers.length != 0)) {
       for (int i = 0; i < _recentlySearchedUsers.length; i++) {
+        String id = _recentlySearchedUsers[i].id;
         recentSearches.add(GestureDetector(
           child: SearchResultCard(
               widget.token,
@@ -239,16 +240,18 @@ class _SearchPageState extends State<SearchPage> {
               _recentlySearchedUsers[i].username,
               _recentlySearchedUsers[i].picture),
           onTap: () {
-            addToRecentSearches(_recentlySearchedUsers[i]);
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                    new Profile(
-                        token,
-                        _recentlySearchedUsers[i].id,
-                        (widget.uId == _recentlySearchedUsers[i].id),
-                        true)));
+                    builder: (context) => new Profile(
+                      token,
+                      id,
+                      (widget.uId == id),
+                      true,
+                    )
+                )
+            );
+            addToRecentSearches(_recentlySearchedUsers[i]);
           },
         ));
       }
