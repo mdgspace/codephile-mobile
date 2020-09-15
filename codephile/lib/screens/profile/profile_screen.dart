@@ -19,6 +19,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 import '../../models/user_profile_details.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 class Profile extends StatefulWidget {
   final String token;
@@ -116,10 +117,12 @@ class _ProfileState extends State<Profile> {
         _isLoading = false;
       });
     } catch(error, stackTrace){
-      await sentry.captureException(
-        exception: error,
-        stackTrace: stackTrace,
-      );
+      if(Foundation.kReleaseMode) {
+        await sentry.captureException(
+          exception: error,
+          stackTrace: stackTrace,
+        );
+      }
     }
   }
 

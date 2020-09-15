@@ -2,6 +2,7 @@ import 'package:codephile/models/institute_list.dart';
 import 'package:codephile/resources/strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
@@ -17,10 +18,12 @@ Future<List<String>> getInstituteList() async {
     return instituteList;
   } catch (error, stackTrace) {
     print(error);
-    await sentry.captureException(
-      exception: error,
-      stackTrace: stackTrace,
-    );
+    if(Foundation.kReleaseMode) {
+      await sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    }
     return [];
   }
 }

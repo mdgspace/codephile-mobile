@@ -5,6 +5,7 @@ import 'package:codephile/services/feed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sentry/sentry.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 class FeedScreen extends StatefulWidget {
   final String token;
@@ -161,10 +162,12 @@ class _FeedScreenState extends State<FeedScreen> {
         }
       });
     } catch (error, stackTrace) {
-      await sentry.captureException(
-        exception: error,
-        stackTrace: stackTrace,
-      );
+      if(Foundation.kReleaseMode) {
+        await sentry.captureException(
+          exception: error,
+          stackTrace: stackTrace,
+        );
+      }
     }
   }
 }

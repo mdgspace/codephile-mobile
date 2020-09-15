@@ -4,6 +4,7 @@ import 'package:codephile/resources/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
@@ -29,10 +30,12 @@ Future<int> followUser(String token, String uid, BuildContext context) async {
     return response.statusCode;
   } catch(error, stackTrace){
     print(error);
-    await sentry.captureException(
-      exception: error,
-      stackTrace: stackTrace,
-    );
+    if(Foundation.kReleaseMode) {
+      await sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    }
     return null;
   }
 }
