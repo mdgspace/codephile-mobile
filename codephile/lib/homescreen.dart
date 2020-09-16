@@ -43,10 +43,10 @@ class HomePageState extends State<HomePage> {
           physics: NeverScrollableScrollPhysics(),
           controller: _pageController,
           children: <Widget>[
-            MaterialApp(home: FeedScreen(token: token)),
-            MaterialApp(home: ContestScreen(token: token)),
-            MaterialApp(home: SearchPage(token, userId)),
-            MaterialApp(home: Profile(token, userId, true, false)),
+            FeedScreen(token: token),
+            ContestScreen(token: token),
+            SearchPage(token, userId),
+            Profile(token, userId, true, false),
           ]),
       bottomNavigationBar: DecoratedBox(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
