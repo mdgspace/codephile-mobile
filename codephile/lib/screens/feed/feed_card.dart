@@ -1,15 +1,18 @@
 import 'package:codephile/models/grouped_feed.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/strings.dart';
+import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'dart:core';
 
 import 'package:intl/intl.dart';
 
 class FeedCard extends StatefulWidget {
   final GroupedFeed feed;
-  FeedCard({this.feed});
+  final String token;
+  FeedCard({this.feed, this.token});
 
   @override
   _FeedCardState createState() => _FeedCardState();
@@ -38,32 +41,46 @@ class _FeedCardState extends State<FeedCard> {
               child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      child: ((widget.feed.picture == null) ||
-                              (widget.feed.picture == ""))
-                          ? Container(
-                              decoration: BoxDecoration(
-                                  color: codephileBackground,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: userIconBorderGrey,
-                                  )),
-                              child: SizedBox(
-                                height: 32.0,
-                                width: 32.0,
-                                child: SvgPicture.asset(
-                                  'assets/default_user_icon.svg',
-                                  fit: BoxFit.fitWidth,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return Profile(
+                              widget.token,
+                              widget.feed.userId,
+                              false,
+                              true,
+                            );
+                          },
+                        ));
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        child: ((widget.feed.picture == null) ||
+                                (widget.feed.picture == ""))
+                            ? Container(
+                                decoration: BoxDecoration(
+                                    color: codephileBackground,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: userIconBorderGrey,
+                                    )),
+                                child: SizedBox(
+                                  height: 32.0,
+                                  width: 32.0,
+                                  child: SvgPicture.asset(
+                                    'assets/default_user_icon.svg',
+                                    fit: BoxFit.fitWidth,
+                                  ),
                                 ),
+                              )
+                            : CircleAvatar(
+                                radius: 16.0,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage:
+                                    NetworkImage(widget.feed.picture),
                               ),
-                            )
-                          : CircleAvatar(
-                              radius: 16.0,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage:
-                                  NetworkImage(widget.feed.picture),
-                            ),
+                      ),
                     ),
                     Expanded(
                       child: Column(
@@ -184,40 +201,48 @@ class _FeedCardState extends State<FeedCard> {
           statusColor = Colors.red;
           status = "Other";
       }
-      children.add(Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          Column(children: <Widget>[
-            Container(
-              height: 9,
-              width: 2,
-              color: top ? Color(0xFFE5E5E5) : Colors.white,
+      children.add(GestureDetector(
+        onTap: () {
+          FlutterWebBrowser.openWebPage(
+            url: widget.feed.url,
+            androidToolbarColor: codephileMain,
+          );
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Column(children: <Widget>[
+              Container(
+                height: 9,
+                width: 2,
+                color: top ? Color(0xFFE5E5E5) : Colors.white,
+              ),
+              Container(
+                height: 8,
+                width: 8,
+                decoration: BoxDecoration(
+                    color: statusColor, borderRadius: BorderRadius.circular(6)),
+              ),
+              Container(
+                height: 9,
+                width: 2,
+                color: bottom ? Color(0xFFE5E5E5) : Colors.white,
+              )
+            ]),
+            Padding(
+              padding: EdgeInsets.fromLTRB(5, 5, 0, 5),
+              child: Text(
+                status,
+                style: TextStyle(color: statusColor),
+              ),
             ),
-            Container(
-              height: 8,
-              width: 8,
-              decoration: BoxDecoration(
-                  color: statusColor, borderRadius: BorderRadius.circular(6)),
-            ),
-            Container(
-              height: 9,
-              width: 2,
-              color: bottom ? Color(0xFFE5E5E5) : Colors.white,
+            Spacer(),
+            Text(
+              DateFormat('dd-MM-yyyy kk-ss').format(element.createdAt),
+              style: TextStyle(color: Color(0xFF919191)),
             )
-          ]),
-          Padding(
-            padding: EdgeInsets.fromLTRB(5, 5, 0, 5),
-            child: Text(
-              status,
-              style: TextStyle(color: statusColor),
-            ),
-          ),
-          Spacer(),
-          Text(
-            DateFormat('dd-MM-yyyy kk-ss').format(element.createdAt),
-            style: TextStyle(color: Color(0xFF919191)),
-          )
-        ],
+          ],
+        ),
       ));
     }
     return children;
