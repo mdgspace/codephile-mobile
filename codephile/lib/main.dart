@@ -77,11 +77,7 @@ Future<void> main() async {
       print(message.toString());
     },
   );
-  runApp(
-    MaterialApp(
-      home: MyApp(),
-    ),
-  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

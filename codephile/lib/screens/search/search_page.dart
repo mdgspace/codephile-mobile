@@ -61,10 +61,7 @@ class _SearchPageState extends State<SearchPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.7,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 4.0, 2.0, 4.0),
                         child: TextField(
@@ -108,50 +105,49 @@ class _SearchPageState extends State<SearchPage> {
             Expanded(
               child: _isSearching == true
                   ? Center(
-                child: CircularProgressIndicator(),
-              )
+                      child: CircularProgressIndicator(),
+                    )
                   : isResultNull
-                  ? Center(
-                child: Text(
-                  "No matching users found",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: const Color.fromRGBO(36, 36, 36, 1),
-                  ),
-                ),
-              )
-                  : ((showRecentSearches) &&
-                  (_recentlySearchedUsers != null) &&
-                  (_recentlySearchedUsers.length != 0))
-                  ? recentSearches()
-                  : ListView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
-                itemCount: searchResult.length,
-                itemBuilder: (BuildContext context, int index) {
-                  CodephileUser user = searchResult[index];
-                  return GestureDetector(
-                    child: SearchResultCard(
-                      token,
-                      user.fullname,
-                      user.username,
-                      user.picture,
-                    ),
-                    onTap: () {
-                      addToRecentSearches(user);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                              new Profile(
-                                  token,
-                                  user.id,
-                                  (widget.uId == user.id),
-                                  true)));
-                    },
-                  );
-                },
-              ),
+                      ? Center(
+                          child: Text(
+                            "No matching users found",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: const Color.fromRGBO(36, 36, 36, 1),
+                            ),
+                          ),
+                        )
+                      : ((showRecentSearches) &&
+                              (_recentlySearchedUsers != null) &&
+                              (_recentlySearchedUsers.length != 0))
+                          ? recentSearches()
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+                              itemCount: searchResult.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                CodephileUser user = searchResult[index];
+                                return GestureDetector(
+                                  child: SearchResultCard(
+                                    token,
+                                    user.fullname,
+                                    user.username,
+                                    user.picture,
+                                  ),
+                                  onTap: () {
+                                    addToRecentSearches(user);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => new Profile(
+                                                token,
+                                                user.id,
+                                                (widget.uId == user.id),
+                                                true)));
+                                  },
+                                );
+                              },
+                            ),
             )
           ],
         ));
@@ -187,7 +183,7 @@ class _SearchPageState extends State<SearchPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String searchHist = prefs.get("recentSearches");
       List<CodephileUser> oldUserObjects =
-      (searchHist != null) ? searchResultUsersFromJson(searchHist) : [];
+          (searchHist != null) ? searchResultUsersFromJson(searchHist) : [];
       List<CodephileUser> newUserObjects = [];
       newUserObjects.add(user);
       for (int i = 0; i < oldUserObjects.length; i++) {
@@ -244,13 +240,11 @@ class _SearchPageState extends State<SearchPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => new Profile(
-                      token,
-                      id,
-                      (widget.uId == id),
-                      true,
-                    )
-                )
-            );
+                          token,
+                          id,
+                          (widget.uId == id),
+                          true,
+                        )));
             addToRecentSearches(_recentlySearchedUsers[i]);
           },
         ));
@@ -268,7 +262,9 @@ class _SearchPageState extends State<SearchPage> {
       List<CodephileUser> recentlySearchedUsers = (userListString == null)
           ? []
           : searchResultUsersFromJson(userListString);
-      _recentlySearchedUsers = recentlySearchedUsers;
+      setState(() {
+        _recentlySearchedUsers = recentlySearchedUsers;
+      });
     } catch (error, stackTrace) {
       await sentry.captureException(
         exception: error,
