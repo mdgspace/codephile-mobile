@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 class ContestScreen extends StatefulWidget {
   final String token;
@@ -165,10 +166,12 @@ class _ContestScreenState extends State<ContestScreen> {
         applyFilter();
       });
     } catch(error, stackTrace){
-      await sentry.captureException(
-        exception: error,
-        stackTrace: stackTrace,
-      );
+      if(Foundation.kReleaseMode) {
+        await sentry.captureException(
+          exception: error,
+          stackTrace: stackTrace,
+        );
+      }
     }
 
   }

@@ -3,6 +3,7 @@ import 'package:codephile/resources/strings.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 class AcceptanceGraph extends StatefulWidget {
   final List<ActivityDetails> activityDetails;
@@ -77,10 +78,12 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
       });
       column = input.length ~/ 7;
     } catch(error, stackTrace){
-      await sentry.captureException(
-        exception: error,
-        stackTrace: stackTrace,
-      );
+      if(Foundation.kReleaseMode) {
+        await sentry.captureException(
+          exception: error,
+          stackTrace: stackTrace,
+        );
+      }
     }
   }
 
