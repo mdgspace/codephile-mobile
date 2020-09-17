@@ -32,75 +32,75 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 0.0),
       child: Container(
+        width: MediaQuery.of(context).size.width,
         color: Colors.transparent,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 8.0, 4.0, 8.0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.width / 10,
-                    width: MediaQuery.of(context).size.width / 10,
-                    alignment: (widget._user.picture == "")
-                        ? Alignment(0.0, 0.0)
-                        : Alignment.center,
-                    child: (widget._user.picture == "")
-                        ? SizedBox(
-                            height: MediaQuery.of(context).size.width / 3,
-                            width: MediaQuery.of(context).size.width / 3,
-                            child: SvgPicture.asset(
-                              'assets/default_user_icon.svg',
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 4.0, 8.0),
+              child: Container(
+                height: MediaQuery.of(context).size.width / 10,
+                width: MediaQuery.of(context).size.width / 10,
+                alignment: (widget._user.picture == "")
+                    ? Alignment(0.0, 0.0)
+                    : Alignment.center,
+                child: (widget._user.picture == "")
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.width / 3,
+                        width: MediaQuery.of(context).size.width / 3,
+                        child: SvgPicture.asset(
+                          'assets/default_user_icon.svg',
+                          fit: BoxFit.fitWidth,
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
                               fit: BoxFit.fitWidth,
-                            ),
-                          )
-                        : Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.fitWidth,
-                                  image: NetworkImage(
-                                    widget._user.picture,
-                                  ),
-                                )),
-                          ),
-                    decoration: BoxDecoration(
-                        color: codephileBackground,
-                        shape: BoxShape.circle,
-                        border:
-                            Border.all(width: 0, color: userIconBorderGrey)),
+                              image: NetworkImage(
+                                widget._user.picture,
+                              ),
+                            )),
+                      ),
+                decoration: BoxDecoration(
+                    color: codephileBackground,
+                    shape: BoxShape.circle,
+                    border: Border.all(width: 0, color: userIconBorderGrey)),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(4.0, 5.0, 8.0, 2.0),
+                    child: Text(
+                      "${widget._user.fullname}",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: const Color.fromRGBO(36, 36, 36, 1),
+                      ),
+                    ),
                   ),
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(4.0, 5.0, 8.0, 2.0),
-                      child: Text(
-                        "${widget._user.fullname}",
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: const Color.fromRGBO(36, 36, 36, 1),
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(4.0, 2.0, 8.0, 8.0),
+                    child: Text(
+                      "@${widget._user.fullname}",
+                      style: TextStyle(
+                        color: const Color.fromRGBO(151, 151, 151, 1),
+                        fontSize: 14.0,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(4.0, 2.0, 8.0, 8.0),
-                      child: Text(
-                        "@${widget._user.fullname}",
-                        style: TextStyle(
-                          color: const Color.fromRGBO(151, 151, 151, 1),
-                          fontSize: 14.0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             GestureDetector(
               child: Padding(

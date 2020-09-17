@@ -77,11 +77,7 @@ Future<void> main() async {
       print(message.toString());
     },
   );
-  runApp(
-    MaterialApp(
-      home: MyApp(),
-    ),
-  );
+  runApp(MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -105,76 +101,75 @@ class ChooseHomeState extends State<ChooseHome> {
     bool _seen = (prefs.getBool('seen') ?? false);
 
     final RemoteConfig _remoteConfig = await RemoteConfig.instance;
-    final int version = 4;
-    final defaults = <String, int>{'version': 4};
+    final int version = 3;
+    final defaults = <String, int>{'version': version};
     await _remoteConfig.setDefaults(defaults);
     await _remoteConfig.fetch(expiration: Duration(seconds: 5));
     await _remoteConfig.activateFetched();
     final int minimunVersion = _remoteConfig.getInt('version');
     print('Minimum version:- ' + minimunVersion.toString());
     if (version < minimunVersion) {
+      print("1");
       showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (context) => WillPopScope(
-                onWillPop: () async => false,
-                child: AlertDialog(
-                  titlePadding: EdgeInsets.all(0),
-                  title: Container(
-                    padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFF3F4F7),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15))),
-                    child: Text(
-                      "Update Available",
-                      textAlign: TextAlign.center,
-                    ),
+          builder: (context) => AlertDialog(
+                titlePadding: EdgeInsets.all(0),
+                title: Container(
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFF3F4F7),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15))),
+                  child: Text(
+                    "Update Available",
+                    textAlign: TextAlign.center,
                   ),
-                  contentPadding: EdgeInsets.all(0),
-                  content: Padding(
-                    padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
-                    child: Text(
-                      "This version of the application has been depricated, please update your app through the Google PlayStore.",
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    FlatButton(
-                        padding: EdgeInsets.all(15),
-                        onPressed: () {
-                          intent.Intent()
-                            ..setAction(action.Action.ACTION_SHOW_APP_INFO)
-                            ..putExtra(extra.Extra.EXTRA_PACKAGE_NAME,
-                                "com.mdg.codephile")
-                            ..startActivity().catchError((e) => print(e));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                          color: codephileMain,
-                          child: Text("Okay",
-                              style: TextStyle(color: Colors.white)),
-                        ))
-                  ],
-                  actionsPadding: EdgeInsets.all(0),
                 ),
+                contentPadding: EdgeInsets.all(0),
+                content: Padding(
+                  padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+                  child: Text(
+                    "This version of the application has been depricated, please update your app through the Google PlayStore.",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                      padding: EdgeInsets.all(15),
+                      onPressed: () {
+                        intent.Intent()
+                          ..setAction(action.Action.ACTION_SHOW_APP_INFO)
+                          ..putExtra(extra.Extra.EXTRA_PACKAGE_NAME,
+                              "in.ac.iitr.mdg.codephile")
+                          ..startActivity().catchError((e) => print(e));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                        color: codephileMain,
+                        child:
+                            Text("Okay", style: TextStyle(color: Colors.white)),
+                      ))
+                ],
+                actionsPadding: EdgeInsets.all(0),
               ));
-    }
-    if (_seen) {
-      String token = prefs.getString('token');
-      String uid = prefs.getString('uid');
-      if (token != null && uid != null) {
-        Navigator.of(context).pushReplacement(new MaterialPageRoute(
-            builder: (context) => HomePage(token: token, userId: uid)));
-      } else {
-        Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => LoginScreen()));
-      }
     } else {
-      prefs.setBool('seen', true);
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+      if (_seen) {
+        String token = prefs.getString('token');
+        String uid = prefs.getString('uid');
+        if (token != null && uid != null) {
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (context) => HomePage(token: token, userId: uid)));
+        } else {
+          Navigator.of(context).pushReplacement(
+              new MaterialPageRoute(builder: (context) => LoginScreen()));
+        }
+      } else {
+        prefs.setBool('seen', true);
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+      }
     }
   }
 

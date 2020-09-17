@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await Future.delayed(Duration(milliseconds: 300));
 
       _scrollController.animateTo(MediaQuery.of(context).viewInsets.bottom,
-          duration: Duration(milliseconds: 500), curve: Curves.bounceOut);
+          duration: Duration(milliseconds: 500), curve: Curves.ease);
     });
 
     _passwordFocusNode = FocusNode();
@@ -193,11 +193,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             FlatButton(
                                 onPressed: () async {
                                   bool result = await buildShowDialog(context);
-                                  if (result) {
+                                  if (result == true) {
                                     Fluttertoast.showToast(
                                         msg:
                                             "Success! Please check your email");
-                                  } else {
+                                  } else if (result == false) {
                                     Fluttertoast.showToast(
                                         msg:
                                             "Failure! No user associated with the email address");
@@ -277,7 +277,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(color: codephileMain),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.pushReplacement(context,
+                                  Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return SignUpPage();
                                   }));
@@ -297,6 +297,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future buildShowDialog(BuildContext context) {
     return showDialog(
+        barrierDismissible: true,
         context: context,
         builder: (context) => AlertDialog(
               titlePadding: EdgeInsets.all(0),

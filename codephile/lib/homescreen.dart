@@ -24,38 +24,30 @@ class HomePageState extends State<HomePage> {
   final String token;
   final String userId;
   int _selectedIndex;
+  PageController _pageController;
   bool _showBatteryOptimizationDialog;
 
   HomePageState({Key key, this.token, this.userId});
   @override
   void initState() {
     super.initState();
-    _selectedIndex = 0;
+    _selectedIndex = 1;
+    _pageController = new PageController(initialPage: 1);
     showBatteryOptimisationAlert();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _selectedIndex, children: <Widget>[
-        MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: FeedScreen(token: token),
-        ),
-        MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: ContestScreen(token: token),
-        ),
-        MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: SearchPage(token, userId),
-        ),
-        MaterialApp(
-          debugShowCheckedModeBanner: false,
-          // home: Container(),
-          home: Profile(token, userId, true, false),
-        )
-      ]),
+      body: PageView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _pageController,
+          children: <Widget>[
+            FeedScreen(token: token),
+            ContestScreen(token: token),
+            SearchPage(token, userId),
+            Profile(token, userId, true, false),
+          ]),
       bottomNavigationBar: DecoratedBox(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(
@@ -73,6 +65,7 @@ class HomePageState extends State<HomePage> {
               callback: () {
                 setState(() {
                   _selectedIndex = 0;
+                  _pageController.jumpToPage(0);
                 });
               },
               selected: (_selectedIndex == 0),
@@ -83,6 +76,7 @@ class HomePageState extends State<HomePage> {
               callback: () {
                 setState(() {
                   _selectedIndex = 1;
+                  _pageController.jumpToPage(1);
                 });
               },
               selected: (_selectedIndex == 1),
@@ -93,6 +87,7 @@ class HomePageState extends State<HomePage> {
               callback: () {
                 setState(() {
                   _selectedIndex = 2;
+                  _pageController.jumpToPage(2);
                 });
               },
               selected: (_selectedIndex == 2),
@@ -103,6 +98,7 @@ class HomePageState extends State<HomePage> {
               callback: () {
                 setState(() {
                   _selectedIndex = 3;
+                  _pageController.jumpToPage(3);
                 });
               },
               selected: (_selectedIndex == 3),
@@ -113,19 +109,21 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> showBatteryOptimisationAlert() async{
+  Future<void> showBatteryOptimisationAlert() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _showBatteryOptimizationDialog = prefs.getBool("showBatteryOptimisationDialog");
-    if(_showBatteryOptimizationDialog == null) _showBatteryOptimizationDialog = true;
-    BatteryOptimization.isIgnoringBatteryOptimizations().then((isNotOptimized){
-      if(isNotOptimized){
+    _showBatteryOptimizationDialog =
+        prefs.getBool("showBatteryOptimisationDialog");
+    if (_showBatteryOptimizationDialog == null)
+      _showBatteryOptimizationDialog = true;
+    BatteryOptimization.isIgnoringBatteryOptimizations().then((isNotOptimized) {
+      if (isNotOptimized) {
         //do nothing
-      }else{
-        if(_showBatteryOptimizationDialog){
+      } else {
+        if (_showBatteryOptimizationDialog) {
           showDialog(
               context: context,
-              builder: (BuildContext context) => new BatteryOptimisationDialog()
-          );
+              builder: (BuildContext context) =>
+                  new BatteryOptimisationDialog());
         }
       }
     });

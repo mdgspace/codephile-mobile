@@ -114,7 +114,10 @@ class _FeedScreenState extends State<FeedScreen> {
             return ListView.builder(
               itemCount: feed.length,
               itemBuilder: (context, index) {
-                return FeedCard(feed: feed[index]);
+                return FeedCard(
+                  feed: feed[index],
+                  token: widget.token,
+                );
               },
             );
           }
@@ -162,7 +165,7 @@ class _FeedScreenState extends State<FeedScreen> {
         }
       });
     } catch (error, stackTrace) {
-      if(Foundation.kReleaseMode) {
+      if (Foundation.kReleaseMode) {
         await sentry.captureException(
           exception: error,
           stackTrace: stackTrace,
