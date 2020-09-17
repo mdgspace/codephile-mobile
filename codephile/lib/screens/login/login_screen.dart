@@ -237,25 +237,35 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (_validateAndSave()) {
                             Token token = await login(_username, _password);
                             if (token != null) {
-                              String uid = await id(token.token, context);
-                              if (_keepMeLoggedIn) {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                prefs.setString("token", token.token);
-                                prefs.setString("uid", uid);
-                              }
                               FocusScope.of(context)
                                   .requestFocus(new FocusNode());
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return HomePage(
-                                  token: token.token,
-                                  userId: uid,
+                              if (token.token == "unverified") {
+                                Fluttertoast.showToast(
+                                  msg: 'Unverified, Please check your email!',
                                 );
-                              }));
+                              } else if (token.token == "wrong credentials") {
+                                Fluttertoast.showToast(
+                                  msg: 'Invalid username or password!😔',
+                                );
+                              } else {
+                                String uid = await id(token.token, context);
+                                if (_keepMeLoggedIn) {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.setString("token", token.token);
+                                  prefs.setString("uid", uid);
+                                }
+                                Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return HomePage(
+                                    token: token.token,
+                                    userId: uid,
+                                  );
+                                }));
+                              }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: 'Incorrect username or password.');
+                                  msg: 'Something went wrong!😔');
                             }
                           }
                           setState(() {

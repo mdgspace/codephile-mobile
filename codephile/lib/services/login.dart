@@ -23,11 +23,15 @@ Future login(String username, String pass) async {
       final jsonResponse = jsonDecode(response.body);
       token = new Token.fromJson(jsonResponse);
       return token;
+    } else if (response.statusCode == 403) {
+      return Token(token: "unverified");
+    } else if (response.statusCode == 401) {
+      return Token(token: "wrong credentials");
     }
     return null;
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

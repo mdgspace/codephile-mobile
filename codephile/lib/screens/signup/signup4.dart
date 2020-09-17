@@ -1,14 +1,11 @@
 import 'package:codephile/resources/helper_functions.dart';
-import 'package:codephile/services/upload_user_image.dart';
+import 'package:codephile/screens/verify/verify_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/models/signup.dart';
 import 'package:codephile/services/signup.dart';
-import 'package:codephile/homescreen.dart';
-import 'package:codephile/services/login.dart';
-import 'package:codephile/services/Id.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'progress_tab_bar.dart';
@@ -307,67 +304,73 @@ class _SignUpPageState extends State<SignUpPage4> {
           fullname: name,
           email: email,
           institute: institute);
-      signUp(details).then((statusCode) {
-        if (statusCode == 201) {
-          Fluttertoast.showToast(
-            msg: "Account Creation successful",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            fontSize: 12.0,
-          );
+      signUp(details).then((res) async {
+        if (res["statusCode"] == 201) {
+          // Fluttertoast.showToast(
+          //   msg: "Account Creation successful",
+          //   toastLength: Toast.LENGTH_SHORT,
+          //   gravity: ToastGravity.CENTER,
+          //   fontSize: 12.0,
+          // );
+          String id = res["response"];
           setState(() {
             isCreateAccountButtonTapped = false;
             isCreateAccountSuccessful = true;
           });
-          login(_username, _password).then((userToken) {
-            if (userToken != null) {
-              id(userToken.token, context).then((id) async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setString("token", userToken.token);
-                prefs.setString("uid", id);
-                if (userImagePath != null) {
-                  int uploadStatusCode = await uploadImage(
-                      userToken.token, userImagePath, context);
-                }
-                if (isCreateAccountSuccessful) {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            HomePage(token: userToken.token, userId: id)),
-                  ).then((_) => _formKey.currentState.reset());
-                }
-              });
-            } else {
-              Fluttertoast.showToast(
-                msg: "Something went wrong. Try Again",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                fontSize: 12.0,
-              );
-              setState(() {
-                isCreateAccountButtonTapped = false;
-                isCreateAccountSuccessful = false;
-                enableTextFields = true;
-              });
-            }
-          });
-        } else if (statusCode == 409) {
-          Fluttertoast.showToast(
-            msg: "Username Already Taken",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            fontSize: 12.0,
+          if (userImagePath != null) {
+            SharedPreferences pref = await SharedPreferences.getInstance();
+            pref.setString('userImagePath', userImagePath);
+          }
+          Navigator.popUntil(context, (route) => route.isFirst);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return VerifyScreen(
+                  username: _username,
+                  password: _password,
+                  id: id,
+                );
+              },
+            ),
           );
-          setState(() {
-            isCreateAccountButtonTapped = false;
-            isCreateAccountSuccessful = false;
-            enableTextFields = true;
-          });
+          // login(_username, _password).then((userToken) {
+          //   if (userToken != null) {
+          //     id(userToken.token, context).then((id) async {
+          //       SharedPreferences prefs = await SharedPreferences.getInstance();
+          //       prefs.setString("token", userToken.token);
+          //       prefs.setString("uid", id);
+          //       if (userImagePath != null) {
+          //         int uploadStatusCode = await uploadImage(
+          //             userToken.token, userImagePath, context);
+          //       }
+          //       if (isCreateAccountSuccessful) {
+          //         Navigator.of(context).popUntil((route) => route.isFirst);
+          //         Navigator.pushReplacement(
+          //           context,
+          //           MaterialPageRoute(
+          //               builder: (context) =>
+          //                   HomePage(token: userToken.token, userId: id)),
+          //         ).then((_) => _formKey.currentState.reset());
+          //       }
+          //     });
+          //   } else {
+          //     Fluttertoast.showToast(
+          //       msg: "Something went wrong. Try Again",
+          //       toastLength: Toast.LENGTH_SHORT,
+          //       gravity: ToastGravity.CENTER,
+          //       fontSize: 12.0,
+          //     );
+          //     setState(() {
+          //       isCreateAccountButtonTapped = false;
+          //       isCreateAccountSuccessful = false;
+          //       enableTextFields = true;
+          //     });
+          //   }
+          // });
         } else {
           Fluttertoast.showToast(
-            msg: "Account Creation unsuccessful",
+            msg: res["response"],
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             fontSize: 12.0,
