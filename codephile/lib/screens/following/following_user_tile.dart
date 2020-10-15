@@ -120,22 +120,19 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  12.0, 5.0, 2.0, 5.0),
-                              child: Text(
-                                "FOLLOWING",
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.white,
-                                ),
+                              padding: EdgeInsets.fromLTRB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              child: SvgPicture.asset(
+                          'assets/Vector.svg',
+                          color: codephileMain,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(
-                                  0.0, 8.0, 12.0, 8.0),
+                                  0.0, 0.0, 0.0, 0.0),
                               child: Icon(
                                 Icons.check,
-                                size: 16.0,
+                                size: 0.0,
                                 color: Colors.white,
                               ),
                             )
@@ -145,15 +142,12 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            Padding(
+                           Padding(
                               padding: const EdgeInsets.fromLTRB(
-                                  16.0, 5.0, 16.0, 5.0),
-                              child: Text(
-                                "FOLLOW",
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: codephileMain,
-                                ),
+                                  0.0, 0.0, 0.0, 0.0),
+                              child: SvgPicture.asset(
+                          'assets/mdi_person_outline.svg',
+                          color: codephileMain,
                               ),
                             )
                           ],
