@@ -89,6 +89,8 @@ flutter:
     - assets/false_audio_button.svg
     - assets/true_audio_button.svg
     - assets/onBoardingShapesAndIcons/
+    - assets/Vector.svg
+    - assets/mdi_person_outline.svg
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
