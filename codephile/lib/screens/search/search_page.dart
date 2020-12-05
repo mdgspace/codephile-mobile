@@ -73,6 +73,7 @@ class _SearchPageState extends State<SearchPage> {
                                 color: secondaryTextGrey,
                               )),
                           onSubmitted: (text) {
+                            text = text.trim();
                             if (text != "") {
                               _handleSearch(text);
                             }
@@ -93,8 +94,8 @@ class _SearchPageState extends State<SearchPage> {
                         color: const Color.fromRGBO(141, 141, 141, 1),
                       ),
                       onPressed: () {
-                        if (_controller.text != "") {
-                          _handleSearch(_controller.text);
+                        if (_controller.text.trim() != "") {
+                          _handleSearch(_controller.text.trim());
                         }
                       },
                     ),
