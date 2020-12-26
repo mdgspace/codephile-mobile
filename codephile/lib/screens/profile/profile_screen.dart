@@ -5,6 +5,7 @@ import 'package:codephile/models/submission_status_data.dart';
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/strings.dart';
+import 'package:codephile/screens/profile/profile_skeleton.dart';
 import 'package:codephile/screens/profile/acceptance_graph.dart';
 import 'package:codephile/screens/profile/accuracy_display.dart';
 import 'package:codephile/screens/profile/no_of_questions_solved_display.dart';
@@ -71,7 +72,7 @@ class _ProfileState extends State<Profile> {
         body: RefreshIndicator(
             child: _isLoading
                 ? Center(
-              child: CircularProgressIndicator(),
+              child: ProfileSkeleton(context),
             )
                 : ListView(
               children: <Widget>[
