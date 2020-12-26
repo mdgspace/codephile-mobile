@@ -3,8 +3,8 @@ import 'package:shimmer/shimmer.dart';
 
 Widget ProfileSkeleton(BuildContext context){
   return Shimmer.fromColors(
-    baseColor: Colors.grey,
-    highlightColor: Colors.white,
+    baseColor: Color(0xFFE5E5E5),
+    highlightColor: Colors.white70,
     child: Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -18,7 +18,7 @@ Widget ProfileSkeleton(BuildContext context){
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.grey,
+                color: Color(0xFFE5E5E5),
               ),
             ),
           ),
@@ -27,7 +27,7 @@ Widget ProfileSkeleton(BuildContext context){
             child: Container(
               height: MediaQuery.of(context).size.width / 18,
               width: MediaQuery.of(context).size.width/2,
-              color: Colors.grey,
+              color: Color(0xFFE5E5E5),
             ),
           ),
           Padding(
@@ -35,7 +35,7 @@ Widget ProfileSkeleton(BuildContext context){
             child: Container(
               height: MediaQuery.of(context).size.width / 18,
               width: MediaQuery.of(context).size.width/2,
-              color: Colors.grey,
+              color: Color(0xFFE5E5E5),
             ),
           ),
           Padding(
@@ -43,7 +43,7 @@ Widget ProfileSkeleton(BuildContext context){
             child: Container(
               height: MediaQuery.of(context).size.width / 18,
               width: MediaQuery.of(context).size.width/2,
-              color: Colors.grey,
+              color: Color(0xFFE5E5E5),
             ),
           ),
           Align(
@@ -53,7 +53,7 @@ Widget ProfileSkeleton(BuildContext context){
               child: Container(
                 height: MediaQuery.of(context).size.width / 18,
                 width: MediaQuery.of(context).size.width/2,
-                color: Colors.grey,
+                color: Color(0xFFE5E5E5),
               ),
             ),
           ),
@@ -66,7 +66,7 @@ Widget ProfileSkeleton(BuildContext context){
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
                   width: MediaQuery.of(context).size.width/10,
-                  color: Colors.grey,
+                  color: Color(0xFFE5E5E5),
                 ),
               ),
               Padding(
@@ -74,7 +74,7 @@ Widget ProfileSkeleton(BuildContext context){
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
                   width: MediaQuery.of(context).size.width/10,
-                  color: Colors.grey,
+                  color: Color(0xFFE5E5E5),
                 ),
               ),
               Padding(
@@ -82,7 +82,7 @@ Widget ProfileSkeleton(BuildContext context){
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
                   width: MediaQuery.of(context).size.width/10,
-                  color: Colors.grey,
+                  color: Color(0xFFE5E5E5),
                 ),
               ),
               Padding(
@@ -90,7 +90,7 @@ Widget ProfileSkeleton(BuildContext context){
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
                   width: MediaQuery.of(context).size.width/10,
-                  color: Colors.grey,
+                  color: Color(0xFFE5E5E5),
                 ),
               ),
             ],
@@ -103,7 +103,7 @@ Widget ProfileSkeleton(BuildContext context){
               child: Container(
                 height: MediaQuery.of(context).size.width / 18,
                 width: MediaQuery.of(context).size.width/2,
-                color: Colors.grey,
+                color: Color(0xFFE5E5E5),
               ),
             ),
           ),
@@ -116,7 +116,7 @@ Widget ProfileSkeleton(BuildContext context){
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
                   width: MediaQuery.of(context).size.width/4,
-                  color: Colors.grey,
+                  color: Color(0xFFE5E5E5),
                 ),
               ),
               Padding(
@@ -124,7 +124,7 @@ Widget ProfileSkeleton(BuildContext context){
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
                   width: MediaQuery.of(context).size.width/4,
-                  color: Colors.grey,
+                  color: Color(0xFFE5E5E5),
                 ),
               ),
               Padding(
@@ -132,7 +132,7 @@ Widget ProfileSkeleton(BuildContext context){
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
                   width: MediaQuery.of(context).size.width/4,
-                  color: Colors.grey,
+                  color: Color(0xFFE5E5E5),
                 ),
               ),
             ],
