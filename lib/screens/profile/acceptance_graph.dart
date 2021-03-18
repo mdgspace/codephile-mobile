@@ -36,11 +36,11 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
 
   void dataSetup() async {
     range = Utils.daysInRange(DateTime(currentYear, currentTriplet * 3 - 2),
-        Utils.lastDayOfMonth(DateTime(currentYear, currentTriplet * 3)))
+            Utils.lastDayOfMonth(DateTime(currentYear, currentTriplet * 3)))
         .toList();
     range.add(Utils.lastDayOfMonth(DateTime(currentYear, currentTriplet * 3)));
     renderRange = Utils.daysInRange(
-        Utils.firstDayOfWeek(range.first), Utils.lastDayOfWeek(range.last))
+            Utils.firstDayOfWeek(range.first), Utils.lastDayOfWeek(range.last))
         .toList();
     renderRange.add(Utils.lastDayOfWeek(range.last));
     switch (currentTriplet) {
@@ -57,12 +57,13 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
         monthLabels = ["Oct", "Nov", "Dec"];
         break;
     }
-    try{
+    try {
       input = Map<DateTime, int>.fromIterable(
         renderRange,
         key: (element) => DateTime(element.year, element.month, element.day),
         value: (element) {
-          if (range.indexOf(DateTime(element.year, element.month, element.day)) ==
+          if (range.indexOf(
+                  DateTime(element.year, element.month, element.day)) ==
               -1) {
             return null;
           } else {
@@ -73,12 +74,12 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
       widget.activityDetails.forEach((element) {
         if (input.containsKey(element.createdAt)) {
           input[element.createdAt] =
-          (element.correct - (element.total - element.correct));
+              (element.correct - (element.total - element.correct));
         }
       });
       column = input.length ~/ 7;
-    } catch(error, stackTrace){
-      if(Foundation.kReleaseMode) {
+    } catch (error, stackTrace) {
+      if (Foundation.kReleaseMode) {
         await sentry.captureException(
           exception: error,
           stackTrace: stackTrace,
@@ -192,17 +193,17 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: weekLabels
                   .map((e) => SizedBox(
-                width: 22,
-                height: 22,
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    e,
-                    style: TextStyle(
-                        color: Color(0xFF979797), fontSize: 14),
-                  ),
-                ),
-              ))
+                        width: 22,
+                        height: 22,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            e,
+                            style: TextStyle(
+                                color: Color(0xFF979797), fontSize: 14),
+                          ),
+                        ),
+                      ))
                   .toList(),
             ),
             SizedBox(
@@ -236,16 +237,18 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
           child: Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                width: 100,
-                height: 10,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.red, Colors.white, Colors.green],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight)),
-              )),
+            alignment: Alignment.centerRight,
+            child: Container(
+              width: 100,
+              height: 10,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.red, Colors.white, Colors.green],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight),
+              ),
+            ),
+          ),
         )
       ],
     );
