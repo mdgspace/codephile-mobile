@@ -84,6 +84,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      theme: ThemeData(
+        primaryColor: codephileMain,
+        backgroundColor: codephileBackground,
+      ),
       debugShowCheckedModeBanner: false,
       home: new ChooseHome(),
     );

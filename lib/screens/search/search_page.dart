@@ -44,114 +44,121 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
-        body: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 40.0, 16.0, 8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(243, 244, 247, 1),
-                  borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(8.0, 4.0, 2.0, 4.0),
-                        child: TextField(
-                          controller: _controller,
-                          decoration: InputDecoration.collapsed(
-                              hintText: inputHint,
-                              hintStyle: TextStyle(
-                                fontSize: 17.0,
-                                color: secondaryTextGrey,
-                              )),
-                          onSubmitted: (text) {
-                            text = text.trim();
-                            if (text != "") {
-                              _handleSearch(text);
-                            }
-                          },
-                          style: TextStyle(
-                            color: const Color.fromRGBO(
-                                36, 36, 36, 1), //TODO: use color resources
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
+          body: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 40.0, 16.0, 8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(243, 244, 247, 1),
+                    borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 4.0, 2.0, 4.0),
+                          child: TextField(
+                            textInputAction: TextInputAction.search,
+                            controller: _controller,
+                            decoration: InputDecoration.collapsed(
+                                hintText: inputHint,
+                                hintStyle: TextStyle(
+                                  fontSize: 17.0,
+                                  color: secondaryTextGrey,
+                                )),
+                            onSubmitted: (text) {
+                              text = text.trim();
+                              if (text != "") {
+                                _handleSearch(text);
+                              }
+                            },
+                            style: TextStyle(
+                              color: const Color.fromRGBO(
+                                  36, 36, 36, 1), //TODO: use color resources
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                      //TODO: use search icon from designs
-                      padding: EdgeInsets.fromLTRB(8.0, 1.0, 2.0, 4.0),
-                      icon: Icon(
-                        Icons.search,
-                        size: 30.0,
-                        color: const Color.fromRGBO(141, 141, 141, 1),
+                      IconButton(
+                        //TODO: use search icon from designs
+                        padding: EdgeInsets.fromLTRB(8.0, 1.0, 2.0, 4.0),
+                        icon: Icon(
+                          Icons.search,
+                          size: 30.0,
+                          color: const Color.fromRGBO(141, 141, 141, 1),
+                        ),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          if (_controller.text.trim() != "") {
+                            _handleSearch(_controller.text.trim());
+                          }
+                        },
                       ),
-                      onPressed: () {
-                        if (_controller.text.trim() != "") {
-                          _handleSearch(_controller.text.trim());
-                        }
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: _isSearching == true
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : isResultNull
-                      ? Center(
-                          child: Text(
-                            "No matching users found",
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: const Color.fromRGBO(36, 36, 36, 1),
+              Expanded(
+                child: _isSearching == true
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : isResultNull
+                        ? Center(
+                            child: Text(
+                              "No matching users found",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: const Color.fromRGBO(36, 36, 36, 1),
+                              ),
                             ),
-                          ),
-                        )
-                      : ((showRecentSearches) &&
-                              (_recentlySearchedUsers != null) &&
-                              (_recentlySearchedUsers.length != 0))
-                          ? recentSearches()
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
-                              itemCount: searchResult.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                CodephileUser user = searchResult[index];
-                                return GestureDetector(
-                                  child: SearchResultCard(
-                                    token,
-                                    user.fullname,
-                                    user.username,
-                                    user.picture,
-                                  ),
-                                  onTap: () {
-                                    addToRecentSearches(user);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => new Profile(
-                                                token,
-                                                user.id,
-                                                (widget.uId == user.id),
-                                                true)));
-                                  },
-                                );
-                              },
-                            ),
-            )
-          ],
-        ));
+                          )
+                        : ((showRecentSearches) &&
+                                (_recentlySearchedUsers != null) &&
+                                (_recentlySearchedUsers.length != 0))
+                            ? recentSearches()
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+                                itemCount: searchResult.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  CodephileUser user = searchResult[index];
+                                  return GestureDetector(
+                                    child: SearchResultCard(
+                                      token,
+                                      user.fullname,
+                                      user.username,
+                                      user.picture,
+                                    ),
+                                    onTap: () {
+                                      addToRecentSearches(user);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => new Profile(
+                                                  token,
+                                                  user.id,
+                                                  (widget.uId == user.id),
+                                                  true)));
+                                    },
+                                  );
+                                },
+                              ),
+              )
+            ],
+          )),
+    );
   }
 
   void _handleSearch(String query) {

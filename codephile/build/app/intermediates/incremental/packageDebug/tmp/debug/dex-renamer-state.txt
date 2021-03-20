@@ -1,0 +1,10 @@
+#Mon Mar 15 21:55:44 IST 2021
+path.2=classes3.dex
+path.1=classes2.dex
+path.0=classes.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+base.2=C\:\\Users\\Raghav\\AndroidStudioProjects\\Codephile_mobile\\codephile\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
+base.1=C\:\\Users\\Raghav\\AndroidStudioProjects\\Codephile_mobile\\codephile\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
+base.0=C\:\\Users\\Raghav\\AndroidStudioProjects\\Codephile_mobile\\codephile\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0

@@ -243,9 +243,10 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
               height: 10,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.red, Colors.white, Colors.green],
                     begin: Alignment.centerLeft,
-                    end: Alignment.centerRight),
+                    end: Alignment.centerRight,
+                  colors: [Colors.red, Colors.white, Colors.green],
+                ),
               ),
             ),
           ),

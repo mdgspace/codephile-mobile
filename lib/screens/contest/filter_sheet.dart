@@ -323,10 +323,19 @@ class _FilterSheetState extends State<FilterSheet> {
                     FlatButton(
                         onPressed: () async {
                           showDatePicker(
-                                  context: context,
+                            context: context,
+                                  builder: (BuildContext context, Widget child){
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.light().copyWith(primary: codephileMain)
+                                      ),
+                                      child: child,
+                                    );
+                                  },
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime(2020),
-                                  lastDate: DateTime(2025))
+                                  lastDate: DateTime(2025),
+                          )
                               .then((val) {
                             if (val == null) {
                               _filter.upcoming = true;

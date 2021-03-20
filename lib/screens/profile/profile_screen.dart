@@ -70,6 +70,7 @@ class _ProfileState extends State<Profile> {
       ),
         backgroundColor: Colors.white,
         body: RefreshIndicator(
+          color: codephileMainShade,
             child: _isLoading
                 ? Center(
               child: ProfileSkeleton(context),
