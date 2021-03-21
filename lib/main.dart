@@ -140,8 +140,10 @@ class ChooseHomeState extends State<ChooseHome> {
                   ),
                 ),
                 actions: <Widget>[
-                  FlatButton(
-                      padding: EdgeInsets.all(15),
+                  TextButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.all(15))
+                    ),
                       onPressed: () {
                         intent.Intent()
                           ..setAction(action.Action.ACTION_SHOW_APP_INFO)

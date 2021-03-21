@@ -53,7 +53,7 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
         ],
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text(
             "Cancel",
             style: TextStyle(color: codephileMain),
@@ -63,7 +63,7 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text(
             "Open Settings",
             style: TextStyle(color: codephileMain),

@@ -256,7 +256,7 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
   }
 
   List<Widget> _buildWeekColumns() {
-    List<Column> weekColumns = List();
+    List<Column> weekColumns = [];
     for (int i = 0; i < column; i++) {
       weekColumns.add(Column(children: _buildWeekDays(i)));
     }
@@ -264,7 +264,7 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
   }
 
   List<Widget> _buildWeekDays(int i) {
-    List<Container> weekDays = List();
+    List<Container> weekDays = [];
     for (int j = 0; j < 7; j++) {
       DateTime date = DateTime(renderRange[i * 7 + j].year,
           renderRange[i * 7 + j].month, renderRange[i * 7 + j].day);

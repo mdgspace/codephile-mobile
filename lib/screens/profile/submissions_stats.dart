@@ -107,7 +107,7 @@ class _SubmissionStatisticsState extends State<SubmissionStatistics> {
       SubmissionData("Compilation Error", cePercentage, subCompilationError)
     ];
     List<Charts.Series<SubmissionData, String>> pieChartData =
-        List<Charts.Series<SubmissionData, String>>();
+        [];
     pieChartData.add(
       Charts.Series(
         data: submissionData,

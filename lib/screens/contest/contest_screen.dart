@@ -23,8 +23,8 @@ class _ContestScreenState extends State<ContestScreen> {
   final SentryClient sentry = new SentryClient(dsn: dsn);
   List<Ongoing> ongoingContests;
   List<Upcoming> upcomingContests;
-  List<Ongoing> filteredOngoingContests = List<Ongoing>();
-  List<Upcoming> filteredUpcomingContests = List<Upcoming>();
+  List<Ongoing> filteredOngoingContests = [];
+  List<Upcoming> filteredUpcomingContests = [];
   ContestFilter filter;
 
   @override

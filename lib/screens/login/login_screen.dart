@@ -190,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }),
                             Text('Keep me logged in'),
                             Spacer(),
-                            FlatButton(
+                            TextButton(
                                 onPressed: () async {
                                   bool result = await buildShowDialog(context);
                                   if (result == true) {
@@ -211,8 +211,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         )),
                     Spacer(flex: 2),
                     Center(
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(0),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all(EdgeInsets.all(0))
+                        ),
                         child: Container(
                             alignment: Alignment.center,
                             height: 50,
@@ -340,8 +342,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _controller,
                   )),
               actions: <Widget>[
-                FlatButton(
-                    padding: EdgeInsets.all(15),
+                TextButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all(EdgeInsets.all(15))
+                    ),
                     onPressed: () async {
                       String email = _controller.text;
                       bool result = await resetPassword(email);

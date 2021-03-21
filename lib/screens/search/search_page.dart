@@ -24,12 +24,12 @@ class _SearchPageState extends State<SearchPage> {
   final String inputHint = "Enter handle or platform";
   final String token;
 
-  _SearchPageState({Key key, this.token});
+  _SearchPageState({this.token});
 
   final SentryClient sentry = new SentryClient(dsn: dsn);
   final TextEditingController _controller = TextEditingController();
   bool _isSearching = false;
-  List<CodephileUser> searchResult = List();
+  List<CodephileUser> searchResult = [];
   int statusCode = 0;
   bool isResultNull = false;
   bool showRecentSearches = true;

@@ -169,8 +169,10 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   Widget _showUpdatePasswordButton() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-        color: isUpdatePasswordTapped ? Colors.grey[500] : codephileMain,
+      child: TextButton(
+        style: TextButton.styleFrom(
+            primary: isUpdatePasswordTapped ? Colors.grey[500] : codephileMain
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(

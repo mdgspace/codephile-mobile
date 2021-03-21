@@ -23,7 +23,7 @@ class _SignUpPageState extends State<SignUpPage2> {
   String name;
   String email;
   String institute;
-  _SignUpPageState({Key key, this.email, this.name, this.institute});
+  _SignUpPageState({this.email, this.name, this.institute});
   String _codechef, _hackerrank, _codeforces, _spoj;
   bool enableTextFields = true;
   Handle handle;
@@ -270,8 +270,10 @@ class _SignUpPageState extends State<SignUpPage2> {
     return (handleVefifying)
         ? Padding(
             padding: const EdgeInsets.all(16.0),
-            child: FlatButton(
-              color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                  primary: isNextButtonTapped ? Colors.grey[500] : codephileMain
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
@@ -292,8 +294,10 @@ class _SignUpPageState extends State<SignUpPage2> {
           )
         : Padding(
             padding: const EdgeInsets.all(16.0),
-            child: FlatButton(
-              color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                  primary: isNextButtonTapped ? Colors.grey[500] : codephileMain
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
