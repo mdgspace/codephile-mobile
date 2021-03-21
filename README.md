@@ -1,6 +1,11 @@
 # Codephile
 
-Codephile is an application specially made for all the competitive oders out there. With features like submission feed, context reminders, user search and many more this app is a perfect companion for stalking your fellow coders and learning from them.
+Codephile is an application specially made for all the competitive coders out there. With features like submission feed, contest reminders, user search, and many more, this app is a perfect companion for stalking your fellow coders and learning from them.
+
+## Screenshots
+
+<img src="https://user-images.githubusercontent.com/60056833/111873783-1ab52900-89b8-11eb-8951-ca6c13249c05.png" width="200" height="400" />  <img src="https://user-images.githubusercontent.com/60056833/111873786-1c7eec80-89b8-11eb-9625-d19a05b15e25.png" width="200" height="400" />  <img src="https://user-images.githubusercontent.com/60056833/111873792-1f79dd00-89b8-11eb-9030-e26c91621304.png" width="200" height="400" />  <img src="https://user-images.githubusercontent.com/60056833/111873795-2143a080-89b8-11eb-9a28-04ea3f216b5b.png" width="200" height="400" />
+<img src="https://user-images.githubusercontent.com/60056833/111873771-0ffa9400-89b8-11eb-8be2-2ac328356207.png" width="200" height="400" />  <img src="https://user-images.githubusercontent.com/60056833/111873773-12f58480-89b8-11eb-8d95-7f905b6d8fa5.png" width="200" height="400" />  <img src="https://user-images.githubusercontent.com/60056833/111873778-15f07500-89b8-11eb-8b46-79abab630f0d.png" width="200" height="400" />  <img src="https://user-images.githubusercontent.com/60056833/111873781-1852cf00-89b8-11eb-807e-05bf63a82d9b.png" width="200" height="400" />
 
 ## Getting Started
 
