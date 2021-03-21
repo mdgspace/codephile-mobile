@@ -54,8 +54,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: FlatButton(
-                      color: Colors.white,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        primary: Colors.white
+                      ),
                       onPressed: () async {
                         final response = await sendVerifyEmail(widget.id);
                         if (response != 1) {
@@ -87,8 +89,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: FlatButton(
-                      color: codephileMain,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                          primary: codephileMain
+                      ),
                       onPressed: () async {
                         Token userToken =
                             await login(widget.username, widget.password);

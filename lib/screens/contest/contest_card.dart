@@ -33,12 +33,14 @@ class _ContestCardState extends State<ContestCard>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return FlatButton(
+    return TextButton(
       onPressed: () {
         FlutterWebBrowser.openWebPage(
             url: widget.url, androidToolbarColor: codephileMain);
       },
-      padding: EdgeInsets.fromLTRB(20, 15, 20, 10),
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(20, 15, 20, 10))
+      ),
       child:
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Padding(
@@ -139,8 +141,10 @@ class _ContestCardState extends State<ContestCard>
                   ),
                 ),
                 actions: <Widget>[
-                  FlatButton(
-                      padding: EdgeInsets.all(15),
+                  TextButton(
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all(EdgeInsets.all(15))
+                      ),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -191,8 +195,10 @@ class _ContestCardState extends State<ContestCard>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            FlatButton(
-                                padding: EdgeInsets.all(0),
+                            TextButton(
+                                style: ButtonStyle(
+                                    padding: MaterialStateProperty.all(EdgeInsets.all(0))
+                                ),
                                 onPressed: () async {
                                   await removeNotification(name: widget.title);
                                   Navigator.pop(context, false);
@@ -205,8 +211,10 @@ class _ContestCardState extends State<ContestCard>
                                     style: TextStyle(color: Color(0xFF979797)),
                                   ),
                                 )),
-                            FlatButton(
-                                padding: EdgeInsets.all(0),
+                            TextButton(
+                                style: ButtonStyle(
+                                    padding: MaterialStateProperty.all(EdgeInsets.all(0))
+                                ),
                                 onPressed: () async {
                                   Duration duration;
                                   switch (remindTime) {

@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage3> {
   Handle handle;
   File userImage;
   _SignUpPageState(
-      {Key key, this.email, this.name, this.institute, this.handle});
+      {this.email, this.name, this.institute, this.handle});
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
@@ -155,8 +155,10 @@ class _SignUpPageState extends State<SignUpPage3> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-        child: FlatButton(
-            color: (userImage == null) ? Colors.white : codephileMain,
+        child: TextButton(
+            style: TextButton.styleFrom(
+                primary: (userImage == null) ? Colors.white : codephileMain
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(

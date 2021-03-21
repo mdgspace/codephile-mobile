@@ -138,7 +138,7 @@ class NavbarButton extends StatelessWidget {
   NavbarButton({this.asset, this.selected, this.callback, this.title});
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
         child: SizedBox(
           height: 64,
           child: Column(
@@ -165,7 +165,9 @@ class NavbarButton extends StatelessWidget {
             ],
           ),
         ),
-        padding: EdgeInsets.all(0),
+        style: ButtonStyle(
+          padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+        ),
         onPressed: callback);
   }
 }

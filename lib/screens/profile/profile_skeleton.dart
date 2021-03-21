@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+// ignore: non_constant_identifier_names
 Widget ProfileSkeleton(BuildContext context){
   return Shimmer.fromColors(
     baseColor: Color(0xFFE5E5E5),

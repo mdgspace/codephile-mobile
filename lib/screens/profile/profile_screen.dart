@@ -131,11 +131,11 @@ class _ProfileState extends State<Profile> {
   void getLatestTwoSubmissions() {
     if (_submissionsList != null) {
       if (_submissionsList.length >= 2) {
-        _mostRecentSubmissions = List<Submission>();
+        _mostRecentSubmissions = [];
         _mostRecentSubmissions.add(_submissionsList[0]);
         _mostRecentSubmissions.add(_submissionsList[1]);
       } else if (_submissionsList.length == 1) {
-        _mostRecentSubmissions = List<Submission>();
+        _mostRecentSubmissions = [];
         _mostRecentSubmissions.add(_submissionsList[0]);
       }
     }

@@ -416,8 +416,10 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   Widget _showSaveChangesButton() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-        color: isSaveChangesTapped ? Colors.grey[500] : codephileMain,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          primary: isSaveChangesTapped ? Colors.grey[500] : codephileMain
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(
