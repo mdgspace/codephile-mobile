@@ -1,6 +1,6 @@
 # Codephile
 
-Codephile is an application specially made for all the competitive oders out there. With features like submission feed, context reminders, user search and many more this app is a perfect companion for stalking your fellow coders and learning from them.
+Codephile is an application specially made for all the competitive coders out there. With features like submission feed, contest reminders, user search, and many more, this app is a perfect companion for stalking your fellow coders and learning from them.
 
 ## Screenshots
 
