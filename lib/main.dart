@@ -77,16 +77,18 @@ Future<void> main() async {
       print(message.toString());
     },
   );
-  runApp(MaterialApp(home: MyApp()));
+    runApp(
+    MaterialApp(
+      home: MyApp(),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: new ChooseHome(),
-    );
+    return new ChooseHome();
   }
 }
 
