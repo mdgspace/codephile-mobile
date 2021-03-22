@@ -6,7 +6,9 @@ import 'package:intl/intl.dart';
 
 class FilterSheet extends StatefulWidget {
   final ContestFilter filter;
+
   FilterSheet({this.filter});
+
   @override
   _FilterSheetState createState() => _FilterSheetState();
 }
@@ -14,6 +16,7 @@ class FilterSheet extends StatefulWidget {
 class _FilterSheetState extends State<FilterSheet> {
   ContestFilter _filter;
   int _duration;
+
   @override
   void initState() {
     super.initState();
@@ -323,11 +326,21 @@ class _FilterSheetState extends State<FilterSheet> {
                     FlatButton(
                         onPressed: () async {
                           showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2020),
-                                  lastDate: DateTime(2025))
-                              .then((val) {
+                            builder: (BuildContext context, Widget child) {
+                              return Theme(
+                                data: Theme.of(context).copyWith(
+                                  colorScheme: ColorScheme.light().copyWith(
+                                    primary: codephileMain,
+                                  ),
+                                ),
+                                child: child,
+                              );
+                            },
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime(2025),
+                          ).then((val) {
                             if (val == null) {
                               _filter.upcoming = true;
                               _filter.startDate = DateTime.now();
