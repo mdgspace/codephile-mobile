@@ -65,6 +65,7 @@ class _SearchPageState extends State<SearchPage> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 4.0, 2.0, 4.0),
                         child: TextField(
+                          textInputAction: TextInputAction.search,
                           controller: _controller,
                           decoration: InputDecoration.collapsed(
                               hintText: inputHint,
@@ -94,6 +95,7 @@ class _SearchPageState extends State<SearchPage> {
                         color: const Color.fromRGBO(141, 141, 141, 1),
                       ),
                       onPressed: () {
+                        FocusScope.of(context).unfocus();
                         if (_controller.text.trim() != "") {
                           _handleSearch(_controller.text.trim());
                         }
