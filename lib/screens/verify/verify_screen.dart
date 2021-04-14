@@ -1,8 +1,10 @@
 import 'package:codephile/models/token.dart';
 import 'package:codephile/resources/colors.dart';
+import 'package:codephile/screens/verify/timer_button.dart';
 import 'package:codephile/services/login.dart';
 import 'package:codephile/services/send_verify_email.dart';
 import 'package:codephile/services/upload_user_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +14,9 @@ class VerifyScreen extends StatefulWidget {
   final String username;
   final String password;
   final String id;
+
   VerifyScreen({this.password, this.username, this.id});
+
   @override
   _VerifyScreenState createState() => _VerifyScreenState();
 }
@@ -54,9 +58,33 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: FlatButton(
-                      color: Colors.white,
-                      onPressed: () async {
+                    child: TimerButton(
+                      borderRadius: 2,
+                      height: 51,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      minWidth: MediaQuery.of(context).size.width * 0.30,
+                      color: codephileMain,
+                      child: Text(
+                        "Resend Email",
+                        style: TextStyle(
+                          color: codephileMain,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      loader: (timeLeft) {
+                        return Text(
+                          "Wait | $timeLeft",
+                          style: TextStyle(
+                            color: codephileMain,
+                            fontSize: 16,
+                          ),
+                        );
+                      },
+                      onTap: (startTimer, btnState) async {
+                        if (btnState == ButtonState.Idle) {
+                          startTimer(3);
+                        }
                         final response = await sendVerifyEmail(widget.id);
                         if (response != 1) {
                           Fluttertoast.showToast(
@@ -67,20 +95,34 @@ class _VerifyScreenState extends State<VerifyScreen> {
                           );
                         }
                       },
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: codephileMain, width: 1.5),
-                        ),
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          "Resend Email",
-                          textAlign: TextAlign.center,
-                          style:
-                              TextStyle(color: codephileMain, fontSize: 16.0),
-                        ),
-                      ),
                     ),
+                    // child: FlatButton(
+                    //   color: Colors.white,
+                    //   onPressed: () async {
+                    //     final response = await sendVerifyEmail(widget.id);
+                    //     if (response != 1) {
+                    //       Fluttertoast.showToast(
+                    //         msg:
+                    //             "Something went wrong, can not send new verification email.",
+                    //         toastLength: Toast.LENGTH_LONG,
+                    //         gravity: ToastGravity.CENTER,
+                    //       );
+                    //     }
+                    //   },
+                    //   child: Container(
+                    //     width: double.infinity,
+                    //     decoration: BoxDecoration(
+                    //       border: Border.all(color: codephileMain, width: 1.5),
+                    //     ),
+                    //     padding: EdgeInsets.all(16.0),
+                    //     child: Text(
+                    //       "Resend Email",
+                    //       textAlign: TextAlign.center,
+                    //       style:
+                    //           TextStyle(color: codephileMain, fontSize: 16.0),
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                 ),
                 Expanded(
