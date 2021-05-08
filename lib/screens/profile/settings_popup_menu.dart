@@ -72,15 +72,19 @@ class _SettingsIconState extends State<SettingsIcon> {
     switch (value) {
       case "update":
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => new UpdateDetails(
-                    widget._token, widget._user, widget._callbackRefresh)));
+          context,
+          MaterialPageRoute(
+            builder: (context) => new UpdateDetails(
+              widget._token,
+              widget._user,
+              widget._callbackRefresh,
+            ),
+          ),
+        );
         break;
       case "logout":
         logout(token: widget._token, context: context);
         break;
     }
   }
-
 }

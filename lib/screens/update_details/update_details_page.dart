@@ -74,7 +74,6 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
           leading: null,

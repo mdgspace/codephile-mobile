@@ -8,12 +8,14 @@ class ContestFilter {
   bool upcoming;
   DateTime startDate;
   List<dynamic> platform;
-  ContestFilter(
-      {this.duration,
-      this.platform,
-      this.startDate,
-      this.ongoing,
-      this.upcoming});
+
+  ContestFilter({
+    this.duration,
+    this.platform,
+    this.startDate,
+    this.ongoing,
+    this.upcoming,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

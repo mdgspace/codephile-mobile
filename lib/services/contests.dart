@@ -23,17 +23,16 @@ Future<Contests> contestList(String token, BuildContext context) async {
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
     }
     Contests contests = new Contests.fromJson(jsonResponse);
-
     return contests;
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

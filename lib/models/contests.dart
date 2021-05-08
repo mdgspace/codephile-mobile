@@ -7,14 +7,14 @@ class Contests {
 
   Contests.fromJson(Map<String, dynamic> json) {
     if (json['ongoing'] != null) {
-      ongoing = new List<Ongoing>();
+      ongoing = <Ongoing>[];
       json['ongoing'].forEach((v) {
         ongoing.add(new Ongoing.fromJson(v));
       });
     }
     timestamp = json['timestamp'];
     if (json['upcoming'] != null) {
-      upcoming = new List<Upcoming>();
+      upcoming = <Upcoming>[];
       json['upcoming'].forEach((v) {
         upcoming.add(new Upcoming.fromJson(v));
       });
