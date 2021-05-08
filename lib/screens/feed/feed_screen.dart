@@ -52,21 +52,23 @@ class _FeedScreenState extends State<FeedScreen> {
       body: Builder(
         builder: (context) {
           if (empty == true) {
-            return Column(children: <Widget>[
-              Spacer(flex: 3),
-              SvgPicture.asset("assets/emptyFeed.svg"),
-              Padding(
-                padding: EdgeInsets.all(25),
-                child: Text(
-                  "Feed looks empty, search and follow some people to see their updates",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Color(0xFF979797)),
+            return Column(
+              children: <Widget>[
+                Spacer(flex: 3),
+                SvgPicture.asset("assets/emptyFeed.svg"),
+                Padding(
+                  padding: EdgeInsets.all(25),
+                  child: Text(
+                    "Feed looks empty, search and follow some people to see their updates",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Color(0xFF979797)),
+                  ),
                 ),
-              ),
-              Spacer(
-                flex: 2,
-              )
-            ]);
+                Spacer(
+                  flex: 2,
+                )
+              ],
+            );
           } else if (feed == null) {
             double width = MediaQuery.of(context).size.width;
             return ListView.builder(

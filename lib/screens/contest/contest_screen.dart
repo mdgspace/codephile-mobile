@@ -109,8 +109,8 @@ class _ContestScreenState extends State<ContestScreen> {
       ),
       body: Builder(
         builder: (context) {
+          double width = MediaQuery.of(context).size.width;
           if (loading) {
-            double width = MediaQuery.of(context).size.width;
             return ListView.builder(
               itemCount: 7,
               itemBuilder: (context, index) {
@@ -159,6 +159,29 @@ class _ContestScreenState extends State<ContestScreen> {
               },
             );
           } else {
+            if ((filteredOngoingContests.length +
+                    filteredUpcomingContests.length) ==
+                0) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Spacer(flex: 3),
+                  SvgPicture.asset("assets/emptyFeed.svg"),
+                  Container(
+                    width: width,
+                    padding: EdgeInsets.all(25),
+                    child: Text(
+                      "No contests found, please adjust your filters!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Color(0xFF979797)),
+                    ),
+                  ),
+                  Spacer(
+                    flex: 2,
+                  )
+                ],
+              );
+            }
             return ListView.builder(
               itemCount: filteredOngoingContests.length +
                   filteredUpcomingContests.length,
