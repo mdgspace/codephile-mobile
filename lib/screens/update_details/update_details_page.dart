@@ -490,16 +490,15 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                 _isInstituteChanged ? _institute : widget._user.institute,
             "handle.codechef": _isCodechefHandleChanged
                 ? _codechefHandle
-                : widget._user.profiles.codechefProfile.userName,
+                : widget._user.handle.codechef,
             "handle.codeforces": _isCodeforcesHandleChanged
                 ? _codeforcesHandle
-                : widget._user.profiles.codeforcesProfile.userName,
+                : widget._user.handle.codeforces,
             "handle.hackerrank": _isHackerrankHandleChanged
                 ? _hackerrankHandle
-                : widget._user.profiles.hackerrankProfile.userName,
-            "handle.spoj": _isSpojHandleChanged
-                ? _spojHandle
-                : widget._user.profiles.spojProfile.userName,
+                : widget._user.handle.hackerrank,
+            "handle.spoj":
+                _isSpojHandleChanged ? _spojHandle : widget._user.handle.spoj,
           };
 
           int responseStatus =
@@ -574,26 +573,19 @@ class _UpdateDetailsState extends State<UpdateDetails> {
 
   getInitialHandle(String platform) {
     platform = platform.toLowerCase();
+    if (widget._user.handle == null) return null;
     switch (platform) {
       case "codechef":
-        return (widget._user.profiles.codechefProfile != null)
-            ? widget._user.profiles.codechefProfile.userName
-            : null;
+        return widget._user.handle.codechef;
         break;
       case "codeforces":
-        return (widget._user.profiles.codeforcesProfile != null)
-            ? widget._user.profiles.codeforcesProfile.userName
-            : null;
+        return widget._user.handle.codeforces;
         break;
       case "hackerrank":
-        return (widget._user.profiles.hackerrankProfile != null)
-            ? widget._user.profiles.hackerrankProfile.userName
-            : null;
+        return widget._user.handle.hackerrank;
         break;
       case "spoj":
-        return (widget._user.profiles.spojProfile != null)
-            ? widget._user.profiles.spojProfile.userName
-            : null;
+        return widget._user.handle.spoj;
         break;
     }
     return null;
