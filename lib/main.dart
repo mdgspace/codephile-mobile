@@ -77,7 +77,7 @@ Future<void> main() async {
       print(message.toString());
     },
   );
-    runApp(
+  runApp(
     MaterialApp(
       home: MyApp(),
       debugShowCheckedModeBanner: false,
@@ -103,7 +103,7 @@ class ChooseHomeState extends State<ChooseHome> {
     bool _seen = (prefs.getBool('seen') ?? false);
 
     final RemoteConfig _remoteConfig = await RemoteConfig.instance;
-    final int version = 4;
+    final int version = 10;
     final defaults = <String, int>{'version': version};
     await _remoteConfig.setDefaults(defaults);
     await _remoteConfig.fetch(expiration: Duration(seconds: 5));

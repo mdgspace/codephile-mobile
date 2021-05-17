@@ -19,13 +19,14 @@ class BottomInfoDisplay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
             child: Text(
               heading,
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 26.0,
-                  fontWeight: FontWeight.w900),
+                color: Colors.white,
+                fontSize: 26.0,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
           Padding(
@@ -35,9 +36,10 @@ class BottomInfoDisplay extends StatelessWidget {
               child: Text(
                 description,
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w300),
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
             ),
           ),

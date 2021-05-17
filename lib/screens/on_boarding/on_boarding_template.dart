@@ -23,12 +23,13 @@ class OnBoardingTemplate extends StatelessWidget {
           body: Column(
             children: <Widget>[
               Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
-                    child: Center(
-                      child: widgetToDisplay,
-                    ),
-                  )),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
+                  child: Center(
+                    child: widgetToDisplay,
+                  ),
+                ),
+              ),
               BottomInfoDisplay(heading, description),
             ],
           ),
@@ -36,22 +37,22 @@ class OnBoardingTemplate extends StatelessWidget {
         Positioned(
             right: MediaQuery.of(context).size.width / 25,
             bottom: MediaQuery.of(context).size.height / 20,
-            child: (pageNo+1 == noOfPages)?
-            FloatingActionButton(
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.arrow_forward,
-                color: Color.fromRGBO(35, 31, 32, 1),
-              ),
-              onPressed: (){
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.pushReplacement(context,
-                    new MaterialPageRoute(builder: (context) => new LoginScreen()));
-              },
-            )
-                :
-            Container()
-        )
+            child: (pageNo + 1 == noOfPages)
+                ? FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Color.fromRGBO(35, 31, 32, 1),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      Navigator.pushReplacement(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new LoginScreen()));
+                    },
+                  )
+                : Container())
       ],
     );
   }
