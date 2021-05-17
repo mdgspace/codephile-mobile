@@ -1,8 +1,10 @@
 import 'package:codephile/resources/helper_functions.dart';
+import 'package:codephile/services/email_availability.dart';
 import 'package:codephile/services/institute_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'progress_tab_bar.dart';
 import 'signup2.dart';
@@ -202,32 +204,41 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  bool _validateAndSave() {
+  Future<bool> _validateAndSave() async {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      return true;
+      final response = await isEmailAvailable(_email);
+      if (!response) {
+        Fluttertoast.showToast(
+          msg: 'An account with this email already exists!',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+        );
+      }
+      return response;
     }
     return false;
   }
 
-  void _validateAndSubmit() {
-    if (_validateAndSave()) {
+  void _validateAndSubmit() async {
+    if (await _validateAndSave()) {
       setState(() {
         isNextButtonTapped = true;
       });
-
       if (isNextButtonTapped) {
         setState(() {
           isNextButtonTapped = false;
           Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => new SignUpPage2(
-                        name: _name,
-                        email: _email,
-                        institute: (_institute == null) ? "" : _institute,
-                      )));
+            context,
+            new MaterialPageRoute(
+              builder: (context) => new SignUpPage2(
+                name: _name,
+                email: _email,
+                institute: (_institute == null) ? "" : _institute,
+              ),
+            ),
+          );
         });
       }
     }
