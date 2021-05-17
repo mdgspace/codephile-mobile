@@ -1,5 +1,6 @@
 import 'package:codephile/models/token.dart';
 import 'package:codephile/resources/colors.dart';
+import 'package:codephile/screens/verify/timer_button.dart';
 import 'package:codephile/services/login.dart';
 import 'package:codephile/services/send_verify_email.dart';
 import 'package:codephile/services/upload_user_image.dart';
@@ -54,9 +55,13 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: FlatButton(
-                      color: Colors.white,
-                      onPressed: () async {
+                    child: TimerButton(
+                      callback: () async {
+                        Fluttertoast.showToast(
+                          msg: "Sending new verification email.",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                        );
                         final response = await sendVerifyEmail(widget.id);
                         if (response != 1) {
                           Fluttertoast.showToast(
@@ -66,20 +71,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
                             gravity: ToastGravity.CENTER,
                           );
                         }
+                        //await Future.delayed(const Duration(seconds: 2));
                       },
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: codephileMain, width: 1.5),
-                        ),
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          "Resend Email",
-                          textAlign: TextAlign.center,
-                          style:
-                              TextStyle(color: codephileMain, fontSize: 16.0),
-                        ),
-                      ),
                     ),
                   ),
                 ),
@@ -125,13 +118,18 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         }
                       },
                       child: Container(
-                          padding: EdgeInsets.all(16.0),
-                          child: Text(
-                            "Login",
-                            textAlign: TextAlign.center,
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
-                          )),
+                        padding: EdgeInsets.all(16.0),
+                        height: 64,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Login",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
