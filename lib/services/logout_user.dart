@@ -12,7 +12,7 @@ Future<bool> logoutUser(String token) async {
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 
   try {
-    var response = await client.post(uri, headers: tokenAuth);
+    var response = await client.post(Uri.parse(uri), headers: tokenAuth);
 
     if (response.statusCode == 200) return true;
 

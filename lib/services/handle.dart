@@ -10,7 +10,7 @@ Future<bool> verifyHandle(String site, String handle) async {
 
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
     );
 
     if (response.statusCode == 200) {

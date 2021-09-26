@@ -19,7 +19,7 @@ Future<Contests> contestList(String token, BuildContext context) async {
 
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);

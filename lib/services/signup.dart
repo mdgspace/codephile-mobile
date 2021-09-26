@@ -13,7 +13,7 @@ Future<dynamic> signUp(SignUp details) async {
 
   try {
     var response = await client.post(
-      uri,
+      Uri.parse(uri),
       body: {
         "username": details.username,
         "email": details.email,

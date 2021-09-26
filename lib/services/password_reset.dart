@@ -11,7 +11,7 @@ Future resetPassword(String email) async {
   final SentryClient sentry = new SentryClient(dsn: dsn);
   try {
     var response = await client.post(
-      uri,
+      Uri.parse(uri),
       body: {'email': email},
     );
     print(response.body);

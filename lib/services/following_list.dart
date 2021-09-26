@@ -10,7 +10,8 @@ import 'package:flutter/foundation.dart' as Foundation;
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<List<Following>> getFollowingList(String token, BuildContext context) async {
+Future<List<Following>> getFollowingList(
+    String token, BuildContext context) async {
   String endpoint = "/friends/following";
   String uri = url + endpoint;
 
@@ -20,19 +21,19 @@ Future<List<Following>> getFollowingList(String token, BuildContext context) asy
 
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
     }
     List<Following> followingList = followingFromJson(response.body);
     return followingList;
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

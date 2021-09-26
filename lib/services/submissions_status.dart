@@ -21,10 +21,10 @@ Future<SubStatusData> getSubmissionStatusData(
 
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
@@ -37,9 +37,9 @@ Future<SubStatusData> getSubmissionStatusData(
     }
 
     return data;
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

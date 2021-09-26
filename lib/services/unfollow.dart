@@ -15,10 +15,10 @@ Future<int> unfollowUser(String token, String uid, BuildContext context) async {
 
   try {
     var response = await client.post(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;

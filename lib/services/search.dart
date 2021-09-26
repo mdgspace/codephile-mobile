@@ -12,7 +12,8 @@ import 'package:flutter/foundation.dart' as Foundation;
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<List<CodephileUser>> search(String token, String query, BuildContext context) async {
+Future<List<CodephileUser>> search(
+    String token, String query, BuildContext context) async {
   String endpoint = "/user/search?query=$query";
   String uri = url + endpoint;
   final SentryClient sentry = new SentryClient(dsn: dsn);
@@ -20,12 +21,12 @@ Future<List<CodephileUser>> search(String token, String query, BuildContext cont
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
 
     List<CodephileUser> results;
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
@@ -50,9 +51,9 @@ Future<List<CodephileUser>> search(String token, String query, BuildContext cont
     }
 
     return results;
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

@@ -12,13 +12,13 @@ Future<List<String>> getInstituteList() async {
   final SentryClient sentry = new SentryClient(dsn: dsn);
 
   try {
-    var response = await client.get(uri);
+    var response = await client.get(Uri.parse(uri));
 
     List<String> instituteList = institutesFromJson(response.body);
     return instituteList;
   } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

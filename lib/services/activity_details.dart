@@ -18,17 +18,16 @@ Future<List<ActivityDetails>> getActivityDetails(
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 
   try {
-    var response = await client.get(uri, headers: tokenAuth);
-    if(response.statusCode == 401){
+    var response = await client.get(Uri.parse(uri), headers: tokenAuth);
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
     }
     return activityDetailsFromJson(response.body);
-
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

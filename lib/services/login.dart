@@ -16,7 +16,7 @@ Future login(String username, String pass) async {
 
   try {
     var response = await client.post(
-      uri,
+      Uri.parse(uri),
       body: {'username': username, 'password': pass},
     );
     if (response.statusCode == 200) {

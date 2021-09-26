@@ -10,7 +10,8 @@ import 'package:flutter/foundation.dart' as Foundation;
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<CodephileUser> getUser(String token, String uId, BuildContext context) async {
+Future<CodephileUser> getUser(
+    String token, String uId, BuildContext context) async {
   String endpoint = "/user/$uId";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
@@ -18,10 +19,10 @@ Future<CodephileUser> getUser(String token, String uId, BuildContext context) as
 
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
@@ -29,9 +30,9 @@ Future<CodephileUser> getUser(String token, String uId, BuildContext context) as
     CodephileUser user = userFromJson(response.body);
 
     return user;
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

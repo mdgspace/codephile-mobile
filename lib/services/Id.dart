@@ -22,10 +22,10 @@ Future<String> id(String token, BuildContext context) async {
 
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
@@ -33,10 +33,9 @@ Future<String> id(String token, BuildContext context) async {
     final jsonResponse = jsonDecode(response.body);
     user = new CodephileUser.fromJson(jsonResponse);
     return user.id;
-
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

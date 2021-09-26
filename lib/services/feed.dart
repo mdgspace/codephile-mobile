@@ -19,7 +19,7 @@ Future<List<Feed>> getFeed(String token, BuildContext context) async {
   final SentryClient sentry = new SentryClient(dsn: dsn);
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
     if (response.statusCode == 401) {
@@ -30,7 +30,7 @@ Future<List<Feed>> getFeed(String token, BuildContext context) async {
     return feedFromJson(response.body);
   } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,

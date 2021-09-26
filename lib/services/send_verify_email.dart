@@ -13,7 +13,7 @@ Future sendVerifyEmail(String uid) async {
 
   try {
     await client.post(
-      uri,
+      Uri.parse(uri),
     );
     return 1;
   } catch (error, stackTrace) {
