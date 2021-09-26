@@ -1,6 +1,7 @@
 import 'package:codephile/homescreen.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/login/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:intent/intent.dart' as intent;
 import 'package:intent/action.dart' as action;
 import 'package:intent/extra.dart' as extra;
@@ -37,6 +38,7 @@ class ReceivedNotification {
 Future<void> main() async {
   // needed if you intend to initialize in the `main` function
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   notificationAppLaunchDetails =
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
@@ -63,8 +65,9 @@ Future<void> main() async {
     selectNotificationSubject.add(payload);
   });
 
-  Crashlytics.instance.enableInDevMode = true;
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  // Crashlytics.instance.enableInDevMode = true;
+  // FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  FirebaseCrashlytics.instance.crash();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   _firebaseMessaging.configure(
     onMessage: (Map<String, dynamic> message) async {
@@ -102,12 +105,18 @@ class ChooseHomeState extends State<ChooseHome> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
 
-    final RemoteConfig _remoteConfig = await RemoteConfig.instance;
+    final RemoteConfig _remoteConfig = RemoteConfig.instance;
     final int version = 10;
     final defaults = <String, int>{'version': version};
     await _remoteConfig.setDefaults(defaults);
-    await _remoteConfig.fetch(expiration: Duration(seconds: 5));
-    await _remoteConfig.activateFetched();
+    await _remoteConfig.fetch();
+    await _remoteConfig.setConfigSettings(
+      RemoteConfigSettings(
+        fetchTimeout: const Duration(seconds: 5),
+        minimumFetchInterval: Duration.zero,
+      ),
+    );
+    await _remoteConfig.activate();
     final int minimunVersion = _remoteConfig.getInt('version');
     print('Minimum version:- ' + minimunVersion.toString());
     if (version < minimunVersion) {
