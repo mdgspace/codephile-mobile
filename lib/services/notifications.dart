@@ -21,7 +21,8 @@ Future<void> setNotification(
   var iOSPlatformChannelSpecifics =
       IOSNotificationDetails(sound: 'slow_spring_board.aiff');
   var platformChannelSpecifics = NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics);
   List pendingNotifications =
       await flutterLocalNotificationsPlugin.pendingNotificationRequests();
   await flutterLocalNotificationsPlugin.schedule(

@@ -56,7 +56,7 @@ Future<void> main() async {
             id: id, title: title, body: body, payload: payload));
       });
   var initializationSettings = InitializationSettings(
-      initializationSettingsAndroid, initializationSettingsIOS);
+      android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String payload) async {
     if (payload != null) {
@@ -68,18 +68,15 @@ Future<void> main() async {
   // Crashlytics.instance.enableInDevMode = true;
   // FlutterError.onError = Crashlytics.instance.recordFlutterError;
   FirebaseCrashlytics.instance.crash();
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  _firebaseMessaging.configure(
-    onMessage: (Map<String, dynamic> message) async {
-      print(message.toString());
-    },
-    onLaunch: (Map<String, dynamic> message) async {
-      print(message.toString());
-    },
-    onResume: (Map<String, dynamic> message) async {
-      print(message.toString());
-    },
-  );
+  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  FirebaseMessaging.onMessage.listen((message) {
+    var notification = message.notification;
+    print('title: ${notification.title} \t body: ${notification.body}');
+  });
+  FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    var notification = message.notification;
+    print('title: ${notification.title} \t body: ${notification.body}');
+  });
   runApp(
     MaterialApp(
       home: MyApp(),
