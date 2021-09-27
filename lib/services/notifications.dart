@@ -25,13 +25,16 @@ Future<void> setNotification(
       iOS: iOSPlatformChannelSpecifics);
   List pendingNotifications =
       await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-  await flutterLocalNotificationsPlugin.schedule(
-      pendingNotifications.length,
-      name,
-      'Contest Starts at ${DateFormat('hh:mm a dd, MMMM yyyy').format(startTime)}',
-      scheduledNotificationDateTime,
-      platformChannelSpecifics,
-      androidAllowWhileIdle: true);
+  await flutterLocalNotificationsPlugin.zonedSchedule(
+    pendingNotifications.length,
+    name,
+    'Contest Starts at ${DateFormat('hh:mm a dd, MMMM yyyy').format(startTime)}',
+    scheduledNotificationDateTime,
+    platformChannelSpecifics,
+    uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+    androidAllowWhileIdle: true,
+  );
 }
 
 Future<void> removeNotification({String name}) async {
