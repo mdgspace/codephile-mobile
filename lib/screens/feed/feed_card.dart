@@ -205,7 +205,7 @@ class _FeedCardState extends State<FeedCard> {
         onTap: () {
           FlutterWebBrowser.openWebPage(
             url: widget.feed.url,
-            androidToolbarColor: codephileMain,
+            customTabsOptions: CustomTabsOptions(toolbarColor: codephileMain),
           );
         },
         child: Row(

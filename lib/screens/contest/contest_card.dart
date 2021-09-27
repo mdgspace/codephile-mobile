@@ -36,7 +36,9 @@ class _ContestCardState extends State<ContestCard>
     return FlatButton(
       onPressed: () {
         FlutterWebBrowser.openWebPage(
-            url: widget.url, androidToolbarColor: codephileMain);
+          url: widget.url,
+          customTabsOptions: CustomTabsOptions(toolbarColor: codephileMain),
+        );
       },
       padding: EdgeInsets.fromLTRB(20, 15, 20, 10),
       child:

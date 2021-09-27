@@ -1,6 +1,6 @@
 import 'package:codephile/models/activity_details.dart';
 import 'package:codephile/resources/strings.dart';
-import 'package:date_utils/date_utils.dart';
+import 'package:date_utils/date_utils.dart' as Utils;
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 import 'package:flutter/foundation.dart' as Foundation;
@@ -35,14 +35,18 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
   }
 
   void dataSetup() async {
-    range = Utils.daysInRange(DateTime(currentYear, currentTriplet * 3 - 2),
-            Utils.lastDayOfMonth(DateTime(currentYear, currentTriplet * 3)))
+    range = Utils.DateUtils.daysInRange(
+            DateTime(currentYear, currentTriplet * 3 - 2),
+            Utils.DateUtils.lastDayOfMonth(
+                DateTime(currentYear, currentTriplet * 3)))
         .toList();
-    range.add(Utils.lastDayOfMonth(DateTime(currentYear, currentTriplet * 3)));
-    renderRange = Utils.daysInRange(
-            Utils.firstDayOfWeek(range.first), Utils.lastDayOfWeek(range.last))
+    range.add(Utils.DateUtils.lastDayOfMonth(
+        DateTime(currentYear, currentTriplet * 3)));
+    renderRange = Utils.DateUtils.daysInRange(
+            Utils.DateUtils.firstDayOfWeek(range.first),
+            Utils.DateUtils.lastDayOfWeek(range.last))
         .toList();
-    renderRange.add(Utils.lastDayOfWeek(range.last));
+    renderRange.add(Utils.DateUtils.lastDayOfWeek(range.last));
     switch (currentTriplet) {
       case 1:
         monthLabels = ["Jan", "Feb", "Mar"];
