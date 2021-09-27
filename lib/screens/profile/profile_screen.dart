@@ -71,7 +71,7 @@ class _ProfileState extends State<Profile> {
         body: RefreshIndicator(
             child: _isLoading
                 ? Center(
-                    child: ProfileSkeleton(context),
+                    child: profileSkeleton(context),
                   )
                 : ListView(
                     children: <Widget>[

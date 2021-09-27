@@ -23,7 +23,7 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
   _SubmissionScreenState({Key key, this.token, this.uid});
 
   List<Submission> submissionList;
-  List<Widget> allSubmission = List<Widget>();
+  List<Widget> allSubmission = <Widget>[];
   bool _isLoading = true;
   String _username;
   String _picture;

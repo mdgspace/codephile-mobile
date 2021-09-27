@@ -119,49 +119,55 @@ class ChooseHomeState extends State<ChooseHome> {
     if (version < minimunVersion) {
       print("1");
       showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => AlertDialog(
-                titlePadding: EdgeInsets.all(0),
-                title: Container(
-                  padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                  decoration: BoxDecoration(
-                      color: Color(0xFFF3F4F7),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15))),
-                  child: Text(
-                    "Update Available",
-                    textAlign: TextAlign.center,
-                  ),
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          titlePadding: EdgeInsets.all(0),
+          title: Container(
+            padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+            decoration: BoxDecoration(
+                color: Color(0xFFF3F4F7),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15))),
+            child: Text(
+              "Update Available",
+              textAlign: TextAlign.center,
+            ),
+          ),
+          contentPadding: EdgeInsets.all(0),
+          content: Padding(
+            padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+            child: Text(
+              "This version of the application has been depricated, please update your app through the Google PlayStore.",
+              textAlign: TextAlign.center,
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.all(15),
+              ),
+              onPressed: () {
+                intent.Intent()
+                  ..setAction(action.Action.ACTION_SHOW_APP_INFO)
+                  ..putExtra(extra.Extra.EXTRA_PACKAGE_NAME,
+                      "in.ac.iitr.mdg.codephile")
+                  ..startActivity().catchError((e) => print(e));
+              },
+              child: Container(
+                padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                color: codephileMain,
+                child: Text(
+                  "Okay",
+                  style: TextStyle(color: Colors.white),
                 ),
-                contentPadding: EdgeInsets.all(0),
-                content: Padding(
-                  padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
-                  child: Text(
-                    "This version of the application has been depricated, please update your app through the Google PlayStore.",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                      padding: EdgeInsets.all(15),
-                      onPressed: () {
-                        intent.Intent()
-                          ..setAction(action.Action.ACTION_SHOW_APP_INFO)
-                          ..putExtra(extra.Extra.EXTRA_PACKAGE_NAME,
-                              "in.ac.iitr.mdg.codephile")
-                          ..startActivity().catchError((e) => print(e));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                        color: codephileMain,
-                        child:
-                            Text("Okay", style: TextStyle(color: Colors.white)),
-                      ))
-                ],
-                actionsPadding: EdgeInsets.all(0),
-              ));
+              ),
+            )
+          ],
+          actionsPadding: EdgeInsets.all(0),
+        ),
+      );
     } else {
       if (_seen) {
         String token = prefs.getString('token');

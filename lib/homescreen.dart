@@ -138,34 +138,37 @@ class NavbarButton extends StatelessWidget {
   NavbarButton({this.asset, this.selected, this.callback, this.title});
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-        child: SizedBox(
-          height: 64,
-          child: Column(
-            children: <Widget>[
-              Container(
-                color: selected ? codephileMain : Colors.transparent,
-                height: 2,
-                width: 75,
+    return TextButton(
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.zero,
+      ),
+      child: SizedBox(
+        height: 64,
+        child: Column(
+          children: <Widget>[
+            Container(
+              color: selected ? codephileMain : Colors.transparent,
+              height: 2,
+              width: 75,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+              child: SvgPicture.asset(
+                asset,
+                color: selected ? codephileMain : Color(0xFF979797),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
-                child: SvgPicture.asset(
-                  asset,
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                  fontWeight: FontWeight.normal,
                   color: selected ? codephileMain : Color(0xFF979797),
-                ),
-              ),
-              Text(
-                title,
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: selected ? codephileMain : Color(0xFF979797),
-                    fontSize: 16),
-              )
-            ],
-          ),
+                  fontSize: 16),
+            )
+          ],
         ),
-        padding: EdgeInsets.all(0),
-        onPressed: callback);
+      ),
+      onPressed: callback,
+    );
   }
 }

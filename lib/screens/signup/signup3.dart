@@ -155,8 +155,11 @@ class _SignUpPageState extends State<SignUpPage3> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-        child: FlatButton(
-            color: (userImage == null) ? Colors.white : codephileMain,
+        child: TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor:
+                  (userImage == null) ? Colors.white : codephileMain,
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(

@@ -80,8 +80,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: FlatButton(
-                      color: codephileMain,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: codephileMain,
+                      ),
                       onPressed: () async {
                         Token userToken =
                             await login(widget.username, widget.password);

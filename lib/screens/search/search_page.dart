@@ -29,7 +29,7 @@ class _SearchPageState extends State<SearchPage> {
   final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
   final TextEditingController _controller = TextEditingController();
   bool _isSearching = false;
-  List<CodephileUser> searchResult = List();
+  List<CodephileUser> searchResult = <CodephileUser>[];
   int statusCode = 0;
   bool isResultNull = false;
   bool showRecentSearches = true;

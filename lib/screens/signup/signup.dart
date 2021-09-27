@@ -183,8 +183,11 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _showNextButton() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-        color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor:
+              isNextButtonTapped ? Colors.grey[500] : codephileMain,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(

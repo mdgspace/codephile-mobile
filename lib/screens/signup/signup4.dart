@@ -217,8 +217,10 @@ class _SignUpPageState extends State<SignUpPage4> {
     return (isCreateAccountButtonTapped)
         ? Padding(
             padding: const EdgeInsets.all(16.0),
-            child: FlatButton(
-                color: Colors.grey[500],
+            child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.grey[500],
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Container(
@@ -238,8 +240,10 @@ class _SignUpPageState extends State<SignUpPage4> {
         : (isCreateAccountSuccessful)
             ? Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: FlatButton(
-                    color: codephileMain,
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: codephileMain,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
@@ -258,8 +262,10 @@ class _SignUpPageState extends State<SignUpPage4> {
               )
             : Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: FlatButton(
-                  color: codephileMain,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: codephileMain,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Container(

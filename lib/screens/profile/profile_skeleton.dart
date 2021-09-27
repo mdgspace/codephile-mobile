@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-Widget ProfileSkeleton(BuildContext context){
+Widget profileSkeleton(BuildContext context) {
   return Shimmer.fromColors(
     baseColor: Color(0xFFE5E5E5),
     highlightColor: Colors.white70,
@@ -26,7 +26,7 @@ Widget ProfileSkeleton(BuildContext context){
             padding: const EdgeInsets.all(8),
             child: Container(
               height: MediaQuery.of(context).size.width / 18,
-              width: MediaQuery.of(context).size.width/2,
+              width: MediaQuery.of(context).size.width / 2,
               color: Color(0xFFE5E5E5),
             ),
           ),
@@ -34,7 +34,7 @@ Widget ProfileSkeleton(BuildContext context){
             padding: const EdgeInsets.all(8),
             child: Container(
               height: MediaQuery.of(context).size.width / 18,
-              width: MediaQuery.of(context).size.width/2,
+              width: MediaQuery.of(context).size.width / 2,
               color: Color(0xFFE5E5E5),
             ),
           ),
@@ -42,17 +42,17 @@ Widget ProfileSkeleton(BuildContext context){
             padding: const EdgeInsets.all(8),
             child: Container(
               height: MediaQuery.of(context).size.width / 18,
-              width: MediaQuery.of(context).size.width/2,
+              width: MediaQuery.of(context).size.width / 2,
               color: Color(0xFFE5E5E5),
             ),
           ),
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(4,20,0,20),
+              padding: const EdgeInsets.fromLTRB(4, 20, 0, 20),
               child: Container(
                 height: MediaQuery.of(context).size.width / 18,
-                width: MediaQuery.of(context).size.width/2,
+                width: MediaQuery.of(context).size.width / 2,
                 color: Color(0xFFE5E5E5),
               ),
             ),
@@ -65,7 +65,7 @@ Widget ProfileSkeleton(BuildContext context){
                 padding: const EdgeInsets.all(8),
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
-                  width: MediaQuery.of(context).size.width/10,
+                  width: MediaQuery.of(context).size.width / 10,
                   color: Color(0xFFE5E5E5),
                 ),
               ),
@@ -73,7 +73,7 @@ Widget ProfileSkeleton(BuildContext context){
                 padding: const EdgeInsets.all(8),
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
-                  width: MediaQuery.of(context).size.width/10,
+                  width: MediaQuery.of(context).size.width / 10,
                   color: Color(0xFFE5E5E5),
                 ),
               ),
@@ -81,7 +81,7 @@ Widget ProfileSkeleton(BuildContext context){
                 padding: const EdgeInsets.all(8),
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
-                  width: MediaQuery.of(context).size.width/10,
+                  width: MediaQuery.of(context).size.width / 10,
                   color: Color(0xFFE5E5E5),
                 ),
               ),
@@ -89,20 +89,19 @@ Widget ProfileSkeleton(BuildContext context){
                 padding: const EdgeInsets.all(8),
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
-                  width: MediaQuery.of(context).size.width/10,
+                  width: MediaQuery.of(context).size.width / 10,
                   color: Color(0xFFE5E5E5),
                 ),
               ),
             ],
           ),
-
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(4,20,0,20),
+              padding: const EdgeInsets.fromLTRB(4, 20, 0, 20),
               child: Container(
                 height: MediaQuery.of(context).size.width / 18,
-                width: MediaQuery.of(context).size.width/2,
+                width: MediaQuery.of(context).size.width / 2,
                 color: Color(0xFFE5E5E5),
               ),
             ),
@@ -115,7 +114,7 @@ Widget ProfileSkeleton(BuildContext context){
                 padding: const EdgeInsets.all(8),
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
-                  width: MediaQuery.of(context).size.width/4,
+                  width: MediaQuery.of(context).size.width / 4,
                   color: Color(0xFFE5E5E5),
                 ),
               ),
@@ -123,7 +122,7 @@ Widget ProfileSkeleton(BuildContext context){
                 padding: const EdgeInsets.all(8),
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
-                  width: MediaQuery.of(context).size.width/4,
+                  width: MediaQuery.of(context).size.width / 4,
                   color: Color(0xFFE5E5E5),
                 ),
               ),
@@ -131,7 +130,7 @@ Widget ProfileSkeleton(BuildContext context){
                 padding: const EdgeInsets.all(8),
                 child: Container(
                   height: MediaQuery.of(context).size.width / 10,
-                  width: MediaQuery.of(context).size.width/4,
+                  width: MediaQuery.of(context).size.width / 4,
                   color: Color(0xFFE5E5E5),
                 ),
               ),

@@ -46,14 +46,15 @@ class _FilterSheetState extends State<FilterSheet> {
                               fontSize: 22, fontWeight: FontWeight.w400),
                         ),
                       ),
-                      FlatButton(
-                          onPressed: () {
-                            Navigator.pop(context, _filter);
-                          },
-                          child: Text(
-                            "Apply",
-                            style: TextStyle(color: codephileMain),
-                          ))
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, _filter);
+                        },
+                        child: Text(
+                          "Apply",
+                          style: TextStyle(color: codephileMain),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -73,8 +74,10 @@ class _FilterSheetState extends State<FilterSheet> {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 0, 25),
-                        child: FlatButton(
-                          padding: EdgeInsets.all(0),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.all(0),
+                          ),
                           onPressed: () {
                             setState(() {
                               _filter.platform[0] = !_filter.platform[0];
@@ -98,8 +101,10 @@ class _FilterSheetState extends State<FilterSheet> {
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 0, 25),
-                        child: FlatButton(
-                          padding: EdgeInsets.all(0),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.all(0),
+                          ),
                           onPressed: () {
                             setState(() {
                               _filter.platform[1] = !_filter.platform[1];
@@ -123,8 +128,10 @@ class _FilterSheetState extends State<FilterSheet> {
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 0, 25),
-                        child: FlatButton(
-                          padding: EdgeInsets.all(0),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.all(0),
+                          ),
                           onPressed: () {
                             setState(() {
                               _filter.platform[2] = !_filter.platform[2];
@@ -148,8 +155,10 @@ class _FilterSheetState extends State<FilterSheet> {
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 0, 25),
-                        child: FlatButton(
-                          padding: EdgeInsets.all(0),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.all(0),
+                          ),
                           onPressed: () {
                             setState(() {
                               _filter.platform[3] = !_filter.platform[3];
@@ -173,8 +182,10 @@ class _FilterSheetState extends State<FilterSheet> {
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 0, 25),
-                        child: FlatButton(
-                          padding: EdgeInsets.all(0),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.all(0),
+                          ),
                           onPressed: () {
                             setState(() {
                               _filter.platform[4] = !_filter.platform[4];
@@ -323,7 +334,7 @@ class _FilterSheetState extends State<FilterSheet> {
                             fontSize: 16.0,
                           ),
                         )),
-                    FlatButton(
+                    TextButton(
                         onPressed: () async {
                           showDatePicker(
                             builder: (BuildContext context, Widget child) {
