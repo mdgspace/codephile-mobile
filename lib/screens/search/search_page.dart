@@ -26,7 +26,7 @@ class _SearchPageState extends State<SearchPage> {
 
   _SearchPageState({Key key, this.token});
 
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
   final TextEditingController _controller = TextEditingController();
   bool _isSearching = false;
   List<CodephileUser> searchResult = List();
@@ -207,7 +207,7 @@ class _SearchPageState extends State<SearchPage> {
       });
     } catch (error, stackTrace) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }
@@ -270,7 +270,7 @@ class _SearchPageState extends State<SearchPage> {
       });
     } catch (error, stackTrace) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

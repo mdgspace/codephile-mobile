@@ -15,7 +15,7 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
   List<GroupedFeed> feed;
   bool empty;
 
@@ -169,7 +169,7 @@ class _FeedScreenState extends State<FeedScreen> {
     } catch (error, stackTrace) {
       if (Foundation.kReleaseMode) {
         await sentry.captureException(
-          exception: error,
+          error,
           stackTrace: stackTrace,
         );
       }

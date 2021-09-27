@@ -9,7 +9,7 @@ http.Client client = new http.Client();
 
 Future<List<String>> getInstituteList() async {
   String uri = "https://codephile.mdg.iitr.ac.in/institutes";
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.get(Uri.parse(uri));
@@ -20,7 +20,7 @@ Future<List<String>> getInstituteList() async {
     print(error);
     if (Foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

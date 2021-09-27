@@ -8,10 +8,11 @@ import 'package:flutter/foundation.dart' as Foundation;
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<int> uploadImage(String token, String userImagePath, BuildContext context) async {
+Future<int> uploadImage(
+    String token, String userImagePath, BuildContext context) async {
   String endpoint = "/user/picture";
   String uri = url + endpoint;
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var request = http.MultipartRequest(
@@ -25,17 +26,17 @@ Future<int> uploadImage(String token, String userImagePath, BuildContext context
     ));
 
     var response = await request.send();
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
     }
     return response.statusCode;
-  } catch(error, stackTrace){
+  } catch (error, stackTrace) {
     print(error);
-    if(Foundation.kReleaseMode) {
+    if (Foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

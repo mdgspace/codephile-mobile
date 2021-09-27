@@ -16,7 +16,7 @@ Future<List<CodephileUser>> search(
     String token, String query, BuildContext context) async {
   String endpoint = "/user/search?query=$query";
   String uri = url + endpoint;
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
   try {
@@ -42,7 +42,7 @@ Future<List<CodephileUser>> search(
         msg: "Search query too small!",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
-        timeInSecForIos: 7,
+        timeInSecForIosWeb: 7,
         fontSize: 12.0,
       );
       results = null;
@@ -55,7 +55,7 @@ Future<List<CodephileUser>> search(
     print(error);
     if (Foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

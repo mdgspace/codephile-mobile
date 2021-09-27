@@ -14,7 +14,7 @@ Future<List<Submission>> getSubmissionList(
   String endpoint = "/submission/all/";
   String uri = url + endpoint + uId;
   var tokenAuth = {"Authorization": token};
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.get(
@@ -32,7 +32,7 @@ Future<List<Submission>> getSubmissionList(
     print(error);
     if (Foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

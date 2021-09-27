@@ -12,7 +12,7 @@ Future login(String username, String pass) async {
   String endpoint = "/user/login";
   String uri = url + endpoint;
   Token token;
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.post(
@@ -33,7 +33,7 @@ Future login(String username, String pass) async {
     print(error);
     if (Foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

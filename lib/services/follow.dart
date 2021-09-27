@@ -15,7 +15,7 @@ Future<int> followUser(String token, String uid, BuildContext context) async {
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.post(
@@ -32,7 +32,7 @@ Future<int> followUser(String token, String uid, BuildContext context) async {
     print(error);
     if (Foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

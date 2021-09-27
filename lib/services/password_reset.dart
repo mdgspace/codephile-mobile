@@ -8,7 +8,7 @@ http.Client client = new http.Client();
 Future resetPassword(String email) async {
   String endpoint = "/user/password-reset-email";
   String uri = url + endpoint;
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
   try {
     var response = await client.post(
       Uri.parse(uri),
@@ -23,7 +23,7 @@ Future resetPassword(String email) async {
   } catch (error, stackTrace) {
     print(error);
     await sentry.captureException(
-      exception: error,
+      error,
       stackTrace: stackTrace,
     );
     return false;

@@ -9,7 +9,7 @@ http.Client client = new http.Client();
 Future sendVerifyEmail(String uid) async {
   String endpoint = "/user/send-verify-email/";
   String uri = url + endpoint + uid;
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
 
   try {
     await client.post(
@@ -20,7 +20,7 @@ Future sendVerifyEmail(String uid) async {
     print(error);
     if (Foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

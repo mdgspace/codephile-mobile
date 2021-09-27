@@ -12,7 +12,7 @@ http.Client client = new http.Client();
 
 Future<List<ActivityDetails>> getActivityDetails(
     String token, String uid, BuildContext context) async {
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
   String endpoint = "/graph/activity/$uid";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
@@ -29,7 +29,7 @@ Future<List<ActivityDetails>> getActivityDetails(
     print(error);
     if (Foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

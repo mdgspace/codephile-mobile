@@ -13,7 +13,7 @@ class AcceptanceGraph extends StatefulWidget {
 }
 
 class _AcceptanceGraphState extends State<AcceptanceGraph> {
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
   List<String> weekLabels;
   double width;
   DateTime now;
@@ -81,7 +81,7 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
     } catch (error, stackTrace) {
       if (Foundation.kReleaseMode) {
         await sentry.captureException(
-          exception: error,
+          error,
           stackTrace: stackTrace,
         );
       }

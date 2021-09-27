@@ -36,7 +36,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   bool _isLoading = true;
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
 
   CodephileUser _user;
   UserProfileDetails _userPlatformDetails;
@@ -55,72 +55,73 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: codephileMain,
-        actions: <Widget>[
-          (widget._isMyProfile)?
-      Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 16.0, 16.0, 0.0),
-        child: SettingsIcon(widget.token, _user, refreshPage),
-      )
-          :
-           Container(),
-        ],
-      ),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: codephileMain,
+          actions: <Widget>[
+            (widget._isMyProfile)
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 16.0, 16.0, 0.0),
+                    child: SettingsIcon(widget.token, _user, refreshPage),
+                  )
+                : Container(),
+          ],
+        ),
         backgroundColor: Colors.white,
         body: RefreshIndicator(
             child: _isLoading
                 ? Center(
-              child: ProfileSkeleton(context),
-            )
+                    child: ProfileSkeleton(context),
+                  )
                 : ListView(
-              children: <Widget>[
-                ProfileCard(
-                  widget.token,
-                  _user,
-                  checkIfFollowing(widget.uId),
-                  widget._isMyProfile,
-                  refreshPage,
-                ),
-                AccuracyDisplay(_userPlatformDetails),
-                ((_user == null) || (_user.solvedProblemsCount == null))?
-                QuestionsSolvedDisplay(0,0,0,0)
-                    :
-                QuestionsSolvedDisplay(
-                    _user.solvedProblemsCount.codechef,
-                    _user.solvedProblemsCount.codeforces,
-                    _user.solvedProblemsCount.hackerrank,
-                    _user.solvedProblemsCount.spoj),
-                SubmissionStatistics(_subStats),
-                AcceptanceGraph(
-                  activityDetails: (_activityDetails != null)? _activityDetails: [],
-                )
-              ],
-            ),
+                    children: <Widget>[
+                      ProfileCard(
+                        widget.token,
+                        _user,
+                        checkIfFollowing(widget.uId),
+                        widget._isMyProfile,
+                        refreshPage,
+                      ),
+                      AccuracyDisplay(_userPlatformDetails),
+                      ((_user == null) || (_user.solvedProblemsCount == null))
+                          ? QuestionsSolvedDisplay(0, 0, 0, 0)
+                          : QuestionsSolvedDisplay(
+                              _user.solvedProblemsCount.codechef,
+                              _user.solvedProblemsCount.codeforces,
+                              _user.solvedProblemsCount.hackerrank,
+                              _user.solvedProblemsCount.spoj),
+                      SubmissionStatistics(_subStats),
+                      AcceptanceGraph(
+                        activityDetails:
+                            (_activityDetails != null) ? _activityDetails : [],
+                      )
+                    ],
+                  ),
             onRefresh: refreshPage));
   }
 
   void initValues() async {
-    try{
+    try {
       var user = await getUser(widget.token, widget.uId, context);
       _user = user;
       _userPlatformDetails = (_user == null) ? null : _user.profiles;
       var followingList = await getFollowingList(widget.token, context);
       _followingList = followingList;
-      var subData = await getSubmissionStatusData(widget.token, widget.uId, context);
+      var subData =
+          await getSubmissionStatusData(widget.token, widget.uId, context);
       _subStats = subData;
 
       _submissionsList = (_user == null) ? null : _user.recentSubmissions;
       getLatestTwoSubmissions();
-      _activityDetails = await getActivityDetails(widget.token, widget.uId, context);
+      _activityDetails =
+          await getActivityDetails(widget.token, widget.uId, context);
       setState(() {
         _isLoading = false;
       });
-    } catch(error, stackTrace){
-      if(Foundation.kReleaseMode) {
+    } catch (error, stackTrace) {
+      if (Foundation.kReleaseMode) {
         await sentry.captureException(
-          exception: error,
+          error,
           stackTrace: stackTrace,
         );
       }

@@ -16,7 +16,7 @@ Future<UserProfileDetails> getAllPlatformDetails(
   String endpoint = "/user/fetch/$uId/";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.get(
@@ -35,7 +35,7 @@ Future<UserProfileDetails> getAllPlatformDetails(
     print(error);
     if (Foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }
