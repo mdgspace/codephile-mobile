@@ -34,17 +34,16 @@ class _ProfileCardState extends State<ProfileCard> {
   String _institute;
   int _noOfFollowing;
 
-
   @override
   void initState() {
     isFollowing = widget._isFollowing;
-    if(widget._user == null){
+    if (widget._user == null) {
       _picture = "";
       _name = "";
       _username = "";
       _institute = "";
       _noOfFollowing = 0;
-    }else{
+    } else {
       _picture = widget._user.picture;
       _name = widget._user.fullname;
       _username = widget._user.username;
@@ -67,9 +66,8 @@ class _ProfileCardState extends State<ProfileCard> {
             child: Container(
               height: MediaQuery.of(context).size.width / 4,
               width: MediaQuery.of(context).size.width / 4,
-              alignment: (_picture == "")
-                  ? Alignment(0.0, 0.0)
-                  : Alignment.center,
+              alignment:
+                  (_picture == "") ? Alignment(0.0, 0.0) : Alignment.center,
               child: (_picture == "")
                   ? SizedBox(
                       height: MediaQuery.of(context).size.width / 3,
@@ -117,8 +115,7 @@ class _ProfileCardState extends State<ProfileCard> {
                     width: 0,
                   )
                 : Padding(
-                    padding:
-                        const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 0.0),
+                    padding: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 0.0),
                     child: Text(
                       _institute,
                       maxLines: 1,
@@ -156,9 +153,8 @@ class _ProfileCardState extends State<ProfileCard> {
                               Navigator.push(
                                   context,
                                   new MaterialPageRoute(
-                                      builder: (context) =>
-                                          new FollowingScreen(
-                                              widget._token))).then((v) {
+                                      builder: (context) => new FollowingScreen(
+                                          widget._token))).then((v) {
                                 widget._callback();
                               });
                             }
@@ -285,7 +281,7 @@ class _ProfileCardState extends State<ProfileCard> {
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          timeInSecForIos: 7,
+          timeInSecForIosWeb: 7,
           fontSize: 12.0,
         );
         setState(() {
@@ -302,7 +298,7 @@ class _ProfileCardState extends State<ProfileCard> {
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          timeInSecForIos: 7,
+          timeInSecForIosWeb: 7,
           fontSize: 12.0,
         );
         setState(() {

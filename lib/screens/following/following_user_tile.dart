@@ -106,7 +106,6 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8.0, 10.0, 16.0, 10.0),
                 child: Container(
-                  
                   child: isFollowing
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -114,8 +113,8 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             SvgPicture.asset(
-                            'assets/following.svg',
-                             color: codephileMain,
+                              'assets/following.svg',
+                              color: codephileMain,
                             ),
                             Icon(
                               Icons.check,
@@ -129,8 +128,8 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
                             SvgPicture.asset(
-                            'assets/follow.svg',
-                             color: codephileMain,
+                              'assets/follow.svg',
+                              color: codephileMain,
                             )
                           ],
                         ),
@@ -160,7 +159,7 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          timeInSecForIos: 7,
+          timeInSecForIosWeb: 7,
           fontSize: 12.0,
         );
         setState(() {
@@ -177,7 +176,7 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          timeInSecForIos: 7,
+          timeInSecForIosWeb: 7,
           fontSize: 12.0,
         );
         setState(() {

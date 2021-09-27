@@ -31,7 +31,7 @@ Future showConnectivityStatus() async {
       msg: "Please check your connection!",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
-      timeInSecForIos: 7,
+      timeInSecForIosWeb: 7,
       fontSize: 12.0,
     );
   }
@@ -88,7 +88,7 @@ void showToast(String message) {
     msg: message,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.CENTER,
-    timeInSecForIos: 7,
+    timeInSecForIosWeb: 7,
     fontSize: 12.0,
   );
 }
@@ -100,6 +100,6 @@ void logout({String token, BuildContext context}) async {
   await prefs.remove("uid");
   await prefs.remove("recentSearches");
   Navigator.of(context).popUntil((route) => route.isFirst);
-  Navigator.of(context, rootNavigator: true).pushReplacement(
-      MaterialPageRoute(builder: (context) => LoginScreen()));
+  Navigator.of(context, rootNavigator: true)
+      .pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
 }

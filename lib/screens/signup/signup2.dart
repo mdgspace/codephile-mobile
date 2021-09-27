@@ -356,7 +356,7 @@ class _SignUpPageState extends State<SignUpPage2> {
               msg: "Invalid Hackerrank handle",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
-              timeInSecForIos: 7,
+              timeInSecForIosWeb: 7,
               fontSize: 12.0,
             );
           }
@@ -387,7 +387,7 @@ class _SignUpPageState extends State<SignUpPage2> {
               msg: "Invalid Spoj handle",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
-              timeInSecForIos: 7,
+              timeInSecForIosWeb: 7,
               fontSize: 12.0,
             );
           }
