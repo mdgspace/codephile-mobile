@@ -33,7 +33,7 @@ class AccuracyDisplay extends StatelessWidget {
   }
 
   List<Widget> getAccuracyTileList() {
-    List<AccuracyTile> accuracyTileList = List<AccuracyTile>();
+    List<AccuracyTile> accuracyTileList = <AccuracyTile>[];
     if (_platformDetails != null) {
       if (_platformDetails.codechefProfile != null) {
         accuracyTileList.add(AccuracyTile(

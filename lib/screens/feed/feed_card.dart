@@ -161,7 +161,7 @@ class _FeedCardState extends State<FeedCard> {
   }
 
   List<Widget> _buildChildren(List<Submissions> list) {
-    List<Widget> children = List();
+    List<Widget> children = <Widget>[];
     for (int i = 0; i < list.length; i++) {
       Submissions element = list[i];
       Color statusColor;

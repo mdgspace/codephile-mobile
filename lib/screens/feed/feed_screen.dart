@@ -131,7 +131,7 @@ class _FeedScreenState extends State<FeedScreen> {
   void refreshFeed() async {
     try {
       getFeed(widget.token, context).then((value) {
-        List<GroupedFeed> groupedFeed = List();
+        List<GroupedFeed> groupedFeed = <GroupedFeed>[];
         if (value == null) {
           setState(() {
             empty = true;
@@ -142,7 +142,8 @@ class _FeedScreenState extends State<FeedScreen> {
               (grpFeedElement) =>
                   grpFeedElement.name == feedElement.submission.name,
               orElse: () {
-                groupedFeed.add(GroupedFeed(
+                groupedFeed.add(
+                  GroupedFeed(
                     fullname: feedElement.fullname,
                     name: feedElement.submission.name,
                     picture: feedElement.picture,
@@ -150,7 +151,9 @@ class _FeedScreenState extends State<FeedScreen> {
                     userId: feedElement.userId,
                     username: feedElement.username,
                     language: feedElement.submission.language,
-                    submissions: List()));
+                    submissions: [],
+                  ),
+                );
                 return groupedFeed.last;
               },
             );
