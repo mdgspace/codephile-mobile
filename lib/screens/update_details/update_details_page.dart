@@ -440,7 +440,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   }
 
   Future<void> _selectImage() async {
-    var picture = await _imagePicker.getImage(source: ImageSource.gallery);
+    var picture = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (picture != null) {
       var croppedPic = await ImageCropper.cropImage(
         sourcePath: picture.path,
