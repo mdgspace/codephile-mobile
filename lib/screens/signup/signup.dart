@@ -162,36 +162,6 @@ class _SignUpPageState extends State<SignUpPage> {
           contentPadding: const EdgeInsets.all(8.0),
         ),
       ),
-      // child: SearchableDropdown<String>(
-      //   underline: const SizedBox(height: 0.0),
-      //   items: _instituteList
-      //       .map((value) => DropdownMenuItem<String>(
-      //             value: value,
-      //             child: SizedBox(
-      //               width: MediaQuery.of(context).size.width * 0.8,
-      //               child: Text(
-      //                 value,
-      //                 overflow: TextOverflow.ellipsis,
-      //               ),
-      //             ),
-      //           ))
-      //       .toList(),
-      //   onChanged: (String institute) {
-      //     setState(() {
-      //       _institute = institute;
-      //     });
-      //   },
-      //   hint: SizedBox(
-      //     width: MediaQuery.of(context).size.width * 0.8,
-      //     child: Padding(
-      //       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-      //       child: Text(
-      //         "Select Institute",
-      //         style: TextStyle(color: Colors.grey),
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 

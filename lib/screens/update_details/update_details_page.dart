@@ -320,37 +320,6 @@ class _UpdateDetailsState extends State<UpdateDetails> {
             contentPadding: const EdgeInsets.all(8.0),
           ),
         ),
-        // child: SearchableDropdown<String>(
-        //   value: widget._user.institute,
-        //   underline: Container(height: 0.0),
-        //   readOnly: !enableTextFields,
-        //   items: _instituteList
-        //       .map((value) => DropdownMenuItem<String>(
-        //             value: value,
-        //             child: SizedBox(
-        //               width: MediaQuery.of(context).size.width * 0.8,
-        //               child: Text(
-        //                 value,
-        //                 overflow: TextOverflow.ellipsis,
-        //               ),
-        //             ),
-        //           ))
-        //       .toList(),
-        //   onChanged: (String institute) {
-        //     setState(() {
-        //       _isInstituteChanged = true;
-        //       _institute = institute;
-        //     });
-        //   },
-        //   hint: SizedBox(
-        //       width: MediaQuery.of(context).size.width * 0.8,
-        //       child: Padding(
-        //         padding: const EdgeInsets.all(8.0),
-        //         child: Text(
-        //           "Select Institute",
-        //         ),
-        //       )),
-        // ),
       ),
     );
   }
