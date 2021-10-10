@@ -3,7 +3,7 @@ import 'package:codephile/screens/on_boarding/on_boarding_background.dart';
 import 'package:codephile/screens/on_boarding/on_boarding_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   @override

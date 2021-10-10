@@ -41,7 +41,6 @@ dependencies:
   firebase_messaging: ^10.0.7
   firebase_remote_config: ^0.11.0
   flutter_local_notifications: ^8.2.0
-  flutter_swiper: ^1.1.6
   sentry: ^6.0.1
   battery_optimization: ^0.1.0
   shimmer: ^2.0.0
@@ -52,6 +51,7 @@ dependencies:
       path: charts_flutter
   dropdown_search: ^1.0.3
   android_intent_plus: ^3.0.1
+  card_swiper: ^1.0.4
 
 
 
