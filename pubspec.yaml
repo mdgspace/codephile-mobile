@@ -1,6 +1,10 @@
 name: codephile
 description: A new Flutter application.
 
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -29,10 +33,10 @@ dependencies:
   intl: ^0.17.0
   rxdart: ^0.27.2
   flutter_web_browser: ^0.15.0
-  searchable_dropdown: ^1.1.3
+  # searchable_dropdown: ^1.1.3
   image_picker: ^0.8.4+2
   image_cropper: ^1.2.1
-  charts_flutter: ^0.11.0
+  # charts_flutter: ^0.11.0
   date_utils: ^0.2.0
   firebase_crashlytics: ^2.2.1
   firebase_messaging: ^10.0.7
@@ -44,6 +48,12 @@ dependencies:
   intent: ^1.3.4
   shimmer: ^2.0.0
   firebase_core: ^1.6.0
+  charts_flutter:
+    git:
+      url: https://github.com/google/charts.git
+      path: charts_flutter
+  dropdown_search: ^1.0.3
+
 
 
 dev_dependencies:

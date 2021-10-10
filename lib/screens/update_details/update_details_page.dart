@@ -8,12 +8,13 @@ import 'package:codephile/services/institute_list.dart';
 import 'package:codephile/services/update_user_details.dart';
 import 'package:codephile/services/upload_user_image.dart';
 import 'package:codephile/services/username.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
+// import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class UpdateDetails extends StatefulWidget {
   final String _token;
@@ -305,37 +306,51 @@ class _UpdateDetailsState extends State<UpdateDetails> {
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.all(Radius.circular(4.0)),
         ),
-        child: SearchableDropdown<String>(
-          value: widget._user.institute,
-          underline: Container(height: 0.0),
-          readOnly: !enableTextFields,
-          items: _instituteList
-              .map((value) => DropdownMenuItem<String>(
-                    value: value,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: Text(
-                        value,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ))
-              .toList(),
+        child: DropdownSearch<String>(
+          selectedItem: widget._user.institute,
+          enabled: enableTextFields,
+          items: _instituteList,
           onChanged: (String institute) {
             setState(() {
-              _isInstituteChanged = true;
               _institute = institute;
             });
           },
-          hint: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Select Institute",
-                ),
-              )),
+          dropdownSearchDecoration: InputDecoration(
+            hintText: 'Select Institute',
+            contentPadding: const EdgeInsets.all(8.0),
+          ),
         ),
+        // child: SearchableDropdown<String>(
+        //   value: widget._user.institute,
+        //   underline: Container(height: 0.0),
+        //   readOnly: !enableTextFields,
+        //   items: _instituteList
+        //       .map((value) => DropdownMenuItem<String>(
+        //             value: value,
+        //             child: SizedBox(
+        //               width: MediaQuery.of(context).size.width * 0.8,
+        //               child: Text(
+        //                 value,
+        //                 overflow: TextOverflow.ellipsis,
+        //               ),
+        //             ),
+        //           ))
+        //       .toList(),
+        //   onChanged: (String institute) {
+        //     setState(() {
+        //       _isInstituteChanged = true;
+        //       _institute = institute;
+        //     });
+        //   },
+        //   hint: SizedBox(
+        //       width: MediaQuery.of(context).size.width * 0.8,
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(8.0),
+        //         child: Text(
+        //           "Select Institute",
+        //         ),
+        //       )),
+        // ),
       ),
     );
   }

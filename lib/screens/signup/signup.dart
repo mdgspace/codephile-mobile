@@ -1,11 +1,12 @@
 import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/services/email_availability.dart';
 import 'package:codephile/services/institute_list.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
+// import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'progress_tab_bar.dart';
 import 'signup2.dart';
 import 'package:codephile/resources/colors.dart';
@@ -148,35 +149,49 @@ class _SignUpPageState extends State<SignUpPage> {
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
       ),
-      child: SearchableDropdown<String>(
-        underline: const SizedBox(height: 0.0),
-        items: _instituteList
-            .map((value) => DropdownMenuItem<String>(
-                  value: value,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: Text(
-                      value,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ))
-            .toList(),
+      child: DropdownSearch<String>(
+        items: _instituteList,
         onChanged: (String institute) {
           setState(() {
             _institute = institute;
           });
         },
-        hint: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: Text(
-                "Select Institute",
-                style: TextStyle(color: Colors.grey),
-              ),
-            )),
+        dropdownSearchDecoration: InputDecoration(
+          hintText: 'Select Institute',
+          hintStyle: TextStyle(color: Colors.grey),
+          contentPadding: const EdgeInsets.all(8.0),
+        ),
       ),
+      // child: SearchableDropdown<String>(
+      //   underline: const SizedBox(height: 0.0),
+      //   items: _instituteList
+      //       .map((value) => DropdownMenuItem<String>(
+      //             value: value,
+      //             child: SizedBox(
+      //               width: MediaQuery.of(context).size.width * 0.8,
+      //               child: Text(
+      //                 value,
+      //                 overflow: TextOverflow.ellipsis,
+      //               ),
+      //             ),
+      //           ))
+      //       .toList(),
+      //   onChanged: (String institute) {
+      //     setState(() {
+      //       _institute = institute;
+      //     });
+      //   },
+      //   hint: SizedBox(
+      //     width: MediaQuery.of(context).size.width * 0.8,
+      //     child: Padding(
+      //       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+      //       child: Text(
+      //         "Select Institute",
+      //         style: TextStyle(color: Colors.grey),
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 

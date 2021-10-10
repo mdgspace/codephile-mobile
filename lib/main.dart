@@ -66,8 +66,8 @@ Future<void> main() async {
   });
 
   // Crashlytics.instance.enableInDevMode = true;
-  // FlutterError.onError = Crashlytics.instance.recordFlutterError;
-  FirebaseCrashlytics.instance.crash();
+  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   FirebaseMessaging.onMessage.listen((message) {
     var notification = message.notification;
