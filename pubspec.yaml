@@ -41,7 +41,11 @@ dependencies:
   firebase_remote_config: ^0.11.0
   flutter_local_notifications: ^8.2.0
   sentry: ^6.0.1
-  battery_optimization: ^0.1.0
+  # battery_optimization: ^0.1.0
+  battery_optimization:
+    git: 
+      url: https://github.com/ChangJoo-Park/battery_optimization.git
+      ref: master
   shimmer: ^2.0.0
   firebase_core: ^1.6.0
   charts_flutter:
