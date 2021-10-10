@@ -1,10 +1,8 @@
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:codephile/homescreen.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/login/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:intent/intent.dart' as intent;
-import 'package:intent/action.dart' as action;
-import 'package:intent/extra.dart' as extra;
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -149,11 +147,14 @@ class ChooseHomeState extends State<ChooseHome> {
                 padding: EdgeInsets.all(15),
               ),
               onPressed: () {
-                intent.Intent()
-                  ..setAction(action.Action.ACTION_SHOW_APP_INFO)
-                  ..putExtra(extra.Extra.EXTRA_PACKAGE_NAME,
-                      "in.ac.iitr.mdg.codephile")
-                  ..startActivity().catchError((e) => print(e));
+                const intent = AndroidIntent(
+                  action: 'android.intent.action.SHOW_APP_INFO',
+                  arguments: {
+                    'android.intent.extra.PACKAGE_NAME':
+                        'in.ac.iitr.mdg.codephile',
+                  },
+                );
+                intent.launch().catchError((e) => print(e));
               },
               child: Container(
                 padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
