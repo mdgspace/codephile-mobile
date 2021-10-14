@@ -11,7 +11,7 @@ class OnBoardingTemplate extends StatelessWidget {
 
   const OnBoardingTemplate(this.pageNo, this.noOfPages, this.widgetToDisplay,
       this.heading, this.description,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -35,24 +35,27 @@ class OnBoardingTemplate extends StatelessWidget {
           ),
         ),
         Positioned(
-            right: MediaQuery.of(context).size.width / 25,
-            bottom: MediaQuery.of(context).size.height / 20,
-            child: (pageNo + 1 == noOfPages)
-                ? FloatingActionButton(
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.arrow_forward,
-                      color: Color.fromRGBO(35, 31, 32, 1),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                      Navigator.pushReplacement(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => new LoginScreen()));
-                    },
-                  )
-                : Container())
+          right: MediaQuery.of(context).size.width / 25,
+          bottom: MediaQuery.of(context).size.height / 20,
+          child: (pageNo + 1 == noOfPages)
+              ? FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  child: const Icon(
+                    Icons.arrow_forward,
+                    color: Color.fromRGBO(35, 31, 32, 1),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
+                )
+              : Container(),
+        )
       ],
     );
   }

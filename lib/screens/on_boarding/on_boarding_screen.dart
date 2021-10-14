@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 class OnBoardingScreen extends StatelessWidget {
+  const OnBoardingScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -14,21 +16,22 @@ class OnBoardingScreen extends StatelessWidget {
     ]);
     return Stack(
       children: <Widget>[
-        OnBoardingBackground(),
+        const OnBoardingBackground(),
         Swiper(
           itemCount: 3,
           itemBuilder: (BuildContext context, int index) {
             return OnBoardingTemplate(
-                index,
-                noOfScreens,
-                pageList[index].widgetToDisplay,
-                pageList[index].heading,
-                pageList[index].description);
+              index,
+              noOfScreens,
+              pageList[index].widgetToDisplay,
+              pageList[index].heading,
+              pageList[index].description,
+            );
           },
-          pagination: SwiperPagination(
+          pagination: const SwiperPagination(
             alignment: Alignment(-47.5 / 50, 45 / 50),
             builder: DotSwiperPaginationBuilder(
-              color: const Color.fromRGBO(0, 0, 0, 0.24),
+              color: Color.fromRGBO(0, 0, 0, 0.24),
               activeColor: Colors.white,
               size: 10.0,
               activeSize: 14.0,
