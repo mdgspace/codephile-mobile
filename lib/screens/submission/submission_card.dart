@@ -3,32 +3,34 @@ import 'package:flutter_svg/svg.dart';
 import 'package:codephile/resources/colors.dart';
 
 class SubmissionCard extends StatelessWidget {
-  final String _username;
+  final String? _username;
   final String _handle;
-  final String _time;
-  final String _problem;
+  final String? _time;
+  final String? _problem;
   final String _platform;
-  final String _picture;
+  final String? _picture;
 
-  final Widget contestIcon = new SvgPicture.asset(
+  final Widget contestIcon = SvgPicture.asset(
     "assets/solved.svg",
     color: const Color.fromRGBO(152, 219, 17, 1),
     width: 12.0,
     height: 12.0,
   );
 
-  final Widget bookmark = new SvgPicture.asset(
+  final Widget bookmark = SvgPicture.asset(
     "assets/bookmark.svg",
     width: 14.0,
     height: 14.0,
   );
 
   SubmissionCard(this._username, this._handle, this._platform, this._problem,
-      this._time, this._picture);
+      this._time, this._picture,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String time = getTime(_time);
+    String time = getTime(_time!);
     final width = MediaQuery.of(context).size.width;
     return GestureDetector(
       child: Padding(
@@ -47,40 +49,38 @@ class SubmissionCard extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10.0, 2.0, 0.0, 2.0),
-                        child: Container(
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(0.05),
-                              child: Container(
-                                width: 40.0,
-                                height: 40.0,
-                                decoration: new BoxDecoration(
-                                  borderRadius: new BorderRadius.circular(2.0),
-                                  image: new DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: new NetworkImage(_picture),
-                                  ),
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(0.05),
+                            child: Container(
+                              width: 40.0,
+                              height: 40.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(2.0),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(_picture!),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      new Column(
+                      Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               _handle,
-                              style: TextStyle(
-                                color: const Color.fromRGBO(36, 36, 36, 1),
+                              style: const TextStyle(
+                                color: Color.fromRGBO(36, 36, 36, 1),
                                 fontSize: 16.0,
                                 fontFamily: 'Roboto',
                               ),
                             ),
                             Text(
-                              _username,
-                              style: TextStyle(
+                              _username!,
+                              style: const TextStyle(
                                 color: Colors.grey,
                               ),
                             ),
@@ -91,10 +91,10 @@ class SubmissionCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(bottom: 2.0, right: 5.0),
+                        padding: const EdgeInsets.only(bottom: 2.0, right: 5.0),
                         child: Text(
                           "Solved $time ago",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                           ),
                         ),
@@ -122,9 +122,9 @@ class SubmissionCard extends StatelessWidget {
                                   padding: const EdgeInsets.all(4.0),
                                   child: contestIcon,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      0.0, 4.0, 5.0, 4.0),
+                                const Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(0.0, 4.0, 5.0, 4.0),
                                   child: Text(
                                     'Solved',
                                     style: TextStyle(
@@ -148,11 +148,11 @@ class SubmissionCard extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(15.0, 6.0, 24.0, 6.0),
                       child: Text(
                         "$_problem",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0,
                           fontFamily: 'Roboto',
-                          color: const Color.fromRGBO(36, 36, 36, 1),
+                          color: Color.fromRGBO(36, 36, 36, 1),
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -176,8 +176,8 @@ class SubmissionCard extends StatelessWidget {
                             padding:
                                 const EdgeInsets.fromLTRB(4.0, 0.0, 2.0, 0.0),
                             child: Text(
-                              "$_platform",
-                              style: TextStyle(
+                              _platform,
+                              style: const TextStyle(
                                 fontSize: 16.0,
                                 color: Colors.black,
                               ),
@@ -219,29 +219,29 @@ class SubmissionCard extends StatelessWidget {
   }
 
   String getIconUrl(String platform) {
-    final String codeChefIcon = "assets/platformIcons/codeChefIcon.png";
-    final String hackerRankIcon = "assets/platformIcons/hackerRankIcon.png";
-    final String hackerEarthIcon = "assets/platformIcons/hackerEarthIcon.png";
-    final String codeForcesIcon = "assets/platformIcons/codeForcesIcon.png";
-    final String spojIcon = "assets/platformIcons/spoj.png";
-    final String otherIcon = "assets/platformIcons/otherIcon.jpg";
+    const String codeChefIcon = "assets/platformIcons/codeChefIcon.png";
+    const String hackerRankIcon = "assets/platformIcons/hackerRankIcon.png";
+    const String hackerEarthIcon = "assets/platformIcons/hackerEarthIcon.png";
+    const String codeForcesIcon = "assets/platformIcons/codeForcesIcon.png";
+    const String spojIcon = "assets/platformIcons/spoj.png";
+    const String otherIcon = "assets/platformIcons/otherIcon.jpg";
 
     switch (platform.toLowerCase()) {
       case "codechef":
         return codeChefIcon;
-        break;
+
       case "hackerrank":
         return hackerRankIcon;
-        break;
+
       case "hackerearth":
         return hackerEarthIcon;
-        break;
+
       case "codeforces":
         return codeForcesIcon;
-        break;
+
       case "spoj":
         return spojIcon;
-        break;
+
       default:
         return otherIcon;
     }
