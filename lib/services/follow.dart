@@ -4,18 +4,18 @@ import 'package:codephile/resources/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<int> followUser(String token, String uid, BuildContext context) async {
+Future<int?> followUser(String token, String? uid, BuildContext context) async {
   String endpoint = "/friends/follow?uid2=$uid";
   String uri = url + endpoint;
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 
-  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.post(
@@ -29,8 +29,8 @@ Future<int> followUser(String token, String uid, BuildContext context) async {
     }
     return response.statusCode;
   } catch (error, stackTrace) {
-    print(error);
-    if (Foundation.kReleaseMode) {
+    debugPrint('$error');
+    if (foundation.kReleaseMode) {
       await sentry.captureException(
         error,
         stackTrace: stackTrace,

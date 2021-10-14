@@ -5,9 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<int> unfollowUser(String token, String uid, BuildContext context) async {
+Future<int?> unfollowUser(
+    String token, String? uid, BuildContext context) async {
   String endpoint = "/friends/unfollow?uid2=$uid";
   String uri = url + endpoint;
 
@@ -25,7 +26,7 @@ Future<int> unfollowUser(String token, String uid, BuildContext context) async {
     }
     return response.statusCode;
   } on Exception catch (e) {
-    print(e);
+    debugPrint(e.toString());
     return null;
   }
 }

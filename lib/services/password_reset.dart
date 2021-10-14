@@ -1,27 +1,27 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
 import 'package:sentry/sentry.dart';
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future resetPassword(String email) async {
+Future<bool> resetPassword(String email) async {
   String endpoint = "/user/password-reset-email";
   String uri = url + endpoint;
-  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
   try {
     var response = await client.post(
       Uri.parse(uri),
       body: {'email': email},
     );
-    print(response.body);
+    debugPrint(response.body);
     if (response.statusCode == 200) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   } catch (error, stackTrace) {
-    print(error);
+    debugPrint('$error');
     await sentry.captureException(
       error,
       stackTrace: stackTrace,

@@ -6,9 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<int> updateUserDetails(
+Future<int?> updateUserDetails(
     String token, var body, BuildContext context) async {
   String endpoint = "/user/";
   String uri = url + endpoint;
@@ -27,7 +27,7 @@ Future<int> updateUserDetails(
     }
     return response.statusCode;
   } on Exception catch (e) {
-    print(e);
+    debugPrint(e.toString());
     return null;
   }
 }

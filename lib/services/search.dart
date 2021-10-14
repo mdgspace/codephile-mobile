@@ -7,16 +7,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<List<CodephileUser>> search(
+Future<List<CodephileUser>?> search(
     String token, String query, BuildContext context) async {
   String endpoint = "/user/search?query=$query";
   String uri = url + endpoint;
-  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
   try {
@@ -25,7 +25,7 @@ Future<List<CodephileUser>> search(
       headers: tokenAuth,
     );
 
-    List<CodephileUser> results;
+    List<CodephileUser>? results;
     if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
@@ -52,8 +52,8 @@ Future<List<CodephileUser>> search(
 
     return results;
   } catch (error, stackTrace) {
-    print(error);
-    if (Foundation.kReleaseMode) {
+    foundation.debugPrint('$error');
+    if (foundation.kReleaseMode) {
       await sentry.captureException(
         error,
         stackTrace: stackTrace,

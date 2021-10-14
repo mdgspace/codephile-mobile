@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<bool> verifyHandle(String site, String handle) async {
+Future<bool?> verifyHandle(String site, String? handle) async {
   String endpoint = "/user/verify/$site?handle=$handle";
   String uri = url + endpoint;
 
@@ -18,7 +19,7 @@ Future<bool> verifyHandle(String site, String handle) async {
     }
     return null;
   } on Exception catch (e) {
-    print(e);
+    debugPrint('$e');
     return null;
   }
 }

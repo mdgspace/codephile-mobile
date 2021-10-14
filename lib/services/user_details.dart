@@ -6,17 +6,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<UserProfileDetails> getAllPlatformDetails(
+Future<UserProfileDetails?> getAllPlatformDetails(
     String token, String uId, BuildContext context) async {
   String endpoint = "/user/fetch/$uId/";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
-  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.get(
@@ -29,11 +29,11 @@ Future<UserProfileDetails> getAllPlatformDetails(
       return null;
     }
     final jsonResponse = jsonDecode(response.body);
-    UserProfileDetails user = new UserProfileDetails.fromJson(jsonResponse);
+    UserProfileDetails user = UserProfileDetails.fromJson(jsonResponse);
     return user;
   } catch (error, stackTrace) {
-    print(error);
-    if (Foundation.kReleaseMode) {
+    foundation.debugPrint(error.toString());
+    if (foundation.kReleaseMode) {
       await sentry.captureException(
         error,
         stackTrace: stackTrace,

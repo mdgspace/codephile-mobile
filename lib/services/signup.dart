@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:codephile/models/signup.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
 Future<dynamic> signUp(SignUp details) async {
   String endpoint = "/user/signup";
@@ -20,13 +21,13 @@ Future<dynamic> signUp(SignUp details) async {
         "password": details.password,
         "fullname": details.fullname,
         "institute": details.institute,
-        "handle.codechef": details.handle.codechef,
-        "handle.codeforces": details.handle.codeforces,
-        "handle.hackerrank": details.handle.hackerrank,
-        "handle.spoj": details.handle.spoj
+        "handle.codechef": details.handle!.codechef,
+        "handle.codeforces": details.handle!.codeforces,
+        "handle.hackerrank": details.handle!.hackerrank,
+        "handle.spoj": details.handle!.spoj
       },
     );
-    print(response.body);
+    debugPrint(response.body);
     final json = jsonDecode(response.body);
     if (response.statusCode == 201) {
       return {
@@ -55,7 +56,7 @@ Future<dynamic> signUp(SignUp details) async {
       };
     }
   } on Exception catch (e) {
-    print(e);
+    debugPrint('$e');
     return null;
   }
 }

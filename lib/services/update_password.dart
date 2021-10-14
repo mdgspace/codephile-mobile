@@ -6,10 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<int> updatePassword(String token, String oldPassword, String newPassword,
-    BuildContext context) async {
+Future<int?> updatePassword(String token, String oldPassword,
+    String newPassword, BuildContext context) async {
   String endpoint = "/user/password-reset";
   String uri = url + endpoint;
 
@@ -29,7 +29,7 @@ Future<int> updatePassword(String token, String oldPassword, String newPassword,
     }
     return response.statusCode;
   } on Exception catch (e) {
-    print(e);
+    debugPrint(e.toString());
     return null;
   }
 }

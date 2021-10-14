@@ -5,14 +5,14 @@ import 'package:codephile/resources/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<List<ActivityDetails>> getActivityDetails(
-    String token, String uid, BuildContext context) async {
-  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
+Future<List<ActivityDetails>?> getActivityDetails(
+    String token, String? uid, BuildContext context) async {
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
   String endpoint = "/graph/activity/$uid";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
@@ -26,8 +26,8 @@ Future<List<ActivityDetails>> getActivityDetails(
     }
     return activityDetailsFromJson(response.body);
   } catch (error, stackTrace) {
-    print(error);
-    if (Foundation.kReleaseMode) {
+    debugPrint('$error');
+    if (foundation.kReleaseMode) {
       await sentry.captureException(
         error,
         stackTrace: stackTrace,

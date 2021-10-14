@@ -1,8 +1,9 @@
 import 'package:codephile/resources/strings.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
 Future<bool> isEmailAvailable(String email) async {
   String endpoint = "/user/available?email=$email";
@@ -14,11 +15,10 @@ Future<bool> isEmailAvailable(String email) async {
     );
     if (response.statusCode == 200) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   } on Exception catch (e) {
-    print(e);
-    return null;
+    debugPrint('$e');
+    return true;
   }
 }
