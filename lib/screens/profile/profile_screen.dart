@@ -20,15 +20,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 import '../../models/user_profile_details.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 class Profile extends StatefulWidget {
-  final String token;
-  final String uId;
+  final String? token;
+  final String? uId;
   final bool _isMyProfile;
   final bool checkIfFollowing;
 
-  Profile(this.token, this.uId, this._isMyProfile, this.checkIfFollowing);
+  const Profile(this.token, this.uId, this._isMyProfile, this.checkIfFollowing,
+      {Key? key})
+      : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -36,15 +38,15 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   bool _isLoading = true;
-  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
 
-  CodephileUser _user;
-  UserProfileDetails _userPlatformDetails;
-  List<Submission> _submissionsList;
-  List<Submission> _mostRecentSubmissions;
-  List<Following> _followingList;
-  List<ActivityDetails> _activityDetails;
-  SubStatusData _subStats;
+  CodephileUser? _user;
+  UserProfileDetails? _userPlatformDetails;
+  List<Submission>? _submissionsList;
+  late List<Submission> _mostRecentSubmissions;
+  List<Following>? _followingList;
+  List<ActivityDetails>? _activityDetails;
+  SubStatusData? _subStats;
 
   @override
   void initState() {
@@ -83,13 +85,13 @@ class _ProfileState extends State<Profile> {
                         refreshPage,
                       ),
                       AccuracyDisplay(_userPlatformDetails),
-                      ((_user == null) || (_user.solvedProblemsCount == null))
-                          ? QuestionsSolvedDisplay(0, 0, 0, 0)
+                      ((_user == null) || (_user!.solvedProblemsCount == null))
+                          ? const QuestionsSolvedDisplay(0, 0, 0, 0)
                           : QuestionsSolvedDisplay(
-                              _user.solvedProblemsCount.codechef,
-                              _user.solvedProblemsCount.codeforces,
-                              _user.solvedProblemsCount.hackerrank,
-                              _user.solvedProblemsCount.spoj),
+                              _user!.solvedProblemsCount!.codechef,
+                              _user!.solvedProblemsCount!.codeforces,
+                              _user!.solvedProblemsCount!.hackerrank,
+                              _user!.solvedProblemsCount!.spoj),
                       SubmissionStatistics(_subStats),
                       AcceptanceGraph(
                         activityDetails:
@@ -102,24 +104,24 @@ class _ProfileState extends State<Profile> {
 
   void initValues() async {
     try {
-      var user = await getUser(widget.token, widget.uId, context);
+      var user = await getUser(widget.token!, widget.uId, context);
       _user = user;
-      _userPlatformDetails = (_user == null) ? null : _user.profiles;
-      var followingList = await getFollowingList(widget.token, context);
+      _userPlatformDetails = (_user == null) ? null : _user!.profiles;
+      var followingList = await getFollowingList(widget.token!, context);
       _followingList = followingList;
       var subData =
-          await getSubmissionStatusData(widget.token, widget.uId, context);
+          await getSubmissionStatusData(widget.token!, widget.uId, context);
       _subStats = subData;
 
-      _submissionsList = (_user == null) ? null : _user.recentSubmissions;
+      _submissionsList = (_user == null) ? null : _user!.recentSubmissions;
       getLatestTwoSubmissions();
       _activityDetails =
-          await getActivityDetails(widget.token, widget.uId, context);
+          await getActivityDetails(widget.token!, widget.uId, context);
       setState(() {
         _isLoading = false;
       });
     } catch (error, stackTrace) {
-      if (Foundation.kReleaseMode) {
+      if (foundation.kReleaseMode) {
         await sentry.captureException(
           error,
           stackTrace: stackTrace,
@@ -130,21 +132,21 @@ class _ProfileState extends State<Profile> {
 
   void getLatestTwoSubmissions() {
     if (_submissionsList != null) {
-      if (_submissionsList.length >= 2) {
+      if (_submissionsList!.length >= 2) {
         _mostRecentSubmissions = <Submission>[];
-        _mostRecentSubmissions.add(_submissionsList[0]);
-        _mostRecentSubmissions.add(_submissionsList[1]);
-      } else if (_submissionsList.length == 1) {
+        _mostRecentSubmissions.add(_submissionsList![0]);
+        _mostRecentSubmissions.add(_submissionsList![1]);
+      } else if (_submissionsList!.length == 1) {
         _mostRecentSubmissions = <Submission>[];
-        _mostRecentSubmissions.add(_submissionsList[0]);
+        _mostRecentSubmissions.add(_submissionsList![0]);
       }
     }
   }
 
-  bool checkIfFollowing(String id) {
+  bool checkIfFollowing(String? id) {
     if (_followingList != null) {
-      for (int i = 0; i < _followingList.length; i++) {
-        if (_followingList[i].id == id) {
+      for (int i = 0; i < _followingList!.length; i++) {
+        if (_followingList![i].id == id) {
           return true;
         }
       }

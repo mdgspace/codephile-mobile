@@ -10,29 +10,34 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfileCard extends StatefulWidget {
-  final String title;
-  final String _token;
-  final CodephileUser _user;
+  final String? title;
+  final String? _token;
+  final CodephileUser? _user;
   final bool _isFollowing;
   final bool _isMyProfile;
   final Function _callback;
 
-  ProfileCard(this._token, this._user, this._isFollowing, this._isMyProfile,
-      this._callback,
-      {Key key, this.title})
-      : super(key: key);
+  const ProfileCard(
+    this._token,
+    this._user,
+    this._isFollowing,
+    this._isMyProfile,
+    this._callback, {
+    Key? key,
+    this.title,
+  }) : super(key: key);
 
   @override
   _ProfileCardState createState() => _ProfileCardState();
 }
 
 class _ProfileCardState extends State<ProfileCard> {
-  bool isFollowing;
-  String _picture;
-  String _name;
-  String _username;
-  String _institute;
-  int _noOfFollowing;
+  late bool isFollowing;
+  String? _picture;
+  String? _name;
+  String? _username;
+  String? _institute;
+  int? _noOfFollowing;
 
   @override
   void initState() {
@@ -44,11 +49,11 @@ class _ProfileCardState extends State<ProfileCard> {
       _institute = "";
       _noOfFollowing = 0;
     } else {
-      _picture = widget._user.picture;
-      _name = widget._user.fullname;
-      _username = widget._user.username;
-      _institute = widget._user.institute;
-      _noOfFollowing = widget._user.noOfFollowing;
+      _picture = widget._user!.picture;
+      _name = widget._user!.fullname;
+      _username = widget._user!.username;
+      _institute = widget._user!.institute;
+      _noOfFollowing = widget._user!.noOfFollowing;
     }
     super.initState();
   }
@@ -66,8 +71,9 @@ class _ProfileCardState extends State<ProfileCard> {
             child: Container(
               height: MediaQuery.of(context).size.width / 4,
               width: MediaQuery.of(context).size.width / 4,
-              alignment:
-                  (_picture == "") ? Alignment(0.0, 0.0) : Alignment.center,
+              alignment: (_picture == "")
+                  ? const Alignment(0.0, 0.0)
+                  : Alignment.center,
               child: (_picture == "")
                   ? SizedBox(
                       height: MediaQuery.of(context).size.width / 3,
@@ -83,51 +89,59 @@ class _ProfileCardState extends State<ProfileCard> {
                           image: DecorationImage(
                             fit: BoxFit.fitWidth,
                             image: NetworkImage(
-                              _picture,
+                              _picture!,
                             ),
                           )),
                     ),
               decoration: BoxDecoration(
-                  color: codephileBackground,
-                  shape: BoxShape.circle,
-                  border: Border.all(width: 2, color: Colors.white)),
+                color: codephileBackground,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  width: 2,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              _name,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 22.0),
+              _name!,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 22.0,
+              ),
             ),
           ),
           Text(
-            "@" + _username,
-            style: TextStyle(
-                color: Color.fromRGBO(255, 255, 255, 0.65), fontSize: 16.0),
+            "@" + _username!,
+            style: const TextStyle(
+              color: Color.fromRGBO(255, 255, 255, 0.65),
+              fontSize: 16.0,
+            ),
           ),
           Container(
             child: (_institute == "")
-                ? Container(
+                ? const SizedBox(
                     height: 0,
                     width: 0,
                   )
                 : Padding(
                     padding: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 0.0),
                     child: Text(
-                      _institute,
+                      _institute!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 16.0),
                     ),
                   ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 24.0, 0.0, 0.0),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8.0),
@@ -142,7 +156,7 @@ class _ProfileCardState extends State<ProfileCard> {
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
                               "$_noOfFollowing Following",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 18.0,
                               ),
@@ -151,10 +165,11 @@ class _ProfileCardState extends State<ProfileCard> {
                           onTap: () {
                             if (widget._isMyProfile) {
                               Navigator.push(
-                                  context,
-                                  new MaterialPageRoute(
-                                      builder: (context) => new FollowingScreen(
-                                          widget._token))).then((v) {
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              FollowingScreen(widget._token)))
+                                  .then((v) {
                                 widget._callback();
                               });
                             }
@@ -170,7 +185,7 @@ class _ProfileCardState extends State<ProfileCard> {
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
                             "$_noOfFollowing Following",
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18.0,
                             ),
@@ -185,15 +200,17 @@ class _ProfileCardState extends State<ProfileCard> {
                                     8.0, 10.0, 16.0, 10.0),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      color: isFollowing
-                                          ? codephileMain
-                                          : Colors.white,
-                                      border: Border.all(
-                                        color: codephileMain,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(2.0))),
+                                    color: isFollowing
+                                        ? codephileMain
+                                        : Colors.white,
+                                    border: Border.all(
+                                      color: codephileMain,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(2.0),
+                                    ),
+                                  ),
                                   child: isFollowing
                                       ? Row(
                                           mainAxisAlignment:
@@ -201,11 +218,10 @@ class _ProfileCardState extends State<ProfileCard> {
                                           mainAxisSize: MainAxisSize.max,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
-                                          children: <Widget>[
+                                          children: const <Widget>[
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      12.0, 5.0, 2.0, 5.0),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  12.0, 5.0, 2.0, 5.0),
                                               child: Text(
                                                 "FOLLOWING",
                                                 style: TextStyle(
@@ -215,9 +231,8 @@ class _ProfileCardState extends State<ProfileCard> {
                                               ),
                                             ),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0.0, 8.0, 12.0, 8.0),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0.0, 8.0, 12.0, 8.0),
                                               child: Icon(
                                                 Icons.check,
                                                 size: 16.0,
@@ -230,11 +245,14 @@ class _ProfileCardState extends State<ProfileCard> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           mainAxisSize: MainAxisSize.max,
-                                          children: <Widget>[
+                                          children: const <Widget>[
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      16.0, 5.0, 16.0, 5.0),
+                                              padding: EdgeInsets.fromLTRB(
+                                                16.0,
+                                                5.0,
+                                                16.0,
+                                                5.0,
+                                              ),
                                               child: Text(
                                                 "FOLLOW",
                                                 style: TextStyle(
@@ -275,7 +293,7 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   void follow() async {
-    followUser(widget._token, widget._user.id, context).then((statusCode) {
+    followUser(widget._token!, widget._user!.id, context).then((statusCode) {
       if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
@@ -292,7 +310,7 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   void unFollow() async {
-    unfollowUser(widget._token, widget._user.id, context).then((statusCode) {
+    unfollowUser(widget._token!, widget._user!.id, context).then((statusCode) {
       if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",

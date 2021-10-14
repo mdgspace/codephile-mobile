@@ -3,17 +3,17 @@ import 'package:codephile/screens/profile/no_of_questions_solved_tile.dart';
 import 'package:flutter/material.dart';
 
 class QuestionsSolvedDisplay extends StatelessWidget {
-  final int codechefSubmissions;
-  final int codeforcesSubmissions;
-  final int hackerrankSubmissions;
-  final int spojSubmissions;
+  final int? codechefSubmissions;
+  final int? codeforcesSubmissions;
+  final int? hackerrankSubmissions;
+  final int? spojSubmissions;
 
   const QuestionsSolvedDisplay(
       this.codechefSubmissions,
       this.codeforcesSubmissions,
       this.hackerrankSubmissions,
       this.spojSubmissions,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -21,8 +21,8 @@ class QuestionsSolvedDisplay extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16.0),
+        const Padding(
+          padding: EdgeInsets.all(16.0),
           child: Text(
             "Number of questions solved",
             style: TextStyle(
