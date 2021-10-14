@@ -10,16 +10,16 @@ import 'dart:core';
 import 'package:intl/intl.dart';
 
 class FeedCard extends StatefulWidget {
-  final GroupedFeed feed;
-  final String token;
-  FeedCard({this.feed, this.token});
+  final GroupedFeed? feed;
+  final String? token;
+  const FeedCard({this.feed, this.token, Key? key}) : super(key: key);
 
   @override
   _FeedCardState createState() => _FeedCardState();
 }
 
 class _FeedCardState extends State<FeedCard> {
-  bool open;
+  late bool open;
   @override
   void initState() {
     super.initState();
@@ -29,7 +29,7 @@ class _FeedCardState extends State<FeedCard> {
   @override
   Widget build(BuildContext context) {
     return ListTileTheme(
-      contentPadding: EdgeInsets.all(10),
+      contentPadding: const EdgeInsets.all(10),
       dense: true,
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.white),
@@ -47,7 +47,7 @@ class _FeedCardState extends State<FeedCard> {
                           builder: (context) {
                             return Profile(
                               widget.token,
-                              widget.feed.userId,
+                              widget.feed!.userId,
                               false,
                               true,
                             );
@@ -55,9 +55,9 @@ class _FeedCardState extends State<FeedCard> {
                         ));
                       },
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                        child: ((widget.feed.picture == null) ||
-                                (widget.feed.picture == ""))
+                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        child: ((widget.feed!.picture == null) ||
+                                (widget.feed!.picture == ""))
                             ? Container(
                                 decoration: BoxDecoration(
                                     color: codephileBackground,
@@ -78,7 +78,7 @@ class _FeedCardState extends State<FeedCard> {
                                 radius: 16.0,
                                 backgroundColor: Colors.transparent,
                                 backgroundImage:
-                                    NetworkImage(widget.feed.picture),
+                                    NetworkImage(widget.feed!.picture!),
                               ),
                       ),
                     ),
@@ -90,23 +90,25 @@ class _FeedCardState extends State<FeedCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
-                                '${widget.feed.fullname.trim()} solved',
-                                style: TextStyle(
+                                '${widget.feed!.fullname!.trim()} solved',
+                                style: const TextStyle(
                                     fontSize: 14.0, color: Color(0xFF979797)),
                               ),
                               Text(
                                 DateFormat("dd-MM-yyyy kk:mm").format(
-                                    widget.feed.submissions[0].createdAt),
-                                style: TextStyle(
-                                    fontSize: 14.0, color: Color(0xFF979797)),
+                                    widget.feed!.submissions![0].createdAt!),
+                                style: const TextStyle(
+                                  fontSize: 14.0,
+                                  color: Color(0xFF979797),
+                                ),
                               )
                             ],
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                             child: Text(
-                              '${widget.feed.name}',
-                              style: TextStyle(
+                              '${widget.feed!.name}',
+                              style: const TextStyle(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black),
@@ -115,7 +117,7 @@ class _FeedCardState extends State<FeedCard> {
                             ),
                           ),
                           Row(children: <Widget>[
-                            Text(
+                            const Text(
                               'on ',
                               style: TextStyle(
                                   fontSize: 12.0, color: Color(0xFF979797)),
@@ -123,14 +125,17 @@ class _FeedCardState extends State<FeedCard> {
                             CircleAvatar(
                               backgroundColor: Colors.transparent,
                               backgroundImage:
-                                  AssetImage(getAsset(widget.feed.url)),
+                                  AssetImage(getAsset(widget.feed!.url!)),
                               radius: 10.0,
                             ),
                             Text(
-                                ' ${getPlatform(widget.feed.url)} | ${widget.feed.language}',
-                                style: TextStyle(
-                                    fontSize: 12.0, color: Color(0xFF979797))),
-                            Spacer(),
+                              ' ${getPlatform(widget.feed!.url!)} | ${widget.feed!.language}',
+                              style: const TextStyle(
+                                fontSize: 12.0,
+                                color: Color(0xFF979797),
+                              ),
+                            ),
+                            const Spacer(),
                             Icon(
                               open
                                   ? Icons.keyboard_arrow_up
@@ -151,10 +156,10 @@ class _FeedCardState extends State<FeedCard> {
             trailing: const SizedBox(),
             children: [
               Container(
-                  color: Color(0xFFFAFAFA),
-                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                  child:
-                      Column(children: _buildChildren(widget.feed.submissions)))
+                  color: const Color(0xFFFAFAFA),
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                  child: Column(
+                      children: _buildChildren(widget.feed!.submissions!)))
             ]),
       ),
     );
@@ -204,8 +209,9 @@ class _FeedCardState extends State<FeedCard> {
       children.add(GestureDetector(
         onTap: () {
           FlutterWebBrowser.openWebPage(
-            url: widget.feed.url,
-            customTabsOptions: CustomTabsOptions(toolbarColor: codephileMain),
+            url: widget.feed!.url!,
+            customTabsOptions:
+                const CustomTabsOptions(toolbarColor: codephileMain),
           );
         },
         child: Row(
@@ -215,7 +221,7 @@ class _FeedCardState extends State<FeedCard> {
               Container(
                 height: 9,
                 width: 2,
-                color: top ? Color(0xFFE5E5E5) : Colors.white,
+                color: top ? const Color(0xFFE5E5E5) : Colors.white,
               ),
               Container(
                 height: 8,
@@ -226,20 +232,22 @@ class _FeedCardState extends State<FeedCard> {
               Container(
                 height: 9,
                 width: 2,
-                color: bottom ? Color(0xFFE5E5E5) : Colors.white,
+                color: bottom ? const Color(0xFFE5E5E5) : Colors.white,
               )
             ]),
             Padding(
-              padding: EdgeInsets.fromLTRB(5, 5, 0, 5),
+              padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
               child: Text(
                 status,
                 style: TextStyle(color: statusColor),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
-              DateFormat('dd-MM-yyyy kk-ss').format(element.createdAt),
-              style: TextStyle(color: Color(0xFF919191)),
+              DateFormat('dd-MM-yyyy kk-ss').format(element.createdAt!),
+              style: const TextStyle(
+                color: Color(0xFF919191),
+              ),
             )
           ],
         ),
@@ -249,16 +257,17 @@ class _FeedCardState extends State<FeedCard> {
   }
 
   String getPlatform(String url) {
-    if (url.startsWith('https://www.hackerrank.com'))
+    if (url.startsWith('https://www.hackerrank.com')) {
       return 'HackerRank';
-    else if (url.startsWith('https://www.spoj.com'))
+    } else if (url.startsWith('https://www.spoj.com')) {
       return 'Spoj';
-    else if (url.startsWith('http://www.codechef.com'))
+    } else if (url.startsWith('http://www.codechef.com')) {
       return 'CodeChef';
-    else if (url.startsWith('http://codeforces.com'))
+    } else if (url.startsWith('http://codeforces.com')) {
       return 'CodeForces';
-    else
+    } else {
       return url;
+    }
   }
 
   String getAsset(String url) {
