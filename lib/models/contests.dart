@@ -1,7 +1,7 @@
 class Contests {
-  List<Ongoing> ongoing;
-  String timestamp;
-  List<Upcoming> upcoming;
+  List<Ongoing>? ongoing;
+  String? timestamp;
+  List<Upcoming>? upcoming;
 
   Contests({this.ongoing, this.timestamp, this.upcoming});
 
@@ -9,37 +9,37 @@ class Contests {
     if (json['ongoing'] != null) {
       ongoing = <Ongoing>[];
       json['ongoing'].forEach((v) {
-        ongoing.add(new Ongoing.fromJson(v));
+        ongoing!.add(Ongoing.fromJson(v));
       });
     }
     timestamp = json['timestamp'];
     if (json['upcoming'] != null) {
       upcoming = <Upcoming>[];
       json['upcoming'].forEach((v) {
-        upcoming.add(new Upcoming.fromJson(v));
+        upcoming!.add(Upcoming.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.ongoing != null) {
-      data['ongoing'] = this.ongoing.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (ongoing != null) {
+      data['ongoing'] = ongoing!.map((v) => v.toJson()).toList();
     }
-    data['timestamp'] = this.timestamp;
-    if (this.upcoming != null) {
-      data['upcoming'] = this.upcoming.map((v) => v.toJson()).toList();
+    data['timestamp'] = timestamp;
+    if (upcoming != null) {
+      data['upcoming'] = upcoming!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Ongoing {
-  DateTime endTime;
-  String name;
-  String platform;
-  String url;
-  String challengeType;
+  DateTime? endTime;
+  String? name;
+  String? platform;
+  String? url;
+  String? challengeType;
 
   Ongoing(
       {this.endTime, this.name, this.platform, this.url, this.challengeType});
@@ -53,24 +53,24 @@ class Ongoing {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['EndTime'] = this.endTime;
-    data['Name'] = this.name;
-    data['Platform'] = this.platform;
-    data['url'] = this.url;
-    data['challenge_type'] = this.challengeType;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['EndTime'] = endTime;
+    data['Name'] = name;
+    data['Platform'] = platform;
+    data['url'] = url;
+    data['challenge_type'] = challengeType;
     return data;
   }
 }
 
 class Upcoming {
-  String duration;
-  DateTime endTime;
-  String name;
-  String platform;
-  DateTime startTime;
-  String url;
-  String challengeType;
+  String? duration;
+  DateTime? endTime;
+  String? name;
+  String? platform;
+  DateTime? startTime;
+  String? url;
+  String? challengeType;
 
   Upcoming(
       {this.duration,
@@ -92,14 +92,14 @@ class Upcoming {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Duration'] = this.duration;
-    data['EndTime'] = this.endTime;
-    data['Name'] = this.name;
-    data['Platform'] = this.platform;
-    data['StartTime'] = this.startTime;
-    data['url'] = this.url;
-    data['challenge_type'] = this.challengeType;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Duration'] = duration;
+    data['EndTime'] = endTime;
+    data['Name'] = name;
+    data['Platform'] = platform;
+    data['StartTime'] = startTime;
+    data['url'] = url;
+    data['challenge_type'] = challengeType;
     return data;
   }
 }

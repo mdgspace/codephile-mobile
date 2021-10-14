@@ -11,14 +11,14 @@ String submissionToJson(List<Submission> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Submission {
-  String createdAt;
-  String language;
-  String name;
-  int points;
-  int rating;
-  String status;
-  List<String> tags;
-  String url;
+  String? createdAt;
+  String? language;
+  String? name;
+  int? points;
+  int? rating;
+  String? status;
+  List<String>? tags;
+  String? url;
 
   Submission({
     this.createdAt,
@@ -51,7 +51,7 @@ class Submission {
         "points": points,
         "rating": rating,
         "status": status,
-        "tags": List<dynamic>.from(tags.map((x) => x)),
+        "tags": List<dynamic>.from(tags!.map((x) => x)),
         "url": url,
       };
 }

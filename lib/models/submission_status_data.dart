@@ -16,13 +16,13 @@ class SubStatusData {
     this.wa,
   });
 
-  int ac;
-  int ce;
-  int mle;
-  int ptl;
-  int re;
-  int tle;
-  int wa;
+  int? ac;
+  int? ce;
+  int? mle;
+  int? ptl;
+  int? re;
+  int? tle;
+  int? wa;
 
   factory SubStatusData.fromJson(Map<String, dynamic> json) => SubStatusData(
         ac: json["ac"],

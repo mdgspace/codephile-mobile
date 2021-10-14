@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-List<Feed> feedFromJson(String str) {
+List<Feed>? feedFromJson(String str) {
   if (str == "null") {
     return null;
   } else {
@@ -9,11 +9,11 @@ List<Feed> feedFromJson(String str) {
 }
 
 class Feed {
-  String username;
-  String userId;
-  String fullname;
-  String picture;
-  Submission submission;
+  String? username;
+  String? userId;
+  String? fullname;
+  String? picture;
+  Submission? submission;
 
   Feed(
       {this.username,
@@ -28,32 +28,32 @@ class Feed {
     fullname = json['fullname'];
     picture = json['picture'];
     submission = json['submission'] != null
-        ? new Submission.fromJson(json['submission'])
+        ? Submission.fromJson(json['submission'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['user_id'] = this.userId;
-    data['fullname'] = this.fullname;
-    data['picture'] = this.picture;
-    if (this.submission != null) {
-      data['submission'] = this.submission.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['username'] = username;
+    data['user_id'] = userId;
+    data['fullname'] = fullname;
+    data['picture'] = picture;
+    if (submission != null) {
+      data['submission'] = submission!.toJson();
     }
     return data;
   }
 }
 
 class Submission {
-  String name;
-  String url;
-  DateTime createdAt;
-  String status;
-  String language;
-  int points;
-  List<String> tags;
-  int rating;
+  String? name;
+  String? url;
+  DateTime? createdAt;
+  String? status;
+  String? language;
+  int? points;
+  List<String>? tags;
+  int? rating;
 
   Submission(
       {this.name,
@@ -77,15 +77,15 @@ class Submission {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    data['created_at'] = this.createdAt.toIso8601String();
-    data['status'] = this.status;
-    data['language'] = this.language;
-    data['points'] = this.points;
-    data['tags'] = this.tags;
-    data['rating'] = this.rating;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['url'] = url;
+    data['created_at'] = createdAt!.toIso8601String();
+    data['status'] = status;
+    data['language'] = language;
+    data['points'] = points;
+    data['tags'] = tags;
+    data['rating'] = rating;
     return data;
   }
 }

@@ -15,10 +15,10 @@ class Following {
     this.username,
   });
 
-  String id;
-  String fullname;
-  String picture;
-  String username;
+  String? id;
+  String? fullname;
+  String? picture;
+  String? username;
 
   factory Following.fromJson(Map<String, dynamic> json) => Following(
         id: json["_id"],

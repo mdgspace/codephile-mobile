@@ -6,7 +6,7 @@ Token tokenFromJson(String str, int statusCode) =>
 String tokenToJson(Token data) => json.encode(data.toJson());
 
 class Token {
-  String token;
+  String? token;
 
   Token({
     this.token,
