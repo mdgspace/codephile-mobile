@@ -10,24 +10,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 class ContestScreen extends StatefulWidget {
-  final String token;
-  ContestScreen({this.token});
+  final String? token;
+  const ContestScreen({this.token, Key? key}) : super(key: key);
   @override
   _ContestScreenState createState() => _ContestScreenState();
 }
 
 class _ContestScreenState extends State<ContestScreen> {
-  final SentryClient sentry = new SentryClient(SentryOptions(dsn: dsn));
-  List<Ongoing> ongoingContests;
-  List<Upcoming> upcomingContests;
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
+  List<Ongoing>? ongoingContests;
+  List<Upcoming>? upcomingContests;
   List<Ongoing> filteredOngoingContests = [];
   List<Upcoming> filteredUpcomingContests = [];
-  ContestFilter filter;
+  ContestFilter? filter;
 
-  bool loading;
+  late bool loading;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _ContestScreenState extends State<ContestScreen> {
         setState(() {
           filter = ContestFilter.fromJson(
             jsonDecode(
-              pref.getString('filter'),
+              pref.getString('filter')!,
             ),
           );
         });
@@ -55,7 +55,7 @@ class _ContestScreenState extends State<ContestScreen> {
         pref.setString(
           'filter',
           jsonEncode(
-            filter.toJson(),
+            filter!.toJson(),
           ),
         );
       }
@@ -87,7 +87,7 @@ class _ContestScreenState extends State<ContestScreen> {
                       pref.setString(
                         'filter',
                         jsonEncode(
-                          filter.toJson(),
+                          filter!.toJson(),
                         ),
                       );
                     });
@@ -98,7 +98,7 @@ class _ContestScreenState extends State<ContestScreen> {
             },
           )
         ],
-        title: Text(
+        title: const Text(
           "Contest",
           style: TextStyle(
             fontSize: 22,
@@ -117,7 +117,7 @@ class _ContestScreenState extends State<ContestScreen> {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.fromLTRB(25, 15, 15, 0),
                       child: CircleAvatar(
                           backgroundColor: Color(0xFFE5E5E5), radius: 18),
@@ -126,30 +126,30 @@ class _ContestScreenState extends State<ContestScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 15, 0, 10),
+                          margin: const EdgeInsets.fromLTRB(0, 15, 0, 10),
                           width: width * 2 / 4,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(2),
-                            color: Color(0xFFE5E5E5),
+                            color: const Color(0xFFE5E5E5),
                           ),
                           height: 14,
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                           width: width * 3 / 4,
                           height: 20,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(2),
-                            color: Color(0xFFE5E5E5),
+                            color: const Color(0xFFE5E5E5),
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                           width: width * 3 / 4,
                           height: 20,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(2),
-                            color: Color(0xFFE5E5E5),
+                            color: const Color(0xFFE5E5E5),
                           ),
                         )
                       ],
@@ -165,20 +165,18 @@ class _ContestScreenState extends State<ContestScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Spacer(flex: 3),
+                  const Spacer(flex: 3),
                   SvgPicture.asset("assets/emptyFeed.svg"),
                   Container(
                     width: width,
-                    padding: EdgeInsets.all(25),
-                    child: Text(
+                    padding: const EdgeInsets.all(25),
+                    child: const Text(
                       "No contests found, please adjust your filters!",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Color(0xFF979797)),
                     ),
                   ),
-                  Spacer(
-                    flex: 2,
-                  )
+                  const Spacer(flex: 2),
                 ],
               );
             }
@@ -219,16 +217,16 @@ class _ContestScreenState extends State<ContestScreen> {
     });
 
     try {
-      contestList(widget.token, context).then((value) {
+      contestList(widget.token!, context).then((value) {
         setState(() {
-          ongoingContests = value.ongoing;
+          ongoingContests = value!.ongoing;
           upcomingContests = value.upcoming;
           loading = false;
         });
         applyFilter();
       });
     } catch (error, stackTrace) {
-      if (Foundation.kReleaseMode) {
+      if (foundation.kReleaseMode) {
         await sentry.captureException(
           error,
           stackTrace: stackTrace,
@@ -241,17 +239,17 @@ class _ContestScreenState extends State<ContestScreen> {
     setState(() {
       filteredOngoingContests.clear();
       filteredUpcomingContests.clear();
-      if (filter.ongoing) {
+      if (filter!.ongoing!) {
         filteredOngoingContests.addAll(
-          ongoingContests.where(
-            (element) => filter.check(ongoing: element),
+          ongoingContests!.where(
+            (element) => filter!.check(ongoing: element),
           ),
         );
       }
-      if (filter.upcoming) {
+      if (filter!.upcoming!) {
         filteredUpcomingContests.addAll(
-          upcomingContests.where(
-            (element) => filter.check(upcoming: element),
+          upcomingContests!.where(
+            (element) => filter!.check(upcoming: element),
           ),
         );
       }
