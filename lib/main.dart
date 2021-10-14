@@ -16,21 +16,22 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
     BehaviorSubject<ReceivedNotification>();
-final BehaviorSubject<String> selectNotificationSubject =
-    BehaviorSubject<String>();
-NotificationAppLaunchDetails notificationAppLaunchDetails;
+final BehaviorSubject<String?> selectNotificationSubject =
+    BehaviorSubject<String?>();
+NotificationAppLaunchDetails? notificationAppLaunchDetails;
 
 class ReceivedNotification {
   final int id;
-  final String title;
-  final String body;
-  final String payload;
+  final String? title;
+  final String? body;
+  final String? payload;
 
-  ReceivedNotification(
-      {@required this.id,
-      @required this.title,
-      @required this.body,
-      @required this.payload});
+  ReceivedNotification({
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.payload,
+  });
 }
 
 Future<void> main() async {
@@ -41,7 +42,8 @@ Future<void> main() async {
   notificationAppLaunchDetails =
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
-  var initializationSettingsAndroid = AndroidInitializationSettings('logo');
+  var initializationSettingsAndroid =
+      const AndroidInitializationSettings('logo');
   // Note: permissions aren't requested here just to demonstrate that can be done later using the `requestPermissions()` method
   // of the `IOSFlutterLocalNotificationsPlugin` class
   var initializationSettingsIOS = IOSInitializationSettings(
@@ -49,14 +51,14 @@ Future<void> main() async {
       requestBadgePermission: false,
       requestSoundPermission: false,
       onDidReceiveLocalNotification:
-          (int id, String title, String body, String payload) async {
+          (int id, String? title, String? body, String? payload) async {
         didReceiveLocalNotificationSubject.add(ReceivedNotification(
             id: id, title: title, body: body, payload: payload));
       });
   var initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String payload) async {
+      onSelectNotification: (String? payload) async {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
     }
@@ -68,15 +70,19 @@ Future<void> main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   FirebaseMessaging.onMessage.listen((message) {
-    var notification = message.notification;
-    print('title: ${notification.title} \t body: ${notification.body}');
+    RemoteNotification? notification = message.notification;
+    if (notification != null) {
+      debugPrint('title: ${notification.title} \t body: ${notification.body}');
+    }
   });
   FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    var notification = message.notification;
-    print('title: ${notification.title} \t body: ${notification.body}');
+    RemoteNotification? notification = message.notification;
+    if (notification != null) {
+      debugPrint('title: ${notification.title} \t body: ${notification.body}');
+    }
   });
   runApp(
-    MaterialApp(
+    const MaterialApp(
       home: MyApp(),
       debugShowCheckedModeBanner: false,
     ),
@@ -84,15 +90,19 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return new ChooseHome();
+    return const ChooseHome();
   }
 }
 
 class ChooseHome extends StatefulWidget {
+  const ChooseHome({Key? key}) : super(key: key);
+
   @override
-  ChooseHomeState createState() => new ChooseHomeState();
+  ChooseHomeState createState() => ChooseHomeState();
 }
 
 class ChooseHomeState extends State<ChooseHome> {
@@ -101,7 +111,7 @@ class ChooseHomeState extends State<ChooseHome> {
     bool _seen = (prefs.getBool('seen') ?? false);
 
     final RemoteConfig _remoteConfig = RemoteConfig.instance;
-    final int version = 10;
+    const int version = 10;
     final defaults = <String, int>{'version': version};
     await _remoteConfig.setDefaults(defaults);
     await _remoteConfig.fetch();
@@ -113,28 +123,30 @@ class ChooseHomeState extends State<ChooseHome> {
     );
     await _remoteConfig.activate();
     final int minimunVersion = _remoteConfig.getInt('version');
-    print('Minimum version:- ' + minimunVersion.toString());
+    debugPrint('Minimum version:- ' + minimunVersion.toString());
     if (version < minimunVersion) {
-      print("1");
+      debugPrint("1");
       showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-          titlePadding: EdgeInsets.all(0),
+          titlePadding: const EdgeInsets.all(0),
           title: Container(
-            padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-            decoration: BoxDecoration(
-                color: Color(0xFFF3F4F7),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15))),
-            child: Text(
+            padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+            decoration: const BoxDecoration(
+              color: Color(0xFFF3F4F7),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+            ),
+            child: const Text(
               "Update Available",
               textAlign: TextAlign.center,
             ),
           ),
-          contentPadding: EdgeInsets.all(0),
-          content: Padding(
+          contentPadding: const EdgeInsets.all(0),
+          content: const Padding(
             padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
             child: Text(
               "This version of the application has been depricated, please update your app through the Google PlayStore.",
@@ -144,7 +156,7 @@ class ChooseHomeState extends State<ChooseHome> {
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
               ),
               onPressed: () {
                 const intent = AndroidIntent(
@@ -154,36 +166,45 @@ class ChooseHomeState extends State<ChooseHome> {
                         'in.ac.iitr.mdg.codephile',
                   },
                 );
-                intent.launch().catchError((e) => print(e));
+                intent.launch().catchError((e) => debugPrint(e));
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
                 color: codephileMain,
-                child: Text(
+                child: const Text(
                   "Okay",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             )
           ],
-          actionsPadding: EdgeInsets.all(0),
+          actionsPadding: const EdgeInsets.all(0),
         ),
       );
     } else {
       if (_seen) {
-        String token = prefs.getString('token');
-        String uid = prefs.getString('uid');
+        String? token = prefs.getString('token');
+        String? uid = prefs.getString('uid');
         if (token != null && uid != null) {
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (context) => HomePage(token: token, userId: uid)));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => HomePage(token: token, userId: uid),
+            ),
+          );
         } else {
           Navigator.of(context).pushReplacement(
-              new MaterialPageRoute(builder: (context) => LoginScreen()));
+            MaterialPageRoute(
+              builder: (context) => const LoginScreen(),
+            ),
+          );
         }
       } else {
         prefs.setBool('seen', true);
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+          MaterialPageRoute(
+            builder: (context) => const OnBoardingScreen(),
+          ),
+        );
       }
     }
   }
@@ -196,9 +217,9 @@ class ChooseHomeState extends State<ChooseHome> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new Center(
-        child: new Text(""),
+    return const Scaffold(
+      body: Center(
+        child: Text(""),
       ),
     );
   }

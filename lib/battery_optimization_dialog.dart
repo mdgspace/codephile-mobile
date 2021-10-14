@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BatteryOptimisationDialog extends StatefulWidget {
+  const BatteryOptimisationDialog({Key? key}) : super(key: key);
+
   @override
   _BatteryOptimisationDialogState createState() =>
       _BatteryOptimisationDialogState();
@@ -15,7 +17,7 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Icon(
+      title: const Icon(
         Icons.notifications_active,
         color: codephileMain,
       ),
@@ -24,7 +26,7 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text(
+          const Text(
             "Please disable battery optimisation for Codephile to receive notifications on time",
             style: TextStyle(
               color: primaryBlackText,
@@ -38,11 +40,11 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
                 activeColor: codephileMain,
                 onChanged: (value) {
                   setState(() {
-                    _showBatteryOptimizationDialog = !value;
+                    _showBatteryOptimizationDialog = !value!;
                   });
                 },
               ),
-              Text(
+              const Text(
                 "Do not show again",
                 style: TextStyle(
                   color: secondaryTextGrey,
@@ -54,7 +56,7 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text(
+          child: const Text(
             "Cancel",
             style: TextStyle(color: codephileMain),
           ),
@@ -64,15 +66,15 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
           },
         ),
         TextButton(
-          child: Text(
+          child: const Text(
             "Open Settings",
             style: TextStyle(color: codephileMain),
           ),
           onPressed: () {
             setBoolValue();
-            BatteryOptimization.openBatteryOptimizationSettings().then((value) {
-              Navigator.of(context).pop();
-            });
+            BatteryOptimization.openBatteryOptimizationSettings().then(
+              (value) => Navigator.of(context).pop(),
+            );
           },
         ),
       ],
@@ -82,6 +84,8 @@ class _BatteryOptimisationDialogState extends State<BatteryOptimisationDialog> {
   void setBoolValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(
-        "showBatteryOptimisationDialog", _showBatteryOptimizationDialog);
+      "showBatteryOptimisationDialog",
+      _showBatteryOptimizationDialog,
+    );
   }
 }
