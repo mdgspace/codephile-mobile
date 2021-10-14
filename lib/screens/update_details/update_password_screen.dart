@@ -1,18 +1,20 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/services/update_password.dart';
 import 'package:flutter/material.dart';
 
 class UpdatePasswordScreen extends StatefulWidget {
-  final String _token;
-  const UpdatePasswordScreen(this._token, {Key key}) : super(key: key);
+  final String? _token;
+  const UpdatePasswordScreen(this._token, {Key? key}) : super(key: key);
 
   @override
   _UpdatePasswordScreenState createState() => _UpdatePasswordScreenState();
 }
 
 class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
-  final _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   bool isUpdatePasswordTapped = false;
   bool _obscureTextOld = true,
       _obscureTextNew = true,
@@ -25,9 +27,17 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
       _lockIconColorNewConfirm = false,
       _seePasswordIconColorNewConfirm = false,
       isOldPasswordIncorrect = false;
-  TextEditingController _oldPasswordController = TextEditingController(),
-      _newPasswordController = TextEditingController(),
-      _newPasswordConfirmController = TextEditingController();
+  late TextEditingController _oldPasswordController,
+      _newPasswordController,
+      _newPasswordConfirmController;
+
+  @override
+  void initState() {
+    _oldPasswordController = TextEditingController();
+    _newPasswordController = TextEditingController();
+    _newPasswordConfirmController = TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +49,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
           leading: null,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
-          title: Text(
+          title: const Text(
             "Change Password",
             style: TextStyle(
                 fontSize: 20.0,
@@ -68,28 +78,25 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
           children: <Widget>[
             Form(
                 key: _formKey,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(16.0, 27.0, 16.0, 16.0),
-                        child: Text(
-                          "Setup a new password for Codephile",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w500,
-                            color: primaryBlackText,
-                          ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(16.0, 27.0, 16.0, 16.0),
+                      child: Text(
+                        "Setup a new password for Codephile",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500,
+                          color: primaryBlackText,
                         ),
                       ),
-                      _showPasswordInput("old"),
-                      _showPasswordInput("new"),
-                      _showPasswordInput("newConfirm"),
-                    ],
-                  ),
+                    ),
+                    _showPasswordInput("old"),
+                    _showPasswordInput("new"),
+                    _showPasswordInput("newConfirm"),
+                  ],
                 )),
             _showUpdatePasswordButton(),
           ],
@@ -114,21 +121,21 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
             maxLines: 1,
             obscureText: getObscureTextBool(inputField),
             autofocus: false,
-            decoration: new InputDecoration(
-              border: OutlineInputBorder(),
-              prefixIcon: new Icon(
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              prefixIcon: Icon(
                 (inputField == "old") ? Icons.lock_outline : Icons.lock,
                 color:
                     getLockIconBool(inputField) ? codephileMain : Colors.grey,
                 size: 39,
               ),
               hintText: getHintText(inputField),
-              labelStyle: new TextStyle(
+              labelStyle: const TextStyle(
                 color: Colors.grey,
               ),
             ),
             validator: (value) {
-              if (value.isEmpty) {
+              if (value!.isEmpty) {
                 return 'Password can\'t be empty';
               } else {
                 if (inputField == "newConfirm") {
@@ -150,7 +157,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
             top: 6.0,
             right: 0.0,
             child: IconButton(
-              icon: new Icon(
+              icon: Icon(
                 getObscureTextBool(inputField)
                     ? Icons.visibility_off
                     : Icons.visibility,
@@ -176,7 +183,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.85,
             child: Text(
               'Update Password',
@@ -194,7 +201,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   }
 
   bool _validateAndSave() {
-    final form = _formKey.currentState;
+    final form = _formKey.currentState!;
     if (form.validate()) {
       form.save();
       return true;
@@ -209,10 +216,10 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
         enableTextFields = false;
       });
 
-      int responseCode = await updatePassword(widget._token,
+      int? responseCode = await updatePassword(widget._token!,
           _oldPasswordController.text, _newPasswordController.text, context);
 
-      print(responseCode);
+      debugPrint(responseCode.toString());
       if (responseCode == 200) {
         setState(() {
           isUpdatePasswordTapped = false;
@@ -249,13 +256,12 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     switch (inputField) {
       case "old":
         return _oldPasswordController;
-        break;
+
       case "new":
         return _newPasswordController;
-        break;
+
       case "newConfirm":
         return _newPasswordConfirmController;
-        break;
     }
   }
 
@@ -263,13 +269,12 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     switch (inputField) {
       case "old":
         return _obscureTextOld;
-        break;
+
       case "new":
         return _obscureTextNew;
-        break;
+
       case "newConfirm":
         return _obscureTextNewConfirm;
-        break;
     }
   }
 
@@ -299,13 +304,13 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
         setState(() {
           _lockIconColorOld = true;
           _seePasswordIconColorOld = true;
-          if ((_newPasswordController.text == '') ||
-              (_oldPasswordController.text == null)) {
+          if (_newPasswordController.text.isEmpty ||
+              _oldPasswordController.text.isEmpty) {
             _lockIconColorNew = false;
             _seePasswordIconColorNew = false;
           }
-          if ((_newPasswordConfirmController.text == '') ||
-              (_oldPasswordController.text == null)) {
+          if (_newPasswordConfirmController.text.isEmpty ||
+              _oldPasswordController.text.isEmpty) {
             _lockIconColorNewConfirm = false;
             _seePasswordIconColorNewConfirm = false;
           }
@@ -350,13 +355,12 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     switch (inputField) {
       case "old":
         return _seePasswordIconColorOld;
-        break;
+
       case "new":
         return _seePasswordIconColorNew;
-        break;
+
       case "newConfirm":
         return _seePasswordIconColorNewConfirm;
-        break;
     }
   }
 
@@ -364,13 +368,12 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     switch (inputField) {
       case "old":
         return _lockIconColorOld;
-        break;
+
       case "new":
         return _lockIconColorNew;
-        break;
+
       case "newConfirm":
         return _lockIconColorNewConfirm;
-        break;
     }
   }
 
@@ -378,13 +381,12 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     switch (inputField) {
       case "old":
         return "Current Password";
-        break;
+
       case "new":
         return "New Password";
-        break;
+
       case "newConfirm":
         return "Re-enter Password";
-        break;
     }
   }
 }
