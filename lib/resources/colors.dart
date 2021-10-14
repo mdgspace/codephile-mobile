@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-final codephileMain = const Color.fromRGBO(51, 102, 255, 1);
-final codephileMainShade = const Color.fromRGBO(51, 102, 255, 0.15);
-final codephileSolved = const Color.fromRGBO(152, 219, 17, 1);
-final codephileSolvedBackground = const Color.fromRGBO(152, 219, 17, 0.15);
-final codephileBackground = const Color.fromRGBO(250, 250, 250, 1);
-final secondaryTextGrey = const Color.fromRGBO(151, 151, 151, 1);
-final userIconBorderGrey = const Color.fromRGBO(229, 229, 229, 1);
-final primaryBlackText = const Color.fromRGBO(36, 36, 36, 1);
-final uiBackground = const Color.fromRGBO(243, 244, 247, 1);
-final questionsSolvedBackground = const Color.fromRGBO(239, 242, 252, 1);
+const codephileMain = Color.fromRGBO(51, 102, 255, 1);
+const codephileMainShade = Color.fromRGBO(51, 102, 255, 0.15);
+const codephileSolved = Color.fromRGBO(152, 219, 17, 1);
+const codephileSolvedBackground = Color.fromRGBO(152, 219, 17, 0.15);
+const codephileBackground = Color.fromRGBO(250, 250, 250, 1);
+const secondaryTextGrey = Color.fromRGBO(151, 151, 151, 1);
+const userIconBorderGrey = Color.fromRGBO(229, 229, 229, 1);
+const primaryBlackText = Color.fromRGBO(36, 36, 36, 1);
+const uiBackground = Color.fromRGBO(243, 244, 247, 1);
+const questionsSolvedBackground = Color.fromRGBO(239, 242, 252, 1);
 
-final subAccepted = const Color.fromRGBO(76, 175, 80, 1);
-final subPartiallySolved = const Color.fromRGBO(166, 244, 99, 1);
-final subWrongAnswer = const Color.fromRGBO(244, 67, 54, 1);
-final subTimeLimitExceeded = const Color.fromRGBO(63, 81, 181, 1);
-final subRuntimeError = const Color.fromRGBO(147, 39, 176, 1);
-final subCompilationError = const Color.fromRGBO(255, 152, 0, 1);
+const subAccepted = Color.fromRGBO(76, 175, 80, 1);
+const subPartiallySolved = Color.fromRGBO(166, 244, 99, 1);
+const subWrongAnswer = Color.fromRGBO(244, 67, 54, 1);
+const subTimeLimitExceeded = Color.fromRGBO(63, 81, 181, 1);
+const subRuntimeError = Color.fromRGBO(147, 39, 176, 1);
+const subCompilationError = Color.fromRGBO(255, 152, 0, 1);
