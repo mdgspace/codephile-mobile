@@ -77,7 +77,7 @@ class ContestFilter {
           _maxDuration = const Duration(days: 31);
           break;
         default:
-          return true;
+          _maxDuration = const Duration(days: 365);
       }
       if (_maxDuration
               .compareTo(upcoming.endTime!.difference(upcoming.startTime!)) >=
@@ -131,7 +131,7 @@ class ContestFilter {
           _maxDuration = const Duration(days: 31);
           break;
         default:
-          return true;
+          _maxDuration = const Duration(days: 365);
       }
       if (_maxDuration.compareTo(ongoing.endTime!.difference(DateTime.now())) >=
           0) {
