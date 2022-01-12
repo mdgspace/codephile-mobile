@@ -1,15 +1,18 @@
 import 'package:codephile/models/grouped_feed.dart';
+import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/strings.dart';
 import 'package:codephile/screens/feed/feed_card.dart';
 import 'package:codephile/services/feed.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as foundation;
 
 class FeedScreen extends StatefulWidget {
   final String? token;
+
   const FeedScreen({this.token, Key? key}) : super(key: key);
+
   @override
   _FeedScreenState createState() => _FeedScreenState();
 }
@@ -17,13 +20,22 @@ class FeedScreen extends StatefulWidget {
 class _FeedScreenState extends State<FeedScreen> {
   final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
   List<GroupedFeed>? feed;
-  bool? empty;
+  bool _empty = false;
+  bool _loading = false;
+  bool _allLoaded = false;
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    empty = false;
-    refreshFeed();
+    _refreshFeed(isUserPrompted: true);
+    _scrollController.addListener(_controlScrolling);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -37,10 +49,10 @@ class _FeedScreenState extends State<FeedScreen> {
               icon: SvgPicture.asset("assets/refresh.svg"),
               onPressed: () {
                 setState(() {
-                  feed = null;
-                  empty = false;
+                  _loading = true;
+                  _empty = false;
                 });
-                refreshFeed();
+                _refreshFeed(isUserPrompted: true);
               })
         ],
         title: const Text(
@@ -54,7 +66,7 @@ class _FeedScreenState extends State<FeedScreen> {
       ),
       body: Builder(
         builder: (context) {
-          if (empty == true) {
+          if (_empty) {
             return Column(
               children: <Widget>[
                 const Spacer(flex: 3),
@@ -114,14 +126,32 @@ class _FeedScreenState extends State<FeedScreen> {
                       ]);
                 });
           } else {
-            return ListView.builder(
-              itemCount: feed!.length,
-              itemBuilder: (context, index) {
-                return FeedCard(
-                  feed: feed![index],
-                  token: widget.token,
-                );
-              },
+            return Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                ListView.builder(
+                  controller: _scrollController,
+                  itemCount: feed!.length,
+                  itemBuilder: (context, index) {
+                    return FeedCard(
+                      feed: feed![index],
+                      token: widget.token,
+                    );
+                  },
+                ),
+                if (_loading && !_allLoaded)
+                  const Positioned(
+                    bottom: 0,
+                    child: SizedBox(
+                      height: 80,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: codephileMain,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             );
           }
         },
@@ -129,54 +159,84 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
-  void refreshFeed() async {
+  void _refreshFeed({required bool isUserPrompted}) async {
+    setState(() => _loading = true);
     try {
-      getFeed(widget.token!, context).then((value) {
-        List<GroupedFeed> groupedFeed = <GroupedFeed>[];
-        if (value == null) {
-          setState(() {
-            empty = true;
-          });
-        } else {
-          value.forEach((feedElement) {
-            GroupedFeed e = groupedFeed.firstWhere(
-              (grpFeedElement) =>
-                  grpFeedElement.name == feedElement.submission!.name,
-              orElse: () {
-                groupedFeed.add(
-                  GroupedFeed(
-                    fullname: feedElement.fullname,
-                    name: feedElement.submission!.name,
-                    picture: feedElement.picture,
-                    url: feedElement.submission!.url,
-                    userId: feedElement.userId,
-                    username: feedElement.username,
-                    language: feedElement.submission!.language,
-                    submissions: [],
-                  ),
-                );
-                return groupedFeed.last;
-              },
-            );
-            e.submissions!.add(Submissions(
-                createdAt: feedElement.submission!.createdAt,
-                points: feedElement.submission!.points,
-                rating: feedElement.submission!.rating,
-                status: feedElement.submission!.status,
-                tags: feedElement.submission!.tags));
-          });
-          setState(() {
-            feed = groupedFeed;
-          });
+      GroupedFeed? lastSubmission = feed?.last;
+      final response = await getFeed(
+        widget.token!,
+        context,
+        before:
+            isUserPrompted ? null : lastSubmission?.submissions?.last.createdAt,
+      );
+      List<GroupedFeed> nextPage = <GroupedFeed>[];
+      if (response == null) {
+        setState(() {
+          _loading = false;
+          _empty = true;
+        });
+      } else {
+        for (final feedElement in response) {
+          GroupedFeed e = nextPage.firstWhere(
+            (grpFeedElement) {
+              return grpFeedElement.name == feedElement.submission!.name;
+            },
+            orElse: () {
+              nextPage.add(
+                GroupedFeed(
+                  fullname: feedElement.fullname,
+                  name: feedElement.submission!.name,
+                  picture: feedElement.picture,
+                  url: feedElement.submission!.url,
+                  userId: feedElement.userId,
+                  username: feedElement.username,
+                  language: feedElement.submission!.language,
+                  submissions: [],
+                ),
+              );
+              return nextPage.last;
+            },
+          );
+          e.submissions!.add(Submissions(
+              createdAt: feedElement.submission!.createdAt,
+              points: feedElement.submission!.points,
+              rating: feedElement.submission!.rating,
+              status: feedElement.submission!.status,
+              tags: feedElement.submission!.tags));
         }
-      });
+        if (nextPage.isEmpty) _allLoaded = true;
+        feed ??= [];
+        if (isUserPrompted && _scrollController.hasClients) {
+          feed = nextPage;
+          _scrollController.animateTo(
+            _scrollController.position.minScrollExtent,
+            duration: const Duration(milliseconds: 2000),
+            curve: Curves.fastOutSlowIn,
+          );
+        } else {
+          feed!.addAll(nextPage);
+        }
+        setState(() => _loading = false);
+      }
     } catch (error, stackTrace) {
       if (foundation.kReleaseMode) {
         await sentry.captureException(
           error,
           stackTrace: stackTrace,
         );
+      } else {
+        rethrow;
       }
+    }
+  }
+
+  void _controlScrolling() {
+    final hasReachedEnd = _scrollController.position.maxScrollExtent -
+            _scrollController.position.pixels <=
+        MediaQuery.of(context).size.width / 2;
+
+    if (hasReachedEnd && !_loading && !_allLoaded) {
+      _refreshFeed(isUserPrompted: false);
     }
   }
 }
