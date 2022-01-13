@@ -9,7 +9,6 @@ import 'package:codephile/services/update_user_details.dart';
 import 'package:codephile/services/upload_user_image.dart';
 import 'package:codephile/services/username.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -328,6 +327,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
           borderRadius: const BorderRadius.all(Radius.circular(4.0)),
         ),
         child: DropdownSearch<String>(
+          showSearchBox: true,
           selectedItem: widget._user!.institute,
           enabled: enableTextFields,
           items: _instituteList,

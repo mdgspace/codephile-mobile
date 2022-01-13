@@ -138,7 +138,7 @@ class _FeedScreenState extends State<FeedScreen> {
             empty = true;
           });
         } else {
-          value.forEach((feedElement) {
+          for (var feedElement in value) {
             GroupedFeed e = groupedFeed.firstWhere(
               (grpFeedElement) =>
                   grpFeedElement.name == feedElement.submission!.name,
@@ -164,7 +164,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 rating: feedElement.submission!.rating,
                 status: feedElement.submission!.status,
                 tags: feedElement.submission!.tags));
-          });
+          }
           setState(() {
             feed = groupedFeed;
           });

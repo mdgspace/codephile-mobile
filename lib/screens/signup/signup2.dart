@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'progress_tab_bar.dart';
 import 'signup3.dart';

@@ -16,7 +16,6 @@ import 'package:codephile/services/activity_details.dart';
 import 'package:codephile/services/following_list.dart';
 import 'package:codephile/services/submissions_status.dart';
 import 'package:codephile/services/user.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 import '../../models/user_profile_details.dart';

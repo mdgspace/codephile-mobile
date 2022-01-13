@@ -3,9 +3,7 @@ import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/following/following_screen.dart';
 import 'package:codephile/services/follow.dart';
 import 'package:codephile/services/unfollow.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

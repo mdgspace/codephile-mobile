@@ -5,7 +5,6 @@ import 'package:codephile/resources/strings.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:codephile/screens/search/search_result_card.dart';
 import 'package:codephile/services/search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
