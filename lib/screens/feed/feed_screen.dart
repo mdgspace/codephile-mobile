@@ -5,19 +5,19 @@ import 'package:codephile/services/feed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 class FeedScreen extends StatefulWidget {
-  final String token;
-  FeedScreen({this.token});
+  final String? token;
+  const FeedScreen({this.token, Key? key}) : super(key: key);
   @override
   _FeedScreenState createState() => _FeedScreenState();
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-  final SentryClient sentry = new SentryClient(dsn: dsn);
-  List<GroupedFeed> feed;
-  bool empty;
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
+  List<GroupedFeed>? feed;
+  bool? empty;
 
   @override
   void initState() {
@@ -43,10 +43,13 @@ class _FeedScreenState extends State<FeedScreen> {
                 refreshFeed();
               })
         ],
-        title: Text(
+        title: const Text(
           "Feed",
           style: TextStyle(
-              fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
         ),
       ),
       body: Builder(
@@ -54,9 +57,9 @@ class _FeedScreenState extends State<FeedScreen> {
           if (empty == true) {
             return Column(
               children: <Widget>[
-                Spacer(flex: 3),
+                const Spacer(flex: 3),
                 SvgPicture.asset("assets/emptyFeed.svg"),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(25),
                   child: Text(
                     "Feed looks empty, search and follow some people to see their updates",
@@ -64,9 +67,7 @@ class _FeedScreenState extends State<FeedScreen> {
                     style: TextStyle(color: Color(0xFF979797)),
                   ),
                 ),
-                Spacer(
-                  flex: 2,
-                )
+                const Spacer(flex: 2)
               ],
             );
           } else if (feed == null) {
@@ -77,7 +78,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Padding(
+                        const Padding(
                             padding: EdgeInsets.fromLTRB(25, 15, 15, 0),
                             child: CircleAvatar(
                                 backgroundColor: Color(0xFFE5E5E5),
@@ -86,27 +87,27 @@ class _FeedScreenState extends State<FeedScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                                margin: EdgeInsets.fromLTRB(0, 15, 0, 10),
+                                margin: const EdgeInsets.fromLTRB(0, 15, 0, 10),
                                 width: width * 2 / 4,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(2),
-                                    color: Color(0xFFE5E5E5)),
+                                    color: const Color(0xFFE5E5E5)),
                                 height: 14),
                             Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                               width: width * 3 / 4,
                               height: 20,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(2),
-                                  color: Color(0xFFE5E5E5)),
+                                  color: const Color(0xFFE5E5E5)),
                             ),
                             Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                              margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                               width: width * 3 / 4,
                               height: 20,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(2),
-                                  color: Color(0xFFE5E5E5)),
+                                  color: const Color(0xFFE5E5E5)),
                             )
                           ],
                         )
@@ -114,10 +115,10 @@ class _FeedScreenState extends State<FeedScreen> {
                 });
           } else {
             return ListView.builder(
-              itemCount: feed.length,
+              itemCount: feed!.length,
               itemBuilder: (context, index) {
                 return FeedCard(
-                  feed: feed[index],
+                  feed: feed![index],
                   token: widget.token,
                 );
               },
@@ -130,46 +131,49 @@ class _FeedScreenState extends State<FeedScreen> {
 
   void refreshFeed() async {
     try {
-      getFeed(widget.token, context).then((value) {
-        List<GroupedFeed> groupedFeed = List();
+      getFeed(widget.token!, context).then((value) {
+        List<GroupedFeed> groupedFeed = <GroupedFeed>[];
         if (value == null) {
           setState(() {
             empty = true;
           });
         } else {
-          value.forEach((feedElement) {
+          for (var feedElement in value) {
             GroupedFeed e = groupedFeed.firstWhere(
               (grpFeedElement) =>
-                  grpFeedElement.name == feedElement.submission.name,
+                  grpFeedElement.name == feedElement.submission!.name,
               orElse: () {
-                groupedFeed.add(GroupedFeed(
+                groupedFeed.add(
+                  GroupedFeed(
                     fullname: feedElement.fullname,
-                    name: feedElement.submission.name,
+                    name: feedElement.submission!.name,
                     picture: feedElement.picture,
-                    url: feedElement.submission.url,
+                    url: feedElement.submission!.url,
                     userId: feedElement.userId,
                     username: feedElement.username,
-                    language: feedElement.submission.language,
-                    submissions: List()));
+                    language: feedElement.submission!.language,
+                    submissions: [],
+                  ),
+                );
                 return groupedFeed.last;
               },
             );
-            e.submissions.add(Submissions(
-                createdAt: feedElement.submission.createdAt,
-                points: feedElement.submission.points,
-                rating: feedElement.submission.rating,
-                status: feedElement.submission.status,
-                tags: feedElement.submission.tags));
-          });
+            e.submissions!.add(Submissions(
+                createdAt: feedElement.submission!.createdAt,
+                points: feedElement.submission!.points,
+                rating: feedElement.submission!.rating,
+                status: feedElement.submission!.status,
+                tags: feedElement.submission!.tags));
+          }
           setState(() {
             feed = groupedFeed;
           });
         }
       });
     } catch (error, stackTrace) {
-      if (Foundation.kReleaseMode) {
+      if (foundation.kReleaseMode) {
         await sentry.captureException(
-          exception: error,
+          error,
           stackTrace: stackTrace,
         );
       }

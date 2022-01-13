@@ -10,10 +10,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:codephile/homescreen.dart';
 
 class VerifyScreen extends StatefulWidget {
-  final String username;
-  final String password;
-  final String id;
-  VerifyScreen({this.password, this.username, this.id});
+  final String? username;
+  final String? password;
+  final String? id;
+  const VerifyScreen({Key? key, this.password, this.username, this.id})
+      : super(key: key);
   @override
   _VerifyScreenState createState() => _VerifyScreenState();
 }
@@ -25,11 +26,11 @@ class _VerifyScreenState extends State<VerifyScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            Spacer(
+            const Spacer(
               flex: 1,
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Text(
                 "Hi,",
                 style: TextStyle(
@@ -37,8 +38,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Text(
                 "You are almost done with the sign up process. Please check your email to verify this account.",
                 style: TextStyle(
@@ -46,9 +47,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 ),
               ),
             ),
-            Spacer(
-              flex: 1,
-            ),
+            const Spacer(flex: 1),
             Row(
               children: [
                 Expanded(
@@ -62,7 +61,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.CENTER,
                         );
-                        final response = await sendVerifyEmail(widget.id);
+                        final response = await sendVerifyEmail(widget.id!);
                         if (response != 1) {
                           Fluttertoast.showToast(
                             msg:
@@ -80,12 +79,14 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: FlatButton(
-                      color: codephileMain,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: codephileMain,
+                      ),
                       onPressed: () async {
-                        Token userToken =
+                        Token? userToken =
                             await login(widget.username, widget.password);
-                        if (userToken.token == "unverified") {
+                        if (userToken!.token == "unverified") {
                           Fluttertoast.showToast(
                             msg: "Email still unverified!",
                             toastLength: Toast.LENGTH_SHORT,
@@ -97,8 +98,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
                               await SharedPreferences.getInstance();
                           if (pref.containsKey("userImagePath")) {
                             await uploadImage(
-                              userToken.token,
-                              pref.getString("userImagePath"),
+                              userToken.token!,
+                              pref.getString("userImagePath")!,
                               context,
                             );
                             pref.remove("userImagePath");
@@ -118,10 +119,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         }
                       },
                       child: Container(
-                        padding: EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(16.0),
                         height: 64,
                         alignment: Alignment.center,
-                        child: Text(
+                        child: const Text(
                           "Login",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -135,9 +136,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 ),
               ],
             ),
-            Spacer(
-              flex: 1,
-            ),
+            const Spacer(flex: 1),
           ],
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

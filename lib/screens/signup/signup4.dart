@@ -1,6 +1,5 @@
 import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/screens/verify/verify_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
@@ -11,51 +10,39 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'progress_tab_bar.dart';
 
 class SignUpPage4 extends StatefulWidget {
-  final String name;
-  final String email;
-  final String institute;
-  final Handle handle;
-  final String userImagePath;
+  final String? name;
+  final String? email;
+  final String? institute;
+  final Handle? handle;
+  final String? userImagePath;
 
-  const SignUpPage4(
-      {Key key,
-      this.name,
-      this.email,
-      this.institute,
-      this.handle,
-      this.userImagePath})
-      : super(key: key);
+  const SignUpPage4({
+    Key? key,
+    this.name,
+    this.email,
+    this.institute,
+    this.handle,
+    this.userImagePath,
+  }) : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState(
-      name: name,
-      email: email,
-      institute: institute,
-      handle: handle,
-      userImagePath: userImagePath);
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage4> {
-  String _username, _password;
-  String name;
-  String email;
-  String institute;
-  Handle handle;
-  String userImagePath;
+  String? _username, _password;
+  String? name;
+  String? email;
+  String? institute;
+  Handle? handle;
+  String? userImagePath;
   bool enableTextFields = true;
   bool _userIconColor = false,
       _lockIconColor = false,
       _seePasswordIconColor = false;
-  _SignUpPageState(
-      {Key key,
-      this.name,
-      this.email,
-      this.institute,
-      this.handle,
-      this.userImagePath});
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final _formKey = new GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -72,6 +59,11 @@ class _SignUpPageState extends State<SignUpPage4> {
   @override
   void initState() {
     super.initState();
+    name = widget.name;
+    email = widget.email;
+    institute = widget.institute;
+    handle = widget.handle;
+    userImagePath = widget.userImagePath;
     showConnectivityStatus();
   }
 
@@ -82,19 +74,19 @@ class _SignUpPageState extends State<SignUpPage4> {
         key: _scaffoldKey,
         body: Form(
           key: _formKey,
-          child: new Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ((isCreateAccountButtonTapped) || (isCreateAccountSuccessful))
-                  ? Expanded(
+                  ? const Expanded(
                       child: Center(
                         child: CircularProgressIndicator(),
                       ),
                     )
                   : Column(
                       children: <Widget>[
-                        ProgressTabBar(4),
+                        const ProgressTabBar(4),
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
@@ -104,14 +96,14 @@ class _SignUpPageState extends State<SignUpPage4> {
                               SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height / 15),
-                              Text(
+                              const Text(
                                   'Setup a username and password for Codephile',
                                   style: TextStyle(
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold)),
-                              SizedBox(height: 25.0),
+                              const SizedBox(height: 25.0),
                               _showUsernameInput(),
-                              SizedBox(height: 15.0),
+                              const SizedBox(height: 15.0),
                               _showPasswordInput(),
                             ],
                           ),
@@ -128,11 +120,12 @@ class _SignUpPageState extends State<SignUpPage4> {
   }
 
   Widget _showUsernameInput() {
-    return new TextFormField(
+    return TextFormField(
       onTap: () {
         setState(() {
           _userIconColor = true;
           if ((_passwordController.text == '') ||
+              // ignore: unnecessary_null_comparison
               (_passwordController.text == null)) {
             _seePasswordIconColor = false;
             _lockIconColor = false;
@@ -144,19 +137,19 @@ class _SignUpPageState extends State<SignUpPage4> {
       maxLines: 1,
       keyboardType: TextInputType.text,
       autofocus: false,
-      decoration: new InputDecoration(
+      decoration: InputDecoration(
         labelText: "Username",
-        prefixIcon: new Icon(
+        prefixIcon: Icon(
           Icons.person,
           color: _userIconColor ? codephileMain : Colors.grey,
           size: 39,
         ),
-        border: OutlineInputBorder(),
-        labelStyle: new TextStyle(
+        border: const OutlineInputBorder(),
+        labelStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),
-      validator: (value) => value.isEmpty ? 'Username can\'t be empty' : null,
+      validator: (value) => value!.isEmpty ? 'Username can\'t be empty' : null,
       onSaved: (value) => _username = value,
     );
   }
@@ -173,6 +166,7 @@ class _SignUpPageState extends State<SignUpPage4> {
                 _lockIconColor = true;
                 _seePasswordIconColor = true;
                 if ((_usernameController.text == '') ||
+                    // ignore: unnecessary_null_comparison
                     (_passwordController.text == null)) {
                   _userIconColor = false;
                 }
@@ -183,25 +177,25 @@ class _SignUpPageState extends State<SignUpPage4> {
             maxLines: 1,
             obscureText: _obscureText,
             autofocus: false,
-            decoration: new InputDecoration(
+            decoration: InputDecoration(
               labelText: "Password",
-              border: OutlineInputBorder(),
-              prefixIcon: new Icon(
+              border: const OutlineInputBorder(),
+              prefixIcon: Icon(
                 Icons.lock,
                 color: _lockIconColor ? codephileMain : Colors.grey,
                 size: 39,
               ),
-              labelStyle: new TextStyle(
+              labelStyle: const TextStyle(
                 color: Colors.grey,
               ),
             ),
             validator: (value) {
-              return value.isEmpty ? 'Password can\'t be empty' : null;
+              return value!.isEmpty ? 'Password can\'t be empty' : null;
             },
             onSaved: (value) => _password = value,
           ),
           IconButton(
-            icon: new Icon(
+            icon: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
               color: _seePasswordIconColor ? codephileMain : Colors.grey,
             ),
@@ -217,11 +211,13 @@ class _SignUpPageState extends State<SignUpPage4> {
     return (isCreateAccountButtonTapped)
         ? Padding(
             padding: const EdgeInsets.all(16.0),
-            child: FlatButton(
-                color: Colors.grey[500],
+            child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.grey[500],
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
                       'Creating...',
@@ -238,16 +234,18 @@ class _SignUpPageState extends State<SignUpPage4> {
         : (isCreateAccountSuccessful)
             ? Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: FlatButton(
-                    color: codephileMain,
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: codephileMain,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width * 0.85,
-                        child: new Text(
+                        child: const Text(
                           'Created Successfully',
                           textAlign: TextAlign.center,
-                          style: new TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,
                           ),
@@ -258,16 +256,18 @@ class _SignUpPageState extends State<SignUpPage4> {
               )
             : Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: FlatButton(
-                  color: codephileMain,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: codephileMain,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.85,
-                      child: new Text(
+                      child: const Text(
                         'Create Account',
                         textAlign: TextAlign.center,
-                        style: new TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.0,
                         ),
@@ -280,7 +280,7 @@ class _SignUpPageState extends State<SignUpPage4> {
   }
 
   bool _validateAndSave() {
-    final form = _formKey.currentState;
+    final form = _formKey.currentState!;
     if (form.validate()) {
       form.save();
       return true;
@@ -312,14 +312,14 @@ class _SignUpPageState extends State<SignUpPage4> {
           //   gravity: ToastGravity.CENTER,
           //   fontSize: 12.0,
           // );
-          String id = res["response"];
+          String? id = res["response"];
           setState(() {
             isCreateAccountButtonTapped = false;
             isCreateAccountSuccessful = true;
           });
           if (userImagePath != null) {
             SharedPreferences pref = await SharedPreferences.getInstance();
-            pref.setString('userImagePath', userImagePath);
+            pref.setString('userImagePath', userImagePath!);
           }
           Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacement(

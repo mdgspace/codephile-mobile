@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:codephile/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -5,9 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 enum ButtonState { Idle, Waiting }
 
 class TimerButton extends StatefulWidget {
-  final Function callback;
+  final Function? callback;
 
-  TimerButton({this.callback});
+  const TimerButton({Key? key, this.callback}) : super(key: key);
 
   @override
   _TimerButtonState createState() => _TimerButtonState();
@@ -15,8 +17,8 @@ class TimerButton extends StatefulWidget {
 
 class _TimerButtonState extends State<TimerButton>
     with SingleTickerProviderStateMixin {
-  ButtonState buttonState;
-  AnimationController animationController;
+  ButtonState? buttonState;
+  late AnimationController animationController;
 
   @override
   void initState() {
@@ -32,9 +34,9 @@ class _TimerButtonState extends State<TimerButton>
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        print(buttonState);
+        debugPrint('$buttonState');
         if (buttonState == ButtonState.Idle) {
-          await widget.callback();
+          await widget.callback!();
           setState(() {
             buttonState = ButtonState.Waiting;
             animationController.forward().then((value) {
@@ -58,10 +60,10 @@ class _TimerButtonState extends State<TimerButton>
             width: 1.5,
           ),
         ),
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Builder(builder: (context) {
           if (buttonState == ButtonState.Idle) {
-            return Text(
+            return const Text(
               "Resend Email",
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -73,7 +75,7 @@ class _TimerButtonState extends State<TimerButton>
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
+                const Text(
                   "Wait",
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -91,7 +93,7 @@ class _TimerButtonState extends State<TimerButton>
                         value: animationController.value,
                         strokeWidth: 3.5,
                         valueColor:
-                            AlwaysStoppedAnimation<Color>(codephileMain),
+                            const AlwaysStoppedAnimation<Color>(codephileMain),
                         backgroundColor: codephileMainShade,
                       ),
                     );

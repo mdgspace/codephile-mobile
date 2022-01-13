@@ -5,40 +5,38 @@ import 'package:codephile/resources/strings.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:codephile/screens/search/search_result_card.dart';
 import 'package:codephile/services/search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchPage extends StatefulWidget {
-  final String token;
-  final String uId;
+  final String? token;
+  final String? uId;
 
-  SearchPage(this.token, this.uId);
+  const SearchPage(this.token, this.uId, {Key? key}) : super(key: key);
 
   @override
-  _SearchPageState createState() => _SearchPageState(token: token);
+  _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
   final String inputHint = "Enter handle or platform";
-  final String token;
+  late final String? token;
 
-  _SearchPageState({Key key, this.token});
-
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
   final TextEditingController _controller = TextEditingController();
   bool _isSearching = false;
-  List<CodephileUser> searchResult = List();
+  List<CodephileUser> searchResult = <CodephileUser>[];
   int statusCode = 0;
   bool isResultNull = false;
   bool showRecentSearches = true;
-  List<CodephileUser> _recentlySearchedUsers;
+  List<CodephileUser>? _recentlySearchedUsers;
 
   @override
   void initState() {
     super.initState();
     _controller.text = "";
+    token = widget.token;
     loadRecentSearches();
   }
 
@@ -52,15 +50,15 @@ class _SearchPageState extends State<SearchPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 40.0, 16.0, 8.0),
               child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(243, 244, 247, 1),
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(243, 244, 247, 1),
                   borderRadius: BorderRadius.all(Radius.circular(2.0)),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 4.0, 2.0, 4.0),
@@ -69,7 +67,7 @@ class _SearchPageState extends State<SearchPage> {
                           controller: _controller,
                           decoration: InputDecoration.collapsed(
                               hintText: inputHint,
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                 fontSize: 17.0,
                                 color: secondaryTextGrey,
                               )),
@@ -79,8 +77,8 @@ class _SearchPageState extends State<SearchPage> {
                               _handleSearch(text);
                             }
                           },
-                          style: TextStyle(
-                            color: const Color.fromRGBO(
+                          style: const TextStyle(
+                            color: Color.fromRGBO(
                                 36, 36, 36, 1), //TODO: use color resources
                           ),
                         ),
@@ -88,11 +86,11 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                     IconButton(
                       //TODO: use search icon from designs
-                      padding: EdgeInsets.fromLTRB(8.0, 1.0, 2.0, 4.0),
-                      icon: Icon(
+                      padding: const EdgeInsets.fromLTRB(8.0, 1.0, 2.0, 4.0),
+                      icon: const Icon(
                         Icons.search,
                         size: 30.0,
-                        color: const Color.fromRGBO(141, 141, 141, 1),
+                        color: Color.fromRGBO(141, 141, 141, 1),
                       ),
                       onPressed: () {
                         FocusScope.of(context).unfocus();
@@ -107,26 +105,27 @@ class _SearchPageState extends State<SearchPage> {
             ),
             Expanded(
               child: _isSearching == true
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(),
                     )
                   : isResultNull
-                      ? Center(
+                      ? const Center(
                           child: Text(
                             "No matching users found",
                             style: TextStyle(
                               fontSize: 16.0,
-                              color: const Color.fromRGBO(36, 36, 36, 1),
+                              color: Color.fromRGBO(36, 36, 36, 1),
                             ),
                           ),
                         )
                       : ((showRecentSearches) &&
                               (_recentlySearchedUsers != null) &&
-                              (_recentlySearchedUsers.length != 0))
+                              (_recentlySearchedUsers!.isNotEmpty))
                           ? recentSearches()
                           : ListView.builder(
                               shrinkWrap: true,
-                              padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+                              padding:
+                                  const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
                               itemCount: searchResult.length,
                               itemBuilder: (BuildContext context, int index) {
                                 CodephileUser user = searchResult[index];
@@ -142,7 +141,7 @@ class _SearchPageState extends State<SearchPage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => new Profile(
+                                            builder: (context) => Profile(
                                                 token,
                                                 user.id,
                                                 (widget.uId == user.id),
@@ -165,8 +164,8 @@ class _SearchPageState extends State<SearchPage> {
       }
     });
     List<CodephileUser> searchResultsTemp; // = List();
-    search(widget.token, query, context).then((results) {
-      if ((results != null) && (results.length != 0)) {
+    search(widget.token!, query, context).then((results) {
+      if ((results != null) && (results.isNotEmpty)) {
         searchResultsTemp = results;
         isResNull = false;
       } else {
@@ -184,7 +183,7 @@ class _SearchPageState extends State<SearchPage> {
   void addToRecentSearches(CodephileUser user) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String searchHist = prefs.get("recentSearches");
+      String? searchHist = prefs.get("recentSearches") as String?;
       List<CodephileUser> oldUserObjects =
           (searchHist != null) ? searchResultUsersFromJson(searchHist) : [];
       List<CodephileUser> newUserObjects = [];
@@ -207,7 +206,7 @@ class _SearchPageState extends State<SearchPage> {
       });
     } catch (error, stackTrace) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }
@@ -215,8 +214,8 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget recentSearches() {
     List<Widget> textWidget = [
-      Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      const Padding(
+        padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
         child: Text(
           "RECENT SEARCHES",
           style: TextStyle(
@@ -229,28 +228,32 @@ class _SearchPageState extends State<SearchPage> {
 
     List<Widget> recentSearches = [];
     if ((_recentlySearchedUsers != null) &&
-        (_recentlySearchedUsers.length != 0)) {
-      for (int i = 0; i < _recentlySearchedUsers.length; i++) {
-        String id = _recentlySearchedUsers[i].id;
-        recentSearches.add(GestureDetector(
-          child: SearchResultCard(
-              widget.token,
-              _recentlySearchedUsers[i].fullname,
-              _recentlySearchedUsers[i].username,
-              _recentlySearchedUsers[i].picture),
-          onTap: () {
-            Navigator.push(
+        (_recentlySearchedUsers!.isNotEmpty)) {
+      for (int i = 0; i < _recentlySearchedUsers!.length; i++) {
+        String? id = _recentlySearchedUsers![i].id;
+        recentSearches.add(
+          GestureDetector(
+            child: SearchResultCard(
+                widget.token,
+                _recentlySearchedUsers![i].fullname,
+                _recentlySearchedUsers![i].username,
+                _recentlySearchedUsers![i].picture),
+            onTap: () {
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => new Profile(
-                          token,
-                          id,
-                          (widget.uId == id),
-                          true,
-                        )));
-            addToRecentSearches(_recentlySearchedUsers[i]);
-          },
-        ));
+                  builder: (context) => Profile(
+                    token,
+                    id,
+                    (widget.uId == id),
+                    true,
+                  ),
+                ),
+              );
+              addToRecentSearches(_recentlySearchedUsers![i]);
+            },
+          ),
+        );
       }
     }
 
@@ -261,7 +264,7 @@ class _SearchPageState extends State<SearchPage> {
   void loadRecentSearches() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String userListString = prefs.get("recentSearches");
+      String? userListString = prefs.get("recentSearches") as String?;
       List<CodephileUser> recentlySearchedUsers = (userListString == null)
           ? []
           : searchResultUsersFromJson(userListString);
@@ -270,7 +273,7 @@ class _SearchPageState extends State<SearchPage> {
       });
     } catch (error, stackTrace) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

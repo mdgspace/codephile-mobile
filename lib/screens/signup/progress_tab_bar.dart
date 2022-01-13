@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ProgressTabBar extends StatelessWidget {
   final int pageNo;
-  ProgressTabBar(this.pageNo);
+  const ProgressTabBar(this.pageNo, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,13 @@ class ProgressTabBar extends StatelessWidget {
 
 class ProgressTab extends StatelessWidget {
   final bool shade;
-  const ProgressTab(this.shade);
+  const ProgressTab(this.shade, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Container(
-        margin: EdgeInsets.only(top: 45),
+        margin: const EdgeInsets.only(top: 45),
         height: 10.0,
         width: width / 4.5,
         child: Material(

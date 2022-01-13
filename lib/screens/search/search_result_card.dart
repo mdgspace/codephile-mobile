@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchResultCard extends StatelessWidget {
-  final String _name;
-  final String _handle;
-  final String _userImage;
-  final String token;
+  final String? _name;
+  final String? _handle;
+  final String? _userImage;
+  final String? token;
 
   const SearchResultCard(this.token, this._name, this._handle, this._userImage,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -27,8 +27,9 @@ class SearchResultCard extends StatelessWidget {
               child: Container(
                 height: MediaQuery.of(context).size.width / 10,
                 width: MediaQuery.of(context).size.width / 10,
-                alignment:
-                    (_userImage == "") ? Alignment(0.0, 0.0) : Alignment.center,
+                alignment: (_userImage == "")
+                    ? const Alignment(0.0, 0.0)
+                    : Alignment.center,
                 child: (_userImage == "")
                     ? SizedBox(
                         height: MediaQuery.of(context).size.width / 3,
@@ -44,7 +45,7 @@ class SearchResultCard extends StatelessWidget {
                             image: DecorationImage(
                               fit: BoxFit.fitWidth,
                               image: NetworkImage(
-                                _userImage,
+                                _userImage!,
                               ),
                             )),
                       ),
@@ -63,9 +64,9 @@ class SearchResultCard extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(4.0, 5.0, 8.0, 2.0),
                   child: Text(
                     "$_name",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18.0,
-                      color: const Color.fromRGBO(36, 36, 36, 1),
+                      color: Color.fromRGBO(36, 36, 36, 1),
                     ),
                   ),
                 ),
@@ -73,8 +74,8 @@ class SearchResultCard extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(4.0, 2.0, 8.0, 8.0),
                   child: Text(
                     "@$_handle",
-                    style: TextStyle(
-                      color: const Color.fromRGBO(151, 151, 151, 1),
+                    style: const TextStyle(
+                      color: Color.fromRGBO(151, 151, 151, 1),
                       fontSize: 14.0,
                     ),
                   ),

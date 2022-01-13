@@ -1,24 +1,26 @@
 import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/services/email_availability.dart';
 import 'package:codephile/services/institute_list.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'progress_tab_bar.dart';
 import 'signup2.dart';
 import 'package:codephile/resources/colors.dart';
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _name, _institute, _email;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final _formKey = new GlobalKey<FormState>();
+  late String _name, _email;
+  String? _institute;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
   bool isNextButtonTapped = false;
   List<String> _instituteList = [];
   bool isLoading = true;
@@ -30,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
     showConnectivityStatus();
     getInstituteList().then((instituteList) {
       setState(() {
-        if (instituteList.length != 0) {
+        if (instituteList.isNotEmpty) {
           _instituteList = instituteList;
         } else {
           _instituteList = [
@@ -48,11 +50,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Form(
@@ -63,37 +65,50 @@ class _SignUpPageState extends State<SignUpPage> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      ProgressTabBar(1),
+                      const ProgressTabBar(1),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  0.0, 20.0, 0.0, 20.0),
-                              child: Text('What\'s your name?',
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold)),
+                            const Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0.0,
+                                20.0,
+                                0.0,
+                                20.0,
+                              ),
+                              child: Text(
+                                'What\'s your name?',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             _showNameInput(),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  0.0, 20.0, 0.0, 20.0),
-                              child: Text('What\'s your email?',
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold)),
+                            const Padding(
+                              padding:
+                                  EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+                              child: Text(
+                                'What\'s your email?',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             _showEmailInput(),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                              child: Text('What is the name of your Institute?',
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold)),
+                            const Padding(
+                              padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                              child: Text(
+                                'What is the name of your Institute?',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             _showInstituteInput(),
                           ],
@@ -109,35 +124,35 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _showNameInput() {
-    return new TextFormField(
+    return TextFormField(
       maxLines: 1,
       keyboardType: TextInputType.text,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: 'Enter full name',
         border: OutlineInputBorder(),
         labelStyle: TextStyle(fontFamily: 'Montserrat', color: Colors.grey),
       ),
-      validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
-      onSaved: (value) => _name = value,
+      validator: (value) => value!.isEmpty ? 'Name can\'t be empty' : null,
+      onSaved: (value) => _name = value!,
     );
   }
 
   Widget _showEmailInput() {
-    return new TextFormField(
+    return TextFormField(
       maxLines: 1,
       keyboardType: TextInputType.text,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: 'Enter email ID',
         border: OutlineInputBorder(),
         labelStyle: TextStyle(fontFamily: 'Montserrat', color: Colors.grey),
       ),
-      validator: (value) => value.isEmpty
+      validator: (value) => value!.isEmpty
           ? 'Email can\'t be empty'
           : RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                   .hasMatch(value)
               ? null
               : "Enter a valid email address!",
-      onSaved: (value) => _email = value,
+      onSaved: (value) => _email = value!,
     );
   }
 
@@ -146,36 +161,21 @@ class _SignUpPageState extends State<SignUpPage> {
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
       ),
-      child: SearchableDropdown<String>(
-        underline: const SizedBox(height: 0.0),
-        items: _instituteList
-            .map((value) => DropdownMenuItem<String>(
-                  value: value,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: Text(
-                      value,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ))
-            .toList(),
-        onChanged: (String institute) {
+      child: DropdownSearch<String>(
+        showSearchBox: true,
+        items: _instituteList,
+        onChanged: (String? institute) {
           setState(() {
             _institute = institute;
           });
         },
-        hint: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: Text(
-                "Select Institute",
-                style: TextStyle(color: Colors.grey),
-              ),
-            )),
+        dropdownSearchDecoration: const InputDecoration(
+          hintText: 'Select Institute',
+          hintStyle: TextStyle(color: Colors.grey),
+          contentPadding: EdgeInsets.all(8.0),
+        ),
       ),
     );
   }
@@ -183,11 +183,14 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _showNextButton() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-        color: isNextButtonTapped ? Colors.grey[500] : codephileMain,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor:
+              isNextButtonTapped ? Colors.grey[500] : codephileMain,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.85,
             child: Text(
               'NEXT',
@@ -205,7 +208,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<bool> _validateAndSave() async {
-    final form = _formKey.currentState;
+    final form = _formKey.currentState!;
     if (form.validate()) {
       form.save();
       final response = await isEmailAvailable(_email);
@@ -231,11 +234,11 @@ class _SignUpPageState extends State<SignUpPage> {
           isNextButtonTapped = false;
           Navigator.push(
             context,
-            new MaterialPageRoute(
-              builder: (context) => new SignUpPage2(
+            MaterialPageRoute(
+              builder: (context) => SignUpPage2(
                 name: _name,
                 email: _email,
-                institute: (_institute == null) ? "" : _institute,
+                institute: _institute ?? '',
               ),
             ),
           );

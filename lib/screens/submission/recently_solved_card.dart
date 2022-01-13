@@ -7,14 +7,16 @@ class RecentlySolvedCard extends StatelessWidget {
   final String _time;
 //TODO: implement mins/hours ago feature
 
-  RecentlySolvedCard(this._problemName, this._platform, this._time);
+  const RecentlySolvedCard(this._problemName, this._platform, this._time,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
       child: Card(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(2.0)),
         ),
         child: Column(
@@ -27,11 +29,13 @@ class RecentlySolvedCard extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("$_problemName",
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: const Color.fromRGBO(36, 36, 36, 1),
-                        )),
+                    child: Text(
+                      _problemName,
+                      style: const TextStyle(
+                        fontSize: 17.0,
+                        color: Color.fromRGBO(36, 36, 36, 1),
+                      ),
+                    ),
                   ),
                 ),
 //              Padding(
@@ -58,10 +62,11 @@ class RecentlySolvedCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "$_platform",
-                        style: TextStyle(
-                            color: const Color.fromRGBO(36, 36, 36, 1),
-                            fontSize: 15.0),
+                        _platform,
+                        style: const TextStyle(
+                          color: Color.fromRGBO(36, 36, 36, 1),
+                          fontSize: 15.0,
+                        ),
                       )
                     ],
                   ),
@@ -69,11 +74,11 @@ class RecentlySolvedCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "${_time.substring(0, 10)}",
+                    _time.substring(0, 10),
                     //TODO: automate according to date format       Priority: 3
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14.0,
-                      color: const Color.fromRGBO(145, 145, 145, 1),
+                      color: Color.fromRGBO(145, 145, 145, 1),
                     ),
                   ),
                 ),
@@ -90,18 +95,19 @@ class RecentlySolvedCard extends StatelessWidget {
     switch (platform.toLowerCase()) {
       case "codechef":
         return codeChefIcon;
-        break;
+
       case "hackerrank":
         return hackerRankIcon;
-        break;
+
       case "hackerearth":
         return hackerEarthIcon;
-        break;
+
       case "codeforces":
         return codeForcesIcon;
-        break;
+
       case "spoj":
         return spojIcon;
+
       default:
         return otherIcon;
     }

@@ -15,9 +15,9 @@ class ActivityDetails {
     this.createdAt,
   });
 
-  int correct;
-  int total;
-  DateTime createdAt;
+  int? correct;
+  int? total;
+  DateTime? createdAt;
 
   factory ActivityDetails.fromJson(Map<String, dynamic> json) =>
       ActivityDetails(
@@ -30,6 +30,6 @@ class ActivityDetails {
         "correct": correct,
         "total": total,
         "created_at":
-            "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
+            "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",
       };
 }

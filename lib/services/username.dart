@@ -1,16 +1,17 @@
 import 'package:codephile/resources/strings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<bool> isUsernameAvailable(String username) async {
+Future<bool?> isUsernameAvailable(String? username) async {
   String endpoint = "/user/available?username=$username";
   String uri = url + endpoint;
 
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
     );
     if (response.statusCode == 200) {
       return true;
@@ -18,7 +19,7 @@ Future<bool> isUsernameAvailable(String username) async {
       return false;
     }
   } on Exception catch (e) {
-    print(e);
+    debugPrint(e.toString());
     return null;
   }
 }

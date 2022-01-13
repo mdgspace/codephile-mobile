@@ -5,32 +5,31 @@ import 'package:codephile/resources/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<List<ActivityDetails>> getActivityDetails(
-    String token, String uid, BuildContext context) async {
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+Future<List<ActivityDetails>?> getActivityDetails(
+    String token, String? uid, BuildContext context) async {
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
   String endpoint = "/graph/activity/$uid";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 
   try {
-    var response = await client.get(uri, headers: tokenAuth);
-    if(response.statusCode == 401){
+    var response = await client.get(Uri.parse(uri), headers: tokenAuth);
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
     }
     return activityDetailsFromJson(response.body);
-
-  } catch(error, stackTrace){
-    print(error);
-    if(Foundation.kReleaseMode) {
+  } catch (error, stackTrace) {
+    debugPrint('$error');
+    if (foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

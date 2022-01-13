@@ -5,31 +5,31 @@ import 'package:codephile/resources/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<SubStatusData> getSubmissionStatusData(
-    String token, String id, BuildContext context) async {
+Future<SubStatusData?> getSubmissionStatusData(
+    String token, String? id, BuildContext context) async {
   String endpoint = "/graph/status/$id";
   String uri = url + endpoint;
 
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
 
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
     }
-    SubStatusData data;
+    SubStatusData? data;
     if (response.statusCode == 200) {
       data = subStatusDataFromJson(response.body);
     } else {
@@ -37,11 +37,11 @@ Future<SubStatusData> getSubmissionStatusData(
     }
 
     return data;
-  } catch(error, stackTrace){
-    print(error);
-    if(Foundation.kReleaseMode) {
+  } catch (error, stackTrace) {
+    foundation.debugPrint('$error');
+    if (foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

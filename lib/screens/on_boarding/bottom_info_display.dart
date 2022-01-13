@@ -5,7 +5,7 @@ class BottomInfoDisplay extends StatelessWidget {
   final String heading;
   final String description;
 
-  const BottomInfoDisplay(this.heading, this.description, {Key key})
+  const BottomInfoDisplay(this.heading, this.description, {Key? key})
       : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class BottomInfoDisplay extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
             child: Text(
               heading,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 26.0,
                 fontWeight: FontWeight.w900,
@@ -35,7 +35,7 @@ class BottomInfoDisplay extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.8,
               child: Text(
                 description,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w300,

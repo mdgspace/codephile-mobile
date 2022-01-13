@@ -1,6 +1,5 @@
 import 'package:codephile/battery_optimization_dialog.dart';
 import 'package:codephile/screens/feed/feed_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:codephile/screens/contest/contest_screen.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
@@ -11,28 +10,27 @@ import 'package:battery_optimization/battery_optimization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  final String token;
-  final String userId;
-  const HomePage({Key key, this.token, this.userId}) : super(key: key);
+  final String? token;
+  final String? userId;
+  const HomePage({Key? key, this.token, this.userId}) : super(key: key);
 
   @override
-  HomePageState createState() =>
-      new HomePageState(token: token, userId: userId);
+  HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
-  final String token;
-  final String userId;
-  int _selectedIndex;
-  PageController _pageController;
-  bool _showBatteryOptimizationDialog;
+  late String? token, userId;
+  int? _selectedIndex;
+  PageController? _pageController;
+  bool? _showBatteryOptimizationDialog;
 
-  HomePageState({Key key, this.token, this.userId});
   @override
   void initState() {
     super.initState();
     _selectedIndex = 1;
-    _pageController = new PageController(initialPage: 1);
+    _pageController = PageController(initialPage: 1);
+    token = widget.token;
+    userId = widget.userId;
     showBatteryOptimisationAlert();
   }
 
@@ -40,21 +38,26 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: _pageController,
-          children: <Widget>[
-            FeedScreen(token: token),
-            ContestScreen(token: token),
-            SearchPage(token, userId),
-            Profile(token, userId, true, false),
-          ]),
+        physics: const NeverScrollableScrollPhysics(),
+        controller: _pageController,
+        children: <Widget>[
+          FeedScreen(token: token),
+          ContestScreen(token: token),
+          SearchPage(token, userId),
+          Profile(token, userId, true, false),
+        ],
+      ),
       bottomNavigationBar: DecoratedBox(
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
               blurRadius: 16,
               color: Color.fromRGBO(0, 0, 0, 0.15),
-              offset: Offset(0, -4))
-        ]),
+              offset: Offset(0, -4),
+            ),
+          ],
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,7 +68,7 @@ class HomePageState extends State<HomePage> {
               callback: () {
                 setState(() {
                   _selectedIndex = 0;
-                  _pageController.jumpToPage(0);
+                  _pageController!.jumpToPage(0);
                 });
               },
               selected: (_selectedIndex == 0),
@@ -76,7 +79,7 @@ class HomePageState extends State<HomePage> {
               callback: () {
                 setState(() {
                   _selectedIndex = 1;
-                  _pageController.jumpToPage(1);
+                  _pageController!.jumpToPage(1);
                 });
               },
               selected: (_selectedIndex == 1),
@@ -87,7 +90,7 @@ class HomePageState extends State<HomePage> {
               callback: () {
                 setState(() {
                   _selectedIndex = 2;
-                  _pageController.jumpToPage(2);
+                  _pageController!.jumpToPage(2);
                 });
               },
               selected: (_selectedIndex == 2),
@@ -98,7 +101,7 @@ class HomePageState extends State<HomePage> {
               callback: () {
                 setState(() {
                   _selectedIndex = 3;
-                  _pageController.jumpToPage(3);
+                  _pageController!.jumpToPage(3);
                 });
               },
               selected: (_selectedIndex == 3),
@@ -113,59 +116,72 @@ class HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _showBatteryOptimizationDialog =
         prefs.getBool("showBatteryOptimisationDialog");
-    if (_showBatteryOptimizationDialog == null)
-      _showBatteryOptimizationDialog = true;
-    BatteryOptimization.isIgnoringBatteryOptimizations().then((isNotOptimized) {
-      if (isNotOptimized) {
-        //do nothing
-      } else {
-        if (_showBatteryOptimizationDialog) {
-          showDialog(
+
+    _showBatteryOptimizationDialog ??= true;
+
+    BatteryOptimization.isIgnoringBatteryOptimizations().then(
+      (isNotOptimized) {
+        if (isNotOptimized!) {
+          //do nothing
+        } else {
+          if (_showBatteryOptimizationDialog!) {
+            showDialog(
               context: context,
-              builder: (BuildContext context) =>
-                  new BatteryOptimisationDialog());
+              builder: (context) => const BatteryOptimisationDialog(),
+            );
+          }
         }
-      }
-    });
+      },
+    );
   }
 }
 
 class NavbarButton extends StatelessWidget {
-  final bool selected;
-  final String asset;
-  final Function callback;
-  final String title;
-  NavbarButton({this.asset, this.selected, this.callback, this.title});
+  final bool? selected;
+  final String? asset;
+  final Function()? callback;
+  final String? title;
+  const NavbarButton({
+    this.asset,
+    this.selected,
+    this.callback,
+    this.title,
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-        child: SizedBox(
-          height: 64,
-          child: Column(
-            children: <Widget>[
-              Container(
-                color: selected ? codephileMain : Colors.transparent,
-                height: 2,
-                width: 75,
+    return TextButton(
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.zero,
+      ),
+      child: SizedBox(
+        height: 64,
+        child: Column(
+          children: <Widget>[
+            Container(
+              color: selected! ? codephileMain : Colors.transparent,
+              height: 2,
+              width: 75,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+              child: SvgPicture.asset(
+                asset!,
+                color: selected! ? codephileMain : const Color(0xFF979797),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
-                child: SvgPicture.asset(
-                  asset,
-                  color: selected ? codephileMain : Color(0xFF979797),
-                ),
+            ),
+            Text(
+              title!,
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                color: selected! ? codephileMain : const Color(0xFF979797),
+                fontSize: 16,
               ),
-              Text(
-                title,
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: selected ? codephileMain : Color(0xFF979797),
-                    fontSize: 16),
-              )
-            ],
-          ),
+            )
+          ],
         ),
-        padding: EdgeInsets.all(0),
-        onPressed: callback);
+      ),
+      onPressed: callback,
+    );
   }
 }

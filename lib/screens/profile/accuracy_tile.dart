@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 
 class AccuracyTile extends StatelessWidget {
   final String _platform;
-  final String _accuracy;
+  final String? _accuracy;
 
-  AccuracyTile(this._platform, this._accuracy);
+  const AccuracyTile(this._platform, this._accuracy, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class AccuracyTile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             color: uiBackground,
-            borderRadius: BorderRadius.all(Radius.circular(2.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(2.0)),
             border: Border.all(
               color: secondaryTextGrey,
               width: 1,
@@ -24,7 +25,7 @@ class AccuracyTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 border: Border(
                   right: BorderSide(
@@ -43,18 +44,18 @@ class AccuracyTile extends StatelessWidget {
               ),
             ),
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: uiBackground,
               ),
               child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
                   ((_accuracy == "NaN") || (_accuracy == ""))
                       ? "-"
-                      : (_accuracy.length > 4)
-                          ? "${_accuracy.substring(0, 4)}"
+                      : (_accuracy!.length > 4)
+                          ? _accuracy!.substring(0, 4)
                           : "$_accuracy",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14.0,
                     color: secondaryTextGrey,
                   ),
@@ -71,19 +72,19 @@ class AccuracyTile extends StatelessWidget {
     switch (platform.toLowerCase()) {
       case "codechef":
         return codeChefIcon;
-        break;
+
       case "hackerrank":
         return hackerRankIcon;
-        break;
+
       case "hackerearth":
         return hackerEarthIcon;
-        break;
+
       case "codeforces":
         return codeForcesIcon;
-        break;
+
       case "spoj":
         return spojIcon;
-        break;
+
       default:
         return otherIcon;
     }

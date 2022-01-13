@@ -8,18 +8,18 @@ import 'package:codephile/services/institute_list.dart';
 import 'package:codephile/services/update_user_details.dart';
 import 'package:codephile/services/upload_user_image.dart';
 import 'package:codephile/services/username.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class UpdateDetails extends StatefulWidget {
-  final String _token;
-  final CodephileUser _user;
+  final String? _token;
+  final CodephileUser? _user;
   final Function _callbackRefresh;
-  const UpdateDetails(this._token, this._user, this._callbackRefresh, {Key key})
+  const UpdateDetails(this._token, this._user, this._callbackRefresh,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -29,31 +29,30 @@ class UpdateDetails extends StatefulWidget {
 class _UpdateDetailsState extends State<UpdateDetails> {
   bool isLoading = true;
   bool enableTextFields = true;
-  File userImageNew;
+  File? userImageNew;
   List<String> _instituteList = [];
-  String _name = "",
-      _username = "",
-      _institute = "",
-      _codechefHandle = "",
-      _codeforcesHandle = "",
-      _spojHandle = "",
-      _hackerrankHandle = "";
-  bool _isNameChanged = false,
-      _isUsernameChanged = false,
-      _isInstituteChanged = false,
-      _isCodechefHandleChanged = false,
-      _isCodeforcesHandleChanged = false,
-      _isHackerrankHandleChanged = false,
-      _isSpojHandleChanged = false;
-  final _formKey = new GlobalKey<FormState>();
-  bool isSaveChangesTapped = false;
+  String? _institute,
+      _codechefHandle,
+      _codeforcesHandle,
+      _spojHandle,
+      _hackerrankHandle;
+  late String _name, _username;
+  late bool _isNameChanged,
+      _isUsernameChanged,
+      _isInstituteChanged,
+      _isCodechefHandleChanged,
+      _isCodeforcesHandleChanged,
+      _isHackerrankHandleChanged,
+      _isSpojHandleChanged,
+      isSaveChangesTapped;
+  final _formKey = GlobalKey<FormState>();
   final ImagePicker _imagePicker = ImagePicker();
 
   @override
   void initState() {
     getInstituteList().then((instituteList) {
       setState(() {
-        if (instituteList.length != 0) {
+        if (instituteList.isNotEmpty) {
           _instituteList = instituteList;
         } else {
           _instituteList = [
@@ -67,6 +66,14 @@ class _UpdateDetailsState extends State<UpdateDetails> {
         isLoading = false;
       });
     });
+    _isNameChanged = false;
+    _isUsernameChanged = false;
+    _isInstituteChanged = false;
+    _isCodechefHandleChanged = false;
+    _isCodeforcesHandleChanged = false;
+    _isHackerrankHandleChanged = false;
+    _isSpojHandleChanged = false;
+    isSaveChangesTapped = false;
     super.initState();
   }
 
@@ -79,12 +86,13 @@ class _UpdateDetailsState extends State<UpdateDetails> {
           leading: null,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
-          title: Text(
+          title: const Text(
             "Update Details",
             style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.w500,
-                color: primaryBlackText),
+              fontSize: 24.0,
+              fontWeight: FontWeight.w500,
+              color: primaryBlackText,
+            ),
           ),
           actions: <Widget>[
             IconButton(
@@ -102,7 +110,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
           ],
         ),
         body: (isLoading)
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : Form(
@@ -118,10 +126,14 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 16.0, 16.0),
+                          padding: const EdgeInsets.fromLTRB(
+                            8.0,
+                            0.0,
+                            16.0,
+                            16.0,
+                          ),
                           child: GestureDetector(
-                            child: Text(
+                            child: const Text(
                               "Change Password",
                               style: TextStyle(
                                 color: codephileMain,
@@ -131,11 +143,12 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                             onTap: () {
                               if (!isSaveChangesTapped) {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            new UpdatePasswordScreen(
-                                                widget._token)));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        UpdatePasswordScreen(widget._token),
+                                  ),
+                                );
                               }
                             },
                           ),
@@ -145,10 +158,14 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
+                      children: const <Widget>[
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 18.0),
+                          padding: EdgeInsets.fromLTRB(
+                            16.0,
+                            16.0,
+                            16.0,
+                            18.0,
+                          ),
                           child: Text(
                             "Update Handles",
                             style: TextStyle(
@@ -185,11 +202,10 @@ class _UpdateDetailsState extends State<UpdateDetails> {
             Container(
               height: MediaQuery.of(context).size.width / 2,
               width: MediaQuery.of(context).size.width / 2,
-              alignment:
-                  ((userImageNew == null) && (widget._user.picture == ""))
-                      ? Alignment(0.0, 0.0)
-                      : Alignment.center,
-              child: ((userImageNew == null) && (widget._user.picture == ""))
+              alignment: (userImageNew == null && widget._user!.picture == '')
+                  ? const Alignment(0.0, 0.0)
+                  : Alignment.center,
+              child: (userImageNew == null && widget._user!.picture == '')
                   ? SizedBox(
                       height: MediaQuery.of(context).size.width / 3,
                       width: MediaQuery.of(context).size.width / 3,
@@ -201,28 +217,34 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                   : (userImageNew == null)
                       ? Container(
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                fit: BoxFit.fitWidth,
-                                image: NetworkImage(
-                                  widget._user.picture,
-                                ),
-                              )),
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.fitWidth,
+                              image: NetworkImage(
+                                widget._user!.picture!,
+                              ),
+                            ),
+                          ),
                         )
                       : Container(
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                fit: BoxFit.fitWidth,
-                                image: FileImage(
-                                  userImageNew,
-                                ),
-                              )),
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.fitWidth,
+                              image: FileImage(
+                                userImageNew!,
+                              ),
+                            ),
+                          ),
                         ),
               decoration: BoxDecoration(
-                  color: codephileBackground,
-                  shape: BoxShape.circle,
-                  border: Border.all(width: 1, color: userIconBorderGrey)),
+                color: codephileBackground,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  width: 1,
+                  color: userIconBorderGrey,
+                ),
+              ),
             ),
             Positioned(
               right: 0.0,
@@ -230,7 +252,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
               child: Container(
                 child: IconButton(
                   icon: Icon(
-                    ((userImageNew == null) && (widget._user.picture == ""))
+                    (userImageNew == null && widget._user!.picture == '')
                         ? Icons.add
                         : Icons.edit,
                     color: Colors.white,
@@ -239,7 +261,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                     _selectImage();
                   },
                 ),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: codephileMain,
                   shape: BoxShape.circle,
                 ),
@@ -254,13 +276,12 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   Widget _showNameInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 14.0),
-      child: new TextFormField(
+      child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.text,
         enabled: enableTextFields,
-        initialValue:
-            (widget._user.fullname == "") ? null : widget._user.fullname,
-        decoration: InputDecoration(
+        initialValue: widget._user!.fullname,
+        decoration: const InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Enter Name",
           labelStyle: TextStyle(fontFamily: 'Montserrat', color: Colors.grey),
@@ -268,8 +289,8 @@ class _UpdateDetailsState extends State<UpdateDetails> {
         onChanged: (value) {
           _isNameChanged = true;
         },
-        validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
-        onSaved: (value) => _name = value,
+        validator: (value) => value!.isEmpty ? 'Name can\'t be empty' : null,
+        onSaved: (value) => _name = value!,
       ),
     );
   }
@@ -277,13 +298,12 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   Widget _showUsernameInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 14.0),
-      child: new TextFormField(
+      child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.text,
         enabled: enableTextFields,
-        initialValue:
-            (widget._user.fullname == "") ? null : widget._user.username,
-        decoration: InputDecoration(
+        initialValue: widget._user!.fullname,
+        decoration: const InputDecoration(
           hintText: "Enter Username",
           border: OutlineInputBorder(),
           labelStyle: TextStyle(fontFamily: 'Montserrat', color: Colors.grey),
@@ -291,8 +311,9 @@ class _UpdateDetailsState extends State<UpdateDetails> {
         onChanged: (value) {
           _isUsernameChanged = true;
         },
-        validator: (value) => value.isEmpty ? 'Username can\'t be empty' : null,
-        onSaved: (value) => _username = value,
+        validator: (value) =>
+            value!.isEmpty ? 'Username can\'t be empty' : null,
+        onSaved: (value) => _username = value!,
       ),
     );
   }
@@ -303,38 +324,22 @@ class _UpdateDetailsState extends State<UpdateDetails> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.all(Radius.circular(4.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(4.0)),
         ),
-        child: SearchableDropdown<String>(
-          value: widget._user.institute,
-          underline: Container(height: 0.0),
-          readOnly: !enableTextFields,
-          items: _instituteList
-              .map((value) => DropdownMenuItem<String>(
-                    value: value,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: Text(
-                        value,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ))
-              .toList(),
-          onChanged: (String institute) {
+        child: DropdownSearch<String>(
+          showSearchBox: true,
+          selectedItem: widget._user!.institute,
+          enabled: enableTextFields,
+          items: _instituteList,
+          onChanged: (String? institute) {
             setState(() {
-              _isInstituteChanged = true;
               _institute = institute;
             });
           },
-          hint: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Select Institute",
-                ),
-              )),
+          dropdownSearchDecoration: const InputDecoration(
+            hintText: 'Select Institute',
+            contentPadding: EdgeInsets.all(8.0),
+          ),
         ),
       ),
     );
@@ -346,21 +351,28 @@ class _UpdateDetailsState extends State<UpdateDetails> {
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            border: Border.all(
-              color: userIconBorderGrey,
-              width: 1.0,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(2.0))),
+          border: Border.all(
+            color: userIconBorderGrey,
+            width: 1.0,
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(2.0),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
-                  color: codephileBackground,
-                  border: Border(
-                      right:
-                          BorderSide(color: userIconBorderGrey, width: 1.0))),
+              decoration: const BoxDecoration(
+                color: codephileBackground,
+                border: Border(
+                  right: BorderSide(
+                    color: userIconBorderGrey,
+                    width: 1.0,
+                  ),
+                ),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(9.0),
                 child: Row(
@@ -372,7 +384,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                       child: Image.asset(getPlatformIconAssetPath(platform)),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       width: MediaQuery.of(context).size.width / 4,
                       child: Text(platform),
                     ),
@@ -380,7 +392,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width / 2,
               child: Center(
                 child: TextFormField(
@@ -390,16 +402,17 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 0.0,
-                          style: BorderStyle.none,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(2.0))),
-                    contentPadding: EdgeInsets.all(8.0),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.0,
+                        style: BorderStyle.none,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                    ),
+                    contentPadding: const EdgeInsets.all(8.0),
                     hintText: "$platform handle",
-                    labelStyle:
-                        TextStyle(fontFamily: 'Montserrat', color: Colors.grey),
+                    labelStyle: const TextStyle(
+                        fontFamily: 'Montserrat', color: Colors.grey),
                   ),
                   onChanged: (value) => setIsChangedTrue(platform),
                   onSaved: (value) => setHandleValue(platform, value),
@@ -415,11 +428,14 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   Widget _showSaveChangesButton() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: FlatButton(
-        color: isSaveChangesTapped ? Colors.grey[500] : codephileMain,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor:
+              isSaveChangesTapped ? Colors.grey[500] : codephileMain,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.85,
             child: Text(
               'Save Changes',
@@ -437,11 +453,11 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   }
 
   Future<void> _selectImage() async {
-    var picture = await _imagePicker.getImage(source: ImageSource.gallery);
+    var picture = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (picture != null) {
       var croppedPic = await ImageCropper.cropImage(
         sourcePath: picture.path,
-        aspectRatio: CropAspectRatio(
+        aspectRatio: const CropAspectRatio(
           ratioX: 1,
           ratioY: 1,
         ),
@@ -461,7 +477,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   }
 
   bool _validateAndSave() {
-    final form = _formKey.currentState;
+    final form = _formKey.currentState!;
     if (form.validate()) {
       form.save();
       return true;
@@ -476,36 +492,36 @@ class _UpdateDetailsState extends State<UpdateDetails> {
         isSaveChangesTapped = true;
       });
 
-      bool isUsernameValid = await validateUsername();
+      bool? isUsernameValid = await validateUsername();
       if (isUsernameValid == false) showToast("Username already taken!");
       bool allHandlesValid = await validateHandles();
 
       if (isUsernameValid != null) {
         if ((allHandlesValid == true) && (isUsernameValid == true)) {
           var requestBody = {
-            "username": _isUsernameChanged ? _username : widget._user.username,
-            "fullname": _isNameChanged ? _name : widget._user.fullname,
+            "username": _isUsernameChanged ? _username : widget._user!.username,
+            "fullname": _isNameChanged ? _name : widget._user!.fullname,
             "institute":
-                _isInstituteChanged ? _institute : widget._user.institute,
+                _isInstituteChanged ? _institute : widget._user!.institute,
             "handle.codechef": _isCodechefHandleChanged
                 ? _codechefHandle
-                : widget._user.handle.codechef,
+                : widget._user!.handle!.codechef,
             "handle.codeforces": _isCodeforcesHandleChanged
                 ? _codeforcesHandle
-                : widget._user.handle.codeforces,
+                : widget._user!.handle!.codeforces,
             "handle.hackerrank": _isHackerrankHandleChanged
                 ? _hackerrankHandle
-                : widget._user.handle.hackerrank,
+                : widget._user!.handle!.hackerrank,
             "handle.spoj":
-                _isSpojHandleChanged ? _spojHandle : widget._user.handle.spoj,
+                _isSpojHandleChanged ? _spojHandle : widget._user!.handle!.spoj,
           };
 
-          int responseStatus =
-              await updateUserDetails(widget._token, requestBody, context);
+          int? responseStatus =
+              await updateUserDetails(widget._token!, requestBody, context);
           if (responseStatus == 202) {
             if (userImageNew != null) {
-              int responseStatusImageUpload =
-                  await uploadImage(widget._token, userImageNew.path, context);
+              int? responseStatusImageUpload = await uploadImage(
+                  widget._token!, userImageNew!.path, context);
               if (responseStatusImageUpload == 201) {
                 setState(() {
                   enableTextFields = true;
@@ -551,7 +567,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     }
   }
 
-  setHandleValue(String platform, String value) {
+  setHandleValue(String platform, String? value) {
     platform = platform.toLowerCase();
     switch (platform) {
       case "codechef":
@@ -572,20 +588,19 @@ class _UpdateDetailsState extends State<UpdateDetails> {
 
   getInitialHandle(String platform) {
     platform = platform.toLowerCase();
-    if (widget._user.handle == null) return null;
+    if (widget._user!.handle == null) return null;
     switch (platform) {
       case "codechef":
-        return widget._user.handle.codechef;
-        break;
+        return widget._user!.handle!.codechef;
+
       case "codeforces":
-        return widget._user.handle.codeforces;
-        break;
+        return widget._user!.handle!.codeforces;
+
       case "hackerrank":
-        return widget._user.handle.hackerrank;
-        break;
+        return widget._user!.handle!.hackerrank;
+
       case "spoj":
-        return widget._user.handle.spoj;
-        break;
+        return widget._user!.handle!.spoj;
     }
     return null;
   }
@@ -620,7 +635,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   Future<bool> validateHandles() async {
     bool allHandlesValid = true;
     if ((_codechefHandle != '') && (_codechefHandle != null)) {
-      bool isValid = await verifyHandle("codechef", _codechefHandle);
+      bool? isValid = await verifyHandle("codechef", _codechefHandle);
       if (isValid != true) {
         allHandlesValid = false;
         showToast("Invalid CodeChef handle");
@@ -630,7 +645,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     }
 
     if ((_codeforcesHandle != '') && (_codeforcesHandle != null)) {
-      bool isValid = await verifyHandle("codeforces", _codeforcesHandle);
+      bool? isValid = await verifyHandle("codeforces", _codeforcesHandle);
       if (isValid != true) {
         allHandlesValid = false;
         showToast("Invalid Codeforces handle");
@@ -640,7 +655,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     }
 
     if ((_hackerrankHandle != '') && (_hackerrankHandle != null)) {
-      bool isValid = await verifyHandle("hackerrank", _hackerrankHandle);
+      bool? isValid = await verifyHandle("hackerrank", _hackerrankHandle);
       if (isValid != true) {
         allHandlesValid = false;
         showToast("Invalid HackerRank handle");
@@ -650,7 +665,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     }
 
     if ((_spojHandle != '') && (_spojHandle != null)) {
-      bool isValid = await verifyHandle("spoj", _spojHandle);
+      bool? isValid = await verifyHandle("spoj", _spojHandle);
       if (isValid != true) {
         allHandlesValid = false;
         showToast("Invalid Spoj Handle");
@@ -662,9 +677,9 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     return allHandlesValid;
   }
 
-  Future<bool> validateUsername() async {
-    bool isUsernameValid = true;
-    if ((_isUsernameChanged) && (_username != widget._user.username)) {
+  Future<bool?> validateUsername() async {
+    bool? isUsernameValid = true;
+    if ((_isUsernameChanged) && (_username != widget._user!.username)) {
       isUsernameValid = await isUsernameAvailable(_username);
     }
     return isUsernameValid;

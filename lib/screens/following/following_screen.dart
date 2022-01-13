@@ -5,9 +5,9 @@ import 'package:codephile/services/following_list.dart';
 import 'package:flutter/material.dart';
 
 class FollowingScreen extends StatefulWidget {
-  final String _token;
+  final String? _token;
 
-  const FollowingScreen(this._token, {Key key}) : super(key: key);
+  const FollowingScreen(this._token, {Key? key}) : super(key: key);
 
   @override
   _FollowingScreenState createState() => _FollowingScreenState();
@@ -15,7 +15,7 @@ class FollowingScreen extends StatefulWidget {
 
 class _FollowingScreenState extends State<FollowingScreen> {
   bool isLoading = true;
-  List<Following> _userFollowing;
+  List<Following>? _userFollowing;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
         leading: null,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           "Following",
           style: TextStyle(
             fontSize: 24.0,
@@ -53,14 +53,14 @@ class _FollowingScreenState extends State<FollowingScreen> {
         ],
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
               shrinkWrap: true,
-              itemCount: (_userFollowing == null) ? 0 : _userFollowing.length,
+              itemCount: (_userFollowing == null) ? 0 : _userFollowing!.length,
               itemBuilder: (BuildContext context, int i) {
-                Following user = _userFollowing[i];
+                Following user = _userFollowing![i];
                 return GestureDetector(
                   child: FollowingUserTile(widget._token, user, true),
                 );
@@ -70,7 +70,8 @@ class _FollowingScreenState extends State<FollowingScreen> {
   }
 
   void initFollowingList() async {
-    List<Following> followingList = await getFollowingList(widget._token, context);
+    List<Following>? followingList =
+        await getFollowingList(widget._token!, context);
     setState(() {
       _userFollowing = followingList;
       isLoading = false;

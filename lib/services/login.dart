@@ -3,25 +3,25 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:codephile/resources/strings.dart';
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future login(String username, String pass) async {
+Future<Token?> login(String? username, String? pass) async {
   String endpoint = "/user/login";
   String uri = url + endpoint;
   Token token;
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.post(
-      uri,
+      Uri.parse(uri),
       body: {'username': username, 'password': pass},
     );
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
-      token = new Token.fromJson(jsonResponse);
+      token = Token.fromJson(jsonResponse);
       return token;
     } else if (response.statusCode == 403) {
       return Token(token: "unverified");
@@ -30,10 +30,10 @@ Future login(String username, String pass) async {
     }
     return null;
   } catch (error, stackTrace) {
-    print(error);
-    if (Foundation.kReleaseMode) {
+    foundation.debugPrint('$error');
+    if (foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

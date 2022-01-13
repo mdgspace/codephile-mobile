@@ -7,11 +7,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class FollowingUserTile extends StatefulWidget {
-  final String _token;
+  final String? _token;
   final Following _user;
   final bool _isFollowing;
 
-  const FollowingUserTile(this._token, this._user, this._isFollowing, {Key key})
+  const FollowingUserTile(this._token, this._user, this._isFollowing,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -19,7 +20,7 @@ class FollowingUserTile extends StatefulWidget {
 }
 
 class _FollowingUserTileState extends State<FollowingUserTile> {
-  bool isFollowing;
+  late bool isFollowing;
 
   @override
   void initState() {
@@ -45,7 +46,7 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                 height: MediaQuery.of(context).size.width / 10,
                 width: MediaQuery.of(context).size.width / 10,
                 alignment: (widget._user.picture == "")
-                    ? Alignment(0.0, 0.0)
+                    ? const Alignment(0.0, 0.0)
                     : Alignment.center,
                 child: (widget._user.picture == "")
                     ? SizedBox(
@@ -62,7 +63,7 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                             image: DecorationImage(
                               fit: BoxFit.fitWidth,
                               image: NetworkImage(
-                                widget._user.picture,
+                                widget._user.picture!,
                               ),
                             )),
                       ),
@@ -83,9 +84,9 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                       "${widget._user.fullname}",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18.0,
-                        color: const Color.fromRGBO(36, 36, 36, 1),
+                        color: Color.fromRGBO(36, 36, 36, 1),
                       ),
                     ),
                   ),
@@ -93,8 +94,8 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                     padding: const EdgeInsets.fromLTRB(4.0, 2.0, 8.0, 8.0),
                     child: Text(
                       "@${widget._user.fullname}",
-                      style: TextStyle(
-                        color: const Color.fromRGBO(151, 151, 151, 1),
+                      style: const TextStyle(
+                        color: Color.fromRGBO(151, 151, 151, 1),
                         fontSize: 14.0,
                       ),
                     ),
@@ -106,7 +107,6 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8.0, 10.0, 16.0, 10.0),
                 child: Container(
-                  
                   child: isFollowing
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -114,10 +114,10 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             SvgPicture.asset(
-                            'assets/following.svg',
-                             color: codephileMain,
+                              'assets/following.svg',
+                              color: codephileMain,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.check,
                               size: 0.0,
                               color: Colors.white,
@@ -129,8 +129,8 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
                             SvgPicture.asset(
-                            'assets/follow.svg',
-                             color: codephileMain,
+                              'assets/follow.svg',
+                              color: codephileMain,
                             )
                           ],
                         ),
@@ -154,13 +154,13 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
   }
 
   void follow() async {
-    followUser(widget._token, widget._user.id, context).then((statusCode) {
+    followUser(widget._token!, widget._user.id, context).then((statusCode) {
       if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          timeInSecForIos: 7,
+          timeInSecForIosWeb: 7,
           fontSize: 12.0,
         );
         setState(() {
@@ -171,13 +171,13 @@ class _FollowingUserTileState extends State<FollowingUserTile> {
   }
 
   void unFollow() async {
-    unfollowUser(widget._token, widget._user.id, context).then((statusCode) {
+    unfollowUser(widget._token!, widget._user.id, context).then((statusCode) {
       if (statusCode != 200) {
         Fluttertoast.showToast(
           msg: "Something went wrong. Please try again later.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          timeInSecForIos: 7,
+          timeInSecForIosWeb: 7,
           fontSize: 12.0,
         );
         setState(() {

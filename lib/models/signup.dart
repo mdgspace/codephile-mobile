@@ -4,12 +4,12 @@ SignUp signUpFromJson(String str) => SignUp.fromJson(json.decode(str));
 String signUpToJson(SignUp data) => json.encode(data.toJson());
 
 class SignUp {
-  Handle handle;
-  String email;
-  String password;
-  String username;
-  String fullname;
-  String institute;
+  Handle? handle;
+  String? email;
+  String? password;
+  String? username;
+  String? fullname;
+  String? institute;
 
   SignUp(
       {this.handle,
@@ -34,15 +34,15 @@ class SignUp {
         "password": password,
         "fullname": fullname,
         "institute": institute,
-        "handle": handle.toJson(),
+        "handle": handle!.toJson(),
       };
 }
 
 class Handle {
-  String codechef;
-  String codeforces;
-  String hackerrank;
-  String spoj;
+  String? codechef;
+  String? codeforces;
+  String? hackerrank;
+  String? spoj;
 
   Handle({this.codechef, this.codeforces, this.hackerrank, this.spoj});
 

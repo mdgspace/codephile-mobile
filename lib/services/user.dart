@@ -5,23 +5,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:codephile/resources/strings.dart';
 import 'package:sentry/sentry.dart';
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 
 var header = {"Content-Type": "application/json"};
-http.Client client = new http.Client();
+http.Client client = http.Client();
 
-Future<CodephileUser> getUser(String token, String uId, BuildContext context) async {
+Future<CodephileUser?> getUser(
+    String token, String? uId, BuildContext context) async {
   String endpoint = "/user/$uId";
   String uri = url + endpoint;
   var tokenAuth = {HttpHeaders.authorizationHeader: token};
-  final SentryClient sentry = new SentryClient(dsn: dsn);
+  final SentryClient sentry = SentryClient(SentryOptions(dsn: dsn));
 
   try {
     var response = await client.get(
-      uri,
+      Uri.parse(uri),
       headers: tokenAuth,
     );
-    if(response.statusCode == 401){
+    if (response.statusCode == 401) {
       logout(token: token, context: context);
       showToast("Please login again");
       return null;
@@ -29,11 +30,11 @@ Future<CodephileUser> getUser(String token, String uId, BuildContext context) as
     CodephileUser user = userFromJson(response.body);
 
     return user;
-  } catch(error, stackTrace){
-    print(error);
-    if(Foundation.kReleaseMode) {
+  } catch (error, stackTrace) {
+    debugPrint(error.toString());
+    if (foundation.kReleaseMode) {
       await sentry.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
     }

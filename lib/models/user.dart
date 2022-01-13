@@ -9,17 +9,17 @@ CodephileUser userFromJson(String str) =>
 String userToJson(CodephileUser data) => json.encode(data.toJson());
 
 class CodephileUser {
-  String fullname;
-  String email;
-  Handle handle;
-  String id;
-  String institute;
-  int noOfFollowing;
-  String picture;
-  UserProfileDetails profiles;
-  List<Submission> recentSubmissions;
-  String username;
-  SolvedProblemsCount solvedProblemsCount;
+  String? fullname;
+  String? email;
+  Handle? handle;
+  String? id;
+  String? institute;
+  int? noOfFollowing;
+  String? picture;
+  UserProfileDetails? profiles;
+  List<Submission>? recentSubmissions;
+  String? username;
+  SolvedProblemsCount? solvedProblemsCount;
 
   CodephileUser({
     this.fullname,
@@ -59,27 +59,27 @@ class CodephileUser {
   Map<String, dynamic> toJson() => {
         "fullname": fullname,
         "email": email,
-        "handle": handle.toJson(),
+        "handle": handle!.toJson(),
         "id": id,
         "institute": institute,
         "no_of_following": noOfFollowing,
         "picture": picture,
-        "profiles": (profiles != null) ? profiles.toJson() : null,
+        "profiles": (profiles != null) ? profiles!.toJson() : null,
         "recent_submissions": (recentSubmissions != null)
-            ? List<dynamic>.from(recentSubmissions.map((x) => x.toJson()))
+            ? List<dynamic>.from(recentSubmissions!.map((x) => x.toJson()))
             : null,
         "username": username,
         "solved_problems_count":
-            (solvedProblemsCount != null) ? solvedProblemsCount.toJson() : null,
+            (solvedProblemsCount != null) ? solvedProblemsCount!.toJson() : null,
       };
 }
 
 class Handle {
-  String codechef;
-  String codeforces;
-  String hackerearth;
-  String hackerrank;
-  String spoj;
+  String? codechef;
+  String? codeforces;
+  String? hackerearth;
+  String? hackerrank;
+  String? spoj;
 
   Handle({
     this.codechef,
@@ -114,10 +114,10 @@ class SolvedProblemsCount {
     this.spoj,
   });
 
-  int codechef;
-  int codeforces;
-  int hackerrank;
-  int spoj;
+  int? codechef;
+  int? codeforces;
+  int? hackerrank;
+  int? spoj;
 
   factory SolvedProblemsCount.fromJson(Map<String, dynamic> json) =>
       SolvedProblemsCount(

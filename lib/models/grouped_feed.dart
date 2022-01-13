@@ -1,12 +1,12 @@
 class GroupedFeed {
-  String username;
-  String userId;
-  String fullname;
-  String picture;
-  String name;
-  String url;
-  String language;
-  List<Submissions> submissions;
+  String? username;
+  String? userId;
+  String? fullname;
+  String? picture;
+  String? name;
+  String? url;
+  String? language;
+  List<Submissions>? submissions;
 
   GroupedFeed(
       {this.username,
@@ -20,11 +20,11 @@ class GroupedFeed {
 }
 
 class Submissions {
-  DateTime createdAt;
-  String status;
-  int points;
-  List<String> tags;
-  int rating;
+  DateTime? createdAt;
+  String? status;
+  int? points;
+  List<String>? tags;
+  int? rating;
 
   Submissions(
       {this.createdAt, this.status, this.points, this.tags, this.rating});

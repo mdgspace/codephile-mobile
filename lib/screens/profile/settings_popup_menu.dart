@@ -1,16 +1,15 @@
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/update_details/update_details_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:codephile/resources/helper_functions.dart';
 
 class SettingsIcon extends StatefulWidget {
-  final String _token;
-  final CodephileUser _user;
+  final String? _token;
+  final CodephileUser? _user;
   final Function _callbackRefresh;
-  const SettingsIcon(this._token, this._user, this._callbackRefresh, {Key key})
+  const SettingsIcon(this._token, this._user, this._callbackRefresh, {Key? key})
       : super(key: key);
   @override
   _SettingsIconState createState() => _SettingsIconState();
@@ -21,7 +20,7 @@ class _SettingsIconState extends State<SettingsIcon> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: MediaQuery.of(context).size.width / 15,
           width: MediaQuery.of(context).size.width / 15,
           child: SvgPicture.asset(
@@ -39,7 +38,7 @@ class _SettingsIconState extends State<SettingsIcon> {
             ),
             itemBuilder: (BuildContext context) {
               return [
-                PopupMenuItem(
+                const PopupMenuItem(
                   value: "update",
                   child: Text(
                     "Update Details",
@@ -49,7 +48,7 @@ class _SettingsIconState extends State<SettingsIcon> {
                     ),
                   ),
                 ),
-                PopupMenuItem(
+                const PopupMenuItem(
                   value: "logout",
                   child: Text(
                     "Logout",
@@ -74,7 +73,7 @@ class _SettingsIconState extends State<SettingsIcon> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => new UpdateDetails(
+            builder: (context) => UpdateDetails(
               widget._token,
               widget._user,
               widget._callbackRefresh,
@@ -83,7 +82,7 @@ class _SettingsIconState extends State<SettingsIcon> {
         );
         break;
       case "logout":
-        logout(token: widget._token, context: context);
+        logout(token: widget._token!, context: context);
         break;
     }
   }

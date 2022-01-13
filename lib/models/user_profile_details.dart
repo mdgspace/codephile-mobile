@@ -7,10 +7,10 @@ String userProfileDetailsToJson(UserProfileDetails data) =>
     json.encode(data.toJson());
 
 class UserProfileDetails {
-  Profile codechefProfile;
-  Profile codeforcesProfile;
-  Profile hackerrankProfile;
-  Profile spojProfile;
+  Profile? codechefProfile;
+  Profile? codeforcesProfile;
+  Profile? hackerrankProfile;
+  Profile? spojProfile;
 
   UserProfileDetails({
     this.codechefProfile,
@@ -28,19 +28,19 @@ class UserProfileDetails {
       );
 
   Map<String, dynamic> toJson() => {
-        "codechefProfile": codechefProfile.toJson(),
-        "codeforcesProfile": codeforcesProfile.toJson(),
-        "hackerrankProfile": hackerrankProfile.toJson(),
-        "spojProfile": spojProfile.toJson(),
+        "codechefProfile": codechefProfile!.toJson(),
+        "codeforcesProfile": codeforcesProfile!.toJson(),
+        "hackerrankProfile": hackerrankProfile!.toJson(),
+        "spojProfile": spojProfile!.toJson(),
       };
 }
 
 class Profile {
-  String accuracy;
-  String name;
-  String rank;
-  String school;
-  String userName;
+  String? accuracy;
+  String? name;
+  String? rank;
+  String? school;
+  String? userName;
 
   Profile({
     this.accuracy,

@@ -4,62 +4,62 @@ import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/screens/signup/progress_tab_bar.dart';
 import 'package:codephile/screens/signup/signup4.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignUpPage3 extends StatefulWidget {
-  final String name;
-  final String email;
-  final String institute;
-  final Handle handle;
+  final String? name;
+  final String? email;
+  final String? institute;
+  final Handle? handle;
 
   const SignUpPage3(
-      {Key key, this.name, this.email, this.institute, this.handle})
+      {Key? key, this.name, this.email, this.institute, this.handle})
       : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState(
-      name: name, email: email, institute: institute, handle: handle);
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage3> {
-  String name;
-  String email;
-  String institute;
-  Handle handle;
-  File userImage;
-  _SignUpPageState(
-      {Key key, this.email, this.name, this.institute, this.handle});
+  String? name;
+  String? email;
+  String? institute;
+  Handle? handle;
+  File? userImage;
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final _formKey = new GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
   final ImagePicker _imagePicker = ImagePicker();
   bool isNextButtonTapped = false;
 
   @override
   void initState() {
+    name = widget.name;
+    email = widget.email;
+    institute = widget.institute;
+    handle = widget.handle;
     super.initState();
     showConnectivityStatus();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       //TODO: change background color at root
       key: _scaffoldKey,
       body: Form(
         key: _formKey,
-        child: new Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Column(
               children: <Widget>[
-                ProgressTabBar(3),
+                const ProgressTabBar(3),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -67,18 +67,24 @@ class _SignUpPageState extends State<SignUpPage3> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(height: MediaQuery.of(context).size.height / 15),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.95,
-                        child: Text('Upload a profile photo',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold)),
+                        child: const Text(
+                          'Upload a profile photo',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
                         child: Text(
                           'This photo will be visible to your followers.',
                           style: TextStyle(
-                              fontSize: 16.0, color: secondaryTextGrey),
+                            fontSize: 16.0,
+                            color: secondaryTextGrey,
+                          ),
                         ),
                       ),
                     ],
@@ -101,8 +107,9 @@ class _SignUpPageState extends State<SignUpPage3> {
         Container(
           height: MediaQuery.of(context).size.width / 2,
           width: MediaQuery.of(context).size.width / 2,
-          alignment:
-              (userImage == null) ? Alignment(0.0, 0.0) : Alignment.center,
+          alignment: (userImage == null)
+              ? const Alignment(0.0, 0.0)
+              : Alignment.center,
           child: (userImage == null)
               ? SizedBox(
                   height: MediaQuery.of(context).size.width / 3,
@@ -118,7 +125,7 @@ class _SignUpPageState extends State<SignUpPage3> {
                       image: DecorationImage(
                         fit: BoxFit.fitWidth,
                         image: FileImage(
-                          userImage,
+                          userImage!,
                         ),
                       )),
                 ),
@@ -140,7 +147,7 @@ class _SignUpPageState extends State<SignUpPage3> {
                 _selectImage();
               },
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: codephileMain,
               shape: BoxShape.circle,
             ),
@@ -155,11 +162,14 @@ class _SignUpPageState extends State<SignUpPage3> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-        child: FlatButton(
-            color: (userImage == null) ? Colors.white : codephileMain,
+        child: TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor:
+                  (userImage == null) ? Colors.white : codephileMain,
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.85,
                 child: Text(
                   (userImage == null) ? 'SKIP' : 'NEXT',
@@ -186,7 +196,7 @@ class _SignUpPageState extends State<SignUpPage3> {
   }
 
   bool _validateAndSave() {
-    final form = _formKey.currentState;
+    final form = _formKey.currentState!;
     if (form.validate()) {
       form.save();
       return true;
@@ -204,25 +214,25 @@ class _SignUpPageState extends State<SignUpPage3> {
           isNextButtonTapped = false;
           Navigator.push(
               context,
-              new MaterialPageRoute(
-                  builder: (context) => new SignUpPage4(
+              MaterialPageRoute(
+                  builder: (context) => SignUpPage4(
                       name: name,
                       email: email,
                       institute: (institute == null) ? '' : institute,
                       handle: handle,
                       userImagePath:
-                          (userImage == null) ? null : userImage.path)));
+                          (userImage == null) ? null : userImage!.path)));
         });
       }
     }
   }
 
   Future<void> _selectImage() async {
-    var picture = await _imagePicker.getImage(source: ImageSource.gallery);
+    var picture = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (picture != null) {
       var croppedPic = await ImageCropper.cropImage(
         sourcePath: picture.path,
-        aspectRatio: CropAspectRatio(
+        aspectRatio: const CropAspectRatio(
           ratioX: 1,
           ratioY: 1,
         ),

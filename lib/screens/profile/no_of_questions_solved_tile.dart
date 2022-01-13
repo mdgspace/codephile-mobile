@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class QuestionsSolvedTile extends StatelessWidget {
   final String _platform;
-  final int _noOfQuestionsSolved;
-  final bool isFirst;
-  final bool isLast;
+  final int? _noOfQuestionsSolved;
+  final bool? isFirst;
+  final bool? isLast;
 
   const QuestionsSolvedTile(this._platform, this._noOfQuestionsSolved,
-      {Key key, this.isFirst, this.isLast})
+      {Key? key, this.isFirst, this.isLast})
       : super(key: key);
 
   @override
@@ -16,7 +16,7 @@ class QuestionsSolvedTile extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           border: Border(
-        bottom: BorderSide(
+        bottom: const BorderSide(
           width: 1,
           color: userIconBorderGrey,
         ),
@@ -39,14 +39,13 @@ class QuestionsSolvedTile extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 _platform,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18.0,
                   color: primaryBlackText,
                 ),
               ),
             ),
           ),
-          Container(
 //            decoration: BoxDecoration(
 //              border: Border(
 //                bottom: BorderSide(
@@ -63,14 +62,13 @@ class QuestionsSolvedTile extends StatelessWidget {
 //                ),
 //              )
 //            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "$_noOfQuestionsSolved",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: primaryBlackText,
-                ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "$_noOfQuestionsSolved",
+              style: const TextStyle(
+                fontSize: 18.0,
+                color: primaryBlackText,
               ),
             ),
           )
