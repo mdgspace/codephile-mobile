@@ -17,7 +17,9 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   freezed_annotation: ^1.1.0
-  json_annotation: ^4.3.0
+  hive_flutter: ^1.1.0
+  hydrated_bloc: ^8.0.0
+  json_annotation: ^4.4.0
   sentry_flutter: ^6.2.2
 
 dev_dependencies:
