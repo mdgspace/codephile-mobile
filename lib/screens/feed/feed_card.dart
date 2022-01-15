@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:codephile/models/grouped_feed.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/strings.dart';
@@ -5,13 +7,12 @@ import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
-import 'dart:core';
-
 import 'package:intl/intl.dart';
 
 class FeedCard extends StatefulWidget {
   final GroupedFeed? feed;
   final String? token;
+
   const FeedCard({this.feed, this.token, Key? key}) : super(key: key);
 
   @override
@@ -20,6 +21,7 @@ class FeedCard extends StatefulWidget {
 
 class _FeedCardState extends State<FeedCard> {
   late bool open;
+
   @override
   void initState() {
     super.initState();
@@ -128,11 +130,18 @@ class _FeedCardState extends State<FeedCard> {
                                   AssetImage(getAsset(widget.feed!.url!)),
                               radius: 10.0,
                             ),
-                            Text(
-                              ' ${getPlatform(widget.feed!.url!)} | ${widget.feed!.language}',
-                              style: const TextStyle(
-                                fontSize: 12.0,
-                                color: Color(0xFF979797),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Text(
+                                _makeNonBreaking(
+                                  ' ${getPlatform(widget.feed!.url!)} |'
+                                  ' ${widget.feed!.language}',
+                                ),
+                                style: const TextStyle(
+                                  fontSize: 12.0,
+                                  color: Color(0xFF979797),
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             const Spacer(),
@@ -283,5 +292,15 @@ class _FeedCardState extends State<FeedCard> {
       default:
         return otherIcon;
     }
+  }
+
+  /// Replaces all empty areas in the text with non-breaking spaces.
+  ///
+  /// This is to ensure that each (non-empty) character of the string is treated
+  /// as a different word. And THAT is needed because Flutter doesn't care about
+  /// the `softWrap` parameter if [TextOverflow.ellipsis] is supplied to the
+  /// `overflow` parameter.
+  String _makeNonBreaking(String str) {
+    return str.replaceAll('', '\u{200B}');
   }
 }
