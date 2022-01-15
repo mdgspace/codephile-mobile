@@ -2,7 +2,7 @@ import 'package:codephile/homescreen.dart';
 import 'package:codephile/models/token.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/signup/signup.dart';
-import 'package:codephile/services/Id.dart';
+import 'package:codephile/services/id.dart';
 import 'package:codephile/services/login.dart';
 import 'package:codephile/services/password_reset.dart';
 import 'package:flutter/gestures.dart';

@@ -234,7 +234,9 @@ class _FilterSheetState extends State<FilterSheet> {
                       child: Text(
                         getLabelForValue(_filter!.duration),
                         style: const TextStyle(
-                            fontSize: 14.0, color: codephileMain),
+                          fontSize: 14.0,
+                          color: codephileMain,
+                        ),
                       ),
                     )
                   ]),

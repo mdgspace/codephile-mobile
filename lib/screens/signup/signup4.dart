@@ -1,6 +1,5 @@
 import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/screens/verify/verify_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';

@@ -5,7 +5,6 @@ import 'package:codephile/resources/strings.dart';
 import 'package:codephile/screens/profile/profile_screen.dart';
 import 'package:codephile/screens/search/search_result_card.dart';
 import 'package:codephile/services/search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -86,19 +85,13 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ),
                     IconButton(
-                      //TODO: use search icon from designs
                       padding: const EdgeInsets.fromLTRB(8.0, 1.0, 2.0, 4.0),
                       icon: const Icon(
-                        Icons.search,
+                        Icons.clear,
                         size: 30.0,
                         color: Color.fromRGBO(141, 141, 141, 1),
                       ),
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        if (_controller.text.trim() != "") {
-                          _handleSearch(_controller.text.trim());
-                        }
-                      },
+                      onPressed: () => _controller.text = '',
                     ),
                   ],
                 ),

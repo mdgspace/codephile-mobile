@@ -1,7 +1,6 @@
 import 'package:codephile/models/user.dart';
 import 'package:codephile/resources/colors.dart';
 import 'package:codephile/screens/update_details/update_details_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:codephile/resources/helper_functions.dart';

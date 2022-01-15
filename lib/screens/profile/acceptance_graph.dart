@@ -80,12 +80,12 @@ class _AcceptanceGraphState extends State<AcceptanceGraph> {
           }
         },
       );
-      widget.activityDetails!.forEach((element) {
+      for (var element in widget.activityDetails!) {
         if (input.containsKey(element.createdAt)) {
           input[element.createdAt] =
               (element.correct! - (element.total! - element.correct!));
         }
-      });
+      }
       column = input.length ~/ 7;
     } catch (error, stackTrace) {
       if (foundation.kReleaseMode) {

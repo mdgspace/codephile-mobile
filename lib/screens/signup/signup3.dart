@@ -4,7 +4,6 @@ import 'package:codephile/resources/colors.dart';
 import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/screens/signup/progress_tab_bar.dart';
 import 'package:codephile/screens/signup/signup4.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';

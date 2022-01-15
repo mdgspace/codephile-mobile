@@ -2,7 +2,6 @@ import 'package:codephile/resources/helper_functions.dart';
 import 'package:codephile/services/email_availability.dart';
 import 'package:codephile/services/institute_list.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/cupertino.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -165,6 +164,7 @@ class _SignUpPageState extends State<SignUpPage> {
         borderRadius: const BorderRadius.all(Radius.circular(4.0)),
       ),
       child: DropdownSearch<String>(
+        showSearchBox: true,
         items: _instituteList,
         onChanged: (String? institute) {
           setState(() {
