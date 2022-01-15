@@ -9,6 +9,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  dio: ^4.0.4
   firebase_core: ^1.11.0
   firebase_crashlytics: ^2.4.5
   firebase_messaging: ^11.2.5
