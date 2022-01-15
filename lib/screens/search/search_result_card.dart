@@ -8,9 +8,13 @@ class SearchResultCard extends StatelessWidget {
   final String? _userImage;
   final String? token;
 
-  const SearchResultCard(this.token, this._name, this._handle, this._userImage,
-      {Key? key})
-      : super(key: key);
+  const SearchResultCard(
+    this.token,
+    this._name,
+    this._handle,
+    this._userImage, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +54,12 @@ class SearchResultCard extends StatelessWidget {
                             )),
                       ),
                 decoration: BoxDecoration(
-                    color: codephileBackground,
-                    shape: BoxShape.circle,
-                    border: Border.all(width: 0, color: userIconBorderGrey)),
+                  color: codephileBackground,
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 0, color: userIconBorderGrey),
+                ),
               ),
             ),
-//          ),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
