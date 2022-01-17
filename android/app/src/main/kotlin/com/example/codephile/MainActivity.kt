@@ -1,4 +1,4 @@
-package `in`.ac.iitr.mdg.codephile
+package com.example.codephile
 
 import io.flutter.embedding.android.FlutterActivity
 
