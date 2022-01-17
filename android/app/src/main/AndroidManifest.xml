@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.codephile">
+    package="in.ac.iitr.mdg.codephile">
    <application
-        android:label="codephile"
+        android:label="Codephile"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
