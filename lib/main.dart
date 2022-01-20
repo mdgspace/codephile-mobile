@@ -53,7 +53,8 @@ Future<void> _initFirebase() async {
       final notification = message.notification;
       if (notification != null) {
         debugPrint(
-            'title: ${notification.title} \t body: ${notification.body}');
+          'title: ${notification.title} \t body: ${notification.body}',
+        );
       }
     },
   );
