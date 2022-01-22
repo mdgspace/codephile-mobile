@@ -76,4 +76,4 @@ jobs:
 
       # Build
       - name: Build APK
-        run: flutter build apk --dart-define=SENTRY_DSN=${SENTRY_DSN}
+        run: flutter build apk --flavor production --target lib/main_production.dart --dart-define=SENTRY_DSN=${SENTRY_DSN}
