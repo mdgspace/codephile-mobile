@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/services/local/storage_service.dart';
+import '../../data/services/remote/api_service.dart';
+import '../../domain/repositories/user_repository.dart';
 
 class Codephile extends StatelessWidget {
   const Codephile({Key? key}) : super(key: key);
@@ -11,8 +16,17 @@ class Codephile extends StatelessWidget {
   }
 
   static Future<Widget> run() async {
-    // TODO(BURG3R5): Initialize services.
-    // TODO(BURG3R5): Wrap `Codephile` widget with `RepositoryProvider`s.
-    return const Codephile();
+    // Service
+    ApiService.init();
+    StorageService.init();
+
+    return MultiRepositoryProvider(
+      providers: <RepositoryProvider>[
+        RepositoryProvider(
+          create: (context) => const UserRepository(),
+        ),
+      ],
+      child: const Codephile(),
+    );
   }
 }

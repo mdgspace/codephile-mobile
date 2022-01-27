@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../config/config.dart';
-import '../local/storage_service.dart';
 
 class ApiService {
   /// Service initializer
@@ -15,6 +14,7 @@ class ApiService {
   /// Safe method to send GET request to an endpoint **below** [Environment.baseUrl].
   static Future<Map<String, dynamic>> get(
     String endpoint, {
+    Map<String, dynamic>? headers,
     Map<String, dynamic>? query,
   }) async {
     Response? response;
@@ -26,7 +26,7 @@ class ApiService {
           validateStatus: (status) {
             return status! < 500;
           },
-          headers: {'authorization': StorageService.authToken},
+          headers: headers,
         ),
       );
       return {
@@ -49,7 +49,8 @@ class ApiService {
   /// Safe method to send POST request to an endpoint **below** [Environment.baseUrl].
   static Future<Map<String, dynamic>> post(
     String endpoint, {
-    required Map<String, dynamic> data,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? data,
   }) async {
     Response? response;
     try {
@@ -60,7 +61,7 @@ class ApiService {
           validateStatus: (status) {
             return status! < 500;
           },
-          headers: {'authorization': StorageService.authToken},
+          headers: headers,
         ),
       );
       return {
@@ -83,7 +84,8 @@ class ApiService {
   /// Safe method to send PUT request to an endpoint **below** [Environment.baseUrl].
   static Future<Map<String, dynamic>> put(
     String endpoint, {
-    required Map<String, dynamic> data,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? data,
   }) async {
     Response? response;
     try {
@@ -94,7 +96,7 @@ class ApiService {
           validateStatus: (status) {
             return status! < 500;
           },
-          headers: {'authorization': StorageService.authToken},
+          headers: headers,
         ),
       );
       return {
