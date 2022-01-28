@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../config/config.dart';
+import '../local/storage_service.dart';
 
 class ApiService {
   /// Service initializer
@@ -14,13 +15,14 @@ class ApiService {
   /// Safe method to send GET request to an endpoint **below** [Environment.baseUrl].
   static Future<Map<String, dynamic>> get(
     String endpoint, {
+    String? baseUrl,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? query,
   }) async {
     Response? response;
     try {
       response = await _channel.get(
-        Environment.baseUrl + endpoint,
+        (baseUrl ?? Environment.baseUrl) + endpoint,
         queryParameters: query,
         options: Options(
           validateStatus: (status) {
@@ -114,5 +116,10 @@ class ApiService {
       'status_code': response?.statusCode ?? 0,
       'data': response?.data ?? 'null',
     };
+  }
+
+  static Future<void> addTokenToHeaders(Map<String, dynamic> headers) async {
+    final token = StorageService.authToken;
+    headers.addAll({'authorization': token});
   }
 }
