@@ -7,7 +7,9 @@ import '../models/feed.dart';
 import '../models/submission.dart';
 
 class CPRepository {
-  const CPRepository();
+  static void init() => instance = CPRepository();
+
+  static late final CPRepository instance;
 
   Future<List<ActivityDetails>?> getActivityDetails(String uid) async {
     final endPoint = 'graph/activity/$uid';

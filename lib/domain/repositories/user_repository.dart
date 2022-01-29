@@ -8,7 +8,10 @@ import '../models/user.dart';
 import '../models/user_profile.dart';
 
 class UserRepository {
-  const UserRepository();
+  static void init() => instance = UserRepository();
+
+  // Instance
+  static late final UserRepository instance;
 
   Future<bool> isEmailAvailable(String email) async {
     final endpoint = 'user/available?email=$email';
@@ -148,7 +151,24 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
-  Future<List<User>?> search(String query) async {}
+  Future<List<User>> search(String query) async {
+    final endpoint = 'user/search?query=$query';
+    final headers = <String, dynamic>{};
+
+    await ApiService.addTokenToHeaders(headers);
+    final response = await ApiService.get(
+      endpoint,
+      headers: headers,
+    );
+
+    final _users = <User>[];
+    if (response['status_code'] == 200) {
+      for (final user in json.decode(response['data']) ?? []) {
+        _users.add(User.fromJson(user));
+      }
+    }
+    return _users;
+  }
 
   Future<List<String>> getInstituteList() async {
     const endpoint = 'institutes';
@@ -170,8 +190,6 @@ class UserRepository {
 
     return [];
   }
-
-  // search
 
   Future<List<SubmissionStatus>?> getSubmissionStatusData(String id) async {
     final endpoint = 'graph/status/$id';

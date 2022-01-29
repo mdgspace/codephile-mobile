@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
+import '../../domain/repositories/cp_repository.dart';
 import '../../domain/repositories/user_repository.dart';
 
 class Codephile extends StatelessWidget {
@@ -20,13 +20,10 @@ class Codephile extends StatelessWidget {
     ApiService.init();
     StorageService.init();
 
-    return MultiRepositoryProvider(
-      providers: <RepositoryProvider>[
-        RepositoryProvider(
-          create: (context) => const UserRepository(),
-        ),
-      ],
-      child: const Codephile(),
-    );
+    // Repositories
+    UserRepository.init();
+    CPRepository.init();
+
+    return const Codephile();
   }
 }
