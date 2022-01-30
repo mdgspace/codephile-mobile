@@ -107,7 +107,7 @@ class ApiService {
       };
     } on Exception catch (exception, stacktrace) {
       debugPrint(
-        'ERROR: Failed during a POST request.\n'
+        'ERROR: Failed during a PUT request.\n'
         'Endpoint: $endpoint\nData: $data\n'
         'Exception: $exception\nStacktrace: $stacktrace',
       );
@@ -118,7 +118,8 @@ class ApiService {
     };
   }
 
-  static Future<void> addTokenToHeaders(Map<String, dynamic> headers) async {
+  /// Adds common tokens to outgoing requests.
+  static void addTokenToHeaders(Map<String, dynamic> headers) {
     final token = StorageService.authToken;
     headers.addAll({'authorization': token});
   }

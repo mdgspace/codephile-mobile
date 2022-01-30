@@ -7,15 +7,11 @@ import '../models/feed.dart';
 import '../models/submission.dart';
 
 class CPRepository {
-  static void init() => instance = CPRepository();
-
-  static late final CPRepository instance;
-
-  Future<List<ActivityDetails>?> getActivityDetails(String uid) async {
+  static Future<List<ActivityDetails>?> getActivityDetails(String uid) async {
     final endPoint = 'graph/activity/$uid';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.post(
       endPoint,
       headers: headers,
@@ -28,11 +24,11 @@ class CPRepository {
     }
   }
 
-  Future<Contest?> contestList() async {
+  static Future<Contest?> contestList() async {
     const endpoint = 'contest/';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.get(
       endpoint,
       headers: headers,
@@ -43,12 +39,12 @@ class CPRepository {
     }
   }
 
-  Future<List<Feed>?> getFeed({DateTime? before}) async {
+  static Future<List<Feed>?> getFeed({DateTime? before}) async {
     final endpoint = 'feed/friend-activity?before='
         '${(before ?? DateTime.now()).millisecondsSinceEpoch ~/ 1000}';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.get(
       endpoint,
       headers: headers,
@@ -61,11 +57,11 @@ class CPRepository {
     }
   }
 
-  Future<List<Submission>?> getSubmissionList(String uid) async {
+  static Future<List<Submission>?> getSubmissionList(String uid) async {
     final endpoint = 'submission/all/$uid';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.get(
       endpoint,
       headers: headers,

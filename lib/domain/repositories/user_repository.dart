@@ -8,12 +8,7 @@ import '../models/user.dart';
 import '../models/user_profile.dart';
 
 class UserRepository {
-  static void init() => instance = UserRepository();
-
-  // Instance
-  static late final UserRepository instance;
-
-  Future<bool> isEmailAvailable(String email) async {
+  static Future<bool> isEmailAvailable(String email) async {
     final endpoint = 'user/available?email=$email';
 
     final response = await ApiService.post(
@@ -23,7 +18,7 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
-  Future<bool> isUsernameAvailable(String username) async {
+  static Future<bool> isUsernameAvailable(String username) async {
     final endpoint = 'user/available?username=$username';
 
     final response = await ApiService.post(
@@ -33,7 +28,7 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
-  Future<String?> signUp(SignUp details) async {
+  static Future<String?> signUp(SignUp details) async {
     const endpoint = 'user/signup';
     final data = {...details.toJson(), ...details.handle?.toJson() ?? {}}
       ..remove('handle');
@@ -48,7 +43,7 @@ class UserRepository {
     }
   }
 
-  Future<String?> login(String username, String password) async {
+  static Future<String?> login(String username, String password) async {
     const endpoint = 'user/login';
 
     final response = await ApiService.post(
@@ -64,11 +59,11 @@ class UserRepository {
     }
   }
 
-  Future<bool> logout() async {
+  static Future<bool> logout() async {
     const endpoint = 'user/logout';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.post(
       endpoint,
       headers: headers,
@@ -77,7 +72,7 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
-  Future<bool> sendVerifyEmail(String uid) async {
+  static Future<bool> sendVerifyEmail(String uid) async {
     final endpoint = 'user/send-verify-email/$uid';
 
     final response = await ApiService.post(
@@ -87,7 +82,7 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
-  Future<bool> resetPassword(String email) async {
+  static Future<bool> resetPassword(String email) async {
     const endpoint = 'user/password-reset-email';
 
     final response = await ApiService.post(
@@ -98,11 +93,11 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
-  Future<int> followUser(String uid) async {
+  static Future<int> followUser(String uid) async {
     final endpoint = 'friends/follow?uid2=$uid';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.post(
       endpoint,
       headers: headers,
@@ -111,11 +106,11 @@ class UserRepository {
     return response['status_code'];
   }
 
-  Future<int> unfollowUser(String uid) async {
+  static Future<int> unfollowUser(String uid) async {
     final endpoint = 'friends/unfollow?uid2=$uid';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.post(
       endpoint,
       headers: headers,
@@ -124,11 +119,11 @@ class UserRepository {
     return response['status_code'];
   }
 
-  Future<List<Following>?> getFollowingList() async {
+  static Future<List<Following>?> getFollowingList() async {
     const endpoint = 'friends/following';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.get(
       endpoint,
       headers: headers,
@@ -141,7 +136,7 @@ class UserRepository {
     }
   }
 
-  Future<bool> verifyHandle(String site, String handle) async {
+  static Future<bool> verifyHandle(String site, String handle) async {
     final endpoint = 'user/verify/$site?handle=$handle';
 
     final response = await ApiService.post(
@@ -151,11 +146,11 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
-  Future<List<User>> search(String query) async {
+  static Future<List<User>> search(String query) async {
     final endpoint = 'user/search?query=$query';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.get(
       endpoint,
       headers: headers,
@@ -170,12 +165,12 @@ class UserRepository {
     return _users;
   }
 
-  Future<List<String>> getInstituteList() async {
+  static Future<List<String>> getInstituteList() async {
     const endpoint = 'institutes';
     const baseUrl = 'https://codephile.mdg.iitr.ac.in/';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.get(
       endpoint,
       baseUrl: baseUrl,
@@ -191,11 +186,12 @@ class UserRepository {
     return [];
   }
 
-  Future<List<SubmissionStatus>?> getSubmissionStatusData(String id) async {
+  static Future<List<SubmissionStatus>?> getSubmissionStatusData(
+      String id) async {
     final endpoint = 'graph/status/$id';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.get(
       endpoint,
       headers: headers,
@@ -208,11 +204,14 @@ class UserRepository {
     }
   }
 
-  Future<int> updatePassword(String oldPassword, String newPassword) async {
+  static Future<int> updatePassword(
+    String oldPassword,
+    String newPassword,
+  ) async {
     const endpoint = 'user/password-reset';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.post(
       endpoint,
       headers: headers,
@@ -225,11 +224,11 @@ class UserRepository {
     return response['status_code'];
   }
 
-  Future<int> updateUserDetails(Map<String, dynamic>? data) async {
+  static Future<int> updateUserDetails(Map<String, dynamic>? data) async {
     const endpoint = 'user/';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.post(
       endpoint,
       headers: headers,
@@ -239,11 +238,11 @@ class UserRepository {
     return response['status_code'];
   }
 
-  Future<User?> getUser(String uid) async {
+  static Future<User?> getUser(String uid) async {
     final endpoint = '/user/$uid';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.get(
       endpoint,
       headers: headers,
@@ -254,11 +253,11 @@ class UserRepository {
     }
   }
 
-  Future<UserProfile?> getAllPlatformDetails(String uid) async {
+  static Future<UserProfile?> getAllPlatformDetails(String uid) async {
     final endpoint = '/user/fetch/$uid';
     final headers = <String, dynamic>{};
 
-    await ApiService.addTokenToHeaders(headers);
+    ApiService.addTokenToHeaders(headers);
     final response = await ApiService.get(
       endpoint,
       headers: headers,
