@@ -4,6 +4,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
+import 'navigation_observer.dart';
 import 'router.dart';
 
 class Codephile extends StatelessWidget {
@@ -16,6 +17,7 @@ class Codephile extends StatelessWidget {
       // home: const SplashScreen(),
       navigatorObservers: <NavigatorObserver>[
         SentryNavigatorObserver(),
+        AppNavigationObserver(),
       ],
       onGenerateRoute: AppRouter.generateRoute,
       title: 'Codephile',
