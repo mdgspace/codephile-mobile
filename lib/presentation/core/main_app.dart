@@ -4,6 +4,9 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'router.dart';
 
+import '../../data/services/local/storage_service.dart';
+import '../../data/services/remote/api_service.dart';
+
 class Codephile extends StatelessWidget {
   const Codephile({Key? key}) : super(key: key);
 
@@ -21,8 +24,9 @@ class Codephile extends StatelessWidget {
   }
 
   static Future<Widget> run() async {
-    // TODO(BURG3R5): Initialize services.
-    // TODO(BURG3R5): Wrap `Codephile` widget with `RepositoryProvider`s.
+    ApiService.init();
+    StorageService.init();
+
     return const Codephile();
   }
 }
