@@ -10,6 +10,7 @@ environment:
 
 dependencies:
   dio: ^4.0.4
+  equatable: ^2.0.3
   firebase_core: ^1.11.0
   firebase_crashlytics: ^2.4.5
   firebase_messaging: ^11.2.5
