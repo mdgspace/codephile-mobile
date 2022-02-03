@@ -7,6 +7,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'data/constants/strings.dart';
+import 'presentation/core/bloc_observer.dart';
 import 'presentation/core/main_app.dart';
 
 Future<void> main() async {
@@ -16,10 +17,11 @@ Future<void> main() async {
   await _initHive();
   final hydratedStorage = await _initHydratedBloc();
 
-  // Zone for Hydrated Bloc.
-  HydratedBlocOverrides.runZoned(
+  // Zone for Hydrated Bloc and AppBlocObserver.
+  await HydratedBlocOverrides.runZoned(
     () async => runApp(await Codephile.run()),
     storage: hydratedStorage,
+    blocObserver: AppBlocObserver(),
   );
 }
 

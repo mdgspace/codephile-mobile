@@ -13,6 +13,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'data/config/config.dart';
 import 'data/constants/strings.dart';
+import 'presentation/core/bloc_observer.dart';
 import 'presentation/core/main_app.dart';
 
 void main() {
@@ -28,10 +29,11 @@ void main() {
       await _initHive();
       final hydratedStorage = await _initHydratedBloc();
 
-      // Zone for Hydrated Bloc.
-      HydratedBlocOverrides.runZoned(
+      // Zone for Hydrated Bloc and AppBlocObserver.
+      await HydratedBlocOverrides.runZoned(
         () async => runApp(await Codephile.run()),
         storage: hydratedStorage,
+        blocObserver: AppBlocObserver(),
       );
     },
     _onError,
