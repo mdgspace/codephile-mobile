@@ -4,14 +4,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as nav;
 
+import '../../../utils/auth_token.dart' as utils;
 import '../../config/config.dart';
 import '../../constants/routes.dart';
-import '../../constants/strings.dart';
-import '../local/storage_service.dart';
 
 class ApiService {
   /// Service initializer
-  static void init() => _channel = Dio();
+  static void init() {
+    _channel = Dio()..options.contentType = Headers.formUrlEncodedContentType;
+  }
 
   // Data
   /// The [Dio] channel through which all requests will be routed.
@@ -23,6 +24,7 @@ class ApiService {
     String? baseUrl,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? query,
+    bool shouldVerify = true,
   }) async {
     log('[API] [GET] >> $endpoint');
     Response? response;
@@ -31,7 +33,7 @@ class ApiService {
         (baseUrl ?? Environment.baseUrl) + endpoint,
         queryParameters: query,
         options: Options(
-          validateStatus: _validate,
+          validateStatus: shouldVerify ? _validateStrict : _validateLoose,
           headers: headers,
         ),
       );
@@ -55,6 +57,7 @@ class ApiService {
     String endpoint, {
     Map<String, dynamic>? headers,
     Map<String, dynamic>? data,
+    bool shouldVerify = true,
   }) async {
     log('[API] [POST] >> $endpoint');
     Response? response;
@@ -63,7 +66,7 @@ class ApiService {
         Environment.baseUrl + endpoint,
         data: data,
         options: Options(
-          validateStatus: _validate,
+          validateStatus: shouldVerify ? _validateStrict : _validateLoose,
           headers: headers,
         ),
       );
@@ -87,6 +90,7 @@ class ApiService {
     String endpoint, {
     Map<String, dynamic>? headers,
     Map<String, dynamic>? data,
+    bool shouldVerify = true,
   }) async {
     log('[API] [PUT] >> $endpoint');
     Response? response;
@@ -95,7 +99,7 @@ class ApiService {
         Environment.baseUrl + endpoint,
         data: data,
         options: Options(
-          validateStatus: _validate,
+          validateStatus: shouldVerify ? _validateStrict : _validateLoose,
           headers: headers,
         ),
       );
@@ -116,15 +120,18 @@ class ApiService {
 
   /// Adds common tokens to outgoing requests.
   static void addTokenToHeaders(Map<String, dynamic> headers) {
-    final token = StorageService.authToken;
-    headers.addAll({'authorization': token});
+    headers.addAll({'authorization': utils.authToken});
   }
 
-  static bool _validate(int? status) {
+  static bool _validateStrict(int? status) {
     if (status == 401) {
-      StorageService.delete(AppStrings.authTokenKey);
+      utils.clearAuthToken();
       nav.Get.offAllNamed(AppRoutes.login);
     }
+    return status! < 500;
+  }
+
+  static bool _validateLoose(int? status) {
     return status! < 500;
   }
 }
