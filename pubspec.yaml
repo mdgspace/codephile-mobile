@@ -29,12 +29,14 @@ dependencies:
   sentry_flutter: ^6.2.2
 
 dev_dependencies:
+  bloc_test: ^9.0.2
   build_runner: ^2.1.7
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-  freezed: ^1.1.1
+  freezed: ^1.1.0
   json_serializable: ^6.1.4
+  mocktail:
 
 flutter:
   uses-material-design: true

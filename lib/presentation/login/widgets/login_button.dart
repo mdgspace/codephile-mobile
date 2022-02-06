@@ -19,7 +19,7 @@ class LoginButton extends StatelessWidget {
           ),
           onPressed: () {
             FocusScope.of(context).requestFocus(FocusNode());
-            if (state.isFormFilled() && state.status is! Loading) {
+            if (state.isLoginButtonActive()) {
               context.read<LoginBloc>().add(const Submit());
             }
           },

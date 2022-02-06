@@ -2,8 +2,8 @@ part of 'login_bloc.dart';
 
 @freezed
 class LoginState with _$LoginState {
-  factory LoginState({
-    required bool rememberMe,
+  const factory LoginState({
+    @Default(true) bool rememberMe,
     @Default(false) bool isUsernameFocused,
     @Default(false) bool isPasswordFocused,
     @Default(true) bool obscurePassword,
@@ -15,7 +15,7 @@ class LoginState with _$LoginState {
 
   const LoginState._();
 
-  bool isFormFilled() {
-    return username.isNotEmpty && password.isNotEmpty;
-  }
+  bool isFormFilled() => username.isNotEmpty && password.isNotEmpty;
+
+  bool isLoginButtonActive() => isFormFilled() && status is! Loading;
 }

@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 
 import '../../../data/constants/routes.dart';
+import '../../../data/constants/strings.dart';
 import '../../../domain/models/status.dart';
 import '../../../domain/repositories/user_repository.dart';
 
@@ -12,7 +13,7 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginState(rememberMe: true)) {
+  LoginBloc() : super(const LoginState()) {
     on<ToggleDialog>(_toggleDialog);
     on<PasswordInput>(_updatePasswordInput);
     on<Submit>(_submitForm);
@@ -22,6 +23,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _submitForm(Submit event, Emitter<LoginState> emit) async {
+    if (!state.isFormFilled()) return;
+
     emit(state.copyWith(status: const Status.loading()));
 
     final result = await UserRepository.login(
@@ -35,50 +38,43 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else {
       if (result == 'Unverified') {
         emit(state.copyWith(
-          status: const Status.error(
-            'Please verify your email before attempting to log in\n'
-            'Check your email for the verification link',
-          ),
+          status: const Status.error(AppStrings.verifyFirst),
         ));
       } else if (result == 'Unauthorized') {
         emit(state.copyWith(
-          status: const Status.error('Incorrect credentials'),
+          status: const Status.error(AppStrings.incorrectCredentials),
         ));
       } else {
         emit(state.copyWith(
-          status: const Status.error('Something went wrong'),
+          status: const Status.error(AppStrings.genericError),
         ));
       }
     }
   }
 
   void _toggleDialog(ToggleDialog event, Emitter<LoginState> emit) async {
-    if (event.email != null) {
+    if (event.email == null) {
+      emit(state.copyWith(showDialog: !state.showDialog));
+    } else {
+      if (event.email!.isEmpty) return;
       emit(state.copyWith(
         showDialog: !state.showDialog,
         status: const Status.loading(),
       ));
-      if (event.email!.isEmpty) return;
       final result = await UserRepository.resetPassword(event.email!);
       if (result == null) {
         emit(state.copyWith(
-          status: const Status.error('Something went wrong'),
+          status: const Status.error(AppStrings.genericError),
         ));
       } else if (result) {
         emit(state.copyWith(
-          status: const Status(
-            'Success! Please check your email for a password reset link',
-          ),
+          status: const Status(AppStrings.passwordResetSuccess),
         ));
       } else {
         emit(state.copyWith(
-          status: const Status.error(
-            'No user associated with given email address',
-          ),
+          status: const Status.error(AppStrings.noUserWithEmail),
         ));
       }
-    } else {
-      emit(state.copyWith(showDialog: !state.showDialog));
     }
   }
 
@@ -91,10 +87,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _updatePasswordInput(PasswordInput event, Emitter<LoginState> emit) {
-    emit(state.copyWith(password: event.value));
+    emit(state.copyWith(
+      isPasswordFocused: true,
+      isUsernameFocused: false,
+      password: event.value,
+    ));
   }
 
   void _updateUsernameInput(UsernameInput event, Emitter<LoginState> emit) {
-    emit(state.copyWith(username: event.value));
+    emit(state.copyWith(
+      isUsernameFocused: true,
+      isPasswordFocused: false,
+      username: event.value,
+    ));
   }
 }
