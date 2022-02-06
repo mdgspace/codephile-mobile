@@ -1,12 +1,17 @@
 part of 'login_widgets.dart';
 
+/// Checkbox and label component that allows the user to choose whether to stay
+/// logged in for future sessions too. Defaults to on.
 class RememberMeButton extends StatelessWidget {
+  /// Checkbox and label component that allows the user to choose whether to stay
+  /// logged in for future sessions too. Defaults to on.
   const RememberMeButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
+    return BlocSelector<LoginBloc, LoginState, bool>(
+      selector: (state) => state.rememberMe,
+      builder: (context, rememberMe) {
         return TextButton(
           onPressed: () => _toggle(context),
           style: ButtonStyle(
@@ -21,7 +26,7 @@ class RememberMeButton extends StatelessWidget {
                 width: 18.r,
                 height: 18.r,
                 child: Checkbox(
-                  value: state.rememberMe,
+                  value: rememberMe,
                   onChanged: (_) => _toggle(context),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(3)),

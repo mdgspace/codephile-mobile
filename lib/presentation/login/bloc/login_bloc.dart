@@ -12,7 +12,9 @@ part 'login_bloc.freezed.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
+/// The Bloc for the login screen.
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  /// The Bloc for the login screen.
   LoginBloc() : super(const LoginState()) {
     on<ToggleDialog>(_toggleDialog);
     on<PasswordInput>(_updatePasswordInput);
@@ -25,7 +27,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void _submitForm(Submit event, Emitter<LoginState> emit) async {
     if (!state.isFormFilled()) return;
 
-    emit(state.copyWith(status: const Status.loading()));
+    emit(state.copyWith(
+      isPasswordFocused: false,
+      isUsernameFocused: false,
+      status: const Status.loading(),
+    ));
 
     final result = await UserRepository.login(
       username: state.username,

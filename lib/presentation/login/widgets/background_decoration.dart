@@ -1,6 +1,8 @@
 part of 'login_widgets.dart';
 
+/// Wrapper that adds a circle and triangle behind its [child].
 class BackgroundDecoration extends StatelessWidget {
+  /// Wrapper that adds a circle and triangle behind its [child].
   const BackgroundDecoration({required this.child, Key? key}) : super(key: key);
 
   final Widget child;

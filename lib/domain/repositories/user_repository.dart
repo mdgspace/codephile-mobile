@@ -53,6 +53,7 @@ class UserRepository {
     return null;
   }
 
+  /// Logs in the user.
   static Future<String?> login({
     required String username,
     required String password,
@@ -76,7 +77,6 @@ class UserRepository {
           shouldPersist: rememberMe,
         );
         StorageService.user = await fetchUserDetails();
-
         return 'Success';
       case 401:
         return 'Unauthorized';
@@ -110,6 +110,7 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
+  /// Requests a password reset.
   static Future<bool?> resetPassword(String email) async {
     const endpoint = 'user/password-reset-email';
 

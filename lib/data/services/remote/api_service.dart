@@ -123,6 +123,7 @@ class ApiService {
     headers.addAll({'authorization': utils.authToken});
   }
 
+  /// Strict validation. Used after authentication.
   static bool _validateStrict(int? status) {
     if (status == 401) {
       utils.clearAuthToken();
@@ -131,6 +132,7 @@ class ApiService {
     return status! < 500;
   }
 
+  /// Looser validation. Used before authentication.
   static bool _validateLoose(int? status) {
     return status! < 500;
   }

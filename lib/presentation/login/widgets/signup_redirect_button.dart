@@ -1,6 +1,8 @@
 part of 'login_widgets.dart';
 
+/// Button component that navigates to [AppRoutes.signUp].
 class SignUpRedirectButton extends StatelessWidget {
+  /// Button component that navigates to [AppRoutes.signUp].
   const SignUpRedirectButton({Key? key}) : super(key: key);
 
   @override

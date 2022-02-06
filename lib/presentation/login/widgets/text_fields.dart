@@ -1,47 +1,37 @@
 part of 'login_widgets.dart';
 
+/// The password text field.
 class PasswordField extends StatelessWidget {
+  /// The password text field.
   const PasswordField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // [BlocSelector] is not used because widget depends on both
+    // [state.isPasswordFocused] and [state.obscurePassword].
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return Stack(
           alignment: Alignment.centerRight,
           children: <Widget>[
-            TextFormField(
-              initialValue: '',
+            TextInput(
+              action: TextInputAction.done,
+              hint: 'Password',
+              keyboard: TextInputType.visiblePassword,
+              obscureText: state.obscurePassword,
               onChanged: (value) =>
                   context.read<LoginBloc>().add(PasswordInput(value)),
-              minLines: 1,
-              style: AppStyles.h6.copyWith(color: AppColors.grey3),
-              obscureText: state.obscurePassword,
-              textInputAction: TextInputAction.go,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                hintText: 'Password',
-                hintStyle: AppStyles.h6,
-                prefixIcon: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.r,
-                    vertical: 10.r,
-                  ),
-                  child: SvgPicture.asset(
-                    AppAssets.lock,
-                    color: (state.isPasswordFocused)
-                        ? AppColors.primary
-                        : AppColors.grey1,
-                  ),
+              prefix: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.r,
+                  vertical: 10.r,
                 ),
-                border: const OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.primary),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.primary,
-                    width: 1.5,
-                  ),
+                child: SvgPicture.asset(
+                  AppAssets.lock,
+                  // TODO(BURG3R5): Deal with Focus transfer.
+                  color: (state.isPasswordFocused)
+                      ? AppColors.primary
+                      : AppColors.grey1,
                 ),
               ),
             ),
@@ -62,42 +52,28 @@ class PasswordField extends StatelessWidget {
   }
 }
 
+/// The username text field.
 class UsernameField extends StatelessWidget {
+  /// The username text field.
   const UsernameField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
-        return TextFormField(
-          initialValue: '',
+    return BlocSelector<LoginBloc, LoginState, bool>(
+      selector: (state) => state.isUsernameFocused,
+      builder: (context, isUsernameFocused) {
+        return TextInput(
+          hint: 'Username',
           onChanged: (value) =>
               context.read<LoginBloc>().add(UsernameInput(value)),
-          minLines: 1,
-          style: AppStyles.h6.copyWith(color: AppColors.grey3),
-          decoration: InputDecoration(
-            hintText: 'Username',
-            hintStyle: AppStyles.h6,
-            prefixIcon: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 8.r,
-                vertical: 10.r,
-              ),
-              child: SvgPicture.asset(
-                AppAssets.person,
-                color: state.isUsernameFocused
-                    ? AppColors.primary
-                    : AppColors.grey1,
-              ),
+          prefix: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 8.r,
+              vertical: 10.r,
             ),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.primary),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primary,
-                width: 1.5,
-              ),
+            child: SvgPicture.asset(
+              AppAssets.person,
+              color: isUsernameFocused ? AppColors.primary : AppColors.grey1,
             ),
           ),
         );

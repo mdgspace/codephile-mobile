@@ -1,6 +1,8 @@
 part of 'login_widgets.dart';
 
+/// Button component that opens a dialog using [showForgotPasswordDialog].
 class ForgotPasswordButton extends StatelessWidget {
+  /// Button component that opens a dialog using [showForgotPasswordDialog].
   const ForgotPasswordButton({Key? key}) : super(key: key);
 
   @override
@@ -11,7 +13,7 @@ class ForgotPasswordButton extends StatelessWidget {
         style: AppStyles.h6.copyWith(color: AppColors.primary),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
-            // FocusScope.of(context).requestFocus();
+            FocusScope.of(context).requestFocus();
             context.read<LoginBloc>().add(const ToggleDialog());
           },
       ),
@@ -20,6 +22,7 @@ class ForgotPasswordButton extends StatelessWidget {
   }
 }
 
+/// Dialog component that takes an email id to send a reset password link to.
 void showForgotPasswordDialog(BuildContext context) async {
   final controller = TextEditingController();
 
@@ -44,21 +47,10 @@ void showForgotPasswordDialog(BuildContext context) async {
       contentPadding: EdgeInsets.zero,
       content: Padding(
         padding: EdgeInsets.fromLTRB(15.r, 15.r, 15.r, 0),
-        child: TextFormField(
-          style: AppStyles.h6.copyWith(color: AppColors.grey3),
-          decoration: InputDecoration(
-            hintText: 'Email',
-            hintStyle: AppStyles.h6,
-            border: const OutlineInputBorder(),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primary,
-                width: 1.5,
-              ),
-            ),
-          ),
-          keyboardType: TextInputType.emailAddress,
+        child: TextInput(
           controller: controller,
+          hint: 'Email',
+          keyboard: TextInputType.emailAddress,
         ),
       ),
       actions: <Widget>[
@@ -72,9 +64,9 @@ void showForgotPasswordDialog(BuildContext context) async {
           child: Container(
             color: AppColors.primary,
             padding: EdgeInsets.symmetric(horizontal: 40.r, vertical: 10.r),
-            child: const Text(
+            child: Text(
               'Okay',
-              style: TextStyle(color: Colors.white),
+              style: AppStyles.h6.copyWith(color: AppColors.white),
             ),
           ),
         ),

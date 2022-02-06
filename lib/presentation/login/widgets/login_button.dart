@@ -1,10 +1,14 @@
 part of 'login_widgets.dart';
 
+/// The login button.
 class LoginButton extends StatelessWidget {
+  /// The login button.
   const LoginButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // [BlocSelector] is not used because widget depends on both
+    // [state.isFormFilled()] and [state.isLoginButtonActive()].
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return TextButton(

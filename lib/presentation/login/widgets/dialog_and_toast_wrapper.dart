@@ -1,6 +1,8 @@
 part of 'login_widgets.dart';
 
+/// Wrapper that listens to the [LoginBloc] provided and reacts with dialogs and toasts.
 class DialogAndToastWrapper extends StatelessWidget {
+  /// Wrapper that listens to the [LoginBloc] provided and reacts with dialogs and toasts.
   const DialogAndToastWrapper({
     required this.child,
     Key? key,
@@ -19,7 +21,7 @@ class DialogAndToastWrapper extends StatelessWidget {
 
         // Toast
         if (state.status is Error) {
-          final message = (state.status as Error).message;
+          final message = (state.status as Error).errorMessage;
           if (message.isNotEmpty) {
             Fluttertoast.showToast(msg: message);
           }

@@ -11,6 +11,7 @@ import '../../../data/constants/colors.dart';
 import '../../../data/constants/routes.dart';
 import '../../../data/constants/styles.dart';
 import '../../../domain/models/status.dart';
+import '../../components/inputs/text_input.dart';
 import '../bloc/login_bloc.dart';
 
 part 'background_decoration.dart';
@@ -20,3 +21,5 @@ part 'login_button.dart';
 part 'remember_me_button.dart';
 part 'signup_redirect_button.dart';
 part 'text_fields.dart';
+
+/// Contains all components required by [LoginScreen] as `part`s for easy importing.

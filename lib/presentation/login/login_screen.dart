@@ -6,7 +6,9 @@ import '../../data/constants/styles.dart';
 import 'bloc/login_bloc.dart';
 import 'widgets/login_widgets.dart';
 
+/// The login screen widget.
 class LoginScreen extends StatelessWidget {
+  /// The login screen widget.
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
