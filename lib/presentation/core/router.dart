@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../data/constants/routes.dart';
 import '../login/login_screen.dart';
+import '../onboarding/onboarding_screen.dart';
 
 /// Wrapper for a single method to be passed to [GetMaterialApp.onGenerateRoute].
 class AppRouter {
@@ -11,6 +12,12 @@ class AppRouter {
       case AppRoutes.login:
         return GetPageRoute(
           page: () => const LoginScreen(),
+          routeName: settings.name,
+          settings: settings,
+        );
+      case AppRoutes.onboarding:
+        return GetPageRoute(
+          page: () => OnboardingScreen(),
           routeName: settings.name,
           settings: settings,
         );

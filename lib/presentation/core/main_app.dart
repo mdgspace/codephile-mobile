@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../data/constants/routes.dart';
+import '../../data/constants/styles.dart';
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
 import 'navigation_observer.dart';
@@ -34,6 +35,7 @@ class Codephile extends StatelessWidget {
           ],
           onGenerateRoute: AppRouter.generateRoute,
           title: 'Codephile',
+          theme: AppStyles.theme,
         );
       },
     );

@@ -1,11 +1,16 @@
-part of 'login_widgets.dart';
+part of 'onboarding_widgets.dart';
 
 /// Wrapper that adds a circle and a triangle behind its [child].
 class BackgroundDecoration extends StatelessWidget {
   /// Wrapper that adds a circle and a triangle behind its [child].
-  const BackgroundDecoration({required this.child, Key? key}) : super(key: key);
+  const BackgroundDecoration({
+    required this.child,
+    this.floatingActionButton,
+    Key? key,
+  }) : super(key: key);
 
   final Widget child;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +18,11 @@ class BackgroundDecoration extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Positioned(
-            top: 0,
+            top: 106.r,
             left: 0,
             child: SvgPicture.asset(
-              AppAssets.circle1,
-              width: 170.r,
+              AppAssets.circle2,
+              height: 290.r,
             ),
           ),
           Positioned(
@@ -31,6 +36,7 @@ class BackgroundDecoration extends StatelessWidget {
           child,
         ],
       ),
+      floatingActionButton: floatingActionButton,
     );
   }
 }
