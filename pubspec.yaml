@@ -18,6 +18,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
+  flutter_screenutil: 5.0.4
+  flutter_svg: ^1.0.3
   freezed_annotation: ^1.1.0
   get: ^4.6.1
   hive_flutter: ^1.1.0
@@ -26,12 +28,17 @@ dependencies:
   sentry_flutter: ^6.2.2
 
 dev_dependencies:
+  bloc_test: ^9.0.2
   build_runner: ^2.1.7
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-  freezed: ^1.1.1
+  freezed: ^1.1.0
   json_serializable: ^6.1.4
+  mocktail:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/app/icons/
+    - assets/app/images/

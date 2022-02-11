@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../../domain/models/user.dart';
 import '../../constants/strings.dart';
 
 class StorageService {
@@ -34,9 +37,33 @@ class StorageService {
 
   // Specific getters and setters
   /// Authorization token for API requests.
+  ///
+  /// Stored across sessions.
   static String? get authToken => _get<String>(AppStrings.authTokenKey);
 
   /// Authorization token for API requests.
+  ///
+  /// Stored across sessions.
   static set authToken(String? token) =>
       _set<String>(AppStrings.authTokenKey, token);
+
+  /// Currently logged in user.
+  static User? get user {
+    try {
+      return User.fromJson(json.decode(_get<String>(AppStrings.userKey)!));
+    } on Exception catch (_) {
+      // This just means that the user has not been stored previously.
+      return null;
+    }
+  }
+
+  /// Currently logged in user.
+  static set user(User? u) {
+    try {
+      _set<String>(AppStrings.userKey, json.encode(u!.toJson()));
+    } on Exception catch (_) {
+      // This just means that the passed object is null.
+      _set<String?>(AppStrings.userKey, null);
+    }
+  }
 }

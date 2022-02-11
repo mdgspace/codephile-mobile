@@ -49,3 +49,4 @@ app.*.map.json
 # Generated files
 **/*.g.dart
 **/*.freezed.dart
+coverage

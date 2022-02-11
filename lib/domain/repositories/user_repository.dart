@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
+import '../../utils/auth_token.dart' as utils;
 import '../models/following.dart';
 import '../models/sign_up.dart';
 import '../models/submission_status.dart';
@@ -8,6 +10,13 @@ import '../models/user.dart';
 import '../models/user_profile.dart';
 
 class UserRepository {
+  // Data
+  /// Authorization token for API requests.
+  ///
+  /// Vanishes after each session.
+  static String? authToken;
+
+  // Methods
   static Future<bool> isEmailAvailable(String email) async {
     final endpoint = 'user/available?email=$email';
 
@@ -41,9 +50,15 @@ class UserRepository {
     if (response['status_code'] == 200) {
       return json.decode(response['data'])['id'];
     }
+    return null;
   }
 
-  static Future<String?> login(String username, String password) async {
+  /// Logs in the user.
+  static Future<String?> login({
+    required String username,
+    required String password,
+    required bool rememberMe,
+  }) async {
     const endpoint = 'user/login';
 
     final response = await ApiService.post(
@@ -52,10 +67,23 @@ class UserRepository {
         'username': username,
         'password': password,
       },
+      shouldVerify: false,
     );
 
-    if (response['status_code'] == 200) {
-      return json.decode(response['data'])['token'];
+    switch (response['status_code']) {
+      case 200:
+        utils.setAuthToken(
+          response['data']['token'],
+          shouldPersist: rememberMe,
+        );
+        StorageService.user = await fetchUserDetails();
+        return 'Success';
+      case 401:
+        return 'Unauthorized';
+      case 403:
+        return 'Unverified';
+      default:
+        return null;
     }
   }
 
@@ -82,7 +110,8 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
-  static Future<bool> resetPassword(String email) async {
+  /// Requests a password reset.
+  static Future<bool?> resetPassword(String email) async {
     const endpoint = 'user/password-reset-email';
 
     final response = await ApiService.post(
@@ -90,7 +119,15 @@ class UserRepository {
       data: {'email': email},
     );
 
-    return response['status_code'] == 200;
+    // Tri-state is just to ensure that internal server errors show up differently.
+    switch (response['status_code']) {
+      case 200:
+        return true;
+      case 403:
+        return false;
+      default:
+        return null;
+    }
   }
 
   static Future<int> followUser(String uid) async {
@@ -134,6 +171,7 @@ class UserRepository {
         json.decode(response['data']).map((e) => Following.fromJson(e)),
       );
     }
+    return null;
   }
 
   static Future<bool> verifyHandle(String site, String handle) async {
@@ -187,7 +225,8 @@ class UserRepository {
   }
 
   static Future<List<SubmissionStatus>?> getSubmissionStatusData(
-      String id) async {
+    String id,
+  ) async {
     final endpoint = 'graph/status/$id';
     final headers = <String, dynamic>{};
 
@@ -202,6 +241,7 @@ class UserRepository {
         json.decode(response['data'])?.map((e) => SubmissionStatus.fromJson(e)),
       );
     }
+    return null;
   }
 
   static Future<int> updatePassword(
@@ -238,7 +278,9 @@ class UserRepository {
     return response['status_code'];
   }
 
-  static Future<User?> getUser(String uid) async {
+  /// Fetches details of user with the given [uid]. To fetch info about
+  /// currently logged in user, call without arguments.
+  static Future<User?> fetchUserDetails({String uid = ''}) async {
     final endpoint = '/user/$uid';
     final headers = <String, dynamic>{};
 
@@ -249,8 +291,9 @@ class UserRepository {
     );
 
     if (response['status_code'] == 200) {
-      return User.fromJson(json.decode(response['data']));
+      return User.fromJson(response['data']);
     }
+    return null;
   }
 
   static Future<UserProfile?> getAllPlatformDetails(String uid) async {
@@ -266,5 +309,6 @@ class UserRepository {
     if (response['status_code'] == 200) {
       return UserProfile.fromJson(json.decode(response['data']));
     }
+    return null;
   }
 }

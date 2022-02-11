@@ -2,26 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../data/constants/routes.dart';
+import '../login/login_screen.dart';
 
 /// Wrapper for a single method to be passed to [GetMaterialApp.onGenerateRoute].
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRoutes.splash:
-        return GetPageRoute(
-          // page: () => const SplashScreen(),
-          routeName: settings.name,
-          settings: settings,
-        );
-      case AppRoutes.home:
-        return GetPageRoute(
-          // page: () => const HomeScreen(),
-          routeName: settings.name,
-          settings: settings,
-        );
       case AppRoutes.login:
         return GetPageRoute(
-          // page: () => const LoginScreen(),
+          page: () => const LoginScreen(),
           routeName: settings.name,
           settings: settings,
         );

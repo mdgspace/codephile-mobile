@@ -50,9 +50,8 @@ jobs:
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       # Test
-      # Temporary disabled due to absence of tests.
-      # - name: Run tests
-      #   run: flutter test
+      - name: Run tests
+        run: flutter test --no-pub test/test.dart
 
   build:
     runs-on: ubuntu-latest

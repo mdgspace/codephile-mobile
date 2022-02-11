@@ -22,6 +22,7 @@ class CPRepository {
           .decode(response['data'])
           .map((e) => ActivityDetails.fromJson(e)));
     }
+    return null;
   }
 
   static Future<Contest?> contestList() async {
@@ -37,6 +38,7 @@ class CPRepository {
     if (response['status_code'] == 200) {
       return Contest.fromJson(json.decode(response['data']));
     }
+    return null;
   }
 
   static Future<List<Feed>?> getFeed({DateTime? before}) async {
@@ -55,6 +57,7 @@ class CPRepository {
         json.decode(response['data']).map((e) => Feed.fromJson(e)),
       );
     }
+    return null;
   }
 
   static Future<List<Submission>?> getSubmissionList(String uid) async {
@@ -72,5 +75,6 @@ class CPRepository {
         json.decode(response['data']).map((e) => Submission.fromJson(e)),
       );
     }
+    return null;
   }
 }
