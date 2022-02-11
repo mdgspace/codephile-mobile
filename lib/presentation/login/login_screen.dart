@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<LoginBloc>(
       create: (_) => LoginBloc(),
-      child: DialogAndToastWrapper(
+      child: DialogAndSnackBarWrapper(
         child: BackgroundDecoration(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 16.r),

@@ -26,6 +26,7 @@ class Codephile extends StatelessWidget {
             );
           },
           debugShowCheckedModeBanner: false,
+          // TODO(developers): Update this with the screen you're testing.
           initialRoute: AppRoutes.splash,
           navigatorObservers: <NavigatorObserver>[
             SentryNavigatorObserver(),

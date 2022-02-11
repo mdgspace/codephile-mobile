@@ -1,9 +1,9 @@
 part of 'login_widgets.dart';
 
-/// Wrapper that listens to the [LoginBloc] provided and reacts with dialogs and toasts.
-class DialogAndToastWrapper extends StatelessWidget {
-  /// Wrapper that listens to the [LoginBloc] provided and reacts with dialogs and toasts.
-  const DialogAndToastWrapper({
+/// Wrapper that listens to the [LoginBloc] provided and reacts with dialogs and snackbars.
+class DialogAndSnackBarWrapper extends StatelessWidget {
+  /// Wrapper that listens to the [LoginBloc] provided and reacts with dialogs and snackbars.
+  const DialogAndSnackBarWrapper({
     required this.child,
     Key? key,
   }) : super(key: key);
@@ -19,16 +19,16 @@ class DialogAndToastWrapper extends StatelessWidget {
           showForgotPasswordDialog(context);
         }
 
-        // Toast
+        // SnackBar
         if (state.status is Error) {
           final message = (state.status as Error).errorMessage;
           if (message.isNotEmpty) {
-            Fluttertoast.showToast(msg: message);
+            showSnackBar(message: message);
           }
         } else if (state.status is Idle) {
           final message = (state.status as Idle).message;
           if (message != null && message.isNotEmpty) {
-            Fluttertoast.showToast(msg: message);
+            showSnackBar(message: message);
           }
         }
       },
