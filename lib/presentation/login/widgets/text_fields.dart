@@ -37,7 +37,7 @@ class PasswordField extends StatelessWidget {
             ),
             IconButton(
               icon: SvgPicture.asset(
-                (state.obscurePassword) ? AppAssets.eyeOn : AppAssets.eyeOff,
+                (state.obscurePassword) ? AppAssets.eyeOff : AppAssets.eyeOn,
                 color: state.isPasswordFocused
                     ? AppColors.primary
                     : AppColors.grey1,
