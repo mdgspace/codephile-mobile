@@ -60,7 +60,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   void _toggleDialog(ToggleDialog event, Emitter<LoginState> emit) async {
     if (event.email == null) {
-      emit(state.copyWith(showDialog: !state.showDialog));
+      emit(state.copyWith(
+        showDialog: !state.showDialog,
+        status: const Status(),
+      ));
     } else {
       if (event.email!.isEmpty) return;
       emit(state.copyWith(

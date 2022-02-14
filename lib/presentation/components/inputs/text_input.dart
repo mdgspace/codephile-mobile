@@ -54,6 +54,7 @@ class TextInput extends StatelessWidget {
       initialValue: controller == null ? initialValue : null,
       keyboardType: keyboard,
       maxLines: maxLines,
+      obscureText: obscureText,
       onChanged: onChanged,
       style: AppStyles.h6.copyWith(color: AppColors.grey3),
       textInputAction: action,

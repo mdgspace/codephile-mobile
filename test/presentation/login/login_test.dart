@@ -5,7 +5,7 @@ import 'package:codephile/presentation/login/bloc/login_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void blocTests() {
-  group('LoginBloc - ', () {
+  group('LoginBloc -', () {
     setUpAll(ApiService.init);
 
     test('emits correct initial state', () {
@@ -25,7 +25,7 @@ void blocTests() {
       );
     });
 
-    group('toggles - ', () {
+    group('toggles -', () {
       blocTest<LoginBloc, LoginState>(
         'obscure password',
         build: () => LoginBloc(),
@@ -51,7 +51,7 @@ void blocTests() {
       );
     });
 
-    group('text fields - ', () {
+    group('text fields -', () {
       blocTest<LoginBloc, LoginState>(
         'tracks focus correctly',
         build: () => LoginBloc(),
@@ -111,7 +111,7 @@ void blocTests() {
       expect(bloc.state.isLoginButtonActive(), false);
     });
 
-    group('forgot password dialog - ', () {
+    group('forgot password dialog -', () {
       blocTest<LoginBloc, LoginState>(
         'opens dialog',
         build: () => LoginBloc(),
@@ -144,7 +144,7 @@ void blocTests() {
       );
     });
 
-    group('submit - ', () {
+    group('submit -', () {
       blocTest<LoginBloc, LoginState>(
         'does nothing if fields are empty',
         build: () => LoginBloc(),
