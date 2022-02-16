@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../data/constants/assets.dart';
 import '../../../data/constants/colors.dart';
+import '../bloc/contests_bloc.dart';
 
 class ContestHeader extends StatelessWidget {
   const ContestHeader({Key? key}) : super(key: key);
@@ -22,7 +24,9 @@ class ContestHeader extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            context.read<ContestsBloc>().add(const UpdateFilter());
+          },
           icon: SvgPicture.asset(AppAssets.filter),
         ),
       ],

@@ -13,3 +13,10 @@ class FetchContests extends ContestsEvent {
   @override
   List<Object?> get props => [];
 }
+
+class UpdateFilter extends ContestsEvent {
+  const UpdateFilter();
+
+  @override
+  List<Object?> get props => [];
+}

@@ -14,6 +14,11 @@ class AppStyles {
     fontSize: 24.sp,
     fontWeight: FontWeight.w900,
   );
+  static final TextStyle h4 = TextStyle(
+    color: AppColors.primaryBlack,
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w500,
+  );
   static final TextStyle h5 = TextStyle(
     color: AppColors.white.withOpacity(0.85),
     fontSize: 16.sp,
@@ -39,6 +44,7 @@ class AppStyles {
     textTheme: TextTheme(
       headline1: h1,
       headline2: h2,
+      headline4: h4,
       headline5: h5,
       headline6: h6,
     ),

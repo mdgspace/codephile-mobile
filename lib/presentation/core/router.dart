@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../../data/constants/routes.dart';
-import '../home/bloc/home_bloc.dart';
 import '../home/home_screen.dart';
 import '../login/login_screen.dart';
 import '../onboarding/onboarding_screen.dart';
@@ -26,10 +24,7 @@ class AppRouter {
         );
       case AppRoutes.home:
         return GetPageRoute(
-          page: () => BlocProvider(
-            create: (context) => HomeBloc()..init(),
-            child: const HomeScreen(),
-          ),
+          page: () => const HomeScreen(),
           routeName: settings.name,
           settings: settings,
         );

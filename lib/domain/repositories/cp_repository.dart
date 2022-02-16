@@ -26,7 +26,7 @@ class CPRepository {
   }
 
   static Future<Contest?> contestList() async {
-    const endpoint = 'contest/';
+    const endpoint = 'contests/';
     final headers = <String, dynamic>{};
 
     ApiService.addTokenToHeaders(headers);
@@ -36,7 +36,7 @@ class CPRepository {
     );
 
     if (response['status_code'] == 200) {
-      return Contest.fromJson(json.decode(response['data']));
+      return Contest.fromJson(response['data']);
     }
     return null;
   }

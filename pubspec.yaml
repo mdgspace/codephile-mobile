@@ -25,6 +25,7 @@ dependencies:
   get: ^4.6.1
   hive_flutter: ^1.1.0
   hydrated_bloc: ^8.0.0
+  intl: ^0.17.0
   json_annotation: ^4.4.0
   sentry_flutter: ^6.2.2
 
@@ -43,4 +44,5 @@ flutter:
   assets:
     - assets/app/icons/
     - assets/app/images/
+    - assets/app/images/platforms/
     - assets/app/illustrations/

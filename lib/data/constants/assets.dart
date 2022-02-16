@@ -3,6 +3,7 @@ class AppAssets {
   static const String _iconsRoot = 'assets/app/icons';
   static const String _imagesRoot = 'assets/app/images';
   static const String _illustrationsRoot = 'assets/app/illustrations';
+  static const String _platformIconRoot = '$_imagesRoot/platforms';
 
   // Icons
   static const String arrowForward = '$_iconsRoot/arrow-forward.svg';
@@ -11,6 +12,8 @@ class AppAssets {
   static const String lock = '$_iconsRoot/lock.svg';
   static const String person = '$_iconsRoot/person.svg';
   static const String filter = '$_iconsRoot/filter.svg';
+  static const String bell = '$_iconsRoot/bell.svg';
+  static const String selectedBell = '$_iconsRoot/selected_bell.svg';
 
   // Images
   static const String circle1 = '$_imagesRoot/circle1.svg';
@@ -30,4 +33,12 @@ class AppAssets {
   static const String contest = '$_iconsRoot/contest.svg';
   static const String search = '$_iconsRoot/search.svg';
   static const String profile = '$_iconsRoot/profile.svg';
+
+  /// Platform Icons
+  static const String codechef = '$_platformIconRoot/codechef.png';
+  static const String codeforces = '$_platformIconRoot/codeforces.png';
+  static const String hackerRank = '$_platformIconRoot/hacker_rank.png';
+  static const String hackerEarth = '$_platformIconRoot/hacker_earth.png';
+  static const String spoj = '$_platformIconRoot/spoj.png';
+  static const String otherPlatform = '$_platformIconRoot/other_platform.jpg';
 }

@@ -22,7 +22,7 @@ class Ongoing with _$Ongoing {
     @JsonKey(name: 'Name') required String name,
     @JsonKey(name: 'Platform') required String platform,
     required String url,
-    @JsonKey(name: 'challenge_type') required String challengeType,
+    @JsonKey(name: 'challenge_type') String? challengeType,
   }) = _Ongoing;
 
   factory Ongoing.fromJson(Map<String, dynamic> json) =>
@@ -37,8 +37,8 @@ class Upcoming with _$Upcoming {
     @JsonKey(name: 'Name') required String name,
     @JsonKey(name: 'Platform') required String platform,
     required String url,
-    @JsonKey(name: 'challenge_type') required String challengeType,
-    String? duration,
+    @JsonKey(name: 'challenge_type') String? challengeType,
+    @JsonKey(name: 'Duration') String? duration,
   }) = _Upcoming;
 
   factory Upcoming.fromJson(Map<String, dynamic> json) =>
