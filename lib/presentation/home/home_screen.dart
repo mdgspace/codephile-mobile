@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/constants/assets.dart';
 import '../../data/constants/colors.dart';
+import '../contests/widgets/contest_header.dart';
 import 'bloc/home_bloc.dart';
 import 'widgets/nav_bar_item.dart';
 
@@ -15,6 +16,12 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
+            appBar: state.selectedIndex == 1
+                ? const PreferredSize(
+                    preferredSize: Size.fromHeight(kToolbarHeight),
+                    child: ContestHeader(),
+                  )
+                : null,
             body: state.screen,
             bottomNavigationBar: Container(
               decoration: const BoxDecoration(

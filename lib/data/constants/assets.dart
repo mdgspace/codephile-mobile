@@ -10,11 +10,13 @@ class AppAssets {
   static const String eyeOff = '$_iconsRoot/eye-off.svg';
   static const String lock = '$_iconsRoot/lock.svg';
   static const String person = '$_iconsRoot/person.svg';
+  static const String filter = '$_iconsRoot/filter.svg';
 
   // Images
   static const String circle1 = '$_imagesRoot/circle1.svg';
   static const String circle2 = '$_imagesRoot/circle2.svg';
   static const String triangle = '$_imagesRoot/triangle.svg';
+  static const String emptyState = '$_imagesRoot/empty_feed.svg';
 
   // Illustrations
   static const String contestCardIllustration =
