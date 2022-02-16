@@ -22,4 +22,10 @@ class AppAssets {
   static const String feedCardIllustration =
       '$_illustrationsRoot/feed_card.png';
   static const String profileIllustration = '$_illustrationsRoot/profile.png';
+
+  /// BottomNavigationBar Icons
+  static const String feed = '$_iconsRoot/feed.svg';
+  static const String contest = '$_iconsRoot/contest.svg';
+  static const String search = '$_iconsRoot/search.svg';
+  static const String profile = '$_iconsRoot/profile.svg';
 }
