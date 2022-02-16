@@ -16,6 +16,9 @@ class TextInput extends StatelessWidget {
     this.obscureText = false,
     this.onChanged,
     this.prefix,
+    this.suffix,
+    this.isFilled,
+    this.fillColor,
     Key? key,
   })  : assert(
           controller != null || onChanged != null,
@@ -32,6 +35,9 @@ class TextInput extends StatelessWidget {
   final TextInputType? keyboard;
   final TextEditingController? controller;
   final Widget? prefix;
+  final Widget? suffix;
+  final bool? isFilled;
+  final Color? fillColor;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +47,7 @@ class TextInput extends StatelessWidget {
         hintText: hint,
         hintStyle: AppStyles.h6,
         prefixIcon: prefix,
+        suffixIcon: suffix,
         border: const OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.primary),
         ),
@@ -50,6 +57,8 @@ class TextInput extends StatelessWidget {
             width: 1.5,
           ),
         ),
+        filled: isFilled,
+        fillColor: fillColor,
       ),
       initialValue: controller == null ? initialValue : null,
       keyboardType: keyboard,
