@@ -4,7 +4,7 @@ part of 'contests_bloc.dart';
 class ContestsState with _$ContestsState {
   const factory ContestsState({
     @Default(true) bool isLoading,
-    Contest? contest,
+    @Default([]) List contests,
   }) = _ContestsState;
 
   const ContestsState._();

@@ -14,6 +14,7 @@ class AppAssets {
   static const String filter = '$_iconsRoot/filter.svg';
   static const String bell = '$_iconsRoot/bell.svg';
   static const String selectedBell = '$_iconsRoot/selected_bell.svg';
+  static const String clock = '$_iconsRoot/clock.svg';
 
   // Images
   static const String circle1 = '$_imagesRoot/circle1.svg';
