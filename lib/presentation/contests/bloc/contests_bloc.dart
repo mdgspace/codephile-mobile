@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -16,6 +18,7 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
   ContestsBloc() : super(const ContestsState()) {
     on<FetchContests>(_fetchContests);
     on<UpdateFilter>(_updateFilter);
+    on<FilterButton>(_filterButton);
   }
 
   void _fetchContests(FetchContests event, Emitter<ContestsState> emit) async {
@@ -24,10 +27,28 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
     _upcoming = [...?contest?.upcoming];
     applyFilter();
     final contests = [..._filteredUpcoming, ..._filteredOngoing];
-    emit(state.copyWith(contests: contests, isLoading: false));
+    emit(state.copyWith(
+      contests: contests,
+      isLoading: false,
+      filter: _filter,
+    ));
   }
 
-  void _updateFilter(UpdateFilter event, Emitter<ContestsState> emit) {}
+  void _filterButton(FilterButton event, Emitter<ContestsState> emit) {
+    _updatedfilter = _filter;
+
+    emit(state.copyWith(duration: _updatedfilter?.duration));
+  }
+
+  void _updateFilter(UpdateFilter event, Emitter<ContestsState> emit) {
+    if (event.updatedFilter != null) _updatedfilter = event.updatedFilter;
+    emit(
+      state.copyWith(
+        duration: event.duration ?? _updatedfilter?.duration,
+        filter: event.updatedFilter ?? _updatedfilter,
+      ),
+    );
+  }
 
   void applyFilter() {
     _filteredOngoing = [];
@@ -53,7 +74,7 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
     }
   }
 
-  ContestFilter? _filter;
+  ContestFilter? _filter, _updatedfilter;
   List<Ongoing> _ongoing = [], _filteredOngoing = [];
   List<Upcoming> _upcoming = [], _filteredUpcoming = [];
 
@@ -70,7 +91,13 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
     }
 
     _filter = StorageService.filter;
+    _updatedfilter = _filter;
     add(const FetchContests());
+  }
+
+  void saveFilter() {
+    log('save filter is called');
+    _filter = _updatedfilter;
   }
 }
 

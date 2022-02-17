@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../../domain/models/contest_filter.dart';
 import '../../../domain/models/user.dart';
 import '../../constants/strings.dart';
 
@@ -66,4 +67,16 @@ class StorageService {
       _set<String?>(AppStrings.userKey, null);
     }
   }
+
+  static ContestFilter? get filter {
+    try {
+      return ContestFilter.fromJson(
+          json.decode(_get<String>(AppStrings.filterKey)!));
+    } on Exception catch (_) {
+      return null;
+    }
+  }
+
+  static set filter(ContestFilter? _filter) =>
+      _set(AppStrings.filterKey, json.encode(_filter!.toJson()));
 }

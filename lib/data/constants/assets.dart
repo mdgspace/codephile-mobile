@@ -15,6 +15,8 @@ class AppAssets {
   static const String bell = '$_iconsRoot/bell.svg';
   static const String selectedBell = '$_iconsRoot/selected_bell.svg';
   static const String clock = '$_iconsRoot/clock.svg';
+  static const String trueRadioButton = '$_iconsRoot/true_radio_button.svg';
+  static const String falseRadioButton = '$_iconsRoot/false_radio_button.svg';
 
   // Images
   static const String circle1 = '$_imagesRoot/circle1.svg';

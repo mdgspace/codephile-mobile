@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../data/constants/assets.dart';
 import '../../../data/constants/colors.dart';
 import '../bloc/contests_bloc.dart';
+import 'filter_sheet.dart';
 
 class ContestHeader extends StatelessWidget {
   const ContestHeader({Key? key}) : super(key: key);
@@ -25,7 +26,14 @@ class ContestHeader extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {
-            context.read<ContestsBloc>().add(const UpdateFilter());
+            final bloc = context.read<ContestsBloc>()
+              ..add(const FilterButton());
+            showModalBottomSheet(
+              context: context,
+              builder: (_) {
+                return FilterSheet(bloc: bloc);
+              },
+            );
           },
           icon: SvgPicture.asset(AppAssets.filter),
         ),

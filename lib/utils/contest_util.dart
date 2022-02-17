@@ -30,4 +30,25 @@ class ContestUtil {
         return 'Other';
     }
   }
+
+  static String getLabel(int? value) {
+    switch (value) {
+      case 0:
+        return '2 hours';
+      case 1:
+        return '3 hours';
+      case 2:
+        return '5 hours';
+      case 3:
+        return '1 day';
+      case 4:
+        return '10 days';
+      case 5:
+        return '1 month';
+      case 6:
+        return '∞';
+      default:
+        return '10 days';
+    }
+  }
 }

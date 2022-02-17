@@ -14,9 +14,21 @@ class FetchContests extends ContestsEvent {
   List<Object?> get props => [];
 }
 
-class UpdateFilter extends ContestsEvent {
-  const UpdateFilter();
+class FilterButton extends ContestsEvent {
+  const FilterButton();
 
   @override
   List<Object?> get props => [];
+}
+
+class UpdateFilter extends ContestsEvent {
+  const UpdateFilter({
+    this.duration,
+    this.updatedFilter,
+  });
+  final int? duration;
+  final ContestFilter? updatedFilter;
+
+  @override
+  List<Object?> get props => [updatedFilter, duration];
 }
