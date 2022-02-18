@@ -32,3 +32,7 @@ class UpdateFilter extends ContestsEvent {
   @override
   List<Object?> get props => [updatedFilter, duration];
 }
+
+class UpdateContestsList extends ContestsEvent {
+  const UpdateContestsList();
+}

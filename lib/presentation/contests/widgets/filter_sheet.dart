@@ -57,7 +57,7 @@ class FilterSheet extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  color: const Color(0xFFF3F4F7),
+                  color: AppColors.grey7,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -73,7 +73,7 @@ class FilterSheet extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           context.read<ContestsBloc>().saveFilter();
-                          Get.back();
+                          Get.back(result: true);
                         },
                         child: Text(
                           'Apply',
@@ -105,7 +105,7 @@ class FilterSheet extends StatelessWidget {
                         return _buildPlatfromIcon(
                           platfromIcons[index],
                           () {
-                            final updatedPlatform = state.filter!.platform!;
+                            final updatedPlatform = state.filter!.platform;
                             updatedPlatform[index] = !updatedPlatform[index];
                             context.read<ContestsBloc>().add(
                                   UpdateFilter(
@@ -115,7 +115,7 @@ class FilterSheet extends StatelessWidget {
                                   ),
                                 );
                           },
-                          state.filter!.platform![index],
+                          state.filter!.platform[index],
                         );
                       },
                     ),
@@ -183,11 +183,17 @@ class FilterSheet extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {},
-                      child: Padding(
+                GestureDetector(
+                  onTap: () {
+                    final ongoing = state.filter!.ongoing!;
+                    context.read<ContestsBloc>().add(UpdateFilter(
+                            updatedFilter: state.filter!.copyWith(
+                          ongoing: !ongoing,
+                        )));
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
                         padding: const EdgeInsets.fromLTRB(25, 10, 15, 10),
                         child: SvgPicture.asset(
                           state.filter!.ongoing!
@@ -197,74 +203,85 @@ class FilterSheet extends StatelessWidget {
                           width: 28,
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: const Text(
+                      const Text(
                         'Ongoing',
                         style: TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-                Row(
-                  children: <Widget>[
-                    GestureDetector(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(25, 10, 15, 10),
-                          child: SvgPicture.asset(
-                            state.filter!.upcoming!
-                                ? AppAssets.trueRadioButton
-                                : AppAssets.falseRadioButton,
-                            height: 28,
-                            width: 28,
-                          ),
-                        )),
-                    GestureDetector(
-                        onTap: () {},
-                        child: const Text(
-                          'Upcoming',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        )),
-                    TextButton(
-                      onPressed: () async {
-                        showDatePicker(
-                          builder: (BuildContext context, Widget? child) {
-                            return Theme(
-                              data: Theme.of(context).copyWith(
-                                colorScheme: const ColorScheme.light().copyWith(
-                                  primary: AppColors.primary,
-                                ),
-                              ),
-                              child: child!,
-                            );
-                          },
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2020),
-                          lastDate: DateTime(2025),
-                        ).then((val) {});
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 15),
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          (state.filter!.startDate != null)
-                              ? DateFormat('d MMMM, yyyy')
-                                  .format(state.filter!.startDate!)
-                              : 'Select Date',
+                GestureDetector(
+                  onTap: () {
+                    final upcoming = state.filter!.upcoming!;
+                    context.read<ContestsBloc>().add(UpdateFilter(
+                            updatedFilter: state.filter!.copyWith(
+                          upcoming: !upcoming,
+                          startDate: !upcoming ? DateTime.now() : null,
+                        )));
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(25, 10, 15, 10),
+                        child: SvgPicture.asset(
+                          state.filter!.upcoming!
+                              ? AppAssets.trueRadioButton
+                              : AppAssets.falseRadioButton,
+                          height: 28,
+                          width: 28,
                         ),
                       ),
-                    ),
-                  ],
+                      const Text(
+                        'Upcoming',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          showDatePicker(
+                            builder: (BuildContext context, Widget? child) {
+                              return Theme(
+                                data: Theme.of(context).copyWith(
+                                  colorScheme:
+                                      const ColorScheme.light().copyWith(
+                                    primary: AppColors.primary,
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            },
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime(2025),
+                          ).then((val) {
+                            context.read<ContestsBloc>().add(UpdateFilter(
+                                  updatedFilter: state.filter!.copyWith(
+                                    upcoming: true,
+                                    startDate: val ??= DateTime.now(),
+                                  ),
+                                ));
+                          });
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 15),
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            (state.filter!.startDate != null)
+                                ? DateFormat('d MMMM, yyyy')
+                                    .format(state.filter!.startDate!)
+                                : 'Select Date',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

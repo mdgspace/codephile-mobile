@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -19,6 +17,7 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
     on<FetchContests>(_fetchContests);
     on<UpdateFilter>(_updateFilter);
     on<FilterButton>(_filterButton);
+    on<UpdateContestsList>(_updateContestsList);
   }
 
   void _fetchContests(FetchContests event, Emitter<ContestsState> emit) async {
@@ -35,19 +34,35 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
   }
 
   void _filterButton(FilterButton event, Emitter<ContestsState> emit) {
-    _updatedfilter = _filter;
+    _filter = StorageService.filter;
 
-    emit(state.copyWith(duration: _updatedfilter?.duration));
+    emit(state.copyWith(
+      duration: _filter?.duration,
+      filter: _filter,
+      updateIdx: state.updateIdx + 1,
+    ));
   }
 
   void _updateFilter(UpdateFilter event, Emitter<ContestsState> emit) {
-    if (event.updatedFilter != null) _updatedfilter = event.updatedFilter;
+    _filter = event.updatedFilter ?? _filter;
     emit(
       state.copyWith(
-        duration: event.duration ?? _updatedfilter?.duration,
-        filter: event.updatedFilter ?? _updatedfilter,
+        duration: event.duration ?? _filter?.duration,
+        filter: event.updatedFilter ?? _filter,
+        updateIdx: state.updateIdx + 1,
       ),
     );
+  }
+
+  void _updateContestsList(
+    UpdateContestsList event,
+    Emitter<ContestsState> emit,
+  ) {
+    applyFilter();
+    final contests = [..._filteredUpcoming, ..._filteredOngoing];
+    emit(state.copyWith(
+      contests: contests,
+    ));
   }
 
   void applyFilter() {
@@ -74,7 +89,7 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
     }
   }
 
-  ContestFilter? _filter, _updatedfilter;
+  ContestFilter? _filter;
   List<Ongoing> _ongoing = [], _filteredOngoing = [];
   List<Upcoming> _upcoming = [], _filteredUpcoming = [];
 
@@ -83,7 +98,7 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
     if (!exists) {
       StorageService.filter = ContestFilter(
         duration: 4,
-        platform: [true, true, true, true, false],
+        platform: const [true, true, true, true, false],
         startDate: DateTime.now(),
         ongoing: true,
         upcoming: true,
@@ -91,13 +106,12 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
     }
 
     _filter = StorageService.filter;
-    _updatedfilter = _filter;
     add(const FetchContests());
   }
 
   void saveFilter() {
-    log('save filter is called');
-    _filter = _updatedfilter;
+    StorageService.filter = _filter;
+    add(const UpdateContestsList());
   }
 }
 
@@ -105,15 +119,15 @@ extension on ContestFilter {
   bool checkPlatform(String platformName) {
     switch (platformName.toLowerCase()) {
       case 'codechef':
-        return platform?[0] ?? false;
+        return platform[0];
       case 'codeforces':
-        return platform?[1] ?? false;
+        return platform[1];
       case 'hackerearth':
-        return platform?[2] ?? false;
+        return platform[2];
       case 'hackerrank':
-        return platform?[3] ?? false;
+        return platform[3];
       default:
-        return platform?[4] ?? false;
+        return platform[4];
     }
   }
 
