@@ -19,11 +19,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   late final List<Widget> screens;
 
   void init() {
-    screens = const <Widget>[
-      FeedScreen(),
-      ContestsScreen(),
+    screens = <Widget>[
+      const FeedScreen(),
+      const ContestsScreen(),
       SearchScreen(),
-      ProfileScreen(),
+      const ProfileScreen(),
     ];
   }
 

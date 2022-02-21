@@ -4,6 +4,7 @@ class AppStrings {
   static const String authTokenKey = 'auth_token';
   static const String userKey = 'user';
   static const String filterKey = 'filter';
+  static const String recentSearchKey = 'recent_search';
 
   // Error
   static const String genericError = 'Something went wrong';

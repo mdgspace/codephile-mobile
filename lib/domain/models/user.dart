@@ -11,7 +11,7 @@ part 'user.g.dart';
 class User with _$User {
   factory User({
     required String fullname,
-    required String email,
+    String? email,
     Handle? handle,
     String? id,
     String? institute,

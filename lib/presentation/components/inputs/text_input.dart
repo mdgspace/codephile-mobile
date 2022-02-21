@@ -19,6 +19,8 @@ class TextInput extends StatelessWidget {
     this.suffix,
     this.isFilled,
     this.fillColor,
+    this.border,
+    this.onSubmitted,
     Key? key,
   })  : assert(
           controller != null || onChanged != null,
@@ -31,6 +33,7 @@ class TextInput extends StatelessWidget {
   final String initialValue;
   final String hint;
   final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
   final TextInputAction action;
   final TextInputType? keyboard;
   final TextEditingController? controller;
@@ -38,6 +41,7 @@ class TextInput extends StatelessWidget {
   final Widget? suffix;
   final bool? isFilled;
   final Color? fillColor;
+  final InputBorder? border;
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +52,12 @@ class TextInput extends StatelessWidget {
         hintStyle: AppStyles.h6,
         prefixIcon: prefix,
         suffixIcon: suffix,
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primary),
-        ),
+        border: border ??
+            const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primary,
+              ),
+            ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColors.primary,
@@ -67,6 +74,7 @@ class TextInput extends StatelessWidget {
       onChanged: onChanged,
       style: AppStyles.h6.copyWith(color: AppColors.grey3),
       textInputAction: action,
+      onFieldSubmitted: onSubmitted,
     );
   }
 }

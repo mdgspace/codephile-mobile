@@ -77,6 +77,26 @@ class StorageService {
     }
   }
 
+  /// recent searches
+  static List<User>? get recentSearches {
+    try {
+      return List<User>.from(json
+          .decode(_get<String>(AppStrings.recentSearchKey)!)
+          .map((e) => User.fromJson(e)));
+    } on Exception catch (_) {
+      return null;
+    }
+  }
+
+  static set recentSearches(List<User>? users) {
+    try {
+      _set<String>(AppStrings.recentSearchKey,
+          json.encode(users!.map((user) => user.toJson()).toList()));
+    } on Exception catch (_) {
+      _set<String?>(AppStrings.recentSearchKey, null);
+    }
+  }
+
   static set filter(ContestFilter? _filter) =>
       _set(AppStrings.filterKey, json.encode(_filter!.toJson()));
 }
