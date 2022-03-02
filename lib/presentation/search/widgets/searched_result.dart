@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/styles.dart';
+import '../../../utils/user_util.dart';
 import '../bloc/search_bloc.dart';
 
 class SearchedResult extends StatelessWidget {
@@ -37,7 +38,9 @@ class SearchedResult extends StatelessWidget {
                 width: 35.r,
                 child: CachedNetworkImage(
                   cacheKey: result.id,
-                  imageUrl: result.picture!,
+                  imageUrl: (result.picture ?? '').isEmpty
+                      ? UserUtil.picture
+                      : result.picture!,
                   errorWidget: (context, url, error) =>
                       const CircularProgressIndicator(),
                 ),

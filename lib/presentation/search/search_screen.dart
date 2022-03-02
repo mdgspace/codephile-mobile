@@ -10,8 +10,7 @@ import 'widgets/recent_searches.dart';
 import 'widgets/searched_result.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({Key? key}) : super(key: key);
-  final TextEditingController _controller = TextEditingController();
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class SearchScreen extends StatelessWidget {
                       context.read<SearchBloc>().add(const Reset());
                     }
                   },
-                  controller: _controller,
+                  controller: context.read<SearchBloc>().controller,
                   onSubmitted: (val) {
                     final res = val.trim();
                     if (res.isEmpty) return;
@@ -70,7 +69,7 @@ class SearchScreen extends StatelessWidget {
                           color: AppColors.grey6,
                         ),
                         onPressed: () {
-                          _controller.clear();
+                          context.read<SearchBloc>().controller.clear();
                           if (state.showSearches) {
                             context.read<SearchBloc>().add(const Reset());
                           }

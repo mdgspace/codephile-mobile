@@ -22,7 +22,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     screens = <Widget>[
       const FeedScreen(),
       const ContestsScreen(),
-      SearchScreen(),
+      const SearchScreen(),
       const ProfileScreen(),
     ];
   }
