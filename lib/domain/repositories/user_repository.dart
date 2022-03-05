@@ -196,7 +196,7 @@ class UserRepository {
 
     final _users = <User>[];
     if (response['status_code'] == 200) {
-      for (final user in json.decode(response['data']) ?? []) {
+      for (final user in response['data'] ?? []) {
         _users.add(User.fromJson(user));
       }
     }
@@ -216,9 +216,7 @@ class UserRepository {
     );
 
     if (response['status_code'] == 200) {
-      return List<String>.from(
-        json.decode(response['data']).map((e) => e),
-      );
+      return List<String>.from(response['data']);
     }
 
     return [];

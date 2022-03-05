@@ -16,6 +16,11 @@ class TextInput extends StatelessWidget {
     this.obscureText = false,
     this.onChanged,
     this.prefix,
+    this.suffix,
+    this.isFilled,
+    this.fillColor,
+    this.border,
+    this.onSubmitted,
     Key? key,
   })  : assert(
           controller != null || onChanged != null,
@@ -28,10 +33,15 @@ class TextInput extends StatelessWidget {
   final String initialValue;
   final String hint;
   final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
   final TextInputAction action;
   final TextInputType? keyboard;
   final TextEditingController? controller;
   final Widget? prefix;
+  final Widget? suffix;
+  final bool? isFilled;
+  final Color? fillColor;
+  final InputBorder? border;
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +51,21 @@ class TextInput extends StatelessWidget {
         hintText: hint,
         hintStyle: AppStyles.h6,
         prefixIcon: prefix,
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primary),
-        ),
+        suffixIcon: suffix,
+        border: border ??
+            const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primary,
+              ),
+            ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColors.primary,
             width: 1.5,
           ),
         ),
+        filled: isFilled,
+        fillColor: fillColor,
       ),
       initialValue: controller == null ? initialValue : null,
       keyboardType: keyboard,
@@ -58,6 +74,7 @@ class TextInput extends StatelessWidget {
       onChanged: onChanged,
       style: AppStyles.h6.copyWith(color: AppColors.grey3),
       textInputAction: action,
+      onFieldSubmitted: onSubmitted,
     );
   }
 }

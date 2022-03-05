@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../data/constants/routes.dart';
+import '../home/home_screen.dart';
 import '../login/login_screen.dart';
 import '../onboarding/onboarding_screen.dart';
 
@@ -18,6 +19,12 @@ class AppRouter {
       case AppRoutes.onboarding:
         return GetPageRoute(
           page: () => OnboardingScreen(),
+          routeName: settings.name,
+          settings: settings,
+        );
+      case AppRoutes.home:
+        return GetPageRoute(
+          page: () => const HomeScreen(),
           routeName: settings.name,
           settings: settings,
         );
