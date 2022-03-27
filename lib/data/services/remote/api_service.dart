@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -112,6 +113,41 @@ class ApiService {
       rethrow;
     }
     log('[API] [PUT] << received ${response.statusCode} from $endpoint');
+    return {
+      'status_code': response.statusCode ?? 0,
+      'data': response.data ?? 'null',
+    };
+  }
+
+  /// Safe method to upload file(s) using PUT request to an endpoint **below** [Environment.baseUrl].
+  static Future<Map<String, dynamic>> putLarge(
+    String endpoint, {
+    required File file,
+    Map<String, dynamic>? headers,
+    bool shouldVerify = true,
+  }) async {
+    log('[API] [PUT_LARGE] >> $endpoint');
+    Response? response;
+    try {
+      response = await _channel.put(
+        Environment.baseUrl + endpoint,
+        data: FormData.fromMap({
+          'image': await MultipartFile.fromFile(file.path),
+        }),
+        options: Options(
+          validateStatus: shouldVerify ? _validateStrict : _validateLoose,
+          headers: headers,
+        ),
+      );
+    } on Exception catch (exception, stacktrace) {
+      debugPrint(
+        'ERROR: Failed during a PUT request.\n'
+        'Endpoint: $endpoint\nFile: ${file.path}\n'
+        'Exception: $exception\nStacktrace: $stacktrace',
+      );
+      rethrow;
+    }
+    log('[API] [PUT_LARGE] << received ${response.statusCode} from $endpoint');
     return {
       'status_code': response.statusCode ?? 0,
       'data': response.data ?? 'null',

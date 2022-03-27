@@ -60,7 +60,7 @@ void showForgotPasswordDialog(BuildContext context) async {
               EdgeInsets.only(right: 10.r),
             ),
           ),
-          onPressed: () async => Get.back(result: controller.text),
+          onPressed: () => Get.back(result: controller.text),
           child: Container(
             color: AppColors.primary,
             padding: EdgeInsets.symmetric(horizontal: 40.r, vertical: 10.r),

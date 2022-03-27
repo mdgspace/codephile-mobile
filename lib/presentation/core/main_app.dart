@@ -5,6 +5,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../data/constants/routes.dart';
 import '../../data/constants/styles.dart';
+import '../../data/services/local/image_service.dart';
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
 import 'navigation_observer.dart';
@@ -27,8 +28,7 @@ class Codephile extends StatelessWidget {
             );
           },
           debugShowCheckedModeBanner: false,
-          // TODO(developers): Update this with the screen you're testing.
-          initialRoute: AppRoutes.splash,
+          initialRoute: AppRoutes.signUp,
           navigatorObservers: <NavigatorObserver>[
             SentryNavigatorObserver(),
             AppNavigationObserver(),
@@ -43,6 +43,7 @@ class Codephile extends StatelessWidget {
 
   static Future<Widget> run() async {
     ApiService.init();
+    ImageService.init();
     StorageService.init();
 
     return const Codephile();

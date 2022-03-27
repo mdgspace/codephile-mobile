@@ -15,7 +15,7 @@ class AppStyles {
     fontWeight: FontWeight.w900,
   );
   static final TextStyle h4 = TextStyle(
-    color: AppColors.primaryBlack,
+    color: AppColors.grey3,
     fontSize: 18.sp,
     fontWeight: FontWeight.w500,
   );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/styles.dart';
@@ -10,6 +11,7 @@ class TextInput extends StatelessWidget {
     required this.hint,
     this.action = TextInputAction.next,
     this.controller,
+    this.errorText,
     this.initialValue = '',
     this.keyboard,
     this.maxLines = 1,
@@ -21,6 +23,7 @@ class TextInput extends StatelessWidget {
     this.fillColor,
     this.border,
     this.onSubmitted,
+    this.prefixIconConstraints,
     Key? key,
   })  : assert(
           controller != null || onChanged != null,
@@ -32,6 +35,7 @@ class TextInput extends StatelessWidget {
   final int maxLines;
   final String initialValue;
   final String hint;
+  final String? errorText;
   final Function(String)? onChanged;
   final Function(String)? onSubmitted;
   final TextInputAction action;
@@ -42,22 +46,24 @@ class TextInput extends StatelessWidget {
   final bool? isFilled;
   final Color? fillColor;
   final InputBorder? border;
+  final BoxConstraints? prefixIconConstraints;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
+        errorText: errorText,
         hintText: hint,
         hintStyle: AppStyles.h6,
         prefixIcon: prefix,
         suffixIcon: suffix,
         border: border ??
-            const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primary,
-              ),
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(2.r),
+              borderSide: const BorderSide(color: AppColors.primary),
             ),
+        prefixIconConstraints: prefixIconConstraints,
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColors.primary,
