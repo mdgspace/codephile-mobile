@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_escapes
+
 import '../data/constants/assets.dart';
 
 class ContestUtil {
@@ -50,5 +52,16 @@ class ContestUtil {
       default:
         return '10 days';
     }
+  }
+
+  static String getPlatformNamefromUrl(String? url) {
+    if (url == null) return '';
+
+    final regExp =
+        RegExp('^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)');
+
+    final match = regExp.firstMatch(url);
+
+    return match?[1]?.split('.').first ?? '';
   }
 }

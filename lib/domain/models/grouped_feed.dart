@@ -7,7 +7,7 @@ part 'grouped_feed.g.dart';
 class GroupedFeed with _$GroupedFeed {
   factory GroupedFeed({
     required String username,
-    required String userId,
+    @JsonKey(name: 'user_id') required String userId,
     String? fullname,
     String? picture,
     String? name,

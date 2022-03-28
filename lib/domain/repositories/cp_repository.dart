@@ -53,8 +53,13 @@ class CPRepository {
     );
 
     if (response['status_code'] == 200) {
+      if (response['data'].runtimeType == String &&
+          response['data'] == 'null') {
+        return null;
+      }
+
       return List<Feed>.from(
-        json.decode(response['data']).map((e) => Feed.fromJson(e)),
+        response['data'].map((e) => Feed.fromJson(e)),
       );
     }
     return null;
