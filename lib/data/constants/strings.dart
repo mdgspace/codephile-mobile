@@ -2,6 +2,7 @@ class AppStrings {
   // Storage
   static const String hiveBoxName = 'app_box';
   static const String authTokenKey = 'auth_token';
+  static const String newUser = 'new_user';
   static const String userKey = 'user';
   static const String filterKey = 'filter';
   static const String recentSearchKey = 'recent_search';

@@ -28,7 +28,7 @@ class Codephile extends StatelessWidget {
             );
           },
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.signUp,
+          initialRoute: AppRoutes.onboarding,
           navigatorObservers: <NavigatorObserver>[
             SentryNavigatorObserver(),
             AppNavigationObserver(),

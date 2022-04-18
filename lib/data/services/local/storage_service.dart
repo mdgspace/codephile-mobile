@@ -48,10 +48,16 @@ class StorageService {
   static set authToken(String? token) =>
       _set<String>(AppStrings.authTokenKey, token);
 
+  /// Whether the user is opening the app for the first time.
+  static bool get newUser => _get<bool>(AppStrings.newUser) ?? true;
+
+  /// Whether the user is opening the app for the first time.
+  static set newUser(bool token) => _set<bool>(AppStrings.newUser, token);
+
   /// Currently logged in user.
   static User? get user {
     try {
-      return User.fromJson(json.decode(_get<String>(AppStrings.userKey)!));
+      return User.fromJson(json.decode(_get<String>(AppStrings.userKey) ?? ''));
     } on Exception catch (_) {
       // This just means that the user has not been stored previously.
       return null;

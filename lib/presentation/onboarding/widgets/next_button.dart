@@ -14,7 +14,8 @@ class NextButton extends StatelessWidget {
       backgroundColor: AppColors.white,
       onPressed: () {
         if (pageIndex == pages.length - 1) {
-          Get.offNamed(AppRoutes.home);
+          StorageService.newUser = false;
+          decideNextScreen();
         } else {
           pageIndex = (pageIndex + 1) % pages.length;
           nextPage();
