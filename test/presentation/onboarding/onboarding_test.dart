@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:codephile/presentation/home/home_screen.dart';
 import 'package:codephile/presentation/onboarding/onboarding_screen.dart';
 import 'package:codephile/presentation/onboarding/widgets/onboarding_widgets.dart';
 import 'package:flutter/material.dart';
@@ -64,8 +65,7 @@ void widgetTests() {
         await tester.pumpAndSettle();
       }
 
-      // TODO(BURG3R5): Uncomment the next line when a HomeScreen widget has been created.
-      // expect(find.byType(HomeScreen), findsOneWidget);
+      expect(find.byType(HomeScreen), findsOneWidget);
     });
   });
 }

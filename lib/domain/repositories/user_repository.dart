@@ -4,7 +4,7 @@ import 'dart:io';
 import '../../data/config/config.dart';
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
-import '../../utils/auth_token.dart' as utils;
+import '../../utils/auth_token.dart' as auth_token_utils;
 import '../../utils/failures.dart';
 import '../models/following.dart';
 import '../models/sign_up.dart';
@@ -50,14 +50,15 @@ class UserRepository {
       shouldVerify: false,
     );
 
-    if (response['status_code'] == 201) {
-      return json.decode(response['data'])['id'];
-    } else if (response['status_code'] == 400) {
-      throw const FormatFailure();
-    } else if (response['status_code'] == 409) {
-      throw const AlreadyExistsFailure();
-    } else {
-      throw const InternalFailure();
+    switch (response['status_code']) {
+      case 201:
+        return json.decode(response['data'])['id'];
+      case 400:
+        throw const IncorrectFormat();
+      case 409:
+        throw const SimilarUserExists();
+      default:
+        throw const InternalFailure();
     }
   }
 
@@ -77,7 +78,7 @@ class UserRepository {
   }
 
   /// Logs in the user.
-  static Future<String?> login({
+  static Future<void> login({
     required String username,
     required String password,
     required bool rememberMe,
@@ -95,18 +96,20 @@ class UserRepository {
 
     switch (response['status_code']) {
       case 200:
-        utils.setAuthToken(
+        auth_token_utils.setAuthToken(
           response['data']['token'],
           shouldPersist: rememberMe,
         );
         StorageService.user = await fetchUserDetails();
-        return 'Success';
+        return;
+      case 400:
+        throw const IncorrectFormat();
       case 401:
-        return 'Unauthorized';
+        throw const IncorrectCredentials();
       case 403:
-        return 'Unverified';
+        throw const UnverifiedEmail();
       default:
-        return null;
+        throw const InternalFailure();
     }
   }
 
@@ -133,7 +136,7 @@ class UserRepository {
   }
 
   /// Requests a password reset.
-  static Future<bool?> resetPassword(String email) async {
+  static Future<void> resetPassword(String email) async {
     const endpoint = 'user/password-reset-email';
 
     final response = await ApiService.post(
@@ -141,14 +144,13 @@ class UserRepository {
       data: {'email': email},
     );
 
-    // Tri-state is just to ensure that internal server errors show up differently.
     switch (response['status_code']) {
       case 200:
-        return true;
+        return;
       case 403:
-        return false;
+        throw const EmailNotFound();
       default:
-        return null;
+        throw const InternalFailure();
     }
   }
 

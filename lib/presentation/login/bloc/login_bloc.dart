@@ -7,6 +7,7 @@ import '../../../data/constants/routes.dart';
 import '../../../data/constants/strings.dart';
 import '../../../domain/models/status.dart';
 import '../../../domain/repositories/user_repository.dart';
+import '../../../utils/failures.dart';
 
 part 'login_bloc.freezed.dart';
 part 'login_event.dart';
@@ -33,28 +34,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       status: const Status.loading(),
     ));
 
-    final result = await UserRepository.login(
-      username: state.username,
-      password: state.password,
-      rememberMe: state.rememberMe,
-    );
-
-    if (result == 'Success') {
+    try {
+      await UserRepository.login(
+        username: state.username,
+        password: state.password,
+        rememberMe: state.rememberMe,
+      );
       Get.offNamed(AppRoutes.home);
-    } else {
-      if (result == 'Unverified') {
-        emit(state.copyWith(
-          status: const Status.error(AppStrings.verifyFirst),
-        ));
-      } else if (result == 'Unauthorized') {
-        emit(state.copyWith(
-          status: const Status.error(AppStrings.incorrectCredentials),
-        ));
-      } else {
-        emit(state.copyWith(
-          status: const Status.error(AppStrings.genericError),
-        ));
-      }
+    } on Failure catch (failure) {
+      emit(state.copyWith(status: Status.error(failure.message)));
+      // Reset status after three seconds.
+      await Future.delayed(const Duration(seconds: 3));
+      emit(state.copyWith(status: const Status()));
     }
   }
 
@@ -70,19 +61,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         showDialog: !state.showDialog,
         status: const Status.loading(),
       ));
-      final result = await UserRepository.resetPassword(event.email!);
-      if (result == null) {
-        emit(state.copyWith(
-          status: const Status.error(AppStrings.genericError),
-        ));
-      } else if (result) {
+      try {
+        await UserRepository.resetPassword(event.email!);
         emit(state.copyWith(
           status: const Status(AppStrings.passwordResetSuccess),
         ));
-      } else {
-        emit(state.copyWith(
-          status: const Status.error(AppStrings.noUserWithEmail),
-        ));
+      } on Failure catch (failure) {
+        emit(state.copyWith(status: Status.error(failure.message)));
+        // Reset status after three seconds.
+        await Future.delayed(const Duration(seconds: 3));
+        emit(state.copyWith(status: const Status()));
       }
     }
   }

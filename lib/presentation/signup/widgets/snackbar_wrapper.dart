@@ -17,7 +17,7 @@ class SnackBarWrapper extends StatelessWidget {
         // Errors
         if (state.status is Error) {
           final message = (state.status as Error).errorMessage;
-          if (message == AppStrings.alreadyExists) {
+          if (message == AppStrings.similarUserExists) {
             showSnackBar(
               message: message,
               actionTitle: 'Log in instead',

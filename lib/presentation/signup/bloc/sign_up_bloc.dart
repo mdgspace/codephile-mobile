@@ -98,8 +98,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             await UserRepository.isEmailAvailable(details.email);
         final isUsernameUnique =
             await UserRepository.isUsernameAvailable(details.username);
-        if (!isEmailUnique) throw const EmailIsNotUniqueFailure();
-        if (!isUsernameUnique) throw const UsernameIsNotUniqueFailure();
+        if (!isEmailUnique) throw const DuplicateEmail();
+        if (!isUsernameUnique) throw const DuplicateUsername();
 
         // Sign up
         final id = await UserRepository.signUp(details);
@@ -114,8 +114,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             'profilePicture': state.image,
           },
         );
-      } on Failure catch (exception) {
-        emit(state.copyWith(status: Status.error(exception.message)));
+      } on Failure catch (failure) {
+        emit(state.copyWith(status: Status.error(failure.message)));
         // Reset status after three seconds.
         await Future.delayed(const Duration(seconds: 3));
         emit(state.copyWith(status: const Status()));

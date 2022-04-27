@@ -36,19 +36,17 @@ Future<void> _loginAndUpdateProfilePic(
   String password,
   File? profilePicture,
 ) async {
-  final result = await UserRepository.login(
-    username: username,
-    password: password,
-    rememberMe: true,
-  );
-  if (result == null) {
-    showSnackBar(message: AppStrings.genericError);
-  } else if (result == 'Unverified') {
-    showSnackBar(message: AppStrings.verifyFirst);
-  } else {
+  try {
+    await UserRepository.login(
+      username: username,
+      password: password,
+      rememberMe: true,
+    );
     if (profilePicture != null) {
       await UserRepository.uploadProfilePicture(profilePicture);
     }
     Get.offAllNamed(AppRoutes.home);
+  } on Failure catch (failure) {
+    showSnackBar(message: failure.message);
   }
 }

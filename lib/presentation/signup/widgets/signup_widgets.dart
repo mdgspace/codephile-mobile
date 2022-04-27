@@ -14,6 +14,7 @@ import '../../../data/constants/strings.dart';
 import '../../../data/constants/styles.dart';
 import '../../../domain/models/status.dart';
 import '../../../domain/repositories/user_repository.dart';
+import '../../../utils/failures.dart';
 import '../../../utils/snackbar.dart';
 import '../../components/inputs/form_input.dart';
 import '../../components/inputs/text_input.dart';

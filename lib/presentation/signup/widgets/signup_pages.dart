@@ -18,7 +18,7 @@ Widget _pageOne() {
             hint: 'Enter your email id',
             title: 'Email ID',
             controller: state.emailController,
-            errorText: state.isEmailUnique ? null : AppStrings.emailIsNotUnique,
+            errorText: state.isEmailUnique ? null : AppStrings.duplicateEmail,
             onChanged: (value) =>
                 context.read<SignUpBloc>().add(EmailInput(value)),
           ),
@@ -253,7 +253,7 @@ Widget _pageFour() {
             onChanged: (value) =>
                 context.read<SignUpBloc>().add(UsernameInput(value)),
             errorText:
-                state.isUsernameUnique ? null : AppStrings.usernameIsNotUnique,
+                state.isUsernameUnique ? null : AppStrings.duplicateUsername,
             prefix: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 8.r,

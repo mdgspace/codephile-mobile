@@ -7,11 +7,11 @@ class AppStrings {
   static const String recentSearchKey = 'recent_search';
 
   // Error
-  static const String alreadyExists = 'This user already exists. '
+  static const String similarUserExists = 'This user already exists. '
       'Please choose different email or username.';
   static const String genericError = 'Something went wrong';
   static const String incorrectCredentials = 'Incorrect credentials';
-  static const String emailIsNotUnique =
+  static const String duplicateEmail =
       'This email is already in use. Use another email or log in';
   static const String noUserWithEmail =
       'No user associated with given email address';
@@ -20,7 +20,7 @@ class AppStrings {
   static const String signUpSuccess =
       'You are almost done with the sign up process. '
       'Please check your email to verify this account';
-  static const String usernameIsNotUnique =
+  static const String duplicateUsername =
       'This username is already in use. Choose another username or log in';
   static const String verifyFirst =
       'Please verify your email before attempting to log in. '
