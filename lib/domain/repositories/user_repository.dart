@@ -6,6 +6,7 @@ import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
 import '../../utils/auth_token.dart' as auth_token_utils;
 import '../../utils/failures.dart';
+import '../models/activity_details.dart';
 import '../models/following.dart';
 import '../models/sign_up.dart';
 import '../models/submission_status.dart';
@@ -192,7 +193,7 @@ class UserRepository {
 
     if (response['status_code'] == 200) {
       return List<Following>.from(
-        json.decode(response['data']).map((e) => Following.fromJson(e)),
+        response['data'].map((e) => Following.fromJson(e)),
       );
     }
     return null;
@@ -245,7 +246,7 @@ class UserRepository {
     return [];
   }
 
-  static Future<List<SubmissionStatus>?> getSubmissionStatusData(
+  static Future<SubmissionStatus?> getSubmissionStatusData(
     String id,
   ) async {
     final endpoint = 'graph/status/$id';
@@ -258,8 +259,24 @@ class UserRepository {
     );
 
     if (response['status_code'] == 200) {
-      return List<SubmissionStatus>.from(
-        json.decode(response['data'])?.map((e) => SubmissionStatus.fromJson(e)),
+      return SubmissionStatus.fromJson(response['data']);
+    }
+    return null;
+  }
+
+  static Future<List<ActivityDetails>?> getActivityDetails(String id) async {
+    final endpoint = 'graph/activity/$id';
+    final headers = <String, dynamic>{};
+
+    ApiService.addTokenToHeaders(headers);
+    final response = await ApiService.get(
+      endpoint,
+      headers: headers,
+    );
+
+    if (response['status_code'] == 200) {
+      return List<ActivityDetails>.from(
+        response['data'].map((e) => ActivityDetails.fromJson(e)),
       );
     }
     return null;
