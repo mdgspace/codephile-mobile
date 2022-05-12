@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as nav;
@@ -13,6 +14,9 @@ class ApiService {
   /// Service initializer
   static void init() {
     _channel = Dio()..options.contentType = Headers.formUrlEncodedContentType;
+    (_channel.httpClientAdapter as DefaultHttpClientAdapter)
+            .onHttpClientCreate =
+        (client) => client..badCertificateCallback = (cert, host, port) => true;
   }
 
   // Data
