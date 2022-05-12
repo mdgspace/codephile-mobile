@@ -17,6 +17,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
+          flutter-version: "2.10.0"
           channel: "stable"
 
       # Prepare Flutter
@@ -41,6 +42,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
+          flutter-version: "2.10.0"
           channel: "stable"
 
       # Prepare Flutter
@@ -63,6 +65,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
+          flutter-version: "2.10.0"
           channel: "stable"
 
       # Prepare Flutter
