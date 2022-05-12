@@ -16,7 +16,7 @@ Widget resendEmailButton(String userId) {
     child: Container(
       alignment: Alignment.center,
       height: 48.r,
-      padding: EdgeInsets.symmetric(horizontal: 50.r),
+      padding: EdgeInsets.symmetric(horizontal: 30.r),
       child: Text(
         'Resend Email',
         style: AppStyles.h6.copyWith(

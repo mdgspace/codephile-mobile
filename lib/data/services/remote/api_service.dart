@@ -14,9 +14,11 @@ class ApiService {
   /// Service initializer
   static void init() {
     _channel = Dio()..options.contentType = Headers.formUrlEncodedContentType;
-    (_channel.httpClientAdapter as DefaultHttpClientAdapter)
-            .onHttpClientCreate =
-        (client) => client..badCertificateCallback = (cert, host, port) => true;
+    if (!kIsWeb) {
+      (_channel.httpClientAdapter as DefaultHttpClientAdapter)
+          .onHttpClientCreate = (client) => client
+        ..badCertificateCallback = (cert, host, port) => true;
+    }
   }
 
   // Data
