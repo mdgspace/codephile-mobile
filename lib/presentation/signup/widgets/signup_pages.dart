@@ -108,6 +108,13 @@ Widget _pageTwo() {
             platformName: 'SPOJ',
             assetPath: AppAssets.spoj,
           ),
+          SizedBox(height: 16.r),
+          _handleInput(
+            context,
+            state,
+            platformName: 'LeetCode',
+            assetPath: AppAssets.leetCode,
+          ),
         ],
       );
     },

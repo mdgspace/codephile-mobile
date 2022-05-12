@@ -45,5 +45,6 @@ class AppAssets {
   static const String hackerRank = '$_platformIconRoot/hacker_rank.png';
   static const String hackerEarth = '$_platformIconRoot/hacker_earth.png';
   static const String spoj = '$_platformIconRoot/spoj.png';
+  static const String leetCode = '$_platformIconRoot/leetcode.png';
   static const String otherPlatform = '$_platformIconRoot/other_platform.jpg';
 }

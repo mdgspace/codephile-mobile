@@ -54,6 +54,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         'hackerrank': TextEditingController(),
         'codeforces': TextEditingController(),
         'spoj': TextEditingController(),
+        'leetcode': TextEditingController(),
       },
     );
     emit(newState);
@@ -89,6 +90,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           hackerrank: state.handleControllers['hackerrank']!.text,
           codeforces: state.handleControllers['codeforces']!.text,
           spoj: state.handleControllers['spoj']!.text,
+          leetcode: state.handleControllers['leetcode']!.text,
         ),
       );
 
