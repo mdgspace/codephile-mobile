@@ -54,7 +54,7 @@ Widget _pageOne() {
             ),
             suggestionsCallback: (pattern) {
               pattern = pattern.toLowerCase();
-              return state.institutes.where(
+              return SignUpBloc.institutes.where(
                 (element) => element.toLowerCase().contains(pattern),
               );
             },

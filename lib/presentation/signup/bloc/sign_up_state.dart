@@ -26,6 +26,10 @@ class SignUpState with _$SignUpState {
     /// Whether the password field should be obscured.
     @Default(true) bool obscurePassword,
 
+    /// Number of institute names suggested by the dropdown field.
+    /// Never used directly, just here to force rebuilds when institutes list is fetched.
+    @Default(5) int numberOfInstitutes,
+
     /// Index of the current screen.
     @Default(0) int pageIndex,
 
@@ -46,9 +50,6 @@ class SignUpState with _$SignUpState {
 
     /// Controller for the username field.
     @Default(null) TextEditingController? usernameController,
-
-    /// Institute names suggested by the dropdown field.
-    @Default(defaultInstitutes) List<String> institutes,
 
     /// Controller for the handle fields.
     @Default({}) Map<String, TextEditingController?> handleControllers,
@@ -121,11 +122,3 @@ class SignUpState with _$SignUpState {
 
 /// Enum of the types of primary button that can be displayed.
 enum PrimaryButtonStatus { next, skip, disabled }
-
-const List<String> defaultInstitutes = [
-  'Indian Institute of Technology Roorkee',
-  'Indian Institute of Technology Delhi',
-  'Indian Institute of Technology Mandi',
-  'Indian Institute of Technology Indore',
-  'Indian Institute of Technology Bombay',
-];

@@ -41,6 +41,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<ToggleObscure>(_toggleObscurePassword);
   }
 
+  static List<String> institutes = <String>[
+    'Indian Institute of Technology Roorkee',
+    'Indian Institute of Technology Delhi',
+    'Indian Institute of Technology Mandi',
+    'Indian Institute of Technology Indore',
+    'Indian Institute of Technology Bombay',
+  ];
+
   Future<void> _initialize(Initialize event, Emitter<SignUpState> emit) async {
     // initialize controllers
     final newState = state.copyWith(
@@ -59,9 +67,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     );
     emit(newState);
     // fetch list of institutes
-    final institutes = await UserRepository.getInstituteList();
-    if (institutes.isNotEmpty) {
-      emit(newState.copyWith(institutes: institutes));
+    final newInstitutes = await UserRepository.getInstituteList();
+    if (newInstitutes.isNotEmpty) {
+      institutes = newInstitutes;
+      emit(newState.copyWith(numberOfInstitutes: institutes.length));
     }
   }
 
