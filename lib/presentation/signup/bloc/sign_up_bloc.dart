@@ -14,6 +14,7 @@ import '../../../domain/models/handle.dart';
 import '../../../domain/models/sign_up.dart';
 import '../../../domain/models/status.dart';
 import '../../../domain/repositories/user_repository.dart';
+import '../../../utils/bloc_transformer.dart';
 import '../../../utils/failures.dart';
 import '../widgets/signup_widgets.dart';
 
@@ -30,12 +31,30 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<Back>(_handleBack);
     on<Next>(_handleNext);
 
-    on<EmailInput>(_updateEmail);
-    on<InstituteInput>(_updateInstitute);
-    on<NameInput>(_updateName);
-    on<PasswordInput>(_updatePassword);
-    on<PlatformHandleInput>(_updateHandles);
-    on<UsernameInput>(_updateUsername);
+    on<EmailInput>(
+      _updateEmail,
+      transformer: getDebounce<EmailInput>(),
+    );
+    on<InstituteInput>(
+      _updateInstitute,
+      transformer: getDebounce<InstituteInput>(),
+    );
+    on<NameInput>(
+      _updateName,
+      transformer: getDebounce<NameInput>(),
+    );
+    on<PasswordInput>(
+      _updatePassword,
+      transformer: getDebounce<PasswordInput>(),
+    );
+    on<PlatformHandleInput>(
+      _updateHandles,
+      transformer: getDebounce<PlatformHandleInput>(),
+    );
+    on<UsernameInput>(
+      _updateUsername,
+      transformer: getDebounce<UsernameInput>(),
+    );
 
     on<SelectImage>(_selectImage);
     on<ToggleObscure>(_toggleObscurePassword);
