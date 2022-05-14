@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import '../../../data/constants/assets.dart';
 import '../../../data/constants/colors.dart';
+import '../../../data/constants/routes.dart';
+import '../../../data/constants/styles.dart';
 import '../bloc/profile_bloc.dart';
+import '../components/follow_button.dart';
+import '../components/following_button.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({Key? key}) : super(key: key);
@@ -47,8 +52,50 @@ class ProfileHeader extends StatelessWidget {
                     ),
                     const Spacer(flex: 2),
                     IconButton(
-                      onPressed: () {
-                        // TODO(aman-singh7): Implement Settings.
+                      onPressed: () async {
+                        await showMenu<String?>(
+                          context: context,
+                          position: RelativeRect.fromLTRB(100.w, 70.h, 0, 0),
+                          items: [
+                            PopupMenuItem(
+                              value: 'update',
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                                vertical: 4.h,
+                              ),
+                              onTap: () {
+                                Get.back(result: AppRoutes.updateProfile);
+                              },
+                              child: Text(
+                                'Update Details',
+                                style: AppStyles.h6.copyWith(
+                                  color: AppColors.primaryBlack,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 'logout',
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                                vertical: 4.h,
+                              ),
+                              onTap: () {},
+                              child: Text(
+                                'Logout',
+                                style: AppStyles.h6.copyWith(
+                                  color: AppColors.primaryBlack,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          ],
+                          elevation: 8,
+                        ).then((route) {
+                          if (route == null) return;
+
+                          Get.toNamed(route);
+                        });
                       },
                       icon: state.personalProfile
                           ? const Icon(
@@ -115,58 +162,37 @@ class ProfileHeader extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          /// If it is not the personal profile
                           if (!state.personalProfile) return;
-                          // TODO(aman-singh7): Navigate to Following Screen
+
+                          /// If the no of following is empty
+                          if ((state.user?.noOfFollowing ?? 0) == 0) return;
+
+                          context
+                              .read<ProfileBloc>()
+                              .add(const ShowFollowing(toShow: true));
                         },
                       ),
                       if (!state.personalProfile) ...<Widget>[
                         const Spacer(),
-                        GestureDetector(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 10, 16, 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: state.isFollowing
-                                    ? AppColors.primary
-                                    : AppColors.white,
-                                border: Border.all(
-                                  color: AppColors.primary,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(2),
-                                ),
-                              ),
-                              padding: EdgeInsets.all(8.r),
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: state.isFollowing
-                                          ? 'FOLLOWING'
-                                          : 'FOLLOW',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: state.isFollowing
-                                            ? AppColors.white
-                                            : AppColors.primary,
-                                      ),
-                                    ),
-                                    WidgetSpan(
-                                      child: Visibility(
-                                        visible: state.isFollowing,
-                                        child: Icon(
-                                          Icons.check,
-                                          size: 16.r,
-                                          color: AppColors.white,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 8.h,
+                            horizontal: 16.w,
+                          ),
+                          child: Visibility(
+                            visible: state.isFollowing,
+                            replacement: FollowButton(
+                              onTap: () {
+                                // TODO(aman-singh7): Implement follow
+                              },
+                            ),
+                            child: FollowingButton(
+                              onTap: () {
+                                // TODO(aman-singh7): Implement unfollow
+                              },
                             ),
                           ),
-                          onTap: () {},
                         ),
                       ],
                     ],

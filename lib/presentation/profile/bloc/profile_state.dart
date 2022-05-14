@@ -6,11 +6,10 @@ class ProfileState with _$ProfileState {
     @Default(true) bool isLoading,
     @Default(true) bool personalProfile,
     @Default(false) bool isFollowing,
+    @Default(false) bool showFollowing,
     User? user,
     List<Following>? following,
     SubmissionStatus? submissionStatus,
-    List<Submission>? submission,
-    Map<DateTime, dynamic>? activity,
     int? currentYear,
     int? currentTriplet,
   }) = _ProfileState;

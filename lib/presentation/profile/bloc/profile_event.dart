@@ -33,3 +33,12 @@ class UpdateMonth extends ProfileEvent {
   @override
   List<Object?> get props => [increment];
 }
+
+class ShowFollowing extends ProfileEvent {
+  const ShowFollowing({required this.toShow});
+
+  final bool toShow;
+
+  @override
+  List<Object?> get props => [toShow];
+}

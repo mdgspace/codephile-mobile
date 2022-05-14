@@ -6,6 +6,7 @@ import '../../data/constants/styles.dart';
 import 'bloc/profile_bloc.dart';
 import 'widgets/acceptance_graph.dart';
 import 'widgets/accuracy_display.dart';
+import 'widgets/following_view.dart';
 import 'widgets/loading_state.dart';
 import 'widgets/profile_header.dart';
 import 'widgets/question_solved.dart';
@@ -21,9 +22,12 @@ class ProfileScreen extends StatelessWidget {
       child: BlocBuilder<ProfileBloc, ProfileState>(
         // When Loading state changes
         buildWhen: (previous, current) =>
-            previous.isLoading ^ current.isLoading,
+            previous.isLoading ^ current.isLoading ||
+            previous.showFollowing ^ current.showFollowing,
         builder: (context, state) {
           if (state.isLoading) return const ProfileLoadingState();
+
+          if (state.showFollowing) return const FollowingView();
 
           return ListView(
             children: [

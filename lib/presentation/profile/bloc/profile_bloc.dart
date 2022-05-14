@@ -5,10 +5,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../data/constants/strings.dart';
 import '../../../data/services/local/storage_service.dart';
 import '../../../domain/models/activity_details.dart';
 import '../../../domain/models/following.dart';
-import '../../../domain/models/submission.dart';
 import '../../../domain/models/submission_status.dart';
 import '../../../domain/models/user.dart';
 import '../../../domain/repositories/user_repository.dart';
@@ -22,38 +22,29 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<FetchDetails>(_onFetchDetails);
     on<UpdateYear>(_onUpdateYear);
     on<UpdateMonth>(_onUpdateMonth);
+    on<ShowFollowing>(_onShowFollowing);
   }
 
   void _onFetchDetails(FetchDetails event, Emitter<ProfileState> emit) async {
     if (!state.isLoading) emit(state.copyWith(isLoading: true));
 
     // Fetch user details
-    final User? _user;
     if (event.userId.isEmpty) {
       _user = StorageService.user;
     } else {
       _user = await UserRepository.fetchUserDetails(uid: event.userId);
     }
 
-    final _followingList = await UserRepository.getFollowingList();
+    _followingList = await UserRepository.getFollowingList();
 
     final _subStats = await UserRepository.getSubmissionStatusData(_user!.id!);
 
-    final _submission = _user.recentSubmissions;
+    final _activityDetails =
+        await UserRepository.getActivityDetails(_user!.id!);
 
-    final _activityDetails = await UserRepository.getActivityDetails(_user.id!);
-
-    final _activity = <DateTime, dynamic>{};
     for (final activity in _activityDetails ?? <ActivityDetails>[]) {
       if (activity.createdAt == null) continue;
       _activity[activity.createdAt!] = activity.correct;
-    }
-
-    final _mostRecentSubmission = <Submission>[];
-    for (var index = 0;
-        index < (_submission?.length ?? 0) && index < 2;
-        index++) {
-      _mostRecentSubmission.add(_submission![index]);
     }
 
     bool? _isFollowing;
@@ -71,12 +62,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       user: _user,
       following: _followingList,
       submissionStatus: _subStats,
-      submission: _submission,
-      activity: _activity,
       personalProfile: event.userId.isEmpty,
       isFollowing: _isFollowing,
       currentYear: _currentYear,
       currentTriplet: _currentTriplet,
+      showFollowing: false,
     ));
   }
 
@@ -107,6 +97,32 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     ));
   }
 
+  void _onShowFollowing(ShowFollowing event, Emitter<ProfileState> emit) async {
+    if (event.toShow) {
+      _followingList = await UserRepository.getFollowingList();
+    }
+    emit(state.copyWith(
+      following: _followingList,
+      showFollowing: event.toShow,
+    ));
+  }
+
+  static Future follow(String userId) async {
+    final statuscode = await UserRepository.followUser(userId);
+
+    if (statuscode != 200) {
+      throw Exception(AppStrings.genericError);
+    }
+  }
+
+  static Future unfollow(String userId) async {
+    final statuscode = await UserRepository.unfollowUser(userId);
+
+    if (statuscode != 200) {
+      throw Exception(AppStrings.genericError);
+    }
+  }
+
   // Index -> Index%4
   static List<String> monthTriplet(int index) {
     switch (index) {
@@ -125,7 +141,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   // Cell Color for Acceptance Graph
-  static Color getCellColor(int index) {
+  Color getCellColor(DateTime date) {
+    final index = _activity[date] ?? 0;
     if (index < 0) {
       return Color.fromRGBO(255, 0, 0, math.min(-0.2 * index, 1));
     } else if (index > 0) {
@@ -138,4 +155,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   int _currentYear = DateTime.now().year;
   int _currentTriplet = DateTime.now().month ~/ 3;
+  List<Following>? _followingList;
+  User? _user;
+  final Map<DateTime, dynamic> _activity = <DateTime, dynamic>{};
 }
