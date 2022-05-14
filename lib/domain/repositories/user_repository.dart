@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../../data/config/config.dart';
+import '../../data/constants/strings.dart';
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
 import '../../utils/auth_token.dart' as auth_token_utils;
@@ -196,7 +197,8 @@ class UserRepository {
         response['data'].map((e) => Following.fromJson(e)),
       );
     }
-    return null;
+
+    throw Exception(AppStrings.genericError);
   }
 
   static Future<bool> verifyHandle(String site, String handle) async {
@@ -225,6 +227,7 @@ class UserRepository {
         _users.add(User.fromJson(user));
       }
     }
+
     return _users;
   }
 
@@ -261,7 +264,8 @@ class UserRepository {
     if (response['status_code'] == 200) {
       return SubmissionStatus.fromJson(response['data']);
     }
-    return null;
+
+    throw Exception(AppStrings.genericError);
   }
 
   static Future<List<ActivityDetails>?> getActivityDetails(String id) async {
@@ -279,7 +283,8 @@ class UserRepository {
         response['data'].map((e) => ActivityDetails.fromJson(e)),
       );
     }
-    return null;
+
+    throw Exception(AppStrings.genericError);
   }
 
   static Future<int> updatePassword(

@@ -9,6 +9,7 @@ import '../../../data/constants/strings.dart';
 import '../../../data/services/local/storage_service.dart';
 import '../../../domain/models/activity_details.dart';
 import '../../../domain/models/following.dart';
+import '../../../domain/models/status.dart';
 import '../../../domain/models/submission_status.dart';
 import '../../../domain/models/user.dart';
 import '../../../domain/repositories/user_repository.dart';
@@ -26,7 +27,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   void _onFetchDetails(FetchDetails event, Emitter<ProfileState> emit) async {
-    if (!state.isLoading) emit(state.copyWith(isLoading: true));
+    if (state.status is! Loading) {
+      emit(state.copyWith(status: const Status.loading()));
+    }
 
     // Fetch user details
     if (event.userId.isEmpty) {
@@ -35,12 +38,19 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       _user = await UserRepository.fetchUserDetails(uid: event.userId);
     }
 
-    _followingList = await UserRepository.getFollowingList();
+    SubmissionStatus? _subStats;
+    List<ActivityDetails>? _activityDetails;
+    // TODO(aman-singh7): Throw specific Error
+    try {
+      _followingList = await UserRepository.getFollowingList();
 
-    final _subStats = await UserRepository.getSubmissionStatusData(_user!.id!);
+      _subStats = await UserRepository.getSubmissionStatusData(_user!.id!);
 
-    final _activityDetails =
-        await UserRepository.getActivityDetails(_user!.id!);
+      _activityDetails = await UserRepository.getActivityDetails(_user!.id!);
+    } on Exception catch (_) {
+      emit(state.copyWith(status: const Status.error(AppStrings.genericError)));
+      return;
+    }
 
     for (final activity in _activityDetails ?? <ActivityDetails>[]) {
       if (activity.createdAt == null) continue;
@@ -58,7 +68,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     _isFollowing ??= false;
 
     emit(state.copyWith(
-      isLoading: false,
+      status: const Status(),
       user: _user,
       following: _followingList,
       submissionStatus: _subStats,

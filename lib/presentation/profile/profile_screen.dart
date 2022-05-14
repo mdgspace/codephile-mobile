@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../data/constants/strings.dart';
 import '../../data/constants/styles.dart';
+import '../../domain/models/status.dart';
+import '../../utils/snackbar.dart';
 import 'bloc/profile_bloc.dart';
 import 'widgets/acceptance_graph.dart';
 import 'widgets/accuracy_display.dart';
@@ -19,13 +22,22 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProfileBloc()..add(const FetchDetails()),
-      child: BlocBuilder<ProfileBloc, ProfileState>(
+      child: BlocConsumer<ProfileBloc, ProfileState>(
+        listenWhen: (previous, current) =>
+            previous.status.hashCode != current.status.hashCode,
+        listener: (context, state) {
+          if (state.status is Error) {
+            showSnackBar(message: AppStrings.genericError);
+          }
+        },
         // When Loading state changes
         buildWhen: (previous, current) =>
-            previous.isLoading ^ current.isLoading ||
+            previous.status.hashCode != current.status.hashCode ||
             previous.showFollowing ^ current.showFollowing,
         builder: (context, state) {
-          if (state.isLoading) return const ProfileLoadingState();
+          if (state.status is Loading || state.status is Error) {
+            return const ProfileLoadingState();
+          }
 
           if (state.showFollowing) return const FollowingView();
 

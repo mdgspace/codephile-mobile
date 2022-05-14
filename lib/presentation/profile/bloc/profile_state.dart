@@ -3,7 +3,7 @@ part of 'profile_bloc.dart';
 @freezed
 class ProfileState with _$ProfileState {
   const factory ProfileState({
-    @Default(true) bool isLoading,
+    @Default(Status.loading()) Status status,
     @Default(true) bool personalProfile,
     @Default(false) bool isFollowing,
     @Default(false) bool showFollowing,
