@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as nav;
@@ -12,6 +14,11 @@ class ApiService {
   /// Service initializer
   static void init() {
     _channel = Dio()..options.contentType = Headers.formUrlEncodedContentType;
+    if (!kIsWeb) {
+      (_channel.httpClientAdapter as DefaultHttpClientAdapter)
+          .onHttpClientCreate = (client) => client
+        ..badCertificateCallback = (cert, host, port) => true;
+    }
   }
 
   // Data
@@ -112,6 +119,41 @@ class ApiService {
       rethrow;
     }
     log('[API] [PUT] << received ${response.statusCode} from $endpoint');
+    return {
+      'status_code': response.statusCode ?? 0,
+      'data': response.data ?? 'null',
+    };
+  }
+
+  /// Safe method to upload file(s) using PUT request to an endpoint **below** [Environment.baseUrl].
+  static Future<Map<String, dynamic>> putLarge(
+    String endpoint, {
+    required File file,
+    Map<String, dynamic>? headers,
+    bool shouldVerify = true,
+  }) async {
+    log('[API] [PUT_LARGE] >> $endpoint');
+    Response? response;
+    try {
+      response = await _channel.put(
+        Environment.baseUrl + endpoint,
+        data: FormData.fromMap({
+          'image': await MultipartFile.fromFile(file.path),
+        }),
+        options: Options(
+          validateStatus: shouldVerify ? _validateStrict : _validateLoose,
+          headers: headers,
+        ),
+      );
+    } on Exception catch (exception, stacktrace) {
+      debugPrint(
+        'ERROR: Failed during a PUT request.\n'
+        'Endpoint: $endpoint\nFile: ${file.path}\n'
+        'Exception: $exception\nStacktrace: $stacktrace',
+      );
+      rethrow;
+    }
+    log('[API] [PUT_LARGE] << received ${response.statusCode} from $endpoint');
     return {
       'status_code': response.statusCode ?? 0,
       'data': response.data ?? 'null',

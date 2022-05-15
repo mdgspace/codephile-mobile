@@ -30,7 +30,7 @@ class BackgroundDecoration extends StatelessWidget {
             right: 0,
             child: SvgPicture.asset(
               AppAssets.triangle,
-              width: 170.r,
+              width: 140.r,
             ),
           ),
           child,

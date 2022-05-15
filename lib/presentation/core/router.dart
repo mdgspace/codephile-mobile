@@ -5,6 +5,8 @@ import '../../data/constants/routes.dart';
 import '../home/home_screen.dart';
 import '../login/login_screen.dart';
 import '../onboarding/onboarding_screen.dart';
+import '../signup/signup_screen.dart';
+import '../signup/verify_screen.dart';
 
 /// Wrapper for a single method to be passed to [GetMaterialApp.onGenerateRoute].
 class AppRouter {
@@ -25,6 +27,18 @@ class AppRouter {
       case AppRoutes.home:
         return GetPageRoute(
           page: () => const HomeScreen(),
+          routeName: settings.name,
+          settings: settings,
+        );
+      case AppRoutes.signUp:
+        return GetPageRoute(
+          page: () => const SignUpScreen(),
+          routeName: settings.name,
+          settings: settings,
+        );
+      case AppRoutes.verify:
+        return GetPageRoute(
+          page: () => VerifyScreen(settings.arguments as Map<String, dynamic>),
           routeName: settings.name,
           settings: settings,
         );

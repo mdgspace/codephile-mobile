@@ -10,6 +10,7 @@ class Handle with _$Handle {
     @JsonKey(name: 'handle.codeforces') String? codeforces,
     @JsonKey(name: 'handle.hackerrank') String? hackerrank,
     @JsonKey(name: 'handle.spoj') String? spoj,
+    @JsonKey(name: 'handle.leetcode') String? leetcode,
   }) = _Handle;
 
   factory Handle.fromJson(Map<String, dynamic> json) => _$HandleFromJson(json);

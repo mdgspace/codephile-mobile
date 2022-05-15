@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
+import '../../data/config/config.dart';
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
-import '../../utils/auth_token.dart' as utils;
+import '../../utils/auth_token.dart' as auth_token_utils;
+import '../../utils/failures.dart';
 import '../models/following.dart';
 import '../models/sign_up.dart';
 import '../models/submission_status.dart';
@@ -17,26 +20,25 @@ class UserRepository {
   static String? authToken;
 
   // Methods
+  /// Checks whether the passed email entered is unique.
   static Future<bool> isEmailAvailable(String email) async {
     final endpoint = 'user/available?email=$email';
 
-    final response = await ApiService.post(
-      endpoint,
-    );
+    final response = await ApiService.get(endpoint, shouldVerify: false);
 
     return response['status_code'] == 200;
   }
 
+  /// Checks whether the username entered is unique.
   static Future<bool> isUsernameAvailable(String username) async {
     final endpoint = 'user/available?username=$username';
 
-    final response = await ApiService.post(
-      endpoint,
-    );
+    final response = await ApiService.get(endpoint, shouldVerify: false);
 
     return response['status_code'] == 200;
   }
 
+  /// Registers the user.
   static Future<String?> signUp(SignUp details) async {
     const endpoint = 'user/signup';
     final data = {...details.toJson(), ...details.handle?.toJson() ?? {}}
@@ -45,16 +47,38 @@ class UserRepository {
     final response = await ApiService.post(
       endpoint,
       data: data,
+      shouldVerify: false,
     );
 
-    if (response['status_code'] == 200) {
-      return json.decode(response['data'])['id'];
+    switch (response['status_code']) {
+      case 201:
+        return json.decode(response['data'])['id'];
+      case 400:
+        throw const IncorrectFormat();
+      case 409:
+        throw const SimilarUserExists();
+      default:
+        throw const InternalFailure();
     }
-    return null;
+  }
+
+  /// Upload profile picture.
+  static Future<bool> uploadProfilePicture(File profilePicture) async {
+    const endpoint = 'user/picture';
+    final headers = <String, dynamic>{};
+    ApiService.addTokenToHeaders(headers);
+
+    final response = await ApiService.putLarge(
+      endpoint,
+      headers: headers,
+      file: profilePicture,
+    );
+
+    return response['status_code'] == 200;
   }
 
   /// Logs in the user.
-  static Future<String?> login({
+  static Future<void> login({
     required String username,
     required String password,
     required bool rememberMe,
@@ -72,18 +96,20 @@ class UserRepository {
 
     switch (response['status_code']) {
       case 200:
-        utils.setAuthToken(
+        auth_token_utils.setAuthToken(
           response['data']['token'],
           shouldPersist: rememberMe,
         );
         StorageService.user = await fetchUserDetails();
-        return 'Success';
+        return;
+      case 400:
+        throw const IncorrectFormat();
       case 401:
-        return 'Unauthorized';
+        throw const IncorrectCredentials();
       case 403:
-        return 'Unverified';
+        throw const UnverifiedEmail();
       default:
-        return null;
+        throw const InternalFailure();
     }
   }
 
@@ -100,18 +126,17 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
+  /// Sends a new confirmation link to user's registered email.
   static Future<bool> sendVerifyEmail(String uid) async {
     final endpoint = 'user/send-verify-email/$uid';
 
-    final response = await ApiService.post(
-      endpoint,
-    );
+    final response = await ApiService.post(endpoint);
 
     return response['status_code'] == 200;
   }
 
   /// Requests a password reset.
-  static Future<bool?> resetPassword(String email) async {
+  static Future<void> resetPassword(String email) async {
     const endpoint = 'user/password-reset-email';
 
     final response = await ApiService.post(
@@ -119,14 +144,13 @@ class UserRepository {
       data: {'email': email},
     );
 
-    // Tri-state is just to ensure that internal server errors show up differently.
     switch (response['status_code']) {
       case 200:
-        return true;
+        return;
       case 403:
-        return false;
+        throw const EmailNotFound();
       default:
-        return null;
+        throw const InternalFailure();
     }
   }
 
@@ -203,15 +227,14 @@ class UserRepository {
     return _users;
   }
 
+  /// Get a list the names of recognized institutes.
   static Future<List<String>> getInstituteList() async {
-    const endpoint = 'institutes';
-    const baseUrl = 'https://codephile.mdg.iitr.ac.in/';
     final headers = <String, dynamic>{};
-
     ApiService.addTokenToHeaders(headers);
+
     final response = await ApiService.get(
-      endpoint,
-      baseUrl: baseUrl,
+      'institutes',
+      baseUrl: Environment.baseUrl.replaceAll('/v1', ''),
       headers: headers,
     );
 
