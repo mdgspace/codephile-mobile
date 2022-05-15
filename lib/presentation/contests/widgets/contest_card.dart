@@ -120,7 +120,7 @@ class ContestCard extends StatelessWidget {
                             child: Text(
                               'Set Reminder',
                               style: AppStyles.h6.copyWith(
-                                color: AppColors.primaryBlack,
+                                color: AppColors.grey3,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -146,7 +146,7 @@ class ContestCard extends StatelessWidget {
                                     child: Text(
                                       'You will be reminded before the contest starts. Set the timer',
                                       style: AppStyles.h6.copyWith(
-                                        color: AppColors.primaryBlack,
+                                        color: AppColors.grey3,
                                         fontSize: 12.sp,
                                       ),
                                       textAlign: TextAlign.center,
@@ -181,8 +181,7 @@ class ContestCard extends StatelessWidget {
                                                         AppStyles.h6.copyWith(
                                                       color: index == value
                                                           ? AppColors.primary
-                                                          : AppColors
-                                                              .primaryBlack,
+                                                          : AppColors.grey3,
                                                     ),
                                                   );
                                                 },

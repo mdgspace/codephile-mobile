@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../../data/constants/strings.dart';
 import '../../data/services/remote/api_service.dart';
 import '../models/activity_details.dart';
 import '../models/contest.dart';
@@ -38,7 +39,8 @@ class CPRepository {
     if (response['status_code'] == 200) {
       return Contest.fromJson(response['data']);
     }
-    return null;
+
+    throw Exception(AppStrings.genericError);
   }
 
   static Future<List<Feed>?> getFeed({DateTime? before}) async {
@@ -62,7 +64,8 @@ class CPRepository {
         response['data'].map((e) => Feed.fromJson(e)),
       );
     }
-    return null;
+
+    throw Exception(AppStrings.genericError);
   }
 
   static Future<List<Submission>?> getSubmissionList(String uid) async {

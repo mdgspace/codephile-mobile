@@ -3,7 +3,7 @@ part of 'feed_bloc.dart';
 @freezed
 class FeedState with _$FeedState {
   const factory FeedState({
-    @Default(true) bool isLoading,
+    @Default(Status.loading()) Status status,
     @Default(false) bool isFetchingNext,
     @Default(false) bool allLoaded,
     @Default([]) List<GroupedFeed> feeds,

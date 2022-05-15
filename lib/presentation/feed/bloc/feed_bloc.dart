@@ -4,9 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 
+import '../../../data/constants/strings.dart';
 import '../../../domain/models/feed.dart';
 import '../../../domain/models/grouped_feed.dart';
+import '../../../domain/models/status.dart';
 import '../../../domain/repositories/cp_repository.dart';
+import '../../../utils/snackbar.dart';
 
 part 'feed_bloc.freezed.dart';
 part 'feed_state.dart';
@@ -23,15 +26,21 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     if (event.fetchNext) {
       emit(state.copyWith(isFetchingNext: true));
     } else {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(status: const Status.loading()));
     }
 
-    feeds = await CPRepository.getFeed(
-          before: event.fetchNext
-              ? groupedFeeds.last.submissions?.last.createdAt
-              : null,
-        ) ??
-        <Feed>[];
+    try {
+      feeds = await CPRepository.getFeed(
+            before: event.fetchNext
+                ? groupedFeeds.last.submissions?.last.createdAt
+                : null,
+          ) ??
+          <Feed>[];
+    } on Exception catch (_) {
+      showSnackBar(message: AppStrings.genericError);
+      emit(state.copyWith(status: const Status.error(AppStrings.genericError)));
+      return;
+    }
 
     if (feeds.isEmpty) _allLoaded = true;
 
@@ -56,7 +65,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
 
     emit(
       state.copyWith(
-        isLoading: false,
+        status: const Status(),
         feeds: [...groupedFeeds],
         isFetchingNext: false,
         allLoaded: _allLoaded,

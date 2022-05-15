@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../data/constants/assets.dart';
 import '../../data/constants/colors.dart';
+import '../../domain/models/status.dart';
 import '../components/widgets/empty_state.dart';
 import '../contests/widgets/loading_state.dart';
 import 'bloc/feed_bloc.dart';
@@ -40,7 +41,7 @@ class FeedScreen extends StatelessWidget {
       ),
       body: BlocBuilder<FeedBloc, FeedState>(
         builder: (context, state) {
-          if (state.isLoading) {
+          if (state.status is Loading || state.status is Error) {
             return const LoadingState();
           }
 

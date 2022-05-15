@@ -7,7 +7,9 @@ import '../../../data/services/local/storage_service.dart';
 import '../../../data/services/remote/notification_service.dart';
 import '../../../domain/models/contest.dart';
 import '../../../domain/models/contest_filter.dart';
+import '../../../domain/models/status.dart';
 import '../../../domain/repositories/cp_repository.dart';
+import '../../../utils/snackbar.dart';
 
 part 'contests_event.dart';
 part 'contests_state.dart';
@@ -22,14 +24,22 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
   }
 
   void _fetchContests(FetchContests event, Emitter<ContestsState> emit) async {
-    final contest = await CPRepository.contestList();
+    Contest? contest;
+    try {
+      contest = await CPRepository.contestList();
+    } on Exception catch (_) {
+      showSnackBar(message: AppStrings.genericError);
+      emit(state.copyWith(status: const Status.error(AppStrings.genericError)));
+      return;
+    }
+
     _ongoing = [...?contest?.ongoing];
     _upcoming = [...?contest?.upcoming];
     applyFilter();
     final contests = [..._filteredUpcoming, ..._filteredOngoing];
     emit(state.copyWith(
       contests: contests,
-      isLoading: false,
+      status: const Status(),
       filter: _filter,
     ));
   }
