@@ -19,6 +19,8 @@ class AppAssets {
   static const String clock = '$_iconsRoot/clock.svg';
   static const String trueRadioButton = '$_iconsRoot/true_radio_button.svg';
   static const String falseRadioButton = '$_iconsRoot/false_radio_button.svg';
+  static const String refresh = '$_iconsRoot/refresh.svg';
+  static const String userIcon = '$_iconsRoot/default_user_icon.svg';
 
   // Images
   static const String circle1 = '$_imagesRoot/circle1.svg';

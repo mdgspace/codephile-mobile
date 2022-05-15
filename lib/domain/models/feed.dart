@@ -8,7 +8,7 @@ part 'feed.g.dart';
 @freezed
 class Feed with _$Feed {
   factory Feed({
-    required String userId,
+    @JsonKey(name: 'user_id') required String userId,
     required String username,
     required String? fullname,
     String? picture,

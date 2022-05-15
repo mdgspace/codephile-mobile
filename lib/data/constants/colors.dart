@@ -10,6 +10,10 @@ class AppColors {
   static const Color grey6 = Color(0xFF919191);
   static const Color grey7 = Color(0xFFF3F4F7);
   static const Color grey8 = Color(0xFFC8C8C8);
+  static const Color grey9 = Color(0xFFFAFAFA);
+  static const Color grey10 = Color(0xFFE5E5E5);
+  static const Color acceptedGreen = Color(0xFF4CAF50);
+  static const Color errorRed = Color(0xFFEB5757);
   static const Color transparent = Colors.transparent;
 
   static const Color primary = Color(0xFF3366FF);

@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../data/constants/assets.dart';
-import '../../../data/constants/colors.dart';
 
 class EmptyState extends StatelessWidget {
-  const EmptyState({Key? key}) : super(key: key);
+  const EmptyState({required this.description, Key? key}) : super(key: key);
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,10 @@ class EmptyState extends StatelessWidget {
         Container(
           width: double.infinity,
           padding: EdgeInsets.all(25.r),
-          child: const Text(
-            'No contests found, please adjust your filters!',
+          child: Text(
+            description,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.grey1,
-            ),
+            style: Theme.of(context).textTheme.headline6,
           ),
         ),
       ],

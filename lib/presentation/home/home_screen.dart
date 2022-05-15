@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/constants/assets.dart';
 import '../../data/constants/colors.dart';
+import '../feed/bloc/feed_bloc.dart';
 import 'bloc/home_bloc.dart';
 import 'widgets/nav_bar_item.dart';
 
@@ -11,8 +12,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeBloc>(
-      create: (_) => HomeBloc()..init(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => HomeBloc()..init(),
+        ),
+        BlocProvider(
+          create: (context) => FeedBloc()..init(),
+        ),
+      ],
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return SafeArea(

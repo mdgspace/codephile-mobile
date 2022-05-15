@@ -48,5 +48,6 @@ class AppStyles {
       headline5: h5,
       headline6: h6,
     ),
+    scaffoldBackgroundColor: AppColors.white,
   );
 }
