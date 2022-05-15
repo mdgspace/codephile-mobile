@@ -21,6 +21,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
+  flutter_local_notifications: ^9.5.2
+  flutter_native_timezone: ^2.0.0
   flutter_screenutil: 5.0.4
   flutter_svg: ^1.0.3
   flutter_typeahead: ^3.2.4

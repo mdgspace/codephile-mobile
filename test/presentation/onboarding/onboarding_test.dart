@@ -1,14 +1,27 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:codephile/data/constants/strings.dart';
+import 'package:codephile/data/services/local/storage_service.dart';
 import 'package:codephile/presentation/home/home_screen.dart';
 import 'package:codephile/presentation/onboarding/onboarding_screen.dart';
 import 'package:codephile/presentation/onboarding/widgets/onboarding_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../utils/pump_screen.dart';
 
 void widgetTests() {
   group('OnboardingScreen -', () {
+    Future<void> _initHive() async {
+      await Hive.initFlutter();
+      await Hive.openBox(AppStrings.hiveBoxName);
+    }
+
+    setUpAll(() async {
+      await _initHive();
+      StorageService.init();
+    });
+
     testWidgets('contains sub-widgets', (tester) async {
       await pumpScreen(tester, () => OnboardingScreen());
 

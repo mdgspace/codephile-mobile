@@ -33,13 +33,18 @@ class ContestsScreen extends StatelessWidget {
             return ListView.builder(
               itemCount: state.contests.length,
               itemBuilder: (context, index) {
+                final isReminderSet = context
+                    .read<ContestsBloc>()
+                    .reminderSet(state.contests[index].name);
                 if (state.contests[index] is Ongoing) {
                   return ContestCard(
+                    isReminderSet: isReminderSet,
                     ongoing: state.contests[index],
                   );
                 }
 
                 return ContestCard(
+                  isReminderSet: isReminderSet,
                   upcoming: state.contests[index],
                 );
               },

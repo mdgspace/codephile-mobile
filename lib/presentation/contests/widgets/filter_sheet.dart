@@ -123,31 +123,12 @@ class FilterSheet extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 16.w),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        'Max. Duration',
-                        style: AppStyles.h6.copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 15),
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          ContestUtil.getLabel(state.filter!.duration),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    'Max. Duration',
+                    style: AppStyles.h6.copyWith(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
                 Slider(
@@ -257,14 +238,18 @@ class FilterSheet extends StatelessWidget {
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2020),
                             lastDate: DateTime(2025),
-                          ).then((val) {
-                            context.read<ContestsBloc>().add(UpdateFilter(
-                                  updatedFilter: state.filter!.copyWith(
-                                    upcoming: true,
-                                    startDate: val ??= DateTime.now(),
-                                  ),
-                                ));
-                          });
+                          ).then(
+                            (val) {
+                              context.read<ContestsBloc>().add(
+                                    UpdateFilter(
+                                      updatedFilter: state.filter!.copyWith(
+                                        upcoming: true,
+                                        startDate: val ??= DateTime.now(),
+                                      ),
+                                    ),
+                                  );
+                            },
+                          );
                         },
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 15),

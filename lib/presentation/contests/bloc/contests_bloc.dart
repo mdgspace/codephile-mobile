@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../data/constants/strings.dart';
 import '../../../data/services/local/storage_service.dart';
+import '../../../data/services/remote/notification_service.dart';
 import '../../../domain/models/contest.dart';
 import '../../../domain/models/contest_filter.dart';
 import '../../../domain/repositories/cp_repository.dart';
@@ -92,8 +93,9 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
   ContestFilter? _filter;
   List<Ongoing> _ongoing = [], _filteredOngoing = [];
   List<Upcoming> _upcoming = [], _filteredUpcoming = [];
+  List<String?> pendingNotification = [];
 
-  void init() {
+  void init() async {
     final exists = StorageService.exists(AppStrings.filterKey);
     if (!exists) {
       StorageService.filter = ContestFilter(
@@ -106,7 +108,12 @@ class ContestsBloc extends Bloc<ContestsEvent, ContestsState> {
     }
 
     _filter = StorageService.filter;
+    pendingNotification = await NotificationService.getPendingNotification();
     add(const FetchContests());
+  }
+
+  bool reminderSet(String? title) {
+    return pendingNotification.contains(title);
   }
 
   void saveFilter() {
