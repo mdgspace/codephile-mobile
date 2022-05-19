@@ -53,7 +53,7 @@ class ProfileHeader extends StatelessWidget {
                     const Spacer(flex: 2),
                     IconButton(
                       onPressed: () async {
-                        await showMenu<String?>(
+                        showMenu(
                           context: context,
                           position: RelativeRect.fromLTRB(100.w, 70.h, 0, 0),
                           items: [
@@ -64,12 +64,17 @@ class ProfileHeader extends StatelessWidget {
                                 vertical: 4.h,
                               ),
                               onTap: () {
-                                Get.back(result: AppRoutes.updateProfile);
+                                Future.delayed(
+                                  const Duration(seconds: 1),
+                                  () {
+                                    Get.toNamed(AppRoutes.updateProfile);
+                                  },
+                                );
                               },
                               child: Text(
                                 'Update Details',
                                 style: AppStyles.h6.copyWith(
-                                  color: AppColors.primaryBlack,
+                                  color: AppColors.grey3,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -84,18 +89,14 @@ class ProfileHeader extends StatelessWidget {
                               child: Text(
                                 'Logout',
                                 style: AppStyles.h6.copyWith(
-                                  color: AppColors.primaryBlack,
+                                  color: AppColors.grey3,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
                             )
                           ],
                           elevation: 8,
-                        ).then((route) {
-                          if (route == null) return;
-
-                          Get.toNamed(route);
-                        });
+                        );
                       },
                       icon: state.personalProfile
                           ? const Icon(

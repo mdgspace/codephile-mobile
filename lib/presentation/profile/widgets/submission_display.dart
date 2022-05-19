@@ -45,7 +45,7 @@ class SubmissionDisplay extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: AppColors.primaryBlack,
+                          color: AppColors.grey3,
                           width: 1.55,
                         ),
                       ),
@@ -53,7 +53,7 @@ class SubmissionDisplay extends StatelessWidget {
                         child: Text(
                           'No Submissions',
                           style: TextStyle(
-                            color: AppColors.primaryBlack,
+                            color: AppColors.grey3,
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                           ),
@@ -114,7 +114,7 @@ class SubmissionDisplay extends StatelessWidget {
                         Text(
                           data.submissionType,
                           style: AppStyles.h6.copyWith(
-                            color: AppColors.primaryBlack,
+                            color: AppColors.grey3,
                             fontSize: 12.sp,
                           ),
                         ),

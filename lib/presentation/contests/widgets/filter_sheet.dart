@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import '../../../data/constants/assets.dart';
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/styles.dart';
-import '../../../utils/contest_util.dart';
+import '../../../utils/platform_util.dart';
 import '../bloc/contests_bloc.dart';
 
 class FilterSheet extends StatelessWidget {
@@ -137,7 +137,7 @@ class FilterSheet extends StatelessWidget {
                   max: 6,
                   divisions: 6,
                   value: state.duration!.toDouble(),
-                  label: ContestUtil.getLabel(state.duration),
+                  label: PlatformUtil.getLabel(state.duration),
                   onChanged: (_value) {
                     context
                         .read<ContestsBloc>()

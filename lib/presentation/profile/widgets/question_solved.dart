@@ -36,8 +36,9 @@ class QuestionSolved extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 16.r),
                       child: Text(
                         key,
-                        style: AppStyles.h6
-                            .copyWith(color: AppColors.primaryBlack),
+                        style: AppStyles.h6.copyWith(
+                          color: AppColors.grey3,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -52,8 +53,9 @@ class QuestionSolved extends StatelessWidget {
                       child: Text(
                         state.user?.solvedProblemsCount?.codechef.toString() ??
                             '0',
-                        style: AppStyles.h6
-                            .copyWith(color: AppColors.primaryBlack),
+                        style: AppStyles.h6.copyWith(
+                          color: AppColors.grey3,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -65,8 +67,9 @@ class QuestionSolved extends StatelessWidget {
                         state.user?.solvedProblemsCount?.codeforces
                                 .toString() ??
                             '0',
-                        style: AppStyles.h6
-                            .copyWith(color: AppColors.primaryBlack),
+                        style: AppStyles.h6.copyWith(
+                          color: AppColors.grey3,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -78,8 +81,7 @@ class QuestionSolved extends StatelessWidget {
                         state.user?.solvedProblemsCount?.hackerrank
                                 .toString() ??
                             '0',
-                        style: AppStyles.h6
-                            .copyWith(color: AppColors.primaryBlack),
+                        style: AppStyles.h6.copyWith(color: AppColors.grey3),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -89,8 +91,7 @@ class QuestionSolved extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 16.r),
                       child: Text(
                         state.user?.solvedProblemsCount?.spoj.toString() ?? '0',
-                        style: AppStyles.h6
-                            .copyWith(color: AppColors.primaryBlack),
+                        style: AppStyles.h6.copyWith(color: AppColors.grey3),
                         textAlign: TextAlign.center,
                       ),
                     ),

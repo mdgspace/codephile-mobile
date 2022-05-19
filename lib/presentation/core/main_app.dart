@@ -28,7 +28,8 @@ class Codephile extends StatelessWidget {
             );
           },
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.signUp,
+          // TODO(developers): Update this with the screen you're testing.
+          initialRoute: AppRoutes.home,
           navigatorObservers: <NavigatorObserver>[
             SentryNavigatorObserver(),
             AppNavigationObserver(),

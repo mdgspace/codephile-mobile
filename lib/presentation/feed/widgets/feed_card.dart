@@ -9,8 +9,8 @@ import 'package:intl/intl.dart';
 import '../../../data/constants/assets.dart';
 import '../../../data/constants/colors.dart';
 import '../../../domain/models/grouped_feed.dart';
-import '../../../utils/contest_util.dart';
 import '../../../utils/feed_util.dart';
+import '../../../utils/platform_util.dart';
 
 class FeedCard extends StatelessWidget {
   FeedCard({
@@ -105,8 +105,8 @@ class FeedCard extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: Colors.transparent,
                         backgroundImage: AssetImage(
-                          ContestUtil.getPlatformIcon(
-                            ContestUtil.getPlatformNamefromUrl(
+                          PlatformUtil.getIcon(
+                            PlatformUtil.getNamefromUrl(
                               feed.url,
                             ),
                           ),
@@ -117,7 +117,7 @@ class FeedCard extends StatelessWidget {
                         width: 150.w,
                         child: Text(
                           _makeNonBreaking(
-                            ' ${ContestUtil.getPlatformName(ContestUtil.getPlatformNamefromUrl(feed.url))} |'
+                            ' ${PlatformUtil.getName(PlatformUtil.getNamefromUrl(feed.url))} |'
                             ' ${feed.language}',
                           ),
                           style: Theme.of(context)

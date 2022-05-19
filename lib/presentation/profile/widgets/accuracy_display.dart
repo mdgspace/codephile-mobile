@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/styles.dart';
-import '../../../utils/contest_util.dart';
+import '../../../utils/platform_util.dart';
 import '../bloc/profile_bloc.dart';
 
 class AccuracyDisplay extends StatelessWidget {
@@ -63,7 +63,7 @@ class AccuracyDisplay extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(5.r),
               child: Image.asset(
-                ContestUtil.getPlatformIcon(platform),
+                PlatformUtil.getIcon(platform),
                 width: 25.r,
                 height: 25.r,
               ),

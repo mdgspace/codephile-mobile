@@ -10,7 +10,7 @@ import '../../../data/constants/colors.dart';
 import '../../../data/constants/styles.dart';
 import '../../../data/services/remote/notification_service.dart';
 import '../../../domain/models/contest.dart';
-import '../../../utils/contest_util.dart';
+import '../../../utils/platform_util.dart';
 import '../bloc/contests_bloc.dart';
 
 class ContestCard extends StatelessWidget {
@@ -287,15 +287,15 @@ class ContestCard extends StatelessWidget {
 }
 
 extension on Ongoing {
-  String get platformName => ContestUtil.getPlatformName(platform);
-  String get icon => ContestUtil.getPlatformIcon(platform);
+  String get platformName => PlatformUtil.getName(platform);
+  String get icon => PlatformUtil.getIcon(platform);
   String get time =>
       'Ends on ${DateFormat('dd, MMMM yyyy hh:mm a').format(endTime)}';
 }
 
 extension on Upcoming {
-  String get platformName => ContestUtil.getPlatformName(platform);
-  String get icon => ContestUtil.getPlatformIcon(platform);
+  String get platformName => PlatformUtil.getName(platform);
+  String get icon => PlatformUtil.getIcon(platform);
   String get time =>
       'Starts on ${DateFormat('dd, MMMM yyyy hh:mm a').format(startTime)}';
 }

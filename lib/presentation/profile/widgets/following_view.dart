@@ -40,7 +40,7 @@ class FollowingView extends StatelessWidget {
             icon: Icon(
               Icons.clear,
               size: 24.r,
-              color: AppColors.primaryBlack,
+              color: AppColors.grey3,
             ),
           ),
         ],
