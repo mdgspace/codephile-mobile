@@ -26,3 +26,35 @@ class UpdateInstitute extends UpdateProfileEvent {
   @override
   List<Object?> get props => [institute];
 }
+
+class SwitchView extends UpdateProfileEvent {
+  const SwitchView();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class UpdateFocusField extends UpdateProfileEvent {
+  const UpdateFocusField({required this.index});
+
+  final int index;
+
+  @override
+  List<Object?> get props => [index];
+}
+
+class ToggleObscure extends UpdateProfileEvent {
+  const ToggleObscure({required this.index});
+
+  final int index;
+
+  @override
+  List<Object?> get props => [index];
+}
+
+class UpdatePassword extends UpdateProfileEvent {
+  const UpdatePassword();
+
+  @override
+  List<Object?> get props => [];
+}

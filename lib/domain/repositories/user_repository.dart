@@ -287,7 +287,7 @@ class UserRepository {
     throw Exception(AppStrings.genericError);
   }
 
-  static Future<int> updatePassword(
+  static Future updatePassword(
     String oldPassword,
     String newPassword,
   ) async {
@@ -304,7 +304,14 @@ class UserRepository {
       },
     );
 
-    return response['status_code'];
+    switch (response['status_code']) {
+      case 200:
+        return;
+      case 403:
+        throw const IncorrectCredentials();
+      default:
+        throw const InternalFailure();
+    }
   }
 
   static Future<int> updateUserDetails(Map<String, dynamic>? data) async {

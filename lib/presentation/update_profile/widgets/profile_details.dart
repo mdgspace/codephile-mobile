@@ -50,7 +50,7 @@ class ProfileDetails extends StatelessWidget {
             return DropdownSearch<String>(
               showSearchBox: true,
               selectedItem: state.user?.institute,
-              items: state.instituteList,
+              items: UpdateProfileBloc.institutes,
               onChanged: (String? institute) {
                 if (institute == null) return;
 
@@ -64,7 +64,9 @@ class ProfileDetails extends StatelessWidget {
         Align(
           alignment: Alignment.bottomRight,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              context.read<UpdateProfileBloc>().add(const SwitchView());
+            },
             child: Text(
               'Change Password',
               style: AppStyles.h6.copyWith(color: AppColors.primary),

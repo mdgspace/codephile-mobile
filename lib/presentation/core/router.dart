@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../../data/constants/routes.dart';
@@ -7,6 +8,7 @@ import '../login/login_screen.dart';
 import '../onboarding/onboarding_screen.dart';
 import '../signup/signup_screen.dart';
 import '../signup/verify_screen.dart';
+import '../update_profile/bloc/update_profile_bloc.dart';
 import '../update_profile/update_profile.dart';
 
 /// Wrapper for a single method to be passed to [GetMaterialApp.onGenerateRoute].
@@ -45,7 +47,10 @@ class AppRouter {
         );
       case AppRoutes.updateProfile:
         return GetPageRoute(
-          page: () => const UpdateProfile(),
+          page: () => BlocProvider(
+            create: (context) => UpdateProfileBloc()..add(const Initialize()),
+            child: const UpdateProfile(),
+          ),
           routeName: settings.name,
           settings: settings,
         );
