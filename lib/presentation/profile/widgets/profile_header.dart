@@ -7,7 +7,10 @@ import 'package:get/get.dart';
 import '../../../data/constants/assets.dart';
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/routes.dart';
+import '../../../data/constants/strings.dart';
 import '../../../data/constants/styles.dart';
+import '../../../domain/repositories/user_repository.dart';
+import '../../../utils/snackbar.dart';
 import '../bloc/profile_bloc.dart';
 import '../components/follow_button.dart';
 import '../components/following_button.dart';
@@ -85,7 +88,15 @@ class ProfileHeader extends StatelessWidget {
                                 horizontal: 12.w,
                                 vertical: 4.h,
                               ),
-                              onTap: () {},
+                              onTap: () async {
+                                final res = await UserRepository.logout();
+                                if (res) {
+                                  Get.offNamed(AppRoutes.login);
+                                  return;
+                                }
+
+                                showSnackBar(message: AppStrings.genericError);
+                              },
                               child: Text(
                                 'Logout',
                                 style: AppStyles.h6.copyWith(

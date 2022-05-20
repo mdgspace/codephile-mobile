@@ -41,7 +41,12 @@ class UpdateProfile extends StatelessWidget {
                     SizedBox(height: 30.h),
                     PrimaryButton(
                       label: 'Save Changes',
-                      onPressed: () {},
+                      onPressed: () {
+                        if (state.isUpdating) return;
+                        context
+                            .read<UpdateProfileBloc>()
+                            .add(const UpdateUserDetails());
+                      },
                     ),
                     SizedBox(height: 30.h),
                   ],

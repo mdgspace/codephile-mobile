@@ -76,11 +76,13 @@ class PlatformUtil {
     required String assetPath,
     Function(String)? onChanged,
     TextEditingController? controller,
+    String? errorText,
   }) {
     return TextInput(
       hint: '$platformName handle',
       onChanged: onChanged,
       controller: controller,
+      errorText: errorText,
       prefix: Container(
         height: 50.r,
         width: 116.r,

@@ -21,24 +21,24 @@ class ProfileDetails extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 16.h),
           child: _profilePicture(),
         ),
-        BlocSelector<UpdateProfileBloc, UpdateProfileState, String?>(
-          selector: (state) => state.user?.fullname,
-          builder: (context, name) {
+        BlocBuilder<UpdateProfileBloc, UpdateProfileState>(
+          builder: (context, state) {
             return TextInput(
-              initialValue: name ?? '',
+              controller: UpdateProfileBloc.controllers['name'],
               onChanged: (val) {},
               hint: 'Name',
+              errorText: state.errors['name'],
             );
           },
         ),
         SizedBox(height: 16.h),
-        BlocSelector<UpdateProfileBloc, UpdateProfileState, String?>(
-          selector: (state) => state.user?.username,
-          builder: (context, username) {
+        BlocBuilder<UpdateProfileBloc, UpdateProfileState>(
+          builder: (context, state) {
             return TextInput(
-              initialValue: username ?? '',
+              controller: UpdateProfileBloc.controllers['username'],
               onChanged: (val) {},
               hint: 'Username',
+              errorText: state.errors['username'],
             );
           },
         ),

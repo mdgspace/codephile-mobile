@@ -58,3 +58,10 @@ class UpdatePassword extends UpdateProfileEvent {
   @override
   List<Object?> get props => [];
 }
+
+class UpdateUserDetails extends UpdateProfileEvent {
+  const UpdateUserDetails();
+
+  @override
+  List<Object?> get props => [];
+}

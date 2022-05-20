@@ -6,11 +6,11 @@ part 'handle.g.dart';
 @freezed
 class Handle with _$Handle {
   factory Handle({
-    @JsonKey(name: 'handle.codechef') String? codechef,
-    @JsonKey(name: 'handle.codeforces') String? codeforces,
-    @JsonKey(name: 'handle.hackerrank') String? hackerrank,
-    @JsonKey(name: 'handle.spoj') String? spoj,
-    @JsonKey(name: 'handle.leetcode') String? leetcode,
+    @JsonKey(name: 'codechef') String? codechef,
+    @JsonKey(name: 'codeforces') String? codeforces,
+    @JsonKey(name: 'hackerrank') String? hackerrank,
+    @JsonKey(name: 'spoj') String? spoj,
+    @JsonKey(name: 'leetcode') String? leetcode,
   }) = _Handle;
 
   factory Handle.fromJson(Map<String, dynamic> json) => _$HandleFromJson(json);

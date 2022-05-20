@@ -41,7 +41,7 @@ class ChangePassword extends StatelessWidget {
                         index: 0,
                         activeIndex: state.activePasswordTextField,
                         obscure: state.passwordFieldObscureState[0],
-                        controller: state.controllers['old_pass'],
+                        controller: UpdateProfileBloc.controllers['old_pass'],
                       ),
                       SizedBox(height: 24.h),
                       _buildTextField(
@@ -50,7 +50,7 @@ class ChangePassword extends StatelessWidget {
                         index: 1,
                         activeIndex: state.activePasswordTextField,
                         obscure: state.passwordFieldObscureState[1],
-                        controller: state.controllers['new_pass'],
+                        controller: UpdateProfileBloc.controllers['new_pass'],
                       ),
                       SizedBox(height: 24.h),
                       _buildTextField(
@@ -59,8 +59,9 @@ class ChangePassword extends StatelessWidget {
                         index: 2,
                         activeIndex: state.activePasswordTextField,
                         obscure: state.passwordFieldObscureState[2],
-                        controller: state.controllers['re_enter'],
-                        compareText: state.controllers['new_pass']?.text,
+                        controller: UpdateProfileBloc.controllers['re_enter'],
+                        compareText:
+                            UpdateProfileBloc.controllers['new_pass']?.text,
                       ),
                     ],
                   ),
@@ -70,6 +71,7 @@ class ChangePassword extends StatelessWidget {
             PrimaryButton(
               label: 'Update Password',
               onPressed: () {
+                if (state.isUpdating) return;
                 if (_key.currentState!.validate()) {
                   context.read<UpdateProfileBloc>().add(const UpdatePassword());
                 }

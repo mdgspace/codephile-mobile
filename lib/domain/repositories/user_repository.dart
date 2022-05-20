@@ -193,6 +193,8 @@ class UserRepository {
     );
 
     if (response['status_code'] == 200) {
+      if (response['data'] == 'null') return <Following>[];
+
       return List<Following>.from(
         response['data'].map((e) => Following.fromJson(e)),
       );
@@ -204,9 +206,7 @@ class UserRepository {
   static Future<bool> verifyHandle(String site, String handle) async {
     final endpoint = 'user/verify/$site?handle=$handle';
 
-    final response = await ApiService.post(
-      endpoint,
-    );
+    final response = await ApiService.get(endpoint);
 
     return response['status_code'] == 200;
   }
@@ -279,6 +279,8 @@ class UserRepository {
     );
 
     if (response['status_code'] == 200) {
+      if (response['data'] == 'null') return <ActivityDetails>[];
+
       return List<ActivityDetails>.from(
         response['data'].map((e) => ActivityDetails.fromJson(e)),
       );
@@ -298,7 +300,7 @@ class UserRepository {
     final response = await ApiService.post(
       endpoint,
       headers: headers,
-      data: <String, String>{
+      data: {
         'new_password': newPassword,
         'old_password': oldPassword,
       },
@@ -319,7 +321,7 @@ class UserRepository {
     final headers = <String, dynamic>{};
 
     ApiService.addTokenToHeaders(headers);
-    final response = await ApiService.post(
+    final response = await ApiService.put(
       endpoint,
       headers: headers,
       data: data,
