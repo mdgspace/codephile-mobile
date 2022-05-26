@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
@@ -11,6 +12,8 @@ import '../../../data/constants/colors.dart';
 import '../../../domain/models/grouped_feed.dart';
 import '../../../utils/feed_util.dart';
 import '../../../utils/platform_util.dart';
+import '../../home/bloc/home_bloc.dart';
+import '../../profile/bloc/profile_bloc.dart';
 
 class FeedCard extends StatelessWidget {
   FeedCard({
@@ -33,7 +36,13 @@ class FeedCard extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                // TODO(aman-singh7): Integrate to profile
+                context
+                    .read<ProfileBloc>()
+                    .add(FetchDetails(userId: feed.userId));
+
+                context
+                    .read<HomeBloc>()
+                    .add(const BottomNavItemPressed(index: 3));
               },
               child: Padding(
                 padding: EdgeInsets.only(right: 10.w),

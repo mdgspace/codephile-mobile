@@ -5,7 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/styles.dart';
+import '../../../domain/models/status.dart';
 import '../../../utils/user_util.dart';
+import '../../home/bloc/home_bloc.dart';
+import '../../profile/bloc/profile_bloc.dart';
 import '../bloc/search_bloc.dart';
 
 class SearchedResult extends StatelessWidget {
@@ -15,7 +18,7 @@ class SearchedResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
-        if (state.isLoading) {
+        if (state.status is Loading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -32,7 +35,15 @@ class SearchedResult extends StatelessWidget {
           children: state.searchedResult.map((result) {
             return ListTile(
               onTap: () {
-                // TODO(aman-singh7): Add to recent searched
+                context.read<SearchBloc>().add(RecentSearch(user: result));
+
+                context
+                    .read<ProfileBloc>()
+                    .add(FetchDetails(userId: result.id ?? ''));
+
+                context
+                    .read<HomeBloc>()
+                    .add(const BottomNavItemPressed(index: 3));
               },
               leading: SizedBox(
                 width: 35.r,

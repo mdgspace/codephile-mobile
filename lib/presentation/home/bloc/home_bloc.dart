@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../data/services/local/storage_service.dart';
+import '../../../domain/repositories/user_repository.dart';
 import '../../contests/contests_screen.dart';
 import '../../feed/feed_screen.dart';
 import '../../profile/profile_screen.dart';
@@ -18,7 +20,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
   late final List<Widget> screens;
 
-  void init() {
+  void init() async {
+    // Fetch User Details on Startup
+    try {
+      StorageService.user = await UserRepository.fetchUserDetails();
+    } on Exception catch (err) {
+      debugPrint(err.toString());
+    }
     screens = <Widget>[
       const FeedScreen(),
       const ContestsScreen(),

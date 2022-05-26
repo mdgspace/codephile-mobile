@@ -5,6 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/styles.dart';
+import '../../../utils/user_util.dart';
+import '../../home/bloc/home_bloc.dart';
+import '../../profile/bloc/profile_bloc.dart';
 import '../bloc/search_bloc.dart';
 
 class RecentSearches extends StatelessWidget {
@@ -20,13 +23,30 @@ class RecentSearches extends StatelessWidget {
           shrinkWrap: true,
           children: [
             Padding(
-              padding: EdgeInsets.all(16.r),
+              padding: EdgeInsets.symmetric(horizontal: 16.r),
               child: Text('RECENT SEARCHES', style: AppStyles.h6),
             ),
             ...state.recentSearches.map((result) {
               return ListTile(
-                leading: CachedNetworkImage(
-                  imageUrl: result.picture!,
+                onTap: () {
+                  context
+                      .read<ProfileBloc>()
+                      .add(FetchDetails(userId: result.id ?? ''));
+
+                  context
+                      .read<HomeBloc>()
+                      .add(const BottomNavItemPressed(index: 3));
+                },
+                leading: SizedBox(
+                  width: 35.r,
+                  child: CachedNetworkImage(
+                    cacheKey: result.id,
+                    imageUrl: (result.picture ?? '').isEmpty
+                        ? UserUtil.picture
+                        : result.picture!,
+                    errorWidget: (context, url, error) =>
+                        const CircularProgressIndicator(),
+                  ),
                 ),
                 title: Text(
                   result.fullname,
@@ -37,6 +57,14 @@ class RecentSearches extends StatelessWidget {
                 subtitle: Text(
                   '@${result.username}',
                   style: AppStyles.h6,
+                ),
+                trailing: IconButton(
+                  onPressed: () {
+                    context
+                        .read<SearchBloc>()
+                        .add(RecentSearch(user: result, toAdd: false));
+                  },
+                  icon: const Icon(Icons.close),
                 ),
               );
             }).toList()

@@ -14,80 +14,77 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SearchBloc>(
-      create: (context) => SearchBloc()..add(const FetchInstituteList()),
-      child: BlocBuilder<SearchBloc, SearchState>(
-        builder: (context, state) {
-          return Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 13.w,
-                  vertical: 30.h,
-                ),
-                child: TextInput(
-                  hint: 'Search people by name or handles',
-                  onChanged: (val) {
-                    if (val.isEmpty) {
-                      context.read<SearchBloc>().add(const Reset());
-                    }
-                  },
-                  controller: context.read<SearchBloc>().controller,
-                  onSubmitted: (val) {
-                    final res = val.trim();
-                    if (res.isEmpty) return;
-                    context.read<SearchBloc>().add(SearchPeople(query: res));
-                  },
-                  action: TextInputAction.search,
-                  isFilled: true,
-                  border: InputBorder.none,
-                  fillColor: AppColors.grey7,
-                  suffix: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        padding: const EdgeInsets.fromLTRB(4, 1, 1, 4),
-                        icon: const Icon(
-                          Icons.filter_alt,
-                          color: AppColors.grey6,
-                        ),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (_) {
-                              return FilterSearch(
-                                bloc: context.read<SearchBloc>(),
-                              );
-                            },
-                          );
-                        },
+    return BlocBuilder<SearchBloc, SearchState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 13.w,
+                vertical: 30.h,
+              ),
+              child: TextInput(
+                hint: 'Search people by name or handles',
+                onChanged: (val) {
+                  if (val.isEmpty) {
+                    context.read<SearchBloc>().add(const Reset());
+                  }
+                },
+                controller: context.read<SearchBloc>().controller,
+                onSubmitted: (val) {
+                  final res = val.trim();
+                  if (res.isEmpty) return;
+                  context.read<SearchBloc>().add(SearchPeople(query: res));
+                },
+                action: TextInputAction.search,
+                isFilled: true,
+                border: InputBorder.none,
+                fillColor: AppColors.grey7,
+                suffix: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      padding: const EdgeInsets.fromLTRB(4, 1, 1, 4),
+                      icon: const Icon(
+                        Icons.filter_alt,
+                        color: AppColors.grey6,
                       ),
-                      IconButton(
-                        padding: const EdgeInsets.fromLTRB(4, 1, 1, 4),
-                        icon: const Icon(
-                          Icons.close,
-                          color: AppColors.grey6,
-                        ),
-                        onPressed: () {
-                          context.read<SearchBloc>().controller.clear();
-                          if (state.showSearches) {
-                            context.read<SearchBloc>().add(const Reset());
-                          }
-                        },
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (_) {
+                            return FilterSearch(
+                              bloc: context.read<SearchBloc>(),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.fromLTRB(4, 1, 1, 4),
+                      icon: const Icon(
+                        Icons.close,
+                        color: AppColors.grey6,
                       ),
-                    ],
-                  ),
+                      onPressed: () {
+                        context.read<SearchBloc>().controller.clear();
+                        if (state.showSearches) {
+                          context.read<SearchBloc>().add(const Reset());
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
-              Expanded(
-                child: state.showSearches
-                    ? const SearchedResult()
-                    : const RecentSearches(),
-              ),
-            ],
-          );
-        },
-      ),
+            ),
+            Expanded(
+              child: state.showSearches
+                  ? const SearchedResult()
+                  : const RecentSearches(),
+            ),
+          ],
+        );
+      },
     );
   }
 }
