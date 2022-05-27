@@ -21,18 +21,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   late final List<Widget> screens;
 
   void init() async {
-    // Fetch User Details on Startup
-    try {
-      StorageService.user = await UserRepository.fetchUserDetails();
-    } on Exception catch (err) {
-      debugPrint(err.toString());
-    }
     screens = <Widget>[
       const FeedScreen(),
       const ContestsScreen(),
       const SearchScreen(),
       const ProfileScreen(),
     ];
+    // Fetch User Details on Startup
+    try {
+      StorageService.user = await UserRepository.fetchUserDetails();
+    } on Exception catch (err) {
+      debugPrint(err.toString());
+    }
   }
 
   void _changeScreen(BottomNavItemPressed event, Emitter<HomeState> emit) {

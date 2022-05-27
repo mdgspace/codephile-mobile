@@ -22,6 +22,8 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
+        // Follow Notifier
+        final _followNotifier = ValueNotifier(state.isFollowing);
         return Container(
           color: AppColors.primary,
           child: Column(
@@ -192,18 +194,39 @@ class ProfileHeader extends StatelessWidget {
                             vertical: 8.h,
                             horizontal: 16.w,
                           ),
-                          child: Visibility(
-                            visible: state.isFollowing,
-                            replacement: FollowButton(
-                              onTap: () {
-                                // TODO(aman-singh7): Implement follow
-                              },
-                            ),
-                            child: FollowingButton(
-                              onTap: () {
-                                // TODO(aman-singh7): Implement unfollow
-                              },
-                            ),
+                          child: ValueListenableBuilder<bool>(
+                            valueListenable: _followNotifier,
+                            builder: (_, value, child) {
+                              if (value) {
+                                return FollowingButton(
+                                  onTap: () async {
+                                    try {
+                                      await context
+                                          .read<ProfileBloc>()
+                                          .unfollow(state.user!.id!);
+                                      _followNotifier.value = false;
+                                    } on Exception catch (_) {
+                                      showSnackBar(
+                                          message: AppStrings.genericError);
+                                    }
+                                  },
+                                );
+                              }
+
+                              return FollowButton(
+                                onTap: () async {
+                                  try {
+                                    await context
+                                        .read<ProfileBloc>()
+                                        .follow(state.user!.id!);
+                                    _followNotifier.value = true;
+                                  } on Exception catch (_) {
+                                    showSnackBar(
+                                        message: AppStrings.genericError);
+                                  }
+                                },
+                              );
+                            },
                           ),
                         ),
                       ],

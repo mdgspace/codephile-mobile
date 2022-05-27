@@ -81,7 +81,7 @@ class StorageService {
   static List<User>? get recentSearches {
     try {
       return List<User>.from(json
-          .decode(_get<String>(AppStrings.recentSearchKey)!)
+          .decode(_get<String>(AppStrings.recentSearchKey) ?? '')
           .map((e) => User.fromJson(e)));
     } on Exception catch (_) {
       return null;

@@ -90,12 +90,12 @@ class FollowingView extends StatelessWidget {
                 /// to rebuild the whole list
                 trailing: ValueListenableBuilder<bool>(
                   valueListenable: _followNotifier,
-                  builder: (context, value, _) {
+                  builder: (_, value, child) {
                     if (value) {
                       return FollowingButton(
                         onTap: () async {
                           try {
-                            await ProfileBloc.unfollow(user.id);
+                            await context.read<ProfileBloc>().unfollow(user.id);
                             _followNotifier.value = false;
                           } on Exception catch (_) {
                             showSnackBar(message: AppStrings.genericError);
@@ -107,7 +107,7 @@ class FollowingView extends StatelessWidget {
                     return FollowButton(
                       onTap: () async {
                         try {
-                          await ProfileBloc.follow(user.id);
+                          await context.read<ProfileBloc>().follow(user.id);
                           _followNotifier.value = true;
                         } on Exception catch (_) {
                           showSnackBar(message: AppStrings.genericError);

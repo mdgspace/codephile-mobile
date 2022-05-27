@@ -115,23 +115,42 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(state.copyWith(
       following: _followingList,
       showFollowing: event.toShow,
+      user: _user,
     ));
   }
 
-  static Future follow(String userId) async {
+  Future follow(String userId) async {
     final statuscode = await UserRepository.followUser(userId);
 
     if (statuscode != 200) {
       throw Exception(AppStrings.genericError);
     }
+
+    var _tempUser = StorageService.user;
+    _tempUser = _tempUser?.copyWith(
+      noOfFollowing: (_tempUser.noOfFollowing ?? 0) + 1,
+    );
+    StorageService.user = _tempUser;
+    if (_user?.id != _tempUser?.id) return;
+
+    _user = _tempUser;
   }
 
-  static Future unfollow(String userId) async {
+  Future unfollow(String userId) async {
     final statuscode = await UserRepository.unfollowUser(userId);
 
     if (statuscode != 200) {
       throw Exception(AppStrings.genericError);
     }
+
+    var _tempUser = StorageService.user;
+    _tempUser = _tempUser?.copyWith(
+      noOfFollowing: (_tempUser.noOfFollowing ?? 0) - 1,
+    );
+    StorageService.user = _tempUser;
+    if (_user?.id != _tempUser?.id) return;
+
+    _user = _tempUser;
   }
 
   // Index -> Index%4
