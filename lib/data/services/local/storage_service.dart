@@ -51,8 +51,8 @@ class StorageService {
   /// Currently logged in user.
   static User? get user {
     try {
-      return User.fromJson(json.decode(_get<String>(AppStrings.userKey)!));
-    } on Exception catch (_) {
+      return User.fromJson(json.decode(_get<String>(AppStrings.userKey) ?? ''));
+    } on FormatException catch (_) {
       // This just means that the user has not been stored previously.
       return null;
     }

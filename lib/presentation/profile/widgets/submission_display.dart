@@ -141,9 +141,7 @@ class SubmissionData {
   final String submissionType;
   final int value;
   final String key;
-}
 
-extension on SubmissionData {
   double percentage(int total) {
     return double.parse((value * 100 / total).toStringAsFixed(1));
   }

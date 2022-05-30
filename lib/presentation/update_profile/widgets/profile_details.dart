@@ -25,7 +25,6 @@ class ProfileDetails extends StatelessWidget {
           builder: (context, state) {
             return TextInput(
               controller: UpdateProfileBloc.controllers['name'],
-              onChanged: (val) {},
               hint: 'Name',
               errorText: state.errors['name'],
             );
@@ -36,7 +35,6 @@ class ProfileDetails extends StatelessWidget {
           builder: (context, state) {
             return TextInput(
               controller: UpdateProfileBloc.controllers['username'],
-              onChanged: (val) {},
               hint: 'Username',
               errorText: state.errors['username'],
             );
