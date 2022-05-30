@@ -42,6 +42,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     List<ActivityDetails>? _activityDetails;
     // TODO(aman-singh7): Throw specific Error
     try {
+      if (_user == null) throw Exception('User not found!!');
       _followingList = await UserRepository.getFollowingList();
 
       _subStats = await UserRepository.getSubmissionStatusData(_user!.id!);
@@ -72,7 +73,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       user: _user,
       following: _followingList,
       submissionStatus: _subStats,
-      personalProfile: event.userId.isEmpty,
+      personalProfile: isSelfProfile,
       isFollowing: _isFollowing,
       currentYear: _currentYear,
       currentTriplet: _currentTriplet,
@@ -114,23 +115,42 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(state.copyWith(
       following: _followingList,
       showFollowing: event.toShow,
+      user: _user,
     ));
   }
 
-  static Future follow(String userId) async {
+  Future follow(String userId) async {
     final statuscode = await UserRepository.followUser(userId);
 
     if (statuscode != 200) {
       throw Exception(AppStrings.genericError);
     }
+
+    var _tempUser = StorageService.user;
+    _tempUser = _tempUser?.copyWith(
+      noOfFollowing: (_tempUser.noOfFollowing ?? 0) + 1,
+    );
+    StorageService.user = _tempUser;
+    if (_user?.id != _tempUser?.id) return;
+
+    _user = _tempUser;
   }
 
-  static Future unfollow(String userId) async {
+  Future unfollow(String userId) async {
     final statuscode = await UserRepository.unfollowUser(userId);
 
     if (statuscode != 200) {
       throw Exception(AppStrings.genericError);
     }
+
+    var _tempUser = StorageService.user;
+    _tempUser = _tempUser?.copyWith(
+      noOfFollowing: (_tempUser.noOfFollowing ?? 0) - 1,
+    );
+    StorageService.user = _tempUser;
+    if (_user?.id != _tempUser?.id) return;
+
+    _user = _tempUser;
   }
 
   // Index -> Index%4
@@ -162,6 +182,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     // Default cell color
     return const Color(0xFFEEEEEE);
   }
+
+  bool get isSelfProfile => _user?.id == StorageService.user?.id;
 
   int _currentYear = DateTime.now().year;
   int _currentTriplet = DateTime.now().month ~/ 3;

@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
@@ -11,6 +12,8 @@ import '../../../data/constants/colors.dart';
 import '../../../domain/models/grouped_feed.dart';
 import '../../../utils/feed_util.dart';
 import '../../../utils/platform_util.dart';
+import '../../home/bloc/home_bloc.dart';
+import '../../profile/bloc/profile_bloc.dart';
 
 class FeedCard extends StatelessWidget {
   FeedCard({
@@ -33,10 +36,16 @@ class FeedCard extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                // TODO(aman-singh7): Integrate to profile
+                context
+                    .read<ProfileBloc>()
+                    .add(FetchDetails(userId: feed.userId));
+
+                context
+                    .read<HomeBloc>()
+                    .add(const BottomNavItemPressed(index: 3));
               },
               child: Padding(
-                padding: EdgeInsets.only(right: 10.w),
+                padding: EdgeInsets.only(right: 10.r),
                 child: feed.picture?.isEmpty ?? true
                     ? Container(
                         decoration: BoxDecoration(
@@ -82,7 +91,7 @@ class FeedCard extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.h),
+                    padding: EdgeInsets.symmetric(vertical: 5.r),
                     child: Text(
                       '${feed.name}',
                       style: Theme.of(context)
@@ -114,7 +123,7 @@ class FeedCard extends StatelessWidget {
                         radius: 10.r,
                       ),
                       SizedBox(
-                        width: 150.w,
+                        width: 150.r,
                         child: Text(
                           _makeNonBreaking(
                             ' ${PlatformUtil.getName(PlatformUtil.getNamefromUrl(feed.url))} |'
@@ -153,8 +162,8 @@ class FeedCard extends StatelessWidget {
         Container(
           color: AppColors.grey9,
           padding: EdgeInsets.symmetric(
-            horizontal: 15.w,
-            vertical: 10.h,
+            horizontal: 15.r,
+            vertical: 10.r,
           ),
           child: Column(
             children: _buildSubmissions(feed.submissions!),
@@ -193,21 +202,21 @@ class FeedCard extends StatelessWidget {
                 Column(
                   children: <Widget>[
                     Container(
-                      height: 9.h,
-                      width: 2.w,
+                      height: 9.r,
+                      width: 2.r,
                       color: isFirst ? AppColors.white : AppColors.grey10,
                     ),
                     Container(
-                      height: 8.h,
-                      width: 8.w,
+                      height: 8.r,
+                      width: 8.r,
                       decoration: BoxDecoration(
                         color: response['color'],
                         shape: BoxShape.circle,
                       ),
                     ),
                     Container(
-                      height: 9.h,
-                      width: 2.w,
+                      height: 9.r,
+                      width: 2.r,
                       color: isLast ? AppColors.white : AppColors.grey10,
                     )
                   ],

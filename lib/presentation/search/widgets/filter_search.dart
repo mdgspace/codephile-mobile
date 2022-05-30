@@ -79,7 +79,7 @@ class FilterSearch extends StatelessWidget {
                   child: DropdownSearch<String>(
                     showSearchBox: true,
                     selectedItem: state.selectedInstitute,
-                    items: state.instituteList,
+                    items: SearchBloc.institutes,
                     onChanged: (institute) {
                       if (institute == null) return;
                       bloc.updatedFilter = institute;

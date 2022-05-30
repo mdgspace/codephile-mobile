@@ -20,60 +20,57 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileBloc()..add(const FetchDetails()),
-      child: BlocConsumer<ProfileBloc, ProfileState>(
-        listenWhen: (previous, current) =>
-            previous.status.hashCode != current.status.hashCode,
-        listener: (context, state) {
-          if (state.status is Error) {
-            showSnackBar(message: AppStrings.genericError);
-          }
-        },
-        // When Loading state changes
-        buildWhen: (previous, current) =>
-            previous.status.hashCode != current.status.hashCode ||
-            previous.showFollowing ^ current.showFollowing,
-        builder: (context, state) {
-          if (state.status is Loading || state.status is Error) {
-            return const ProfileLoadingState();
-          }
+    return BlocConsumer<ProfileBloc, ProfileState>(
+      listenWhen: (previous, current) =>
+          previous.status.hashCode != current.status.hashCode,
+      listener: (context, state) {
+        if (state.status is Error) {
+          showSnackBar(message: AppStrings.genericError);
+        }
+      },
+      // When Loading state changes
+      buildWhen: (previous, current) =>
+          previous.status.hashCode != current.status.hashCode ||
+          previous.showFollowing ^ current.showFollowing,
+      builder: (context, state) {
+        if (state.status is Loading || state.status is Error) {
+          return const ProfileLoadingState();
+        }
 
-          if (state.showFollowing) return const FollowingView();
+        if (state.showFollowing) return const FollowingView();
 
-          return ListView(
-            children: [
-              const ProfileHeader(),
-              Padding(
-                padding: EdgeInsets.fromLTRB(16.w, 24.h, 0, 8.h),
-                child: Text(
-                  'Accuracy',
-                  style: AppStyles.h1.copyWith(fontSize: 15.sp),
-                ),
+        return ListView(
+          children: [
+            const ProfileHeader(),
+            Padding(
+              padding: EdgeInsets.fromLTRB(16.r, 24.r, 0, 8.r),
+              child: Text(
+                'Accuracy',
+                style: AppStyles.h1.copyWith(fontSize: 15.sp),
               ),
-              const AccuracyDisplay(),
-              SizedBox(height: 30.h),
-              Padding(
-                padding: EdgeInsets.only(left: 16.w, top: 24.h),
-                child: Text(
-                  'Number of question solved',
-                  style: AppStyles.h1.copyWith(fontSize: 15.sp),
-                ),
+            ),
+            const AccuracyDisplay(),
+            SizedBox(height: 30.r),
+            Padding(
+              padding: EdgeInsets.only(left: 16.r, top: 24.r),
+              child: Text(
+                'Number of question solved',
+                style: AppStyles.h1.copyWith(fontSize: 15.sp),
               ),
-              const QuestionSolved(),
-              Padding(
-                padding: EdgeInsets.only(left: 16.w, top: 24.h),
-                child: Text(
-                  'Status of total Submissions',
-                  style: AppStyles.h1.copyWith(fontSize: 15.sp),
-                ),
+            ),
+            const QuestionSolved(),
+            Padding(
+              padding: EdgeInsets.only(left: 16.r, top: 24.r),
+              child: Text(
+                'Status of total Submissions',
+                style: AppStyles.h1.copyWith(fontSize: 15.sp),
               ),
-              const SubmissionDisplay(),
-              const AcceptanceGraph(),
-            ],
-          );
-        },
-      ),
+            ),
+            const SubmissionDisplay(),
+            const AcceptanceGraph(),
+          ],
+        );
+      },
     );
   }
 }

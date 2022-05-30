@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:get/get.dart';
 
 import '../../../data/constants/assets.dart';
@@ -22,6 +23,8 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
+        // Follow Notifier
+        final _followNotifier = ValueNotifier(state.isFollowing);
         return Container(
           color: AppColors.primary,
           child: Column(
@@ -42,35 +45,38 @@ class ProfileHeader extends StatelessWidget {
                           width: 2,
                           color: Colors.white,
                         ),
+                        image: DecorationImage(
+                          image: state.user?.picture == null
+                              ? const Svg(AppAssets.defaultUserIcon)
+                              : NetworkImage(state.user!.picture!)
+                                  as ImageProvider,
+                        ),
                       ),
-                      child: state.user?.picture == null
-                          ? SvgPicture.asset(
-                              AppAssets.defaultUserIcon,
-                              fit: BoxFit.fitWidth,
-                            )
-                          : Image.network(
-                              state.user!.picture!,
-                              fit: BoxFit.fitWidth,
-                            ),
                     ),
                     const Spacer(flex: 2),
                     IconButton(
                       onPressed: () async {
+                        final _bloc = context.read<ProfileBloc>();
                         showMenu(
                           context: context,
-                          position: RelativeRect.fromLTRB(100.w, 70.h, 0, 0),
+                          position: RelativeRect.fromLTRB(100.r, 70.r, 0, 0),
                           items: [
                             PopupMenuItem(
                               value: 'update',
                               padding: EdgeInsets.symmetric(
-                                horizontal: 12.w,
-                                vertical: 4.h,
+                                horizontal: 12.r,
+                                vertical: 4.r,
                               ),
                               onTap: () {
                                 Future.delayed(
                                   const Duration(seconds: 1),
                                   () {
-                                    Get.toNamed(AppRoutes.updateProfile);
+                                    Get.toNamed(AppRoutes.updateProfile)
+                                        ?.then((value) {
+                                      if (value == null) return;
+
+                                      _bloc.add(const FetchDetails());
+                                    });
                                   },
                                 );
                               },
@@ -85,8 +91,8 @@ class ProfileHeader extends StatelessWidget {
                             PopupMenuItem(
                               value: 'logout',
                               padding: EdgeInsets.symmetric(
-                                horizontal: 12.w,
-                                vertical: 4.h,
+                                horizontal: 12.r,
+                                vertical: 4.r,
                               ),
                               onTap: () async {
                                 final res = await UserRepository.logout();
@@ -189,21 +195,42 @@ class ProfileHeader extends StatelessWidget {
                         const Spacer(),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                            vertical: 8.h,
-                            horizontal: 16.w,
+                            vertical: 8.r,
+                            horizontal: 16.r,
                           ),
-                          child: Visibility(
-                            visible: state.isFollowing,
-                            replacement: FollowButton(
-                              onTap: () {
-                                // TODO(aman-singh7): Implement follow
-                              },
-                            ),
-                            child: FollowingButton(
-                              onTap: () {
-                                // TODO(aman-singh7): Implement unfollow
-                              },
-                            ),
+                          child: ValueListenableBuilder<bool>(
+                            valueListenable: _followNotifier,
+                            builder: (_, value, child) {
+                              if (value) {
+                                return FollowingButton(
+                                  onTap: () async {
+                                    try {
+                                      await context
+                                          .read<ProfileBloc>()
+                                          .unfollow(state.user!.id!);
+                                      _followNotifier.value = false;
+                                    } on Exception catch (_) {
+                                      showSnackBar(
+                                          message: AppStrings.genericError);
+                                    }
+                                  },
+                                );
+                              }
+
+                              return FollowButton(
+                                onTap: () async {
+                                  try {
+                                    await context
+                                        .read<ProfileBloc>()
+                                        .follow(state.user!.id!);
+                                    _followNotifier.value = true;
+                                  } on Exception catch (_) {
+                                    showSnackBar(
+                                        message: AppStrings.genericError);
+                                  }
+                                },
+                              );
+                            },
                           ),
                         ),
                       ],

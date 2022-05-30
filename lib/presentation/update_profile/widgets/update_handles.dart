@@ -21,7 +21,7 @@ class UpdateHandles extends StatelessWidget {
               'Update Handles',
               style: AppStyles.h4.copyWith(fontSize: 16.sp),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 16.r),
             PlatformUtil.handleInput(
               platformName: 'CodeChef',
               assetPath: AppAssets.codechef,
@@ -29,7 +29,7 @@ class UpdateHandles extends StatelessWidget {
               controller: UpdateProfileBloc.controllers['codechef'],
               errorText: state.errors['codechef'],
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 16.r),
             PlatformUtil.handleInput(
               platformName: 'HackerRank',
               assetPath: AppAssets.hackerRank,
@@ -37,7 +37,7 @@ class UpdateHandles extends StatelessWidget {
               controller: UpdateProfileBloc.controllers['hackerrank'],
               errorText: state.errors['hackerrank'],
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 16.r),
             PlatformUtil.handleInput(
               platformName: 'CodeForces',
               assetPath: AppAssets.codeforces,
@@ -45,7 +45,7 @@ class UpdateHandles extends StatelessWidget {
               controller: UpdateProfileBloc.controllers['codeforces'],
               errorText: state.errors['codeforces'],
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 16.r),
             PlatformUtil.handleInput(
               platformName: 'Spoj',
               assetPath: AppAssets.spoj,
@@ -53,7 +53,7 @@ class UpdateHandles extends StatelessWidget {
               controller: UpdateProfileBloc.controllers['spoj'],
               errorText: state.errors['spoj'],
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 16.r),
             PlatformUtil.handleInput(
               platformName: 'LeetCode',
               assetPath: AppAssets.leetCode,

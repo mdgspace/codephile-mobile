@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/constants/assets.dart';
 import '../../data/constants/colors.dart';
+import '../contests/bloc/contests_bloc.dart';
 import '../feed/bloc/feed_bloc.dart';
+import '../profile/bloc/profile_bloc.dart';
+import '../search/bloc/search_bloc.dart';
 import 'bloc/home_bloc.dart';
 import 'widgets/nav_bar_item.dart';
 
@@ -19,6 +22,15 @@ class HomeScreen extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => FeedBloc()..init(),
+        ),
+        BlocProvider(
+          create: (context) => ContestsBloc()..init(),
+        ),
+        BlocProvider(
+          create: (context) => SearchBloc()..add(const Init()),
+        ),
+        BlocProvider(
+          create: (context) => ProfileBloc()..add(const FetchDetails()),
         ),
       ],
       child: BlocBuilder<HomeBloc, HomeState>(
@@ -74,6 +86,11 @@ class HomeScreen extends StatelessWidget {
                       label: 'Profile',
                       isActive: state.selectedIndex == 3,
                       callback: () {
+                        // Set to default
+                        if (!context.read<ProfileBloc>().isSelfProfile) {
+                          context.read<ProfileBloc>().add(const FetchDetails());
+                        }
+
                         context
                             .read<HomeBloc>()
                             .add(const BottomNavItemPressed(index: 3));

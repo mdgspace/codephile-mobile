@@ -31,6 +31,7 @@ class ImageService {
       compressQuality: 100,
       maxHeight: 1000,
       maxWidth: 1000,
+      cropStyle: CropStyle.circle,
       compressFormat: ImageCompressFormat.png,
     );
     return croppedImage;

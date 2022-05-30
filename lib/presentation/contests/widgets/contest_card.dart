@@ -44,7 +44,7 @@ class ContestCard extends StatelessWidget {
       },
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: 10.h,
+          vertical: 10.r,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +69,7 @@ class ContestCard extends StatelessWidget {
                     style: AppStyles.h6,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 6.h),
+                    padding: EdgeInsets.symmetric(vertical: 6.r),
                     child: Text(
                       upcoming != null ? upcoming!.name : ongoing!.name,
                       style: AppStyles.h4.copyWith(
@@ -82,7 +82,7 @@ class ContestCard extends StatelessWidget {
                       SvgPicture.asset(
                         AppAssets.clock,
                       ),
-                      SizedBox(width: 4.w),
+                      SizedBox(width: 4.r),
                       Text(
                         upcoming != null ? upcoming!.time : ongoing!.time,
                         style: AppStyles.h6,
@@ -110,7 +110,7 @@ class ContestCard extends StatelessWidget {
                             ),
                           ),
                           title: Container(
-                            padding: EdgeInsets.symmetric(vertical: 10.h),
+                            padding: EdgeInsets.symmetric(vertical: 10.r),
                             decoration: BoxDecoration(
                               color: AppColors.grey7,
                               borderRadius: BorderRadius.vertical(
@@ -135,13 +135,13 @@ class ContestCard extends StatelessWidget {
                               ),
                             ),
                             child: SizedBox(
-                              height: 120.h,
+                              height: 120.r,
                               child: Column(
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 30.w,
-                                      vertical: 10.h,
+                                      horizontal: 30.r,
+                                      vertical: 10.r,
                                     ),
                                     child: Text(
                                       'You will be reminded before the contest starts. Set the timer',
@@ -159,8 +159,8 @@ class ContestCard extends StatelessWidget {
                                         valueListenable: _remindNotifer,
                                         builder: (context, value, _) {
                                           return SizedBox(
-                                            height: 60.h,
-                                            width: 30.w,
+                                            height: 60.r,
+                                            width: 30.r,
                                             child: ListWheelScrollView(
                                               controller:
                                                   FixedExtentScrollController(
@@ -190,7 +190,7 @@ class ContestCard extends StatelessWidget {
                                           );
                                         },
                                       ),
-                                      SizedBox(width: 4.w),
+                                      SizedBox(width: 4.r),
                                       Text(
                                         'minutes',
                                         style: AppStyles.h6.copyWith(
@@ -218,8 +218,8 @@ class ContestCard extends StatelessWidget {
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 40.w,
-                                    vertical: 10.h,
+                                    horizontal: 40.r,
+                                    vertical: 10.r,
                                   ),
                                   color: AppColors.grey10,
                                   child: Text(
@@ -255,8 +255,8 @@ class ContestCard extends StatelessWidget {
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: 40.w,
-                                  vertical: 10.h,
+                                  horizontal: 40.r,
+                                  vertical: 10.r,
                                 ),
                                 color: AppColors.primary,
                                 child: Text(

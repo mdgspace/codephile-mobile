@@ -18,7 +18,7 @@ class ProfileDetails extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 16.h),
+          padding: EdgeInsets.symmetric(vertical: 16.r),
           child: _profilePicture(),
         ),
         BlocBuilder<UpdateProfileBloc, UpdateProfileState>(
@@ -31,7 +31,7 @@ class ProfileDetails extends StatelessWidget {
             );
           },
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16.r),
         BlocBuilder<UpdateProfileBloc, UpdateProfileState>(
           builder: (context, state) {
             return TextInput(
@@ -42,7 +42,7 @@ class ProfileDetails extends StatelessWidget {
             );
           },
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16.r),
         BlocBuilder<UpdateProfileBloc, UpdateProfileState>(
           buildWhen: (previous, current) =>
               previous.user?.institute != current.user?.institute,
