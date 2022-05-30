@@ -91,14 +91,14 @@ class SubmissionDisplay extends StatelessWidget {
                       ),
                     ),
             ),
-            SizedBox(width: 20.w),
+            SizedBox(width: 20.r),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: submissionData.map(
                 (data) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.h),
+                    padding: EdgeInsets.symmetric(vertical: 5.r),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -110,7 +110,7 @@ class SubmissionDisplay extends StatelessWidget {
                             color: GraphUtil.getChartColor(data.key),
                           ),
                         ),
-                        SizedBox(width: 4.w),
+                        SizedBox(width: 4.r),
                         Text(
                           data.submissionType,
                           style: AppStyles.h6.copyWith(

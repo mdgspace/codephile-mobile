@@ -20,8 +20,8 @@ class SearchScreen extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: 13.w,
-                vertical: 30.h,
+                horizontal: 13.r,
+                vertical: 30.r,
               ),
               child: TextInput(
                 hint: 'Search people by name or handles',

@@ -25,7 +25,7 @@ class FilterSheet extends StatelessWidget {
 
   Widget _buildPlatfromIcon(String icon, VoidCallback callback, bool isActive) {
     return Padding(
-      padding: EdgeInsets.only(left: 16.w, top: 10.h, bottom: 20.h),
+      padding: EdgeInsets.only(left: 16.r, top: 10.r, bottom: 20.r),
       child: InkWell(
         onTap: callback,
         child: AnimatedOpacity(
@@ -87,7 +87,7 @@ class FilterSheet extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 16.w, top: 10.h),
+                  padding: EdgeInsets.only(left: 16.r, top: 10.r),
                   child: Text(
                     'Platforms',
                     style: AppStyles.h6.copyWith(
@@ -122,7 +122,7 @@ class FilterSheet extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 16.w),
+                  padding: EdgeInsets.only(left: 16.r),
                   child: Text(
                     'Max. Duration',
                     style: AppStyles.h6.copyWith(
@@ -155,7 +155,7 @@ class FilterSheet extends StatelessWidget {
                   },
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 16.w),
+                  padding: EdgeInsets.only(left: 16.r),
                   child: Text(
                     'Start Date',
                     style: AppStyles.h6.copyWith(

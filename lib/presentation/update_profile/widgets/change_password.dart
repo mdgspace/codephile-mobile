@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 import '../../../data/constants/assets.dart';
-import '../../../data/constants/colors.dart';
 import '../../../data/constants/styles.dart';
 import '../../components/inputs/text_input.dart';
 import '../../components/widgets/primary_button.dart';
@@ -27,14 +26,14 @@ class ChangePassword extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 10.r),
                       Text(
                         'Setup a new password for Codephile',
                         style: AppStyles.h4.copyWith(
                           fontSize: 16.sp,
                         ),
                       ),
-                      SizedBox(height: 24.h),
+                      SizedBox(height: 24.r),
                       _buildTextField(
                         context,
                         hint: 'Current Password',
@@ -43,7 +42,7 @@ class ChangePassword extends StatelessWidget {
                         obscure: state.passwordFieldObscureState[0],
                         controller: UpdateProfileBloc.controllers['old_pass'],
                       ),
-                      SizedBox(height: 24.h),
+                      SizedBox(height: 24.r),
                       _buildTextField(
                         context,
                         hint: 'New Password',
@@ -52,7 +51,7 @@ class ChangePassword extends StatelessWidget {
                         obscure: state.passwordFieldObscureState[1],
                         controller: UpdateProfileBloc.controllers['new_pass'],
                       ),
-                      SizedBox(height: 24.h),
+                      SizedBox(height: 24.r),
                       _buildTextField(
                         context,
                         hint: 'Re-enter Password',
@@ -92,46 +91,37 @@ class ChangePassword extends StatelessWidget {
     TextEditingController? controller,
     String? compareText,
   }) {
-    return FocusScope(
-      key: Key(hint),
-      onFocusChange: (focus) {
-        if (!focus) return;
-
-        context.read<UpdateProfileBloc>().add(UpdateFocusField(index: index));
+    return TextInput(
+      key: UniqueKey(),
+      hint: hint,
+      validator: (val) {
+        if (val?.isEmpty ?? true) {
+          return 'Required Field';
+        }
+        // Re-enter field
+        if (index == 2 && val != compareText) {
+          return "It doesn't matches with new password";
+        }
+        return null;
       },
-      child: TextInput(
-        hint: hint,
-        validator: (val) {
-          if (val?.isEmpty ?? true) {
-            return 'Required Field';
-          }
-          // Re-enter field
-          if (index == 2 && val != compareText) {
-            return "It doesn't matches with new password";
-          }
-          return null;
-        },
-        onChanged: (val) {},
-        controller: controller,
-        obscureText: obscure,
-        prefix: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 8.r,
-            vertical: 10.r,
-          ),
-          child: SvgPicture.asset(
-            index == 0 ? AppAssets.lock : AppAssets.lockFilled,
-            color: activeIndex == index ? AppColors.primary : AppColors.grey1,
-          ),
+      onChanged: (val) {},
+      controller: controller,
+      obscureText: obscure,
+      prefix: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.r,
+          vertical: 10.r,
         ),
-        suffix: IconButton(
-          onPressed: () {
-            context.read<UpdateProfileBloc>().add(ToggleObscure(index: index));
-          },
-          icon: SvgPicture.asset(
-            obscure ? AppAssets.eyeOff : AppAssets.eyeOn,
-            color: activeIndex == index ? AppColors.primary : AppColors.grey1,
-          ),
+        child: ImageIcon(
+          Svg(index == 0 ? AppAssets.lock : AppAssets.lockFilled),
+        ),
+      ),
+      suffix: IconButton(
+        onPressed: () {
+          context.read<UpdateProfileBloc>().add(ToggleObscure(index: index));
+        },
+        icon: ImageIcon(
+          Svg(obscure ? AppAssets.eyeOff : AppAssets.eyeOn),
         ),
       ),
     );

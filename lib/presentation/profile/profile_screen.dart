@@ -43,16 +43,16 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const ProfileHeader(),
             Padding(
-              padding: EdgeInsets.fromLTRB(16.w, 24.h, 0, 8.h),
+              padding: EdgeInsets.fromLTRB(16.r, 24.r, 0, 8.r),
               child: Text(
                 'Accuracy',
                 style: AppStyles.h1.copyWith(fontSize: 15.sp),
               ),
             ),
             const AccuracyDisplay(),
-            SizedBox(height: 30.h),
+            SizedBox(height: 30.r),
             Padding(
-              padding: EdgeInsets.only(left: 16.w, top: 24.h),
+              padding: EdgeInsets.only(left: 16.r, top: 24.r),
               child: Text(
                 'Number of question solved',
                 style: AppStyles.h1.copyWith(fontSize: 15.sp),
@@ -60,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const QuestionSolved(),
             Padding(
-              padding: EdgeInsets.only(left: 16.w, top: 24.h),
+              padding: EdgeInsets.only(left: 16.r, top: 24.r),
               child: Text(
                 'Status of total Submissions',
                 style: AppStyles.h1.copyWith(fontSize: 15.sp),

@@ -15,51 +15,57 @@ class UpdateProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: context.read<UpdateProfileBloc>().onWillPop,
-      child: Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: UpdateProfileAppBar(),
-        ),
-        body: BlocBuilder<UpdateProfileBloc, UpdateProfileState>(
+    return BlocProvider(
+      create: (context) => UpdateProfileBloc()..add(const Initialize()),
+      child: BlocBuilder<UpdateProfileBloc, UpdateProfileState>(
           builder: (context, state) {
-            if (state.status is Idle) {
-              if (state.showChangePasswordView) {
-                return Padding(
-                  padding: EdgeInsets.all(16.r),
-                  child: ChangePassword(),
-                );
-              }
-              return SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Column(
-                  children: [
-                    const ProfileDetails(),
-                    SizedBox(height: 30.h),
-                    const UpdateHandles(),
-                    SizedBox(height: 30.h),
-                    PrimaryButton(
-                      label: 'Save Changes',
-                      onPressed: () {
-                        if (state.isUpdating) return;
-                        context
-                            .read<UpdateProfileBloc>()
-                            .add(const UpdateUserDetails());
-                      },
-                    ),
-                    SizedBox(height: 30.h),
-                  ],
-                ),
-              );
-            }
+        return WillPopScope(
+          onWillPop: context.read<UpdateProfileBloc>().onWillPop,
+          child: Scaffold(
+            appBar: const PreferredSize(
+              preferredSize: Size.fromHeight(kToolbarHeight),
+              child: UpdateProfileAppBar(),
+            ),
+            body: _buildBody(context, state),
+          ),
+        );
+      }),
+    );
+  }
 
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+  Widget _buildBody(BuildContext context, UpdateProfileState state) {
+    if (state.status is Idle) {
+      if (state.showChangePasswordView) {
+        return Padding(
+          padding: EdgeInsets.all(16.r),
+          child: ChangePassword(),
+        );
+      }
+      return SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 16.r),
+        child: Column(
+          children: [
+            const ProfileDetails(),
+            SizedBox(height: 30.r),
+            const UpdateHandles(),
+            SizedBox(height: 30.r),
+            PrimaryButton(
+              label: 'Save Changes',
+              onPressed: () {
+                if (state.isUpdating) return;
+                context
+                    .read<UpdateProfileBloc>()
+                    .add(const UpdateUserDetails());
+              },
+            ),
+            SizedBox(height: 30.r),
+          ],
         ),
-      ),
+      );
+    }
+
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

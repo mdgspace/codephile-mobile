@@ -2,20 +2,17 @@ part of 'update_profile_bloc.dart';
 
 abstract class UpdateProfileEvent extends Equatable {
   const UpdateProfileEvent();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class Initialize extends UpdateProfileEvent {
   const Initialize();
-
-  @override
-  List<Object?> get props => [];
 }
 
 class SelectImage extends UpdateProfileEvent {
   const SelectImage();
-
-  @override
-  List<Object?> get props => [];
 }
 
 class UpdateInstitute extends UpdateProfileEvent {
@@ -29,9 +26,6 @@ class UpdateInstitute extends UpdateProfileEvent {
 
 class SwitchView extends UpdateProfileEvent {
   const SwitchView();
-
-  @override
-  List<Object?> get props => [];
 }
 
 class UpdateFocusField extends UpdateProfileEvent {
@@ -54,14 +48,8 @@ class ToggleObscure extends UpdateProfileEvent {
 
 class UpdatePassword extends UpdateProfileEvent {
   const UpdatePassword();
-
-  @override
-  List<Object?> get props => [];
 }
 
 class UpdateUserDetails extends UpdateProfileEvent {
   const UpdateUserDetails();
-
-  @override
-  List<Object?> get props => [];
 }

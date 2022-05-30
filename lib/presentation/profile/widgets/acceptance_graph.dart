@@ -36,9 +36,9 @@ class AcceptanceGraph extends StatelessWidget {
             // Section Heading
             Padding(
               padding: EdgeInsets.only(
-                left: 16.w,
-                top: 24.h,
-                bottom: 10.h,
+                left: 16.r,
+                top: 24.r,
+                bottom: 10.r,
               ),
               child: Row(
                 children: [
@@ -94,7 +94,7 @@ class AcceptanceGraph extends StatelessWidget {
                 ...ProfileBloc.monthTriplet(state.currentTriplet!).map(
                   (month) {
                     return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      padding: EdgeInsets.symmetric(horizontal: 25.r),
                       child: Text(
                         month,
                         style: AppStyles.h6,
@@ -118,7 +118,7 @@ class AcceptanceGraph extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  SizedBox(width: 10.w),
+                  SizedBox(width: 10.r),
                   Column(
                     children: ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(
                       (week) {
@@ -132,7 +132,7 @@ class AcceptanceGraph extends StatelessWidget {
                       },
                     ).toList(),
                   ),
-                  SizedBox(width: 10.w),
+                  SizedBox(width: 10.r),
                   // Generate First Week
                   Column(
                     children: [
@@ -200,30 +200,30 @@ class AcceptanceGraph extends StatelessWidget {
                       ],
                     ),
 
-                  SizedBox(width: 10.w),
+                  SizedBox(width: 10.r),
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0),
+              padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text('-5', style: AppStyles.h6.copyWith(fontSize: 12.sp)),
-                  SizedBox(width: 50.w),
+                  SizedBox(width: 50.r),
                   Text('0', style: AppStyles.h6.copyWith(fontSize: 12.sp)),
-                  SizedBox(width: 55.w),
+                  SizedBox(width: 55.r),
                   Text('5', style: AppStyles.h6.copyWith(fontSize: 12.sp)),
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 20.h),
+              padding: EdgeInsets.fromLTRB(20.r, 5.r, 20.r, 20.r),
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Container(
-                  width: 130.w,
-                  height: 10.h,
+                  width: 130.r,
+                  height: 10.r,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [Colors.red, Colors.white, Colors.green],

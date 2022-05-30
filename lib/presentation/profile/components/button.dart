@@ -26,8 +26,8 @@ class Button extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: 6.w,
-          vertical: 5.h,
+          horizontal: 6.r,
+          vertical: 5.r,
         ),
         child: Container(
           decoration: BoxDecoration(

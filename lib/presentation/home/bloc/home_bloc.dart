@@ -32,6 +32,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       StorageService.user = await UserRepository.fetchUserDetails();
     } on Exception catch (err) {
       debugPrint(err.toString());
+      rethrow;
     }
   }
 

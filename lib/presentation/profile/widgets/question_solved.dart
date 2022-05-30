@@ -22,7 +22,7 @@ class QuestionSolved extends StatelessWidget {
                 color: AppColors.lightBlue,
               ),
             ),
-            defaultColumnWidth: FixedColumnWidth(90.w),
+            defaultColumnWidth: FixedColumnWidth(90.r),
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             children: [
               TableRow(

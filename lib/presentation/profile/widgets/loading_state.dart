@@ -19,7 +19,7 @@ class ProfileLoadingState extends StatelessWidget {
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.white1,
+              color: AppColors.grey10,
             ),
           ),
         ),
@@ -27,9 +27,9 @@ class ProfileLoadingState extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.all(8.r),
             child: Container(
-              height: 20.h,
-              width: 180.w,
-              color: AppColors.white1,
+              height: 20.r,
+              width: 180.r,
+              color: AppColors.grey10,
             ),
           );
         }),
@@ -37,13 +37,13 @@ class ProfileLoadingState extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              vertical: 20.h,
-              horizontal: 10.w,
+              vertical: 20.r,
+              horizontal: 10.r,
             ),
             child: Container(
-              height: 20.h,
-              width: 180.w,
-              color: AppColors.white1,
+              height: 20.r,
+              width: 180.r,
+              color: AppColors.grey10,
             ),
           ),
         ),
@@ -53,9 +53,9 @@ class ProfileLoadingState extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.all(10.r),
               child: Container(
-                height: 35.h,
-                width: 35.w,
-                color: AppColors.white1,
+                height: 35.r,
+                width: 35.r,
+                color: AppColors.grey10,
               ),
             );
           }),
@@ -64,13 +64,13 @@ class ProfileLoadingState extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              vertical: 20.h,
-              horizontal: 10.w,
+              vertical: 20.r,
+              horizontal: 10.r,
             ),
             child: Container(
-              height: 20.h,
-              width: 180.w,
-              color: AppColors.white1,
+              height: 20.r,
+              width: 180.r,
+              color: AppColors.grey10,
             ),
           ),
         ),
@@ -81,9 +81,9 @@ class ProfileLoadingState extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.all(8.r),
               child: Container(
-                height: 34.h,
-                width: 90.w,
-                color: AppColors.white1,
+                height: 34.r,
+                width: 90.r,
+                color: AppColors.grey10,
               ),
             );
           }),
