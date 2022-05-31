@@ -24,6 +24,7 @@ class TextInput extends StatelessWidget {
     this.border,
     this.onSubmitted,
     this.prefixIconConstraints,
+    this.validator,
     Key? key,
   })  : assert(
           controller != null || onChanged != null,
@@ -47,11 +48,13 @@ class TextInput extends StatelessWidget {
   final Color? fillColor;
   final InputBorder? border;
   final BoxConstraints? prefixIconConstraints;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      validator: validator,
       decoration: InputDecoration(
         errorText: errorText,
         hintText: hint,

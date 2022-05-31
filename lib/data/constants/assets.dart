@@ -12,6 +12,7 @@ class AppAssets {
   static const String eyeOn = '$_iconsRoot/eye-on.svg';
   static const String eyeOff = '$_iconsRoot/eye-off.svg';
   static const String lock = '$_iconsRoot/lock.svg';
+  static const String lockFilled = '$_iconsRoot/lock_filled.svg';
   static const String person = '$_iconsRoot/person.svg';
   static const String filter = '$_iconsRoot/filter.svg';
   static const String bell = '$_iconsRoot/bell.svg';

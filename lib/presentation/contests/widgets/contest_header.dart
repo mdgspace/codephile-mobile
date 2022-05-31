@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../data/constants/assets.dart';
 import '../../../data/constants/colors.dart';
+import '../../../data/constants/styles.dart';
 import '../bloc/contests_bloc.dart';
 import 'filter_sheet.dart';
 
@@ -15,12 +17,11 @@ class ContestHeader extends StatelessWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: AppColors.white,
-      title: const Text(
+      title: Text(
         'Contest',
-        style: TextStyle(
-          fontSize: 22,
+        style: AppStyles.h4.copyWith(
+          fontSize: 22.sp,
           fontWeight: FontWeight.w600,
-          color: Colors.black,
         ),
       ),
       actions: [

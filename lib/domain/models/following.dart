@@ -6,7 +6,7 @@ part 'following.g.dart';
 @freezed
 class Following with _$Following {
   factory Following({
-    required String id,
+    @JsonKey(name: '_id') required String id,
     required String username,
     String? fullname,
     String? picture,
