@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -28,7 +29,7 @@ class Codephile extends StatelessWidget {
             );
           },
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.onboarding,
+          initialRoute: _getInitialRoute(),
           navigatorObservers: <NavigatorObserver>[
             SentryNavigatorObserver(),
             AppNavigationObserver(),
@@ -46,6 +47,19 @@ class Codephile extends StatelessWidget {
     ImageService.init();
     StorageService.init();
 
+    Future.delayed(const Duration(seconds: 1), FlutterNativeSplash.remove);
+
     return const Codephile();
+  }
+
+  String _getInitialRoute() {
+    if (StorageService.newUser) {
+      return AppRoutes.onboarding;
+    } else if (StorageService.user != null &&
+        StorageService.authToken != null) {
+      return AppRoutes.home;
+    } else {
+      return AppRoutes.login;
+    }
   }
 }
