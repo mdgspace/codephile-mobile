@@ -8,4 +8,5 @@ class AppRoutes {
 
   // Post-Auth
   static const String home = 'home';
+  static const String updateProfile = 'updatePofile';
 }

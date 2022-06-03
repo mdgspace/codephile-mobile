@@ -11,6 +11,7 @@ environment:
 dependencies:
   cached_network_image: ^3.2.0
   card_swiper: ^2.0.1
+  charts_flutter: ^0.12.0
   dio: ^4.0.4
   dropdown_search: ^2.0.1
   equatable: ^2.0.3
@@ -26,6 +27,7 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   flutter_screenutil: 5.0.4
   flutter_svg: ^1.0.3
+  flutter_svg_provider: ^1.0.3
   flutter_typeahead: ^3.2.4
   flutter_web_browser: ^0.17.0
   freezed_annotation: ^1.1.0

@@ -7,8 +7,8 @@ abstract class SearchEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class FetchInstituteList extends SearchEvent {
-  const FetchInstituteList();
+class Init extends SearchEvent {
+  const Init();
 }
 
 class SearchPeople extends SearchEvent {
@@ -25,4 +25,13 @@ class UpdateFilterInstitute extends SearchEvent {
 
 class Reset extends SearchEvent {
   const Reset();
+}
+
+class RecentSearch extends SearchEvent {
+  const RecentSearch({required this.user, this.toAdd = true});
+  final User user;
+  final bool toAdd;
+
+  @override
+  List<Object?> get props => [user, toAdd];
 }

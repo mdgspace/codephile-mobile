@@ -7,6 +7,7 @@ import '../login/login_screen.dart';
 import '../onboarding/onboarding_screen.dart';
 import '../signup/signup_screen.dart';
 import '../signup/verify_screen.dart';
+import '../update_profile/update_profile.dart';
 
 /// Wrapper for a single method to be passed to [GetMaterialApp.onGenerateRoute].
 class AppRouter {
@@ -39,6 +40,12 @@ class AppRouter {
       case AppRoutes.verify:
         return GetPageRoute(
           page: () => VerifyScreen(settings.arguments as Map<String, dynamic>),
+          routeName: settings.name,
+          settings: settings,
+        );
+      case AppRoutes.updateProfile:
+        return GetPageRoute(
+          page: () => const UpdateProfile(),
           routeName: settings.name,
           settings: settings,
         );

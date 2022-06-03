@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../../data/config/config.dart';
+import '../../data/constants/strings.dart';
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
 import '../../utils/auth_token.dart' as auth_token_utils;
 import '../../utils/failures.dart';
+import '../models/activity_details.dart';
 import '../models/following.dart';
 import '../models/sign_up.dart';
 import '../models/submission_status.dart';
@@ -191,19 +193,20 @@ class UserRepository {
     );
 
     if (response['status_code'] == 200) {
+      if (response['data'] == 'null') return <Following>[];
+
       return List<Following>.from(
-        json.decode(response['data']).map((e) => Following.fromJson(e)),
+        response['data'].map((e) => Following.fromJson(e)),
       );
     }
-    return null;
+
+    throw Exception(AppStrings.genericError);
   }
 
   static Future<bool> verifyHandle(String site, String handle) async {
     final endpoint = 'user/verify/$site?handle=$handle';
 
-    final response = await ApiService.post(
-      endpoint,
-    );
+    final response = await ApiService.get(endpoint);
 
     return response['status_code'] == 200;
   }
@@ -224,6 +227,7 @@ class UserRepository {
         _users.add(User.fromJson(user));
       }
     }
+
     return _users;
   }
 
@@ -245,7 +249,7 @@ class UserRepository {
     return [];
   }
 
-  static Future<List<SubmissionStatus>?> getSubmissionStatusData(
+  static Future<SubmissionStatus?> getSubmissionStatusData(
     String id,
   ) async {
     final endpoint = 'graph/status/$id';
@@ -258,14 +262,34 @@ class UserRepository {
     );
 
     if (response['status_code'] == 200) {
-      return List<SubmissionStatus>.from(
-        json.decode(response['data'])?.map((e) => SubmissionStatus.fromJson(e)),
-      );
+      return SubmissionStatus.fromJson(response['data']);
     }
-    return null;
+
+    throw Exception(AppStrings.genericError);
   }
 
-  static Future<int> updatePassword(
+  static Future<List<ActivityDetails>?> getActivityDetails(String id) async {
+    final endpoint = 'graph/activity/$id';
+    final headers = <String, dynamic>{};
+
+    ApiService.addTokenToHeaders(headers);
+    final response = await ApiService.get(
+      endpoint,
+      headers: headers,
+    );
+
+    if (response['status_code'] == 200) {
+      if (response['data'] == 'null') return <ActivityDetails>[];
+
+      return List<ActivityDetails>.from(
+        response['data'].map((e) => ActivityDetails.fromJson(e)),
+      );
+    }
+
+    throw Exception(AppStrings.genericError);
+  }
+
+  static Future updatePassword(
     String oldPassword,
     String newPassword,
   ) async {
@@ -276,13 +300,20 @@ class UserRepository {
     final response = await ApiService.post(
       endpoint,
       headers: headers,
-      data: <String, String>{
+      data: {
         'new_password': newPassword,
         'old_password': oldPassword,
       },
     );
 
-    return response['status_code'];
+    switch (response['status_code']) {
+      case 200:
+        return;
+      case 403:
+        throw const IncorrectCredentials();
+      default:
+        throw const InternalFailure();
+    }
   }
 
   static Future<int> updateUserDetails(Map<String, dynamic>? data) async {
@@ -290,7 +321,7 @@ class UserRepository {
     final headers = <String, dynamic>{};
 
     ApiService.addTokenToHeaders(headers);
-    final response = await ApiService.post(
+    final response = await ApiService.put(
       endpoint,
       headers: headers,
       data: data,

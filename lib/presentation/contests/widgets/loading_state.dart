@@ -28,7 +28,7 @@ class LoadingState extends StatelessWidget {
               children: <Widget>[
                 Container(
                   margin: const EdgeInsets.fromLTRB(0, 15, 0, 10),
-                  width: 150.w,
+                  width: 150.r,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(2),
                     color: const Color(0xFFE5E5E5),
@@ -37,7 +37,7 @@ class LoadingState extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  width: 250.w,
+                  width: 250.r,
                   height: 20,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(2),
@@ -46,7 +46,7 @@ class LoadingState extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                  width: 250.w,
+                  width: 250.r,
                   height: 20,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(2),

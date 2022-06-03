@@ -15,12 +15,13 @@ class User with _$User {
     Handle? handle,
     String? id,
     String? institute,
-    int? noOfFollowing,
+    @JsonKey(name: 'no_of_following') int? noOfFollowing,
     String? picture,
     UserProfile? profiles,
-    List<Submission>? recentSubmissions,
+    @JsonKey(name: 'recent_submissions') List<Submission>? recentSubmissions,
     String? username,
-    SolvedProblemsCount? solvedProblemsCount,
+    @JsonKey(name: 'solved_problems_count')
+        SolvedProblemsCount? solvedProblemsCount,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
