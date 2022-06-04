@@ -9,6 +9,7 @@ import '../../data/constants/styles.dart';
 import '../../data/services/local/image_service.dart';
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
+import '../../data/services/remote/notification_service.dart';
 import '../../domain/repositories/user_repository.dart';
 import 'navigation_observer.dart';
 import 'router.dart';
@@ -47,13 +48,17 @@ class Codephile extends StatelessWidget {
     ApiService.init();
     ImageService.init();
     StorageService.init();
+    NotificationService.init();
+
     if (StorageService.user != null) {
       // Fetch User Details on Startup
       try {
         StorageService.user = await UserRepository.fetchUserDetails();
       } on Exception catch (err) {
         debugPrint(err.toString());
-        rethrow;
+        //rethrow;
+        // Rethrowing error here causes the app
+        // to stuck on the splash screen.
       }
     }
 
