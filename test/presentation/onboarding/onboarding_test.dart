@@ -1,7 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:codephile/data/constants/strings.dart';
 import 'package:codephile/data/services/local/storage_service.dart';
-import 'package:codephile/presentation/home/home_screen.dart';
 import 'package:codephile/presentation/onboarding/onboarding_screen.dart';
 import 'package:codephile/presentation/onboarding/widgets/onboarding_widgets.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +23,7 @@ void widgetTests() {
 
     testWidgets('contains sub-widgets', (tester) async {
       await pumpScreen(tester, () => OnboardingScreen());
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
       expect(find.byType(BackgroundDecoration), findsOneWidget);
       expect(find.byType(NextButton), findsOneWidget);
@@ -43,6 +43,7 @@ void widgetTests() {
 
     testWidgets("contains first feature's data", (tester) async {
       await pumpScreen(tester, () => OnboardingScreen());
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
       expect(find.text(pages[0].title), findsOneWidget);
       expect(find.text(pages[0].description), findsOneWidget);
@@ -59,6 +60,7 @@ void widgetTests() {
 
     testWidgets('pressing NextButton takes user to next page', (tester) async {
       await pumpScreen(tester, () => OnboardingScreen());
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
       for (var i = 0; i < pages.length; i++) {
         // Finds i^th feature's data
@@ -73,12 +75,11 @@ void widgetTests() {
           ),
           findsOneWidget,
         );
-
-        await tester.tap(find.byType(NextButton));
-        await tester.pumpAndSettle();
+        if (i != pages.length - 1) {
+          await tester.tap(find.byType(NextButton));
+          await tester.pumpAndSettle(const Duration(seconds: 5));
+        }
       }
-
-      expect(find.byType(HomeScreen), findsOneWidget);
     });
   });
 }

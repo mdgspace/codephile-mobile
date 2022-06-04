@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -8,6 +9,7 @@ import '../../data/constants/styles.dart';
 import '../../data/services/local/image_service.dart';
 import '../../data/services/local/storage_service.dart';
 import '../../data/services/remote/api_service.dart';
+import '../../data/services/remote/notification_service.dart';
 import '../../domain/repositories/user_repository.dart';
 import 'navigation_observer.dart';
 import 'router.dart';
@@ -29,8 +31,7 @@ class Codephile extends StatelessWidget {
             );
           },
           debugShowCheckedModeBanner: false,
-          // TODO(developers): Update this with the screen you're testing.
-          initialRoute: AppRoutes.home,
+          initialRoute: _getInitialRoute(),
           navigatorObservers: <NavigatorObserver>[
             SentryNavigatorObserver(),
             AppNavigationObserver(),
@@ -47,6 +48,7 @@ class Codephile extends StatelessWidget {
     ApiService.init();
     ImageService.init();
     StorageService.init();
+    NotificationService.init();
 
     if (StorageService.user != null) {
       // Fetch User Details on Startup
@@ -54,10 +56,24 @@ class Codephile extends StatelessWidget {
         StorageService.user = await UserRepository.fetchUserDetails();
       } on Exception catch (err) {
         debugPrint(err.toString());
-        rethrow;
+        //rethrow;
+        // Rethrowing error here causes the app
+        // to stuck on the splash screen.
       }
     }
 
+    Future.delayed(const Duration(seconds: 1), FlutterNativeSplash.remove);
     return const Codephile();
+  }
+
+  String _getInitialRoute() {
+    if (StorageService.newUser) {
+      return AppRoutes.onboarding;
+    } else if (StorageService.user != null &&
+        StorageService.authToken != null) {
+      return AppRoutes.home;
+    } else {
+      return AppRoutes.login;
+    }
   }
 }
