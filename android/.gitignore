@@ -12,3 +12,4 @@ supply_json_key.json
 key.properties
 **/*.keystore
 **/*.jks
+**/*.pem
