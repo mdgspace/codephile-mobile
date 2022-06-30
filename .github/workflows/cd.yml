@@ -16,8 +16,8 @@ jobs:
   deploy:
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
-    # This job will run if the release is based on master branch
-    if: github.event.release.target_commitish == 'master'
+    # This job will run if the release is based on main branch
+    if: github.event.release.target_commitish == 'main'
     steps:
       # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v1
