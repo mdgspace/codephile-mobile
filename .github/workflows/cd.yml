@@ -10,6 +10,7 @@ env:
   RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
   RELEASE_KEYSTORE_PROPERTIES: ${{ secrets.RELEASE_KEYSTORE_PROPERTIES }}
   RELEASE_TYPE: ${{ contains(github.event.release.tag_name, 'internal') && 'internal' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'prod' }}
+  FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
   SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
 jobs:
@@ -39,11 +40,17 @@ jobs:
       # Get flutter dependencies.
       - run: flutter pub get
 
+      # Generate Freezed models
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
+
       # Check for any formatting issues in the code.
       - run: flutter format --set-exit-if-changed .
 
       # Statically analyze the Dart code for any errors.
       - run: flutter analyze .
+
+      #  Provide Firebase config file
+      - run: echo $FIREBASE_CONFIG | base64 --decode > android/app/google-services.json
 
       # Save supply json key for fastlane
       - run: echo "${FASTLANE_SUPPLY_JSON_KEY}" | base64 --decode > android/supply_json_key.json
