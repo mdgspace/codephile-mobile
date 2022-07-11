@@ -15,7 +15,7 @@ class BackgroundDecoration extends StatelessWidget {
           Positioned(
             top: 0,
             left: 0,
-            child: SvgPicture.asset(
+            child: svg.SvgPicture.asset(
               AppAssets.circle1,
               width: 170.r,
             ),
@@ -23,7 +23,7 @@ class BackgroundDecoration extends StatelessWidget {
           Positioned(
             top: 80.r,
             right: 0,
-            child: SvgPicture.asset(
+            child: svg.SvgPicture.asset(
               AppAssets.triangle,
               width: 140.r,
             ),

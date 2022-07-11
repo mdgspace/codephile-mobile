@@ -14,8 +14,6 @@ void blocTests() {
         bloc.state,
         const LoginState(
           rememberMe: true,
-          isUsernameFocused: false,
-          isPasswordFocused: false,
           obscurePassword: true,
           showDialog: false,
           status: Status(),
@@ -60,9 +58,7 @@ void blocTests() {
           ..add(const PasswordInput(''))
           ..add(const UsernameInput('A')),
         expect: () => const <LoginState>[
-          LoginState(isUsernameFocused: true),
-          LoginState(isPasswordFocused: true),
-          LoginState(isUsernameFocused: true, username: 'A'),
+          LoginState(username: 'A'),
         ],
       );
 
@@ -75,12 +71,10 @@ void blocTests() {
         expect: () => const <LoginState>[
           LoginState(
             username: 'username',
-            isUsernameFocused: true,
           ),
           LoginState(
             username: 'username',
             password: 'password',
-            isPasswordFocused: true,
           ),
         ],
       );

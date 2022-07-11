@@ -6,12 +6,6 @@ part of 'login_bloc.dart';
 class LoginState with _$LoginState {
   /// State class for [LoginBloc].
   const factory LoginState({
-    /// Whether the username field is in focus.
-    @Default(false) bool isUsernameFocused,
-
-    /// Whether the password field is in focus.
-    @Default(false) bool isPasswordFocused,
-
     /// Whether the password field should be obscured.
     @Default(true) bool obscurePassword,
 
