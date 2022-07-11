@@ -290,12 +290,12 @@ extension on Ongoing {
   String get platformName => PlatformUtil.getName(platform);
   String get icon => PlatformUtil.getIcon(platform);
   String get time =>
-      'Ends on ${DateFormat('dd, MMMM yyyy hh:mm a').format(endTime)}';
+      'Ends on ${DateFormat('dd MMMM, yyyy hh:mm a').format(endTime)}';
 }
 
 extension on Upcoming {
   String get platformName => PlatformUtil.getName(platform);
   String get icon => PlatformUtil.getIcon(platform);
   String get time =>
-      'Starts on ${DateFormat('dd, MMMM yyyy hh:mm a').format(startTime)}';
+      'Starts on ${DateFormat('dd MMMM, yyyy hh:mm a').format(startTime)}';
 }

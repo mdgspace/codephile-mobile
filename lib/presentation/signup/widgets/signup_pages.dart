@@ -2,6 +2,8 @@ part of 'signup_widgets.dart';
 
 Widget _pageOne() {
   return BlocBuilder<SignUpBloc, SignUpState>(
+    buildWhen: (previous, current) =>
+        previous.isEmailUnique ^ current.isEmailUnique,
     builder: (context, state) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,39 +29,47 @@ Widget _pageOne() {
             'Institute (optional)',
             style: AppStyles.h4.copyWith(fontWeight: FontWeight.w900),
           ),
+          _buildInstituteInput(),
           SizedBox(height: 8.r),
-          TypeAheadFormField<String>(
-            onSuggestionSelected: (value) =>
-                context.read<SignUpBloc>().add(InstituteInput(value)),
-            itemBuilder: (context, suggestion) =>
-                ListTile(title: Text(suggestion)),
-            textFieldConfiguration: TextFieldConfiguration(
-              onChanged: (value) =>
-                  context.read<SignUpBloc>().add(InstituteInput(value)),
-              controller: state.instituteController,
-              decoration: InputDecoration(
-                hintText: 'Enter the name of your institute',
-                hintStyle: AppStyles.h6,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(2.r),
-                  borderSide: const BorderSide(color: AppColors.primary),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.primary,
-                    width: 1.5,
-                  ),
-                ),
+        ],
+      );
+    },
+  );
+}
+
+Widget _buildInstituteInput() {
+  return BlocSelector<SignUpBloc, SignUpState, TextEditingController?>(
+    selector: (state) => state.instituteController,
+    builder: (context, controller) {
+      return TypeAheadFormField<String>(
+        onSuggestionSelected: (value) =>
+            context.read<SignUpBloc>().add(InstituteInput(value)),
+        itemBuilder: (context, suggestion) => ListTile(title: Text(suggestion)),
+        textFieldConfiguration: TextFieldConfiguration(
+          onSubmitted: (value) =>
+              context.read<SignUpBloc>().add(InstituteInput(value)),
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: 'Enter the name of your institute',
+            hintStyle: AppStyles.h6,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(2.r),
+              borderSide: const BorderSide(color: AppColors.primary),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primary,
+                width: 1.5,
               ),
             ),
-            suggestionsCallback: (pattern) {
-              pattern = pattern.toLowerCase();
-              return SignUpBloc.institutes.where(
-                (element) => element.toLowerCase().contains(pattern),
-              );
-            },
           ),
-        ],
+        ),
+        suggestionsCallback: (pattern) {
+          pattern = pattern.toLowerCase();
+          return SignUpBloc.institutes.where(
+            (element) => element.toLowerCase().contains(pattern),
+          );
+        },
       );
     },
   );
@@ -67,6 +77,7 @@ Widget _pageOne() {
 
 Widget _pageTwo() {
   return BlocBuilder<SignUpBloc, SignUpState>(
+    buildWhen: (previous, current) => false,
     builder: (context, state) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +210,7 @@ Widget _pageThree() {
                         border: Border.all(color: AppColors.grey1),
                         borderRadius: BorderRadius.circular(90.r),
                       ),
-                      child: SvgPicture.asset(
+                      child: svg.SvgPicture.asset(
                         AppAssets.defaultUserIcon,
                         fit: BoxFit.fill,
                       ),
@@ -245,6 +256,8 @@ Widget _pageThree() {
 
 Widget _pageFour() {
   return BlocBuilder<SignUpBloc, SignUpState>(
+    buildWhen: (previous, current) =>
+        previous.obscurePassword ^ current.obscurePassword,
     builder: (context, state) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,50 +279,38 @@ Widget _pageFour() {
                 horizontal: 8.r,
                 vertical: 10.r,
               ),
-              child: SvgPicture.asset(
-                AppAssets.person,
-                color: state.isUsernameFocused
-                    ? AppColors.primary
-                    : AppColors.grey1,
+              child: const ImageIcon(
+                Svg(AppAssets.person),
               ),
             ),
           ),
           SizedBox(height: 34.r),
-          Stack(
-            alignment: Alignment.centerRight,
-            children: <Widget>[
-              TextInput(
-                action: TextInputAction.done,
-                hint: 'Password',
-                keyboard: TextInputType.visiblePassword,
-                obscureText: state.obscurePassword,
-                controller: state.passwordController,
-                onChanged: (value) =>
-                    context.read<SignUpBloc>().add(PasswordInput(value)),
-                prefix: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.r,
-                    vertical: 10.r,
-                  ),
-                  child: SvgPicture.asset(
-                    AppAssets.lock,
-                    color: (state.isPasswordFocused)
-                        ? AppColors.primary
-                        : AppColors.grey1,
-                  ),
+          TextInput(
+            action: TextInputAction.done,
+            hint: 'Password',
+            keyboard: TextInputType.visiblePassword,
+            obscureText: state.obscurePassword,
+            controller: state.passwordController,
+            onChanged: (value) =>
+                context.read<SignUpBloc>().add(PasswordInput(value)),
+            prefix: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 8.r,
+                vertical: 10.r,
+              ),
+              child: const ImageIcon(
+                Svg(AppAssets.lock),
+              ),
+            ),
+            suffix: IconButton(
+              icon: ImageIcon(
+                Svg(
+                  state.obscurePassword ? AppAssets.eyeOff : AppAssets.eyeOn,
                 ),
               ),
-              IconButton(
-                icon: SvgPicture.asset(
-                  (state.obscurePassword) ? AppAssets.eyeOff : AppAssets.eyeOn,
-                  color: state.isPasswordFocused
-                      ? AppColors.primary
-                      : AppColors.grey1,
-                ),
-                onPressed: () =>
-                    context.read<SignUpBloc>().add(const ToggleObscure()),
-              ),
-            ],
+              onPressed: () =>
+                  context.read<SignUpBloc>().add(const ToggleObscure()),
+            ),
           ),
         ],
       );

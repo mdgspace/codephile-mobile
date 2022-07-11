@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../domain/models/status.dart';
 import 'bloc/sign_up_bloc.dart';
 import 'widgets/signup_widgets.dart';
 
@@ -16,15 +17,18 @@ class SignUpScreen extends StatelessWidget {
       create: (_) => SignUpBloc()..add(const Initialize()),
       child: SnackBarWrapper(
         child: ScrollAndNavWrapper(
-          child: BlocSelector<SignUpBloc, SignUpState, int>(
-            selector: (state) => state.pageIndex,
-            builder: (context, pageIndex) {
+          child: BlocBuilder<SignUpBloc, SignUpState>(
+            builder: (context, state) {
+              if (state.status is Loading) {
+                return Container();
+              }
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const PopButton(),
                   SizedBox(height: 25.r),
-                  signUpPages[pageIndex](),
+                  signUpPages[state.pageIndex](),
                   SizedBox(height: 25.r),
                 ],
               );

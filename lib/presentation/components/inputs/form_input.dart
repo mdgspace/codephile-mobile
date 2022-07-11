@@ -18,6 +18,8 @@ class FormInput extends StatelessWidget {
     this.maxLines = 1,
     this.obscureText = false,
     this.onChanged,
+    this.onSubmitted,
+    this.onEditingComplete,
     this.prefix,
     Key? key,
   })  : assert(
@@ -34,10 +36,12 @@ class FormInput extends StatelessWidget {
   final String title;
   final String? errorText;
   final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
   final TextInputAction action;
   final TextInputType? keyboard;
   final TextEditingController? controller;
   final Widget? prefix;
+  final Function()? onEditingComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +69,8 @@ class FormInput extends StatelessWidget {
           controller: enabled ? controller : null,
           prefix: prefix,
           errorText: errorText,
+          onEditingComplete: onEditingComplete,
+          onSubmitted: onSubmitted,
         ),
       ],
     );

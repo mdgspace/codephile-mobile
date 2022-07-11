@@ -23,6 +23,7 @@ class TextInput extends StatelessWidget {
     this.fillColor,
     this.border,
     this.onSubmitted,
+    this.onEditingComplete,
     this.prefixIconConstraints,
     this.validator,
     Key? key,
@@ -49,6 +50,7 @@ class TextInput extends StatelessWidget {
   final InputBorder? border;
   final BoxConstraints? prefixIconConstraints;
   final String? Function(String?)? validator;
+  final Function()? onEditingComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +85,7 @@ class TextInput extends StatelessWidget {
       onChanged: onChanged,
       style: AppStyles.h6.copyWith(color: AppColors.grey3),
       textInputAction: action,
+      onEditingComplete: onEditingComplete,
       onFieldSubmitted: onSubmitted,
     );
   }
