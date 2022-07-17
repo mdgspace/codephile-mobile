@@ -58,6 +58,7 @@ void blocTests() {
           ..add(const PasswordInput(''))
           ..add(const UsernameInput('A')),
         expect: () => const <LoginState>[
+          LoginState(),
           LoginState(username: 'A'),
         ],
       );
