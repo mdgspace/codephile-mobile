@@ -15,7 +15,7 @@ class PopButton extends StatelessWidget {
         } else {
           return GestureDetector(
             onTap: () => context.read<SignUpBloc>().add(const Back()),
-            child: SvgPicture.asset(
+            child: svg.SvgPicture.asset(
               AppAssets.arrowBackward,
               width: 16.r,
             ),

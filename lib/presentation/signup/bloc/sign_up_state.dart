@@ -14,12 +14,6 @@ class SignUpState with _$SignUpState {
     /// Whether the name field is in focus.
     @Default(false) bool isNameFocused,
 
-    /// Whether the password field is in focus.
-    @Default(false) bool isPasswordFocused,
-
-    /// Whether the username field is in focus.
-    @Default(false) bool isUsernameFocused,
-
     /// Whether the username entered is unique.
     @Default(true) bool isUsernameUnique,
 
@@ -55,7 +49,7 @@ class SignUpState with _$SignUpState {
     @Default({}) Map<String, TextEditingController?> handleControllers,
 
     /// State of the screen.
-    @Default(Status()) Status status,
+    @Default(Status.loading()) Status status,
   }) = _SignUpState;
 
   const SignUpState._();

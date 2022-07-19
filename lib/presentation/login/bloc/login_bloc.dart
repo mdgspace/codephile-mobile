@@ -29,8 +29,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (!state.isFormFilled()) return;
 
     emit(state.copyWith(
-      isPasswordFocused: false,
-      isUsernameFocused: false,
       status: const Status.loading(),
     ));
 
@@ -84,18 +82,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _updatePasswordInput(PasswordInput event, Emitter<LoginState> emit) {
-    emit(state.copyWith(
-      isPasswordFocused: true,
-      isUsernameFocused: false,
-      password: event.value,
-    ));
+    emit(state.copyWith(password: event.value));
   }
 
   void _updateUsernameInput(UsernameInput event, Emitter<LoginState> emit) {
-    emit(state.copyWith(
-      isUsernameFocused: true,
-      isPasswordFocused: false,
-      username: event.value,
-    ));
+    emit(state.copyWith(username: event.value));
   }
 }

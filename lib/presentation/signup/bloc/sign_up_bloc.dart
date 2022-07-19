@@ -71,6 +71,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   Future<void> _initialize(Initialize event, Emitter<SignUpState> emit) async {
     // initialize controllers
     final newState = state.copyWith(
+      status: const Status(),
       emailController: TextEditingController(),
       instituteController: TextEditingController(),
       nameController: TextEditingController(),
@@ -188,8 +189,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   void _updatePassword(PasswordInput event, Emitter<SignUpState> emit) {
     emit(state.copyWith(
-      isPasswordFocused: true,
-      isUsernameFocused: false,
       passwordController: state.passwordController?.updateWith(event.value),
     ));
   }
@@ -199,8 +198,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     emit(state.copyWith(
-      isUsernameFocused: true,
-      isPasswordFocused: false,
       usernameController: state.usernameController?.updateWith(event.value),
     ));
     if (event.value.length >= 3) {
@@ -228,7 +225,8 @@ extension on TextEditingController {
     final controller = TextEditingController(text: value);
     // ignore: cascade_invocations
     controller.selection = TextSelection.fromPosition(
-      TextPosition(offset: selection.baseOffset),
+      TextPosition(offset: value.length),
+      // TextPosition(offset: selection.baseOffset),
     );
     return controller;
   }
