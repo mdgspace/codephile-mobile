@@ -36,6 +36,7 @@ class PasswordField extends StatelessWidget {
             onPressed: () =>
                 context.read<LoginBloc>().add(const ToggleObscure()),
           ),
+          onEditingComplete: () => FocusScope.of(context).nextFocus(),
         );
       },
     );
