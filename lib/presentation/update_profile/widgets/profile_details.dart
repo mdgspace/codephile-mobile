@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../data/constants/assets.dart';
 import '../../../data/constants/colors.dart';
-import '../../../data/constants/styles.dart';
+// import '../../../data/constants/styles.dart';
 import '../../components/inputs/text_input.dart';
 import '../bloc/update_profile_bloc.dart';
 
@@ -46,9 +46,9 @@ class ProfileDetails extends StatelessWidget {
               previous.user?.institute != current.user?.institute,
           builder: (context, state) {
             return DropdownSearch<String>(
-              showSearchBox: true,
               selectedItem: state.user?.institute,
               items: UpdateProfileBloc.institutes,
+              popupProps: const PopupProps.menu(showSearchBox: true),
               onChanged: (String? institute) {
                 if (institute == null) return;
 
@@ -59,18 +59,19 @@ class ProfileDetails extends StatelessWidget {
             );
           },
         ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: TextButton(
-            onPressed: () {
-              context.read<UpdateProfileBloc>().add(const SwitchView());
-            },
-            child: Text(
-              'Change Password',
-              style: AppStyles.h6.copyWith(color: AppColors.primary),
-            ),
-          ),
-        ),
+        // TODO(aman-singh7): Blocked From backend. Information Needed
+        // Align(
+        //   alignment: Alignment.bottomRight,
+        //   child: TextButton(
+        //     onPressed: () {
+        //       context.read<UpdateProfileBloc>().add(const SwitchView());
+        //     },
+        //     child: Text(
+        //       'Change Password',
+        //       style: AppStyles.h6.copyWith(color: AppColors.primary),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

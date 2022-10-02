@@ -14,6 +14,7 @@ Widget _pageOne() {
             controller: state.nameController,
             onChanged: (value) =>
                 context.read<SignUpBloc>().add(NameInput(value)),
+            onEditingComplete: () => FocusScope.of(context).nextFocus(),
           ),
           SizedBox(height: 34.r),
           FormInput(
@@ -23,6 +24,7 @@ Widget _pageOne() {
             errorText: state.isEmailUnique ? null : AppStrings.duplicateEmail,
             onChanged: (value) =>
                 context.read<SignUpBloc>().add(EmailInput(value)),
+            onEditingComplete: () => FocusScope.of(context).nextFocus(),
           ),
           SizedBox(height: 34.r),
           Text(
@@ -283,6 +285,7 @@ Widget _pageFour() {
                 Svg(AppAssets.person),
               ),
             ),
+            onEditingComplete: () => FocusScope.of(context).nextFocus(),
           ),
           SizedBox(height: 34.r),
           TextInput(
@@ -311,6 +314,7 @@ Widget _pageFour() {
               onPressed: () =>
                   context.read<SignUpBloc>().add(const ToggleObscure()),
             ),
+            onEditingComplete: () => FocusScope.of(context).nextFocus(),
           ),
         ],
       );

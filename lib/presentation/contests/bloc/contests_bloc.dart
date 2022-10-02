@@ -159,33 +159,33 @@ extension on ContestFilter {
 
     if (!platfromCheck) return platfromCheck;
 
-    Duration _maxDuration;
+    Duration maxDuration;
     switch (duration) {
       case 0:
-        _maxDuration = const Duration(hours: 2);
+        maxDuration = const Duration(hours: 2);
         break;
       case 1:
-        _maxDuration = const Duration(hours: 3);
+        maxDuration = const Duration(hours: 3);
         break;
       case 2:
-        _maxDuration = const Duration(hours: 5);
+        maxDuration = const Duration(hours: 5);
         break;
       case 3:
-        _maxDuration = const Duration(days: 1);
+        maxDuration = const Duration(days: 1);
         break;
       case 4:
-        _maxDuration = const Duration(days: 10);
+        maxDuration = const Duration(days: 10);
         break;
       case 5:
-        _maxDuration = const Duration(days: 31);
+        maxDuration = const Duration(days: 31);
         break;
       default:
-        _maxDuration = Duration(days: 1e5.toInt());
+        maxDuration = Duration(days: 1e5.toInt());
     }
 
     final durationCheck = upcoming != null
-        ? upcoming.compareDuration(_maxDuration)
-        : ongoing!.compareDuration(_maxDuration);
+        ? upcoming.compareDuration(maxDuration)
+        : ongoing!.compareDuration(maxDuration);
 
     if (!durationCheck) return durationCheck;
 
@@ -200,17 +200,17 @@ extension on ContestFilter {
 }
 
 extension on Upcoming {
-  bool compareDuration(Duration _duration) {
-    return _duration.compareTo(endTime.difference(startTime)) >= 0;
+  bool compareDuration(Duration duration) {
+    return duration.compareTo(endTime.difference(startTime)) >= 0;
   }
 
-  bool compareStart(DateTime _startDate) {
-    return startTime.isAfter(_startDate);
+  bool compareStart(DateTime startDate) {
+    return startTime.isAfter(startDate);
   }
 }
 
 extension on Ongoing {
-  bool compareDuration(Duration _duration) {
-    return _duration.compareTo(endTime.difference(DateTime.now())) >= 0;
+  bool compareDuration(Duration duration) {
+    return duration.compareTo(endTime.difference(DateTime.now())) >= 0;
   }
 }

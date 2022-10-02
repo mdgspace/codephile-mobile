@@ -63,7 +63,7 @@ class FollowingView extends StatelessWidget {
             itemCount: state.following?.length,
             itemBuilder: (context, index) {
               final user = state.following![index];
-              final _followNotifier = ValueNotifier(true);
+              final followNotifier = ValueNotifier(true);
               return ListTile(
                 leading: SizedBox(
                   width: 35.r,
@@ -89,14 +89,14 @@ class FollowingView extends StatelessWidget {
                 /// will only build its trailing widget, eliminating the need
                 /// to rebuild the whole list
                 trailing: ValueListenableBuilder<bool>(
-                  valueListenable: _followNotifier,
+                  valueListenable: followNotifier,
                   builder: (_, value, child) {
                     if (value) {
                       return FollowingButton(
                         onTap: () async {
                           try {
                             await context.read<ProfileBloc>().unfollow(user.id);
-                            _followNotifier.value = false;
+                            followNotifier.value = false;
                           } on Exception catch (_) {
                             showSnackBar(message: AppStrings.genericError);
                           }
@@ -108,7 +108,7 @@ class FollowingView extends StatelessWidget {
                       onTap: () async {
                         try {
                           await context.read<ProfileBloc>().follow(user.id);
-                          _followNotifier.value = true;
+                          followNotifier.value = true;
                         } on Exception catch (_) {
                           showSnackBar(message: AppStrings.genericError);
                         }

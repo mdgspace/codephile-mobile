@@ -18,7 +18,7 @@ class AcceptanceGraph extends StatelessWidget {
             (previous.currentTriplet != current.currentTriplet);
       },
       builder: (context, state) {
-        final _bloc = context.read<ProfileBloc>();
+        final bloc = context.read<ProfileBloc>();
         var day = 0;
 
         final firstWeekDay = util.DateUtils.fistDayofMonth(
@@ -67,7 +67,7 @@ class AcceptanceGraph extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      _bloc.add(const UpdateYear(increment: true));
+                      bloc.add(const UpdateYear(increment: true));
                     },
                     icon: Icon(
                       Icons.chevron_right,
@@ -83,7 +83,7 @@ class AcceptanceGraph extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    _bloc.add(const UpdateMonth(increment: false));
+                    bloc.add(const UpdateMonth(increment: false));
                   },
                   icon: Icon(
                     Icons.chevron_left,
@@ -104,7 +104,7 @@ class AcceptanceGraph extends StatelessWidget {
                 ).toList(),
                 IconButton(
                   onPressed: () {
-                    _bloc.add(const UpdateMonth(increment: true));
+                    bloc.add(const UpdateMonth(increment: true));
                   },
                   icon: Icon(
                     Icons.chevron_right,
@@ -149,7 +149,7 @@ class AcceptanceGraph extends StatelessWidget {
                           width: 20.r,
                           height: 20.r,
                           margin: EdgeInsets.all(2.r),
-                          color: _bloc.getCellColor(util.DateUtils.getDateTime(
+                          color: bloc.getCellColor(util.DateUtils.getDateTime(
                               day, state.currentTriplet!, state.currentYear!)),
                         );
                       }),
@@ -165,9 +165,10 @@ class AcceptanceGraph extends StatelessWidget {
                             width: 20.r,
                             height: 20.r,
                             margin: EdgeInsets.all(2.r),
-                            color: _bloc.getCellColor(
-                                util.DateUtils.getDateTime(day,
-                                    state.currentTriplet!, state.currentYear!)),
+                            color: bloc.getCellColor(util.DateUtils.getDateTime(
+                                day,
+                                state.currentTriplet!,
+                                state.currentYear!)),
                           );
                         }),
                       );
@@ -185,9 +186,10 @@ class AcceptanceGraph extends StatelessWidget {
                             width: 20.r,
                             height: 20.r,
                             margin: EdgeInsets.all(2.r),
-                            color: _bloc.getCellColor(
-                                util.DateUtils.getDateTime(day,
-                                    state.currentTriplet!, state.currentYear!)),
+                            color: bloc.getCellColor(util.DateUtils.getDateTime(
+                                day,
+                                state.currentTriplet!,
+                                state.currentYear!)),
                           );
                         }),
                         ...List.generate(7 - lastWeekDays, (_) {

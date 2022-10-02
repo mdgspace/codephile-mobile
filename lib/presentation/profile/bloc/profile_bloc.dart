@@ -38,43 +38,43 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       _user = await UserRepository.fetchUserDetails(uid: event.userId);
     }
 
-    SubmissionStatus? _subStats;
-    List<ActivityDetails>? _activityDetails;
+    SubmissionStatus? subStats;
+    List<ActivityDetails>? activityDetails;
     // TODO(aman-singh7): Throw specific Error
     try {
       if (_user == null) throw Exception('User not found!!');
       _followingList = await UserRepository.getFollowingList();
 
-      _subStats = await UserRepository.getSubmissionStatusData(_user!.id!);
+      subStats = await UserRepository.getSubmissionStatusData(_user!.id!);
 
-      _activityDetails = await UserRepository.getActivityDetails(_user!.id!);
+      activityDetails = await UserRepository.getActivityDetails(_user!.id!);
     } on Exception catch (_) {
       emit(state.copyWith(status: const Status.error(AppStrings.genericError)));
       return;
     }
 
-    for (final activity in _activityDetails ?? <ActivityDetails>[]) {
+    for (final activity in activityDetails ?? <ActivityDetails>[]) {
       if (activity.createdAt == null) continue;
       _activity[activity.createdAt!] = activity.correct;
     }
 
-    bool? _isFollowing;
+    bool? isFollowing;
     for (final follower in _followingList ?? <Following>[]) {
       if (follower.id == event.userId) {
-        _isFollowing = true;
+        isFollowing = true;
         break;
       }
     }
 
-    _isFollowing ??= false;
+    isFollowing ??= false;
 
     emit(state.copyWith(
       status: const Status(),
       user: _user,
       following: _followingList,
-      submissionStatus: _subStats,
+      submissionStatus: subStats,
       personalProfile: isSelfProfile,
-      isFollowing: _isFollowing,
+      isFollowing: isFollowing,
       currentYear: _currentYear,
       currentTriplet: _currentTriplet,
       showFollowing: false,
@@ -126,14 +126,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       throw Exception(AppStrings.genericError);
     }
 
-    var _tempUser = StorageService.user;
-    _tempUser = _tempUser?.copyWith(
-      noOfFollowing: (_tempUser.noOfFollowing ?? 0) + 1,
+    var tempUser = StorageService.user;
+    tempUser = tempUser?.copyWith(
+      noOfFollowing: (tempUser.noOfFollowing ?? 0) + 1,
     );
-    StorageService.user = _tempUser;
-    if (_user?.id != _tempUser?.id) return;
+    StorageService.user = tempUser;
+    if (_user?.id != tempUser?.id) return;
 
-    _user = _tempUser;
+    _user = tempUser;
   }
 
   Future unfollow(String userId) async {
@@ -143,14 +143,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       throw Exception(AppStrings.genericError);
     }
 
-    var _tempUser = StorageService.user;
-    _tempUser = _tempUser?.copyWith(
-      noOfFollowing: (_tempUser.noOfFollowing ?? 0) - 1,
+    var tempUser = StorageService.user;
+    tempUser = tempUser?.copyWith(
+      noOfFollowing: (tempUser.noOfFollowing ?? 0) - 1,
     );
-    StorageService.user = _tempUser;
-    if (_user?.id != _tempUser?.id) return;
+    StorageService.user = tempUser;
+    if (_user?.id != tempUser?.id) return;
 
-    _user = _tempUser;
+    _user = tempUser;
   }
 
   // Index -> Index%4

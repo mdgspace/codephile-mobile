@@ -11,13 +11,13 @@ import '../../utils/pump_screen.dart';
 
 void widgetTests() {
   group('OnboardingScreen -', () {
-    Future<void> _initHive() async {
+    Future<void> initHive() async {
       await Hive.initFlutter();
       await Hive.openBox(AppStrings.hiveBoxName);
     }
 
     setUpAll(() async {
-      await _initHive();
+      await initHive();
       StorageService.init();
     });
 

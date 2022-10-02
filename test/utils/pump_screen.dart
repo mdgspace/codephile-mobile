@@ -9,10 +9,10 @@ Future<void> pumpScreen(WidgetTester tester, Widget Function() screen) async {
   await tester.pumpWidget(
     ScreenUtilInit(
       designSize: const Size(360, 640),
-      builder: () {
+      builder: (context, _) {
         return GetMaterialApp(
           builder: (context, widget) {
-            ScreenUtil.setContext(context);
+            // ScreenUtil.setContext(context);
             return MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
               child: widget!,

@@ -22,7 +22,6 @@ class PasswordField extends StatelessWidget {
               horizontal: 8.r,
               vertical: 10.r,
             ),
-            // TODO(BURG3R5): Deal with Focus transfer.
             child: const ImageIcon(
               Svg(AppAssets.lock),
             ),
@@ -36,6 +35,7 @@ class PasswordField extends StatelessWidget {
             onPressed: () =>
                 context.read<LoginBloc>().add(const ToggleObscure()),
           ),
+          onEditingComplete: () => FocusScope.of(context).nextFocus(),
         );
       },
     );

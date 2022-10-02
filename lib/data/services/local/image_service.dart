@@ -34,6 +34,12 @@ class ImageService {
       cropStyle: CropStyle.circle,
       compressFormat: ImageCompressFormat.png,
     );
-    return croppedImage;
+
+    File? file;
+    if (croppedImage != null) {
+      file = File(croppedImage.path);
+    }
+
+    return file;
   }
 }

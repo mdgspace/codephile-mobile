@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../data/constants/routes.dart';
+import '../../data/constants/strings.dart';
 import '../../data/constants/styles.dart';
 import '../../data/services/local/image_service.dart';
 import '../../data/services/local/storage_service.dart';
@@ -21,10 +22,9 @@ class Codephile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(360, 640),
-      builder: () {
+      builder: (context, _) {
         return GetMaterialApp(
           builder: (context, widget) {
-            ScreenUtil.setContext(context);
             return MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
               child: widget!,
@@ -50,7 +50,7 @@ class Codephile extends StatelessWidget {
     StorageService.init();
     NotificationService.init();
 
-    if (StorageService.user != null) {
+    if (StorageService.exists(AppStrings.userKey, checkForNull: true)) {
       // Fetch User Details on Startup
       try {
         StorageService.user = await UserRepository.fetchUserDetails();
