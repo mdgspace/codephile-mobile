@@ -50,7 +50,7 @@ class Codephile extends StatelessWidget {
     StorageService.init();
     NotificationService.init();
 
-    if (StorageService.exists(AppStrings.userKey)) {
+    if (StorageService.exists(AppStrings.userKey, checkForNull: true)) {
       // Fetch User Details on Startup
       try {
         StorageService.user = await UserRepository.fetchUserDetails();
