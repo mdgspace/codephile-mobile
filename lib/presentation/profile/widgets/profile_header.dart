@@ -10,6 +10,7 @@ import '../../../data/constants/colors.dart';
 import '../../../data/constants/routes.dart';
 import '../../../data/constants/strings.dart';
 import '../../../data/constants/styles.dart';
+import '../../../data/services/local/storage_service.dart';
 import '../../../domain/repositories/user_repository.dart';
 import '../../../utils/snackbar.dart';
 import '../bloc/profile_bloc.dart';
@@ -24,7 +25,7 @@ class ProfileHeader extends StatelessWidget {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         // Follow Notifier
-        final _followNotifier = ValueNotifier(state.isFollowing);
+        final followNotifier = ValueNotifier(state.isFollowing);
         return Container(
           color: AppColors.primary,
           child: Column(
@@ -56,7 +57,7 @@ class ProfileHeader extends StatelessWidget {
                     const Spacer(flex: 2),
                     IconButton(
                       onPressed: () async {
-                        final _bloc = context.read<ProfileBloc>();
+                        final bloc = context.read<ProfileBloc>();
                         showMenu(
                           context: context,
                           position: RelativeRect.fromLTRB(100.r, 70.r, 0, 0),
@@ -75,7 +76,7 @@ class ProfileHeader extends StatelessWidget {
                                         ?.then((value) {
                                       if (value == null) return;
 
-                                      _bloc.add(const FetchDetails());
+                                      bloc.add(const FetchDetails());
                                     });
                                   },
                                 );
@@ -97,6 +98,7 @@ class ProfileHeader extends StatelessWidget {
                               onTap: () async {
                                 final res = await UserRepository.logout();
                                 if (res) {
+                                  StorageService.delete(AppStrings.userKey);
                                   Get.offNamed(AppRoutes.login);
                                   return;
                                 }
@@ -199,7 +201,7 @@ class ProfileHeader extends StatelessWidget {
                             horizontal: 16.r,
                           ),
                           child: ValueListenableBuilder<bool>(
-                            valueListenable: _followNotifier,
+                            valueListenable: followNotifier,
                             builder: (_, value, child) {
                               if (value) {
                                 return FollowingButton(
@@ -208,7 +210,7 @@ class ProfileHeader extends StatelessWidget {
                                       await context
                                           .read<ProfileBloc>()
                                           .unfollow(state.user!.id!);
-                                      _followNotifier.value = false;
+                                      followNotifier.value = false;
                                     } on Exception catch (_) {
                                       showSnackBar(
                                           message: AppStrings.genericError);
@@ -223,7 +225,7 @@ class ProfileHeader extends StatelessWidget {
                                     await context
                                         .read<ProfileBloc>()
                                         .follow(state.user!.id!);
-                                    _followNotifier.value = true;
+                                    followNotifier.value = true;
                                   } on Exception catch (_) {
                                     showSnackBar(
                                         message: AppStrings.genericError);

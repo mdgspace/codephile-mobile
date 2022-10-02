@@ -221,14 +221,14 @@ class UserRepository {
       headers: headers,
     );
 
-    final _users = <User>[];
+    final users = <User>[];
     if (response['status_code'] == 200) {
       for (final user in response['data'] ?? []) {
-        _users.add(User.fromJson(user));
+        users.add(User.fromJson(user));
       }
     }
 
-    return _users;
+    return users;
   }
 
   /// Get a list the names of recognized institutes.

@@ -25,7 +25,6 @@ class UpdateProfileBloc extends Bloc<UpdateProfileEvent, UpdateProfileState> {
     on<SelectImage>(_onSelectImage);
     on<UpdateInstitute>(_onUpdateInstitute);
     on<SwitchView>(_onSwitchView);
-    on<UpdateFocusField>(_onUpdateFocusField);
     on<ToggleObscure>(_onToggleObscure);
     on<UpdatePassword>(_onUpdatePassword);
     on<UpdateUserDetails>(_onUpdateUserDetails);
@@ -66,9 +65,9 @@ class UpdateProfileBloc extends Bloc<UpdateProfileEvent, UpdateProfileState> {
   }
 
   void _onInitialize(Initialize event, Emitter<UpdateProfileState> emit) async {
-    final _instituteList = await UserRepository.getInstituteList();
-    if (_instituteList.isNotEmpty) {
-      institutes = _instituteList;
+    final instituteList = await UserRepository.getInstituteList();
+    if (instituteList.isNotEmpty) {
+      institutes = instituteList;
     }
 
     _initializeTextField();
@@ -97,15 +96,7 @@ class UpdateProfileBloc extends Bloc<UpdateProfileEvent, UpdateProfileState> {
     controllers['old_pass']?.text = '';
     controllers['new_pass']?.text = '';
     controllers['re_enter']?.text = '';
-    emit(state.copyWith(
-      showChangePasswordView: !currentState,
-      activePasswordTextField: -1,
-    ));
-  }
-
-  void _onUpdateFocusField(
-      UpdateFocusField event, Emitter<UpdateProfileState> emit) {
-    emit(state.copyWith(activePasswordTextField: event.index));
+    emit(state.copyWith(showChangePasswordView: !currentState));
   }
 
   void _onToggleObscure(ToggleObscure event, Emitter<UpdateProfileState> emit) {
@@ -140,23 +131,23 @@ class UpdateProfileBloc extends Bloc<UpdateProfileEvent, UpdateProfileState> {
     isChanged = false;
     emit(state.copyWith(isUpdating: true));
 
-    final _errors = <String, dynamic>{};
+    final errors = <String, dynamic>{};
 
     /// Name Field Validation
     isChanged |= controllers['name']!.text.trim() != state.user?.fullname;
     if (controllers['name']!.text.isEmpty) {
-      _errors['name'] = 'Required Field';
+      errors['name'] = 'Required Field';
     }
 
     /// Username Field Validation
     if (controllers['username']!.text.isEmpty) {
-      _errors['username'] = 'Required Field';
+      errors['username'] = 'Required Field';
     } else if (controllers['username']?.text.trim() != _currentUser.username) {
       isChanged = true;
       final res = await UserRepository.isUsernameAvailable(
           controllers['username']!.text.trim());
 
-      if (!res) _errors['username'] = 'Already Taken';
+      if (!res) errors['username'] = 'Already Taken';
     }
 
     /// Handles Validation
@@ -168,35 +159,35 @@ class UpdateProfileBloc extends Bloc<UpdateProfileEvent, UpdateProfileState> {
       'leetcode'
     ];
     for (final platform in platforms) {
-      final _handle = controllers[platform]!.text.trim();
+      final handle = controllers[platform]!.text.trim();
 
-      if (_handle.isEmpty) continue;
+      if (handle.isEmpty) continue;
 
-      if (!compareHandles(platform, _handle)) {
+      if (!compareHandles(platform, handle)) {
         isChanged |= true;
-        final res = await UserRepository.verifyHandle(platform, _handle);
+        final res = await UserRepository.verifyHandle(platform, handle);
 
-        if (!res) _errors[platform] = 'Invalid Handle';
+        if (!res) errors[platform] = 'Invalid Handle';
       }
     }
 
     /// Returns if errors are not empty
-    if (_errors.keys.isNotEmpty || !isChanged) {
-      emit(state.copyWith(isUpdating: false, errors: _errors));
+    if (errors.keys.isNotEmpty || !isChanged) {
+      emit(state.copyWith(isUpdating: false, errors: errors));
       return;
     }
 
-    final _updatedData = <String, dynamic>{};
-    _updatedData['fullname'] = controllers['name']?.text.trim();
-    _updatedData['username'] = controllers['username']?.text.trim();
-    _updatedData['institute'] = state.user!.institute;
-    _updatedData['handle.codechef'] = controllers['codechef']?.text.trim();
-    _updatedData['handle.codeforces'] = controllers['codeforces']?.text.trim();
-    _updatedData['handle.hackerrank'] = controllers['hackerrank']?.text.trim();
-    _updatedData['handle.spoj'] = controllers['spoj']?.text.trim();
-    _updatedData['handle.leetcode'] = controllers['leetcode']?.text.trim();
+    final updatedData = <String, dynamic>{};
+    updatedData['fullname'] = controllers['name']?.text.trim();
+    updatedData['username'] = controllers['username']?.text.trim();
+    updatedData['institute'] = state.user!.institute;
+    updatedData['handle.codechef'] = controllers['codechef']?.text.trim();
+    updatedData['handle.codeforces'] = controllers['codeforces']?.text.trim();
+    updatedData['handle.hackerrank'] = controllers['hackerrank']?.text.trim();
+    updatedData['handle.spoj'] = controllers['spoj']?.text.trim();
+    updatedData['handle.leetcode'] = controllers['leetcode']?.text.trim();
 
-    final statusCode = await UserRepository.updateUserDetails(_updatedData);
+    final statusCode = await UserRepository.updateUserDetails(updatedData);
 
     if (state.image != null) {
       await UserRepository.uploadProfilePicture(state.image!);

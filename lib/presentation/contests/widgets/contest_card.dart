@@ -97,7 +97,7 @@ class ContestCard extends StatelessWidget {
               builder: (context, value, _) {
                 return IconButton(
                   onPressed: () {
-                    final _bloc = context.read<ContestsBloc>();
+                    final bloc = context.read<ContestsBloc>();
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -208,7 +208,7 @@ class ContestCard extends StatelessWidget {
                               TextButton(
                                 onPressed: () {
                                   _notifier.value = false;
-                                  _bloc.pendingNotification
+                                  bloc.pendingNotification
                                       .remove(upcoming!.name);
 
                                   NotificationService.cancelNotification(
@@ -234,9 +234,9 @@ class ContestCard extends StatelessWidget {
                               onPressed: () {
                                 if (upcoming != null) {
                                   _notifier.value = true;
-                                  if (!_bloc.pendingNotification
+                                  if (!bloc.pendingNotification
                                       .contains(upcoming!.name)) {
-                                    _bloc.pendingNotification
+                                    bloc.pendingNotification
                                         .add(upcoming!.name);
                                   }
                                   NotificationService.setNotification(

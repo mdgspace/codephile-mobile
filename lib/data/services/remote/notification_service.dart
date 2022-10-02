@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -13,20 +15,17 @@ class NotificationService {
         'channelName',
         importance: Importance.max,
       ),
-      iOS: IOSNotificationDetails(),
+      iOS: DarwinNotificationDetails(),
     );
   }
 
   static Future init() async {
     const settings = InitializationSettings(
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
-      iOS: IOSInitializationSettings(),
+      iOS: DarwinInitializationSettings(),
     );
 
-    await _notification.initialize(
-      settings,
-      onSelectNotification: (payload) {},
-    );
+    await _notification.initialize(settings);
 
     tz.initializeTimeZones();
     final locationName = await FlutterNativeTimezone.getLocalTimezone();

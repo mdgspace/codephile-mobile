@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'grouped_feed.freezed.dart';
 part 'grouped_feed.g.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class GroupedFeed with _$GroupedFeed {
   factory GroupedFeed({
     required String username,

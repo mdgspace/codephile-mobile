@@ -77,16 +77,18 @@ class FilterSearch extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
                   ),
                   child: DropdownSearch<String>(
-                    showSearchBox: true,
                     selectedItem: state.selectedInstitute,
+                    popupProps: const PopupProps.menu(showSearchBox: true),
                     items: SearchBloc.institutes,
                     onChanged: (institute) {
                       if (institute == null) return;
                       bloc.updatedFilter = institute;
                     },
-                    dropdownSearchDecoration: const InputDecoration(
-                      hintText: 'Select Institute',
-                      contentPadding: EdgeInsets.all(8),
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        hintText: 'Select Institute',
+                        contentPadding: EdgeInsets.all(8),
+                      ),
                     ),
                   ),
                 ),

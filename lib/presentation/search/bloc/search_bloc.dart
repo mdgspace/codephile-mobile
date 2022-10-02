@@ -89,17 +89,17 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   void _onRecentSearch(RecentSearch event, Emitter<SearchState> emit) {
-    final _recent = state.recentSearches;
+    final recent = state.recentSearches;
     if (event.toAdd) {
-      _recent.insert(0, event.user);
+      recent.insert(0, event.user);
     } else {
-      _recent.remove(event.user);
+      recent.remove(event.user);
     }
 
-    StorageService.recentSearches = _recent;
+    StorageService.recentSearches = recent;
 
     emit(state.copyWith(
-      recentSearches: [..._recent],
+      recentSearches: [...recent],
       count: state.count + 1,
     ));
   }

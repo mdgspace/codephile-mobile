@@ -46,9 +46,9 @@ class ProfileDetails extends StatelessWidget {
               previous.user?.institute != current.user?.institute,
           builder: (context, state) {
             return DropdownSearch<String>(
-              showSearchBox: true,
               selectedItem: state.user?.institute,
               items: UpdateProfileBloc.institutes,
+              popupProps: const PopupProps.menu(showSearchBox: true),
               onChanged: (String? institute) {
                 if (institute == null) return;
 

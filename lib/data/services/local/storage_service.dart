@@ -103,6 +103,6 @@ class StorageService {
     }
   }
 
-  static set filter(ContestFilter? _filter) =>
-      _set(AppStrings.filterKey, json.encode(_filter!.toJson()));
+  static set filter(ContestFilter? filter) =>
+      _set(AppStrings.filterKey, json.encode(filter!.toJson()));
 }

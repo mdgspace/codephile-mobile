@@ -138,17 +138,17 @@ class FilterSheet extends StatelessWidget {
                   divisions: 6,
                   value: state.duration!.toDouble(),
                   label: PlatformUtil.getLabel(state.duration),
-                  onChanged: (_value) {
+                  onChanged: (value) {
                     context
                         .read<ContestsBloc>()
-                        .add(UpdateFilter(duration: _value.toInt()));
+                        .add(UpdateFilter(duration: value.toInt()));
                   },
-                  onChangeEnd: (_value) {
+                  onChangeEnd: (value) {
                     context.read<ContestsBloc>().add(
                           UpdateFilter(
-                            duration: _value.toInt(),
+                            duration: value.toInt(),
                             updatedFilter: state.filter!.copyWith(
-                              duration: _value.toInt(),
+                              duration: value.toInt(),
                             ),
                           ),
                         );
