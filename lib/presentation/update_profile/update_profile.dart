@@ -51,6 +51,7 @@ class UpdateProfile extends StatelessWidget {
             SizedBox(height: 30.r),
             PrimaryButton(
               label: 'Save Changes',
+              isLoading: state.isUpdating,
               onPressed: () {
                 if (state.isUpdating) return;
                 context

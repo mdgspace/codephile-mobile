@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'contest_filter.freezed.dart';
 part 'contest_filter.g.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class ContestFilter extends Equatable with _$ContestFilter {
   const factory ContestFilter({
     int? duration,

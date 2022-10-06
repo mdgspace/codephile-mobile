@@ -161,13 +161,13 @@ class UpdateProfileBloc extends Bloc<UpdateProfileEvent, UpdateProfileState> {
     for (final platform in platforms) {
       final handle = controllers[platform]!.text.trim();
 
-      if (handle.isEmpty) continue;
-
       if (!compareHandles(platform, handle)) {
         isChanged |= true;
-        final res = await UserRepository.verifyHandle(platform, handle);
+        if (handle.isNotEmpty) {
+          final res = await UserRepository.verifyHandle(platform, handle);
 
-        if (!res) errors[platform] = 'Invalid Handle';
+          if (!res) errors[platform] = 'Invalid Handle';
+        }
       }
     }
 
@@ -209,19 +209,19 @@ class UpdateProfileBloc extends Bloc<UpdateProfileEvent, UpdateProfileState> {
   bool compareHandles(String platform, String value) {
     switch (platform) {
       case 'codechef':
-        return value == state.user?.handle?.codechef;
+        return value.compareTo(state.user?.handle?.codechef ?? '') == 0;
 
       case 'codeforces':
-        return value == state.user?.handle?.codeforces;
+        return value.compareTo(state.user?.handle?.codeforces ?? '') == 0;
 
       case 'hackerrank':
-        return value == state.user?.handle?.hackerrank;
+        return value.compareTo(state.user?.handle?.hackerrank ?? '') == 0;
 
       case 'spoj':
-        return value == state.user?.handle?.spoj;
+        return value.compareTo(state.user?.handle?.spoj ?? '') == 0;
 
       case 'leetcode':
-        return value == state.user?.handle?.leetcode;
+        return value.compareTo(state.user?.handle?.leetcode ?? '') == 0;
 
       default:
         return false;
