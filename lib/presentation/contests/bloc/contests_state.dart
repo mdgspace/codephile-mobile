@@ -1,6 +1,6 @@
 part of 'contests_bloc.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class ContestsState extends Equatable with _$ContestsState {
   const factory ContestsState({
     @Default(Status.loading()) Status status,

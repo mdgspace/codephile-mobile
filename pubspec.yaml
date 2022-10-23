@@ -3,7 +3,7 @@ description: Codephile.
 
 publish_to: 'none'
 
-version: 1.0.0+17
+version: 1.0.0+19
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -15,14 +15,14 @@ dependencies:
   dio: ^4.0.4
   dropdown_search: ^5.0.3
   equatable: ^2.0.3
-  firebase_core: ^1.11.0
-  firebase_crashlytics: ^2.4.5
-  firebase_messaging: ^13.0.4
-  firebase_remote_config: ^2.0.19
+  firebase_core: ^2.1.0
+  firebase_crashlytics: ^3.0.2
+  firebase_messaging: ^14.0.2
+  firebase_remote_config: ^3.0.2
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
-  flutter_local_notifications: ^11.0.1
+  flutter_local_notifications: ^12.0.2
   flutter_native_splash: ^2.1.6
   flutter_native_timezone: ^2.0.0
   flutter_screenutil: ^5.5.4

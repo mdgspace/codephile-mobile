@@ -1,6 +1,6 @@
 part of 'feed_bloc.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class FeedState with _$FeedState {
   const factory FeedState({
     @Default(Status.loading()) Status status,

@@ -1,6 +1,6 @@
 part of 'search_bloc.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class SearchState with _$SearchState {
   const factory SearchState({
     @Default(Status.loading()) Status status,
