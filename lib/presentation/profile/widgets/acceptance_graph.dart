@@ -20,7 +20,6 @@ class AcceptanceGraph extends StatelessWidget {
       },
       builder: (context, state) {
         final bloc = context.read<ProfileBloc>();
-        print(bloc.state.user);
         var day = 0;
 
         final firstWeekDay = util.DateUtils.fistDayofMonth(
