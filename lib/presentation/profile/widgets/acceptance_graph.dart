@@ -15,10 +15,13 @@ class AcceptanceGraph extends StatelessWidget {
     return BlocBuilder<ProfileBloc, ProfileState>(
       buildWhen: (previous, current) {
         return (previous.currentYear != current.currentYear) ||
-            (previous.currentTriplet != current.currentTriplet);
+            (previous.currentTriplet != current.currentTriplet) ||
+            (previous.user != current.user);
       },
       builder: (context, state) {
+        print("Acceptance Graph Build");
         final bloc = context.read<ProfileBloc>();
+        print(bloc.state.user);
         var day = 0;
 
         final firstWeekDay = util.DateUtils.fistDayofMonth(
