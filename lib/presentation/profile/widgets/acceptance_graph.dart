@@ -19,7 +19,6 @@ class AcceptanceGraph extends StatelessWidget {
             (previous.user != current.user);
       },
       builder: (context, state) {
-        print("Acceptance Graph Build");
         final bloc = context.read<ProfileBloc>();
         print(bloc.state.user);
         var day = 0;
