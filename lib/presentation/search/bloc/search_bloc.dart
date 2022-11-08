@@ -91,7 +91,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   void _onRecentSearch(RecentSearch event, Emitter<SearchState> emit) {
     final recent = state.recentSearches;
     if (event.toAdd) {
-      recent.insert(0, event.user);
+      if (!recent.contains(event.user)) {
+        recent.insert(0, event.user);
+      }
     } else {
       recent.remove(event.user);
     }
