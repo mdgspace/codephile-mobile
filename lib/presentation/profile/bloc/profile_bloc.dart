@@ -53,6 +53,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       return;
     }
 
+    _activity.clear();
     for (final activity in activityDetails ?? <ActivityDetails>[]) {
       if (activity.createdAt == null) continue;
       _activity[activity.createdAt!] = activity.correct;

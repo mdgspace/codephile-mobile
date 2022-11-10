@@ -15,7 +15,8 @@ class AcceptanceGraph extends StatelessWidget {
     return BlocBuilder<ProfileBloc, ProfileState>(
       buildWhen: (previous, current) {
         return (previous.currentYear != current.currentYear) ||
-            (previous.currentTriplet != current.currentTriplet);
+            (previous.currentTriplet != current.currentTriplet) ||
+            (previous.user != current.user);
       },
       builder: (context, state) {
         final bloc = context.read<ProfileBloc>();
