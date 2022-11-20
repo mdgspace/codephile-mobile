@@ -8,6 +8,7 @@ import '../../../data/constants/strings.dart';
 import '../../../data/constants/styles.dart';
 import '../../../utils/snackbar.dart';
 import '../../../utils/user_util.dart';
+import '../../home/bloc/home_bloc.dart';
 import '../bloc/profile_bloc.dart';
 import '../components/follow_button.dart';
 import '../components/following_button.dart';
@@ -65,6 +66,15 @@ class FollowingView extends StatelessWidget {
               final user = state.following![index];
               final followNotifier = ValueNotifier(true);
               return ListTile(
+                onTap: () {
+                  context
+                      .read<ProfileBloc>()
+                      .add(FetchDetails(userId: user.id));
+
+                  context
+                      .read<HomeBloc>()
+                      .add(const BottomNavItemPressed(index: 3));
+                },
                 leading: SizedBox(
                   width: 35.r,
                   child: CachedNetworkImage(
