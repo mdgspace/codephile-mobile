@@ -45,15 +45,17 @@ class SearchedResult extends StatelessWidget {
                     .read<HomeBloc>()
                     .add(const BottomNavItemPressed(index: 3));
               },
-              leading: SizedBox(
-                width: 35.r,
-                child: CachedNetworkImage(
-                  cacheKey: result.id,
-                  imageUrl: (result.picture ?? '').isEmpty
-                      ? UserUtil.picture
-                      : result.picture!,
-                  errorWidget: (context, url, error) =>
-                      const CircularProgressIndicator(),
+              leading: ClipOval(
+                child: SizedBox(
+                  width: 35.r,
+                  child: CachedNetworkImage(
+                    cacheKey: result.id,
+                    imageUrl: (result.picture ?? '').isEmpty
+                        ? UserUtil.picture
+                        : result.picture!,
+                    errorWidget: (context, url, error) =>
+                        const CircularProgressIndicator(),
+                  ),
                 ),
               ),
               title: Text(
