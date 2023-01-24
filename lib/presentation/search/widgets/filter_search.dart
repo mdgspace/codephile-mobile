@@ -42,7 +42,7 @@ class FilterSearch extends StatelessWidget {
                       onPressed: () {
                         context
                             .read<SearchBloc>()
-                            .add(const UpdateFilterInstitute());
+                            .add(const UpdateFilterField());
                         Get.back(result: true);
                       },
                       child: Text(
@@ -59,7 +59,7 @@ class FilterSearch extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.fromLTRB(25, 25, 0, 25),
                 child: Text(
-                  'Institutes',
+                  'Fields',
                   style: TextStyle(
                     color: Color(0xFF979797),
                     fontSize: 18,
@@ -77,16 +77,16 @@ class FilterSearch extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
                   ),
                   child: DropdownSearch<String>(
-                    selectedItem: state.selectedInstitute,
+                    selectedItem: state.selectedField,
                     popupProps: const PopupProps.menu(showSearchBox: true),
-                    items: SearchBloc.institutes,
-                    onChanged: (institute) {
-                      if (institute == null) return;
-                      bloc.updatedFilter = institute;
+                    items: SearchBloc.fields,
+                    onChanged: (field) {
+                      if (field == null) return;
+                      bloc.updatedFilter = field;
                     },
                     dropdownDecoratorProps: const DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
-                        hintText: 'Select Institute',
+                        hintText: 'Select Field',
                         contentPadding: EdgeInsets.all(8),
                       ),
                     ),

@@ -12,15 +12,16 @@ class Init extends SearchEvent {
 }
 
 class SearchPeople extends SearchEvent {
-  const SearchPeople({required this.query});
+  const SearchPeople({required this.query, this.selectedField = 'username'});
   final String query;
+  final String selectedField;
 
   @override
-  List<Object?> get props => [query];
+  List<Object?> get props => [query, selectedField];
 }
 
-class UpdateFilterInstitute extends SearchEvent {
-  const UpdateFilterInstitute();
+class UpdateFilterField extends SearchEvent {
+  const UpdateFilterField();
 }
 
 class Reset extends SearchEvent {

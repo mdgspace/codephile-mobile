@@ -16,26 +16,22 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc() : super(const SearchState()) {
     on<Init>(_onInit);
     on<SearchPeople>(_onSearchPeople);
-    on<UpdateFilterInstitute>(_onUpdateFilterInstitute);
+    on<UpdateFilterField>(_onUpdateFilterField);
     on<Reset>(_onReset);
     on<RecentSearch>(_onRecentSearch);
   }
 
-  static List<String> institutes = <String>[
-    'All',
-    'Indian Institute of Technology Roorkee',
-    'Indian Institute of Technology Delhi',
-    'Indian Institute of Technology Mandi',
-    'Indian Institute of Technology Indore',
-    'Indian Institute of Technology Bombay',
+  static List<String> fields = <String>[
+    'username',
+    'fullname',
+    'handle.codechef',
+    'handle.codeforces',
+    'handle.hackerearth',
+    'handle.hackerrank',
+    'handle.spoj'
   ];
 
   void _onInit(Init event, Emitter<SearchState> emit) async {
-    final res = await UserRepository.getInstituteList();
-    if (res.isNotEmpty) {
-      institutes = ['All', ...res];
-    }
-
     emit(state.copyWith(
       recentSearches: StorageService.recentSearches ?? <User>[],
     ));
@@ -47,36 +43,22 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       status: const Status.loading(),
     ));
 
-    searchedResult = await UserRepository.search(event.query);
-    applyFilter();
+    searchedResult =
+        await UserRepository.search(event.query, event.selectedField);
 
     emit(state.copyWith(
       showSearches: true,
       status: const Status(),
-      searchedResult: filteredSearchResult,
+      searchedResult: searchedResult,
     ));
   }
 
-  void _onUpdateFilterInstitute(
-    UpdateFilterInstitute event,
-    Emitter<SearchState> emit,
-  ) {
-    applyFilter();
+  void _onUpdateFilterField(
+      UpdateFilterField event, Emitter<SearchState> emit) async {
     emit(state.copyWith(
-      selectedInstitute: updatedFilter,
-      searchedResult: filteredSearchResult,
-    ));
-  }
-
-  void applyFilter() {
-    if (state.selectedInstitute == 'All') {
-      filteredSearchResult = searchedResult;
-      return;
-    }
-
-    filteredSearchResult = [];
-    filteredSearchResult.addAll(searchedResult.where(
-      (element) => element.institute == state.selectedInstitute,
+      selectedField: updatedFilter,
+      showSearches: true,
+      status: const Status(),
     ));
   }
 

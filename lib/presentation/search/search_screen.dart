@@ -34,7 +34,8 @@ class SearchScreen extends StatelessWidget {
                 onSubmitted: (val) {
                   final res = val.trim();
                   if (res.isEmpty) return;
-                  context.read<SearchBloc>().add(SearchPeople(query: res));
+                  context.read<SearchBloc>().add(SearchPeople(
+                      query: res, selectedField: state.selectedField));
                 },
                 action: TextInputAction.search,
                 isFilled: true,
