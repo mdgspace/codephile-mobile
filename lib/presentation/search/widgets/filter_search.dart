@@ -40,9 +40,9 @@ class FilterSearch extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        context
-                            .read<SearchBloc>()
-                            .add(const UpdateFilterField());
+                        context.read<SearchBloc>().add(SearchPeople(
+                            query: state.query,
+                            selectedField: bloc.updatedFilter));
                         Get.back(result: true);
                       },
                       child: Text(

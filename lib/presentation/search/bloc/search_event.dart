@@ -20,8 +20,12 @@ class SearchPeople extends SearchEvent {
   List<Object?> get props => [query, selectedField];
 }
 
-class UpdateFilterField extends SearchEvent {
-  const UpdateFilterField();
+class UpdateQuery extends SearchEvent {
+  const UpdateQuery({required this.query});
+  final String query;
+
+  @override
+  List<Object?> get props => [query];
 }
 
 class Reset extends SearchEvent {

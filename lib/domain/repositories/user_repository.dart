@@ -223,6 +223,8 @@ class UserRepository {
 
     final users = <User>[];
     if (response['status_code'] == 200) {
+      // Check if the response is null
+      if (response['data'] == 'null') return users;
       for (final user in response['data'] ?? []) {
         users.add(User.fromJson(user));
       }

@@ -16,7 +16,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc() : super(const SearchState()) {
     on<Init>(_onInit);
     on<SearchPeople>(_onSearchPeople);
-    on<UpdateFilterField>(_onUpdateFilterField);
+    on<UpdateQuery>(_onUpdateQuery);
     on<Reset>(_onReset);
     on<RecentSearch>(_onRecentSearch);
   }
@@ -40,6 +40,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   void _onSearchPeople(SearchPeople event, Emitter<SearchState> emit) async {
     emit(state.copyWith(
       showSearches: true,
+      query: event.query,
+      selectedField: event.selectedField,
       status: const Status.loading(),
     ));
 
@@ -53,11 +55,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     ));
   }
 
-  void _onUpdateFilterField(
-      UpdateFilterField event, Emitter<SearchState> emit) async {
+  void _onUpdateQuery(UpdateQuery event, Emitter<SearchState> emit) async {
     emit(state.copyWith(
-      selectedField: updatedFilter,
-      showSearches: true,
+      query: event.query,
       status: const Status(),
     ));
   }
@@ -88,7 +88,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     ));
   }
 
-  String updatedFilter = '';
+  String updatedFilter = 'username';
   List<User> searchedResult = [];
   List<User> filteredSearchResult = [];
   final TextEditingController controller = TextEditingController();
