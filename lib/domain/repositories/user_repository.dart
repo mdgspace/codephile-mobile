@@ -211,8 +211,8 @@ class UserRepository {
     return response['status_code'] == 200;
   }
 
-  static Future<List<User>> search(String query) async {
-    final endpoint = 'user/search?query=$query';
+  static Future<List<User>> search(String query, String field) async {
+    final endpoint = 'user/search?query=$query&path=$field';
     final headers = <String, dynamic>{};
 
     ApiService.addTokenToHeaders(headers);
@@ -223,6 +223,8 @@ class UserRepository {
 
     final users = <User>[];
     if (response['status_code'] == 200) {
+      // Check if the response is null
+      if (response['data'] == 'null') return users;
       for (final user in response['data'] ?? []) {
         users.add(User.fromJson(user));
       }

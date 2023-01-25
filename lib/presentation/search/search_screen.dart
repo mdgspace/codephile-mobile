@@ -28,13 +28,16 @@ class SearchScreen extends StatelessWidget {
                 onChanged: (val) {
                   if (val.isEmpty) {
                     context.read<SearchBloc>().add(const Reset());
+                  } else {
+                    context.read<SearchBloc>().add(UpdateQuery(query: val));
                   }
                 },
                 controller: context.read<SearchBloc>().controller,
                 onSubmitted: (val) {
                   final res = val.trim();
                   if (res.isEmpty) return;
-                  context.read<SearchBloc>().add(SearchPeople(query: res));
+                  context.read<SearchBloc>().add(SearchPeople(
+                      query: res, selectedField: state.selectedField));
                 },
                 action: TextInputAction.search,
                 isFilled: true,
