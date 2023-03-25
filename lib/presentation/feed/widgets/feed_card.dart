@@ -80,13 +80,13 @@ class FeedCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         '${feed.fullname!.trim()} solved',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       Text(
                         DateFormat('dd-MM-yyyy kk:mm').format(
                           feed.submissions![0].createdAt!,
                         ),
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
                   ),
@@ -96,7 +96,7 @@ class FeedCard extends StatelessWidget {
                       '${feed.name}',
                       style: Theme.of(context)
                           .textTheme
-                          .headline4
+                          .headlineMedium
                           ?.copyWith(fontSize: 16.sp),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -108,7 +108,7 @@ class FeedCard extends StatelessWidget {
                         'on ',
                         style: Theme.of(context)
                             .textTheme
-                            .headline6
+                            .titleLarge
                             ?.copyWith(fontSize: 12.sp),
                       ),
                       CircleAvatar(
@@ -131,7 +131,7 @@ class FeedCard extends StatelessWidget {
                           ),
                           style: Theme.of(context)
                               .textTheme
-                              .headline6
+                              .titleLarge
                               ?.copyWith(fontSize: 12.sp),
                           overflow: TextOverflow.ellipsis,
                         ),
