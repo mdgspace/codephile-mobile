@@ -22,11 +22,9 @@ Future<void> main() async {
   final hydratedStorage = await _initHydratedBloc();
 
   // Zone for Hydrated Bloc and AppBlocObserver.
-  await HydratedBlocOverrides.runZoned(
-    () async => runApp(await Codephile.run()),
-    storage: hydratedStorage,
-    blocObserver: AppBlocObserver(),
-  );
+  HydratedBloc.storage = hydratedStorage;
+  Bloc.observer = AppBlocObserver();
+  runApp(await Codephile.run());
 }
 
 Future<void> _initHive() async {

@@ -42,11 +42,11 @@ class AppStyles {
       secondary: AppColors.primaryAccent,
     ),
     textTheme: TextTheme(
-      headline1: h1,
-      headline2: h2,
-      headline4: h4,
-      headline5: h5,
-      headline6: h6,
+      displayLarge: h1,
+      displayMedium: h2,
+      headlineMedium: h4,
+      headlineSmall: h5,
+      titleLarge: h6,
     ),
     scaffoldBackgroundColor: AppColors.white,
   );

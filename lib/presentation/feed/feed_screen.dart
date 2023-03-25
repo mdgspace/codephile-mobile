@@ -22,7 +22,7 @@ class FeedScreen extends StatelessWidget {
         backgroundColor: AppColors.white,
         title: Text(
           'Feed',
-          style: Theme.of(context).textTheme.headline4?.copyWith(
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontSize: 22.sp,
               ),
         ),

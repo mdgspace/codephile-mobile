@@ -43,7 +43,7 @@ class AppBlocObserver extends BlocObserver {
       Sentry.captureException(
         error,
         stackTrace: stackTrace,
-        hint: bloc.runtimeType.toString(),
+        hint: Hint.withMap({'bloc': bloc.runtimeType.toString()}),
       );
     }
     super.onError(bloc, error, stackTrace);

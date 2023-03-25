@@ -12,7 +12,7 @@ dependencies:
   cached_network_image: ^3.2.0
   card_swiper: ^2.0.1
   charts_flutter: ^0.12.0
-  dio: ^4.0.4
+  dio: ^5.0.3
   dropdown_search: ^5.0.3
   equatable: ^2.0.3
   firebase_core: ^2.1.0
@@ -22,7 +22,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
-  flutter_local_notifications: ^12.0.2
+  flutter_local_notifications: ^13.0.0
   flutter_native_splash: ^2.1.6
   flutter_native_timezone: ^2.0.0
   flutter_screenutil: ^5.5.4
@@ -33,19 +33,19 @@ dependencies:
   freezed_annotation: ^2.1.0
   get: ^4.6.1
   hive_flutter: ^1.1.0
-  hydrated_bloc: ^8.0.0
+  hydrated_bloc: ^9.1.0
   image_cropper: ^3.0.0
   image_picker: ^0.8.4+10
   intl: ^0.17.0
   json_annotation: ^4.4.0
   path_provider: ^2.0.11
   rxdart: ^0.27.3
-  sentry_flutter: ^6.2.2
+  sentry_flutter: ^7.2.0
 
 dev_dependencies:
   bloc_test: ^9.0.2
   build_runner: ^2.1.7
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.12.0
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
